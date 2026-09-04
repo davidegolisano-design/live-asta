@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>LIVEASTA V7</title>
+    <title>LIVEASTA V8</title>
     <meta name="theme-color" content="#0D1117">
     <meta name="description" content="LIVEASTA - asta fantasy calcio realtime a stanze">
     <link rel="manifest" href="manifest.webmanifest">
@@ -2751,7 +2751,7 @@
         }
 </style>
 
-<style id="liveasta-v7-clean-broadcast-dark">
+<style id="liveasta-v8-clean-broadcast-dark">
 /* ===== LAYOUT PC STABILE (migrato dal vecchio V74, senza palette legacy) ===== */
 .logo-text{
   display:flex!important;
@@ -2946,8 +2946,10 @@ button:disabled,.btn:disabled{
 
 /* ===== HEADER / NAV ===== */
 .session-nav,.topbar,.navbar{
-  background:#111821!important;
-  border-color:#334155!important;
+  background:transparent!important;
+  background-image:none!important;
+  border:0!important;
+  box-shadow:none!important;
   color:#F8FAFC!important;
 }
 .session-nav *{color:#F8FAFC!important}
@@ -2990,7 +2992,8 @@ tbody tr:hover{background:#202938!important}
 
 /* Il riquadro giocatore resta interamente ai colori sociali. */
 #screen-auctioneer-board .col-player{
-  background-color:transparent!important;
+  background:var(--team-card-bg,linear-gradient(180deg,#171E28,#111821))!important;
+  background-image:var(--team-card-bg,linear-gradient(180deg,#171E28,#111821))!important;
   background-size:100% 100%!important;
   background-position:center!important;
   background-repeat:no-repeat!important;
@@ -3112,7 +3115,7 @@ grid-row:1!important;
   overflow:visible!important;
   text-overflow:clip!important;
   text-shadow:0 2px 4px rgba(0,0,0,.95),0 0 5px rgba(0,0,0,.88)!important;
-  transform:translateY(13px)!important;
+  transform:translateY(20px)!important;
   position:relative!important;
   z-index:5!important;
 }
@@ -3159,7 +3162,7 @@ grid-row:3!important;
   white-space:nowrap!important;
   overflow:visible!important;
   text-shadow:0 2px 4px rgba(0,0,0,.94),0 0 4px rgba(0,0,0,.82)!important;
-  transform:translateY(-13px)!important;
+  transform:translateY(-20px)!important;
   position:relative!important;
   z-index:5!important;
 }
@@ -3178,7 +3181,7 @@ color:#FFF!important;
 #screen-player-buzzer .player-live-side{
 display:grid!important;
   grid-template-columns:minmax(0,1fr)!important;
-  grid-template-rows:minmax(0,1fr) minmax(0,1fr)!important;
+  grid-template-rows:1fr 1fr!important;
   gap:0!important;
   padding:0!important;
   min-width:0!important;
@@ -3193,16 +3196,17 @@ display:grid!important;
 #screen-player-buzzer .player-timer-box,
 #screen-player-buzzer .player-auction-info{
 width:100%!important;
+  height:100%!important;
   max-width:none!important;
   min-width:0!important;
   min-height:0!important;
   margin:0!important;
   padding:8px 5px!important;
   box-sizing:border-box!important;
-  display:flex!important;
-  flex-direction:column!important;
+  display:grid!important;
+  grid-template-rows:auto auto minmax(0,1fr)!important;
   align-items:center!important;
-  justify-content:center!important;
+  justify-items:center!important;
   text-align:center!important;
   background:transparent!important;
   border:0!important;
@@ -3212,16 +3216,17 @@ width:100%!important;
 }
 #screen-player-buzzer .player-timer-box{
 width:100%!important;
+  height:100%!important;
   max-width:none!important;
   min-width:0!important;
   min-height:0!important;
   margin:0!important;
   padding:8px 5px!important;
   box-sizing:border-box!important;
-  display:flex!important;
-  flex-direction:column!important;
+  display:grid!important;
+  grid-template-rows:auto minmax(0,1fr) auto!important;
   align-items:center!important;
-  justify-content:center!important;
+  justify-items:center!important;
   text-align:center!important;
   background:transparent!important;
   border:0!important;
@@ -3250,10 +3255,25 @@ background:
 
 /* Countdown: SOLO testo rosso, mai sfondo rosso */
 #screen-player-buzzer #player-countdown{
+width:100%!important;
+  margin:0!important;
+  padding:0!important;
+  align-self:center!important;
+  justify-self:center!important;
   background:transparent!important;
   border:0!important;
   box-shadow:none!important;
   color:#FF8A3D!important;
+  font-family:'Inter',sans-serif!important;
+  font-size:clamp(5.0rem,22vw,7.1rem)!important;
+  font-weight:800!important;
+  font-style:normal!important;
+  font-variant-numeric:tabular-nums!important;
+  letter-spacing:-.045em!important;
+  line-height:.82!important;
+  text-align:center!important;
+  white-space:nowrap!important;
+  overflow:visible!important;
 }
 #screen-player-buzzer #player-countdown.danger,
 #screen-player-buzzer #player-countdown.liveasta-last3{
@@ -3264,10 +3284,26 @@ background:
   text-shadow:0 0 22px rgba(255,51,79,.32)!important;
 }
 #screen-player-buzzer #player-current-value{
+width:100%!important;
+  margin:0!important;
+  padding:0!important;
+  align-self:center!important;
+  justify-self:center!important;
   background:transparent!important;
-  color:#FF8A3D!important;
   border:0!important;
   box-shadow:none!important;
+  color:#FF8A3D!important;
+  font-family:'Inter',sans-serif!important;
+  font-size:clamp(5.0rem,22vw,7.1rem)!important;
+  font-weight:800!important;
+  font-style:normal!important;
+  font-variant-numeric:tabular-nums!important;
+  letter-spacing:-.045em!important;
+  line-height:.82!important;
+  text-align:center!important;
+  white-space:nowrap!important;
+  overflow:visible!important;
+  text-shadow:none!important;
 }
 #screen-player-buzzer #player-current-winner{
   color:#F8FAFC!important;
@@ -3334,31 +3370,40 @@ background:
   #screen-player-buzzer .phone-player-name{
     height:34px!important;
     font-size:clamp(.96rem,4.2vw,1.35rem)!important;
-    transform:translateY(9px)!important
+    transform:translateY(14px)!important
   }
   #screen-player-buzzer .phone-player-meta{
     height:26px!important;
     font-size:clamp(.72rem,3.2vw,.92rem)!important;
-    transform:translateY(-9px)!important
+    transform:translateY(-14px)!important
   }
   #screen-player-buzzer .phone-card-image{
-    width:100%!important;max-width:100%!important;
-    height:100%!important;max-height:100%!important;
+    width:100%!important;
+    max-width:100%!important;
+    height:100%!important;
+    max-height:100%!important;
     transform:scale(1.08)!important
+  }
+  #screen-player-buzzer #player-countdown,
+  #screen-player-buzzer #player-current-value{
+    font-size:clamp(4.4rem,20vw,5.9rem)!important;
   }
 }
 
-
-/* ===== HARDENING DESIGN: nessun tema sottostante visibile ===== */
-html{
-  color-scheme:dark!important;
-  background:#0D1117!important;
+/* Specificità finale: colori sociali su TUTTO il riquadro giocatore PC */
+#screen-auctioneer-board #view-auction .auction-col.col-player{
+  background:var(--team-card-bg,linear-gradient(180deg,#171E28,#111821))!important;
+  background-image:var(--team-card-bg,linear-gradient(180deg,#171E28,#111821))!important;
+  background-color:#171E28!important;
+  background-size:100% 100%!important;
+  background-position:center!important;
+  background-repeat:no-repeat!important;
 }
-body{
-  opacity:1!important;
-}
 
-/* Il tema finale governa tutti i pannelli di alto livello */
+
+/* ===== V8 FINAL: override espliciti anti-residuo ===== */
+
+/* Nessun vecchio gradiente/tema può rimanere sotto le schermate principali */
 #screen-role,
 #screen-room-choice,
 #screen-room-create,
@@ -3367,25 +3412,76 @@ body{
 #screen-auctioneer-board,
 #screen-room-control,
 #screen-admin{
-  background-color:#0D1117!important;
+  background:#0D1117!important;
+  background-image:none!important;
 }
 
-/* Nessuna transizione sui colori di struttura al primo paint */
-body,
-.screen,
-.setup-card,
-.control-card,
-.dashboard,
-.phone-top-area,
-.player-live-side,
-.auction-col{
-  transition-property:none!important;
+/* Header senza fascia rettangolare dietro titolo */
+#screen-player-buzzer .session-nav,
+#screen-player-buzzer .player-session-nav,
+#screen-auctioneer-board .session-nav,
+#screen-auctioneer-board .auctioneer-session-nav{
+  background:transparent!important;
+  background-image:none!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+#screen-player-buzzer .session-title,
+#screen-auctioneer-board .session-title,
+#screen-auctioneer-board .auctioneer-session-center{
+  background:transparent!important;
+  background-image:none!important;
+  border:0!important;
+  box-shadow:none!important;
 }
 
-/* Le transizioni di feedback live vengono riabilitate solo dove servono */
-#screen-player-buzzer .phone-top-area,
+/* Specificità massima: colori sociali su tutto il riquadro calciatore PC */
+#screen-auctioneer-board #view-auction .auction-col.col-player{
+  background:var(--team-card-bg,linear-gradient(180deg,#171E28,#111821))!important;
+  background-image:var(--team-card-bg,linear-gradient(180deg,#171E28,#111821))!important;
+  background-color:#171E28!important;
+  background-size:100% 100%!important;
+  background-position:center!important;
+  background-repeat:no-repeat!important;
+}
+
+/* Mobile: timer e offerta sullo stesso asse e con identica tipografia numerica */
 #screen-player-buzzer .player-live-side{
-  transition:border-color .18s ease,box-shadow .18s ease,background .18s ease!important;
+  grid-template-rows:1fr 1fr!important;
+}
+#screen-player-buzzer .player-timer-box,
+#screen-player-buzzer .player-auction-info{
+  align-items:center!important;
+  justify-items:center!important;
+  text-align:center!important;
+}
+#screen-player-buzzer #player-countdown,
+#screen-player-buzzer #player-current-value{
+  font-family:'Inter',sans-serif!important;
+  font-size:clamp(5rem,22vw,7.1rem)!important;
+  font-weight:800!important;
+  font-style:normal!important;
+  font-variant-numeric:tabular-nums!important;
+  letter-spacing:-.045em!important;
+  line-height:.82!important;
+  text-align:center!important;
+}
+
+/* Nome e ruolo/squadra più vicini alla miniatura */
+#screen-player-buzzer .phone-player-name{
+  transform:translateY(20px)!important;
+}
+#screen-player-buzzer .phone-player-meta{
+  transform:translateY(-20px)!important;
+}
+
+@media(max-height:760px){
+  #screen-player-buzzer .phone-player-name{transform:translateY(14px)!important}
+  #screen-player-buzzer .phone-player-meta{transform:translateY(-14px)!important}
+  #screen-player-buzzer #player-countdown,
+  #screen-player-buzzer #player-current-value{
+    font-size:clamp(4.4rem,20vw,5.9rem)!important;
+  }
 }
 </style>
 </head>
@@ -3553,7 +3649,7 @@ body,
 
     <div id="screen-admin" class="screen">
         <div class="setup-card" style="max-width:1100px; width:96%; padding:24px;">
-            <div class="admin-version-badge">LIVEASTA · VERSIONE V7</div>
+            <div class="admin-version-badge">LIVEASTA · VERSIONE V8</div>
             <h1>Gestione stanze</h1>
             <p class="subtitle">Nome, password, modifica ed eliminazione</p>
             <div style="display:flex; gap:8px; margin-bottom:10px;">
@@ -8391,7 +8487,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 
 
 
-<script id="liveasta-v7-runtime">
+<script id="liveasta-v8-runtime">
 (function(){
   const TEAM_COLORS={
     'ATALANTA':['#111111','#249FDB'],
@@ -8575,9 +8671,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyBrand(){
-    document.title='LIVEASTA V7';
+    document.title='LIVEASTA V8';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V7';
+      el.textContent='LIVEASTA · VERSIONE V8';
     });
     document.querySelectorAll('.logo-text').forEach(el=>{
       const a=el.querySelector('.rosa');
