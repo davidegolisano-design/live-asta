@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>LIVEASTA V1</title>
+    <title>LIVEASTA V2</title>
     <meta name="theme-color" content="#061A20">
     <meta name="description" content="LIVEASTA - asta fantasy calcio realtime a stanze">
     <link rel="manifest" href="manifest.webmanifest">
@@ -3048,7 +3048,7 @@ body{background:linear-gradient(180deg,#08242a 0%,#06161b 68%,#041216 100%)!impo
 
     <div id="screen-admin" class="screen">
         <div class="setup-card" style="max-width:1100px; width:96%; padding:24px;">
-            <div class="admin-version-badge">LIVEASTA · VERSIONE V1</div>
+            <div class="admin-version-badge">LIVEASTA · VERSIONE V2</div>
             <h1>Gestione stanze</h1>
             <p class="subtitle">Nome, password, modifica ed eliminazione</p>
             <div style="display:flex; gap:8px; margin-bottom:10px;">
@@ -7864,61 +7864,6 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
     </div>
 
 
-<script id="rosarush-v75-team-glow-js">
-(function(){
-  const TEAM_COLORS={
-    'ATALANTA':['#1769aa','#111111'],'BOLOGNA':['#c8102e','#19398a'],'CAGLIARI':['#d71920','#123b7a'],
-    'COMO':['#0b5ea8','#ffffff'],'CREMONESE':['#d71920','#9b9b9b'],'FIORENTINA':['#6f2da8','#ffffff'],
-    'GENOA':['#c8102e','#17365d'],'INTER':['#0068a8','#111111'],'JUVENTUS':['#ffffff','#111111'],
-    'LAZIO':['#69b9e7','#ffffff'],'LECCE':['#f5d000','#d71920'],'MILAN':['#d71920','#111111'],
-    'NAPOLI':['#18a9e1','#ffffff'],'PARMA':['#f4cf00','#1d4e9e'],'PISA':['#173f8a','#111111'],
-    'ROMA':['#8e1f2d','#f4a900'],'SASSUOLO':['#16a34a','#111111'],'TORINO':['#8b1e2d','#ffffff'],
-    'UDINESE':['#ffffff','#111111'],'VERONA':['#163f8c','#f2cf00'],'HELLAS VERONA':['#163f8c','#f2cf00'],
-    'VENEZIA':['#f58220','#138a50'],'MONZA':['#e31b23','#ffffff'],'FROSINONE':['#f3d400','#1663a9'],
-    'EMPOLI':['#1675c1','#ffffff']
-  };
-  function norm(v){return String(v||'').trim().toUpperCase().replace(/\s+/g,' ')}
-  function colorsFor(club){
-    const c=norm(club);
-    if(TEAM_COLORS[c]) return TEAM_COLORS[c];
-    for(const k in TEAM_COLORS){if(c.includes(k)||k.includes(c)) return TEAM_COLORS[k]}
-    return ['#19cbbf','#ffb84d'];
-  }
-  function apply(){
-    const club=document.getElementById('phone-player-club');
-    const card=document.querySelector('#screen-player-buzzer .player-card-side');
-    if(card){const [a,b]=colorsFor(club&&club.textContent);card.style.setProperty('--team-glow-1',a);card.style.setProperty('--team-glow-2',b)}
-  }
-  function boot(){
-    apply();
-    const club=document.getElementById('phone-player-club');
-    if(club)new MutationObserver(apply).observe(club,{childList:true,subtree:true,characterData:true});
-    document.addEventListener('visibilitychange',()=>{if(!document.hidden)apply()});
-  }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
-  window.updateRosaRushTeamGlow=apply;
-})();
-</script>
-
-<script id="rosarush-v77-glow-sync">
-(function(){
- const TEAM_COLORS=window.ROSARUSH_TEAM_COLORS||{
-  'ATALANTA':['#1769aa','#111111'],'BOLOGNA':['#c8102e','#19398a'],'CAGLIARI':['#d71920','#123b7a'],'COMO':['#0b5ea8','#ffffff'],'CREMONESE':['#d71920','#9b9b9b'],'FIORENTINA':['#6f2da8','#ffffff'],'GENOA':['#c8102e','#17365d'],'INTER':['#0068a8','#111111'],'JUVENTUS':['#ffffff','#111111'],'LAZIO':['#69b9e7','#ffffff'],'LECCE':['#f5d000','#d71920'],'MILAN':['#d71920','#111111'],'NAPOLI':['#18a9e1','#ffffff'],'PARMA':['#f4cf00','#1d4e9e'],'PISA':['#173f8a','#111111'],'ROMA':['#8e1f2d','#f4a900'],'SASSUOLO':['#16a34a','#111111'],'TORINO':['#8b1e2d','#ffffff'],'UDINESE':['#ffffff','#111111'],'VERONA':['#163f8c','#f2cf00'],'HELLAS VERONA':['#163f8c','#f2cf00'],'VENEZIA':['#f58220','#138a50'],'MONZA':['#e31b23','#ffffff'],'FROSINONE':['#f3d400','#1663a9'],'EMPOLI':['#1675c1','#ffffff']};
- function n(v){return String(v||'').trim().toUpperCase().replace(/\s+/g,' ')}
- function c(v){const x=n(v);if(TEAM_COLORS[x])return TEAM_COLORS[x];for(const k in TEAM_COLORS){if(x.includes(k)||k.includes(x))return TEAM_COLORS[k]}return ['#19D3C5','#FF8A34']}
- function apply(){
-  const mobileClub=document.getElementById('phone-player-club')?.textContent;
-  const mobile=document.querySelector('#screen-player-buzzer .player-card-side');
-  if(mobile){const [a,b]=c(mobileClub);mobile.style.setProperty('--team-glow-1',a);mobile.style.setProperty('--team-glow-2',b)}
-  const pcClub=document.getElementById('auction-player-club')?.textContent||document.querySelector('#auction-player-meta .club')?.textContent||document.getElementById('auction-player-meta')?.textContent;
-  const pc=document.querySelector('#screen-auctioneer-board .col-player');
-  if(pc){const [a,b]=c(pcClub);pc.style.setProperty('--team-glow-1',a);pc.style.setProperty('--team-glow-2',b)}
- }
- if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>{apply();new MutationObserver(apply).observe(document.body,{subtree:true,childList:true,characterData:true})});else{apply();new MutationObserver(apply).observe(document.body,{subtree:true,childList:true,characterData:true})}
-})();
-</script>
-
-
 <style id="rosarush-v79-mobile-polish">
 /* V79: luce più compatta, testi più leggibili, nome/meta ravvicinati */
 #screen-player-buzzer .player-card-side{
@@ -7961,7 +7906,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 @media(max-height:760px){#screen-player-buzzer .player-card-side{grid-template-rows:38px minmax(0,1fr) 30px!important}}
 </style>
 <script id="rosarush-v79-version">
-(function(){document.title='LIVEASTA V1';function v(){document.querySelectorAll('*').forEach(function(e){if(e.children.length===0&&e.textContent&&e.textContent.includes('VERSIONE V78'))e.textContent=e.textContent.replace('VERSIONE V78','VERSIONE V81')})}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',v);else v()})();
+(function(){document.title='LIVEASTA V2';function v(){document.querySelectorAll('*').forEach(function(e){if(e.children.length===0&&e.textContent&&e.textContent.includes('VERSIONE V78'))e.textContent=e.textContent.replace('VERSIONE V78','VERSIONE V81')})}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',v);else v()})();
 </script>
 
 
@@ -8108,7 +8053,7 @@ button:disabled,.btn:disabled,.disabled{color:#A6B3B4!important;opacity:.72!impo
 </style>
 <script id="rosarush-v81-version-fix">
 (function(){
-  document.title='LIVEASTA V1';
+  document.title='LIVEASTA V2';
   function v(){document.querySelectorAll('*').forEach(function(e){if(e.children.length===0&&e.textContent){e.textContent=e.textContent.replace('VERSIONE V80','VERSIONE V81')}})}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',v);else v();
 })();
@@ -8118,9 +8063,9 @@ button:disabled,.btn:disabled,.disabled{color:#A6B3B4!important;opacity:.72!impo
 <script id="liveasta-v1-branding-final">
 (function(){
   function applyLiveAstaBranding(){
-    document.title='LIVEASTA V1';
+    document.title='LIVEASTA V2';
     document.querySelectorAll('.admin-version-badge').forEach(function(el){
-      el.textContent='LIVEASTA · VERSIONE V1';
+      el.textContent='LIVEASTA · VERSIONE V2';
     });
     document.querySelectorAll('.logo-text').forEach(function(el){
       var a=el.querySelector('.rosa'), b=el.querySelector('.rush');
@@ -8130,6 +8075,373 @@ button:disabled,.btn:disabled,.disabled{color:#A6B3B4!important;opacity:.72!impo
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',applyLiveAstaBranding);
   else applyLiveAstaBranding();
+})();
+</script>
+
+
+<style id="liveasta-v2-team-cards-mobile">
+/* =========================================================
+   LIVEASTA V2
+   - colori sociali su tutto il riquadro calciatore
+   - miniatura mobile più grande e centrata
+   - stato online integrato nel box Squadra
+   - ultimi 3 secondi rossi
+   - nomi calciatori sempre su una riga e auto-ridimensionati
+   ========================================================= */
+
+/* Il vecchio glow non deve più comparire */
+#screen-player-buzzer .player-card-side:before,
+#screen-player-buzzer .player-card-side:after,
+#screen-auctioneer-board .col-player:before,
+#screen-auctioneer-board .col-player:after{
+    display:none!important;
+    content:none!important;
+    opacity:0!important;
+    background:none!important;
+    filter:none!important;
+    mask-image:none!important;
+    -webkit-mask-image:none!important;
+}
+
+/* Colori sociali pieni: il JS imposta il background dinamico */
+#screen-player-buzzer .player-card-side,
+#screen-auctioneer-board .col-player{
+    background:#10242a!important;
+    background-image:var(--team-card-bg,linear-gradient(180deg,#10242a,#0b1b20))!important;
+    background-size:100% 100%!important;
+    background-position:center!important;
+    background-repeat:no-repeat!important;
+    overflow:hidden!important;
+    isolation:isolate!important;
+}
+
+/* Leggibilità sopra bianco/giallo e sopra i colori più chiari */
+#screen-player-buzzer .phone-player-name,
+#screen-player-buzzer .phone-player-meta,
+#screen-player-buzzer #phone-player-club,
+#screen-auctioneer-board #auction-player-name-top,
+#screen-auctioneer-board .auction-player-meta,
+#screen-auctioneer-board #auction-player-club{
+    color:#fff!important;
+    text-shadow:
+      0 2px 2px rgba(0,0,0,.95),
+      0 0 5px rgba(0,0,0,.92),
+      1px 0 1px rgba(0,0,0,.8),
+      -1px 0 1px rgba(0,0,0,.8)!important;
+}
+
+/* Miniatura telecomando: più grande, ma sempre centrata */
+#screen-player-buzzer .phone-card-image{
+    width:112%!important;
+    max-width:112%!important;
+    height:112%!important;
+    max-height:112%!important;
+    object-fit:contain!important;
+    object-position:center center!important;
+    align-self:center!important;
+    justify-self:center!important;
+    margin:0!important;
+    transform:scale(1.10)!important;
+    transform-origin:50% 50%!important;
+    filter:drop-shadow(0 12px 17px rgba(0,0,0,.48))!important;
+}
+
+/* Il vecchio box ONLINE sparisce. La riga torna a due box uguali. */
+#screen-player-buzzer .player-identity-row{
+    grid-template-columns:1fr 1fr!important;
+}
+#screen-player-buzzer #player-connection-pill{
+    display:none!important;
+}
+
+/* Pallino connessione dentro il box Squadra */
+#screen-player-buzzer .identity-pill.team{
+    position:relative!important;
+}
+#screen-player-buzzer .team-inline-status-dot{
+    display:inline-block!important;
+    width:8px!important;
+    height:8px!important;
+    min-width:8px!important;
+    border-radius:50%!important;
+    margin-right:1px!important;
+    background:#ff5268!important;
+    box-shadow:0 0 8px rgba(255,82,104,.65)!important;
+    flex:0 0 auto!important;
+}
+#screen-player-buzzer .team-inline-status-dot.online{
+    background:#61ff71!important;
+    box-shadow:0 0 9px rgba(97,255,113,.85)!important;
+}
+#screen-player-buzzer .team-inline-status-dot.connecting{
+    background:#ffd84d!important;
+    box-shadow:0 0 8px rgba(255,216,77,.75)!important;
+}
+
+/* Ultimi 3 secondi SEMPRE rossi, sia telecomando che banditore */
+#screen-player-buzzer #player-countdown.liveasta-last3,
+#screen-auctioneer-board #countdown-display.liveasta-last3{
+    color:#ff334f!important;
+    text-shadow:0 0 22px rgba(255,51,79,.38),0 2px 7px rgba(0,0,0,.45)!important;
+}
+
+/* I nomi non vengono mai troncati o mandati a capo.
+   Il JS abbassa automaticamente il font finché entrano. */
+#phone-player-name,
+#auction-player-name-top,
+#nomination-stage-player-name,
+#ready-player-name,
+.phone-player-name,
+.player-name-top,
+.nomination-stage-player-name,
+.ready-player-name{
+    white-space:nowrap!important;
+    overflow:visible!important;
+    text-overflow:clip!important;
+    max-width:100%!important;
+    min-width:0!important;
+    box-sizing:border-box!important;
+}
+
+/* Per evitare che la miniatura ingrandita sposti nome/meta */
+#screen-player-buzzer .phone-player-name,
+#screen-player-buzzer .phone-player-meta{
+    position:relative!important;
+    z-index:5!important;
+}
+
+@media(max-width:700px){
+    #screen-player-buzzer .phone-card-image{
+        width:115%!important;
+        max-width:115%!important;
+        height:115%!important;
+        max-height:115%!important;
+        transform:scale(1.11)!important;
+    }
+}
+@media(max-height:760px){
+    #screen-player-buzzer .phone-card-image{
+        width:110%!important;
+        max-width:110%!important;
+        height:110%!important;
+        max-height:110%!important;
+        transform:scale(1.08)!important;
+    }
+}
+</style>
+
+<script id="liveasta-v2-team-cards-behaviour">
+(function(){
+    const TEAM_COLORS={
+        'ATALANTA':['#111111','#249FDB'],
+        'BOLOGNA':['#D71920','#173D8F'],
+        'CAGLIARI':['#D71920','#173D8F'],
+        'COMO':['#249FDB','#F7F7F2'],
+        'FIORENTINA':['#6F2DA8'],
+        'FROSINONE':['#F5D000','#249FDB'],
+        'GENOA':['#D71920','#173D8F'],
+        'INTER':['#111111','#249FDB'],
+        'JUVENTUS':['#F7F7F2','#111111'],
+        'LAZIO':['#F7F7F2','#79C8EF'],
+        'LECCE':['#F5D000','#D71920'],
+        'MILAN':['#D71920','#111111'],
+        'MONZA':['#F7F7F2','#D71920'],
+        'NAPOLI':['#249FDB'],
+        'PARMA':['#F5D000','#173D8F'],
+        'ROMA':['#F5D000','#D71920'],
+        'SASSUOLO':['#111111','#159447'],
+        'TORINO':['#7A263A'],
+        'UDINESE':['#F7F7F2','#111111'],
+        'VENEZIA':['#F58220','#111111','#159447']
+    };
+
+    function norm(v){
+        return String(v||'').trim().toUpperCase().replace(/\s+/g,' ');
+    }
+
+    function colorsFor(v){
+        const n=norm(v);
+        if(TEAM_COLORS[n]) return TEAM_COLORS[n];
+        for(const k in TEAM_COLORS){
+            if(n.includes(k)||k.includes(n)) return TEAM_COLORS[k];
+        }
+        return null;
+    }
+
+    function fullCardBackground(colors){
+        if(!colors||!colors.length){
+            return 'linear-gradient(180deg,#10242a 0%,#0b1b20 100%)';
+        }
+        if(colors.length===1){
+            return `linear-gradient(180deg,${colors[0]} 0%,${colors[0]} 100%)`;
+        }
+        if(colors.length===2){
+            /* taglio netto al 50% */
+            return `linear-gradient(90deg,${colors[0]} 0%,${colors[0]} 50%,${colors[1]} 50%,${colors[1]} 100%)`;
+        }
+        /* Venezia: tre fasce verticali uguali */
+        return `linear-gradient(90deg,
+          ${colors[0]} 0%,${colors[0]} 33.333%,
+          ${colors[1]} 33.333%,${colors[1]} 66.666%,
+          ${colors[2]} 66.666%,${colors[2]} 100%)`;
+    }
+
+    function applyTeamCards(){
+        const mobileClub=document.getElementById('phone-player-club');
+        const mobileCard=document.querySelector('#screen-player-buzzer .player-card-side');
+        if(mobileCard){
+            mobileCard.style.setProperty('--team-card-bg',fullCardBackground(colorsFor(mobileClub?.textContent)));
+        }
+
+        const auctionClub=document.getElementById('auction-player-club');
+        const auctionCard=document.querySelector('#screen-auctioneer-board .col-player');
+        if(auctionCard){
+            auctionCard.style.setProperty('--team-card-bg',fullCardBackground(colorsFor(auctionClub?.textContent)));
+        }
+    }
+
+    function installConnectionDot(){
+        const teamBox=document.querySelector('#screen-player-buzzer .identity-pill.team');
+        const oldPill=document.getElementById('player-connection-pill');
+        if(!teamBox||!oldPill) return;
+
+        let dot=document.getElementById('team-inline-status-dot');
+        if(!dot){
+            dot=document.createElement('span');
+            dot.id='team-inline-status-dot';
+            dot.className='team-inline-status-dot';
+            const label=teamBox.querySelector('span');
+            if(label) teamBox.insertBefore(dot,label);
+            else teamBox.prepend(dot);
+        }
+
+        const sync=()=>{
+            dot.classList.remove('online','connecting');
+            if(oldPill.classList.contains('online')) dot.classList.add('online');
+            else if(oldPill.classList.contains('connecting')) dot.classList.add('connecting');
+        };
+        sync();
+        new MutationObserver(sync).observe(oldPill,{attributes:true,attributeFilter:['class']});
+    }
+
+    function updateCountdownColor(el){
+        if(!el) return;
+        const raw=String(el.textContent||'').trim().replace(',','.');
+        const value=Number(raw);
+        el.classList.toggle('liveasta-last3',Number.isFinite(value)&&value>0&&value<=3);
+    }
+
+    function watchCountdown(id){
+        const el=document.getElementById(id);
+        if(!el) return;
+        updateCountdownColor(el);
+        new MutationObserver(()=>updateCountdownColor(el))
+          .observe(el,{childList:true,subtree:true,characterData:true});
+    }
+
+    const NAME_SELECTORS=[
+        '#phone-player-name',
+        '#auction-player-name-top',
+        '#nomination-stage-player-name',
+        '#ready-player-name'
+    ];
+
+    function fitOneLine(el){
+        if(!el||!el.isConnected) return;
+        const text=String(el.textContent||'').trim();
+        if(!text||text==='--') return;
+
+        /* Riparti dalla dimensione CSS della schermata corrente */
+        el.style.removeProperty('font-size');
+        el.style.setProperty('white-space','nowrap','important');
+        el.style.setProperty('overflow','visible','important');
+        el.style.setProperty('text-overflow','clip','important');
+
+        const parent=el.parentElement;
+        const available=Math.max(1,Math.min(
+            el.clientWidth||Infinity,
+            parent?.clientWidth||Infinity
+        ));
+        if(!Number.isFinite(available)||available<=1) return;
+
+        let size=parseFloat(getComputedStyle(el).fontSize)||24;
+        const minSize=8;
+
+        /* Riduce solo se serve; nessun taglio, nessun a-capo. */
+        let safety=80;
+        while(el.scrollWidth>available && size>minSize && safety--){
+            size-=0.5;
+            el.style.setProperty('font-size',size+'px','important');
+        }
+
+        /* Ultima protezione per nomi eccezionalmente lunghi */
+        if(el.scrollWidth>available){
+            const ratio=Math.max(.72,available/el.scrollWidth);
+            el.style.setProperty('transform-origin','center center','important');
+            const existing=(el.id==='phone-player-name')?'translateY(13px) ':'';
+            el.style.setProperty('transform',existing+`scaleX(${ratio})`,'important');
+        }else if(el.id!=='phone-player-name'){
+            el.style.removeProperty('transform');
+        }
+    }
+
+    function fitAllNames(){
+        requestAnimationFrame(()=>{
+            NAME_SELECTORS.forEach(sel=>{
+                document.querySelectorAll(sel).forEach(fitOneLine);
+            });
+        });
+    }
+
+    function boot(){
+        document.title='LIVEASTA V2';
+        document.querySelectorAll('.admin-version-badge').forEach(el=>{
+            el.textContent='LIVEASTA · VERSIONE V2';
+        });
+
+        installConnectionDot();
+        applyTeamCards();
+        watchCountdown('player-countdown');
+        watchCountdown('countdown-display');
+        fitAllNames();
+
+        const mobileClub=document.getElementById('phone-player-club');
+        if(mobileClub){
+            new MutationObserver(()=>{
+                applyTeamCards();
+                fitAllNames();
+            }).observe(mobileClub,{childList:true,subtree:true,characterData:true});
+        }
+
+        const auctionClub=document.getElementById('auction-player-club');
+        if(auctionClub){
+            new MutationObserver(()=>{
+                applyTeamCards();
+                fitAllNames();
+            }).observe(auctionClub,{childList:true,subtree:true,characterData:true});
+        }
+
+        NAME_SELECTORS.forEach(sel=>{
+            document.querySelectorAll(sel).forEach(el=>{
+                new MutationObserver(fitAllNames)
+                  .observe(el,{childList:true,subtree:true,characterData:true});
+            });
+        });
+
+        window.addEventListener('resize',fitAllNames,{passive:true});
+        document.addEventListener('visibilitychange',()=>{
+            if(!document.hidden){
+                applyTeamCards();
+                fitAllNames();
+            }
+        });
+    }
+
+    if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot);
+    else boot();
+
+    window.LIVEASTA_TEAM_COLORS=TEAM_COLORS;
+    window.updateLiveAstaTeamCards=applyTeamCards;
 })();
 </script>
 
