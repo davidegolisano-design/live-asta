@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>LIVEASTA V5</title>
+    <title>LIVEASTA V6</title>
     <meta name="theme-color" content="#0D1117">
     <meta name="description" content="LIVEASTA - asta fantasy calcio realtime a stanze">
     <link rel="manifest" href="manifest.webmanifest">
@@ -2968,7 +2968,7 @@ body{background:radial-gradient(circle at 15% 0,rgba(25,203,191,.20),transparent
 
     <div id="screen-admin" class="screen">
         <div class="setup-card" style="max-width:1100px; width:96%; padding:24px;">
-            <div class="admin-version-badge">LIVEASTA · VERSIONE V5</div>
+            <div class="admin-version-badge">LIVEASTA · VERSIONE V6</div>
             <h1>Gestione stanze</h1>
             <p class="subtitle">Nome, password, modifica ed eliminazione</p>
             <div style="display:flex; gap:8px; margin-bottom:10px;">
@@ -7969,9 +7969,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
     }
 
     function boot(){
-        document.title='LIVEASTA V5';
+        document.title='LIVEASTA V6';
         document.querySelectorAll('.admin-version-badge').forEach(el=>{
-            el.textContent='LIVEASTA · VERSIONE V5';
+            el.textContent='LIVEASTA · VERSIONE V6';
         });
 
         installConnectionDot();
@@ -8066,9 +8066,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
     }
 
     function boot(){
-        document.title='LIVEASTA V5';
+        document.title='LIVEASTA V6';
         document.querySelectorAll('.admin-version-badge').forEach(el=>{
-            el.textContent='LIVEASTA · VERSIONE V5';
+            el.textContent='LIVEASTA · VERSIONE V6';
         });
 
         forceTeamBackgrounds();
@@ -8092,7 +8092,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 
 
 
-<style id="liveasta-v5-clean-broadcast-dark">
+<style id="liveasta-v6-clean-broadcast-dark">
 :root{
   --bg-main:#0D1117!important;
   --bg-card:#171E28!important;
@@ -8282,10 +8282,14 @@ tbody tr:hover{background:#202938!important}
    TELECOMANDO MOBILE
    ========================================================= */
 #screen-player-buzzer .phone-top-area{
+display:grid!important;
+  grid-template-columns:minmax(0,53%) minmax(0,47%)!important;
+  align-items:stretch!important;
   background:#111821!important;
   border:1px solid #334155!important;
   box-shadow:0 12px 30px rgba(0,0,0,.22)!important;
   transition:border-color .18s ease,box-shadow .18s ease!important;
+  overflow:hidden!important;
 }
 
 /* Stato vincente/perdente: NON più sotto i due pannelli.
@@ -8307,11 +8311,14 @@ tbody tr:hover{background:#202938!important}
 
 /* Lato calciatore: colori sociali, senza glow storico */
 #screen-player-buzzer .player-card-side{
-  display:grid!important;
-  grid-template-rows:38px minmax(0,1fr) 32px!important;
+display:grid!important;
+  grid-template-columns:minmax(0,1fr)!important;
+  grid-template-rows:38px minmax(0,1fr) 28px!important;
   position:relative!important;
   isolation:isolate!important;
   overflow:hidden!important;
+  min-width:0!important;
+  min-height:0!important;
   background-color:#171E28!important;
   background-image:var(--team-card-bg,linear-gradient(180deg,#171E28,#111821))!important;
   background-size:100% 100%!important;
@@ -8324,24 +8331,42 @@ tbody tr:hover{background:#202938!important}
   content:none!important;
 }
 #screen-player-buzzer .phone-player-name{
-  grid-row:1!important;
+grid-row:1!important;
+  grid-column:1!important;
   align-self:center!important;
   justify-self:center!important;
   width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  height:38px!important;
   margin:0!important;
-  padding:0 5px!important;
+  padding:0 6px!important;
   box-sizing:border-box!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
   color:#FFF!important;
-  text-shadow:0 2px 4px rgba(0,0,0,.95),0 0 4px rgba(0,0,0,.85)!important;
-  transform:translateY(18px)!important;
+  font-size:clamp(1.05rem,4.7vw,1.55rem)!important;
+  font-weight:900!important;
+  line-height:1!important;
   white-space:nowrap!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
+  text-shadow:0 2px 4px rgba(0,0,0,.95),0 0 5px rgba(0,0,0,.88)!important;
+  transform:translateY(13px)!important;
+  position:relative!important;
+  z-index:5!important;
 }
 #screen-player-buzzer .phone-card-image{
-  grid-row:2!important;
-  width:116%!important;
-  max-width:116%!important;
-  height:116%!important;
-  max-height:116%!important;
+grid-row:2!important;
+  grid-column:1!important;
+  width:100%!important;
+  max-width:100%!important;
+  height:100%!important;
+  max-height:100%!important;
+  min-width:0!important;
+  min-height:0!important;
   object-fit:contain!important;
   object-position:center center!important;
   align-self:center!important;
@@ -8350,31 +8375,58 @@ tbody tr:hover{background:#202938!important}
   transform:scale(1.10)!important;
   transform-origin:center center!important;
   filter:drop-shadow(0 11px 16px rgba(0,0,0,.42))!important;
+  position:relative!important;
+  z-index:3!important;
 }
 #screen-player-buzzer .phone-player-meta{
-  grid-row:3!important;
+grid-row:3!important;
+  grid-column:1!important;
   align-self:center!important;
-  justify-content:center!important;
+  justify-self:center!important;
   width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  height:28px!important;
   margin:0!important;
-  padding:0 4px!important;
+  padding:0 5px!important;
   box-sizing:border-box!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:7px!important;
   color:#FFF!important;
-  text-shadow:0 2px 4px rgba(0,0,0,.92)!important;
-  transform:translateY(-18px)!important;
+  font-size:clamp(.78rem,3.5vw,1.02rem)!important;
+  font-weight:900!important;
+  line-height:1!important;
   white-space:nowrap!important;
+  overflow:visible!important;
+  text-shadow:0 2px 4px rgba(0,0,0,.94),0 0 4px rgba(0,0,0,.82)!important;
+  transform:translateY(-13px)!important;
+  position:relative!important;
+  z-index:5!important;
 }
 #screen-player-buzzer #phone-player-club{
-  color:#FFF!important;
+color:#FFF!important;
+  font-size:inherit!important;
   font-weight:900!important;
+  min-width:0!important;
+  max-width:none!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
+  white-space:nowrap!important;
 }
 
 /* Lato live: un unico pannello, niente "quadrati dentro quadrati". */
 #screen-player-buzzer .player-live-side{
-  display:grid!important;
-  grid-template-rows:1fr 1fr!important;
+display:grid!important;
+  grid-template-columns:minmax(0,1fr)!important;
+  grid-template-rows:minmax(0,1fr) minmax(0,1fr)!important;
   gap:0!important;
   padding:0!important;
+  min-width:0!important;
+  min-height:0!important;
+  align-items:stretch!important;
+  justify-items:stretch!important;
   background:#151D27!important;
   border-left:1px solid #334155!important;
   overflow:hidden!important;
@@ -8382,10 +8434,12 @@ tbody tr:hover{background:#202938!important}
 }
 #screen-player-buzzer .player-timer-box,
 #screen-player-buzzer .player-auction-info{
-  width:100%!important;
+width:100%!important;
   max-width:none!important;
+  min-width:0!important;
+  min-height:0!important;
   margin:0!important;
-  padding:8px!important;
+  padding:8px 5px!important;
   box-sizing:border-box!important;
   display:flex!important;
   flex-direction:column!important;
@@ -8396,21 +8450,39 @@ tbody tr:hover{background:#202938!important}
   border:0!important;
   border-radius:0!important;
   box-shadow:none!important;
+  overflow:hidden!important;
 }
 #screen-player-buzzer .player-timer-box{
+width:100%!important;
+  max-width:none!important;
+  min-width:0!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:8px 5px!important;
+  box-sizing:border-box!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+  background:transparent!important;
+  border:0!important;
   border-bottom:1px solid rgba(184,194,207,.15)!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  overflow:hidden!important;
 }
 
 /* Verde/rosso realmente VISIBILE nella colonna destra */
 #screen-player-buzzer .phone-top-area.player-winning .player-live-side{
-  background:
-    radial-gradient(circle at 50% 42%,rgba(61,220,151,.22),transparent 58%),
-    linear-gradient(180deg,#17382B 0%,#14271F 52%,#151D27 100%)!important;
+background:
+    radial-gradient(circle at 50% 48%,rgba(61,220,151,.15),transparent 62%),
+    linear-gradient(180deg,#183126 0%,#17251F 50%,#151D27 100%)!important;
 }
 #screen-player-buzzer .phone-top-area.player-losing .player-live-side{
-  background:
-    radial-gradient(circle at 50% 42%,rgba(255,93,115,.18),transparent 58%),
-    linear-gradient(180deg,#3A1B24 0%,#271820 52%,#151D27 100%)!important;
+background:
+    radial-gradient(circle at 50% 48%,rgba(255,93,115,.12),transparent 62%),
+    linear-gradient(180deg,#321B22 0%,#241A20 50%,#151D27 100%)!important;
 }
 #screen-player-buzzer .phone-top-area.player-preparing .player-live-side{
   background:
@@ -8500,23 +8572,32 @@ tbody tr:hover{background:#202938!important}
 .role-A{background:#F5B942!important;color:#160F04!important}
 
 @media(max-height:760px){
-  #screen-player-buzzer .phone-player-name{transform:translateY(14px)!important}
-  #screen-player-buzzer .phone-player-meta{transform:translateY(-14px)!important}
+  #screen-player-buzzer .player-card-side{grid-template-rows:34px minmax(0,1fr) 26px!important}
+  #screen-player-buzzer .phone-player-name{
+    height:34px!important;
+    font-size:clamp(.96rem,4.2vw,1.35rem)!important;
+    transform:translateY(9px)!important
+  }
+  #screen-player-buzzer .phone-player-meta{
+    height:26px!important;
+    font-size:clamp(.72rem,3.2vw,.92rem)!important;
+    transform:translateY(-9px)!important
+  }
   #screen-player-buzzer .phone-card-image{
-    width:112%!important;max-width:112%!important;
-    height:112%!important;max-height:112%!important;
-    transform:scale(1.08)!important;
+    width:100%!important;max-width:100%!important;
+    height:100%!important;max-height:100%!important;
+    transform:scale(1.08)!important
   }
 }
 </style>
 
 
-<script id="liveasta-v5-ui-fix">
+<script id="liveasta-v6-ui-fix">
 (function(){
   function applyBrand(){
-    document.title='LIVEASTA V5';
+    document.title='LIVEASTA V6';
     document.querySelectorAll('.admin-version-badge').forEach(function(el){
-      el.textContent='LIVEASTA · VERSIONE V5';
+      el.textContent='LIVEASTA · VERSIONE V6';
     });
     document.querySelectorAll('.logo-text').forEach(function(el){
       const a=el.querySelector('.rosa'), b=el.querySelector('.rush');
