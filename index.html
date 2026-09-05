@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>LIVEASTA V24</title>
+    <title>LIVEASTA V25</title>
     <meta name="theme-color" content="#0D1117">
     <meta name="color-scheme" content="dark">
     <meta name="mobile-web-app-capable" content="yes">
@@ -2756,7 +2756,7 @@
         }
 </style>
 
-<style id="liveasta-v24-theme-switcher">
+<style id="liveasta-v25-theme-switcher">
 /* ===== LAYOUT PC STABILE (migrato dal vecchio V74, senza palette legacy) ===== */
 .logo-text{
   display:flex!important;
@@ -5506,6 +5506,146 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
   overflow-wrap:normal!important;
   hyphens:none!important;
 }
+
+
+/* ==========================================================
+   LIVEASTA V25 — CLASSIFICA BUSTA CHIUSA
+   ========================================================== */
+.sealed-ranking{
+  width:100%!important;
+  min-width:0!important;
+  box-sizing:border-box!important;
+}
+
+.sealed-ranking-title{
+  margin:0 0 7px!important;
+  color:var(--theme-muted,#B8C2CF)!important;
+  font-size:.72rem!important;
+  font-weight:900!important;
+  letter-spacing:.10em!important;
+  text-align:center!important;
+  white-space:nowrap!important;
+}
+
+.sealed-ranking-list{
+  width:100%!important;
+  display:flex!important;
+  flex-direction:column!important;
+  gap:4px!important;
+  max-height:210px!important;
+  overflow:auto!important;
+  scrollbar-width:thin!important;
+}
+
+.sealed-ranking-row{
+  width:100%!important;
+  min-width:0!important;
+  display:grid!important;
+  grid-template-columns:28px minmax(0,1fr) auto!important;
+  align-items:center!important;
+  gap:7px!important;
+  padding:6px 8px!important;
+  box-sizing:border-box!important;
+  border-radius:8px!important;
+  background:color-mix(in srgb,var(--theme-input,#111821) 88%,transparent)!important;
+  border:1px solid color-mix(in srgb,var(--theme-border,#334155) 72%,transparent)!important;
+}
+
+.sealed-ranking-row.winner{
+  background:color-mix(in srgb,var(--theme-primary,#3DDC97) 15%,var(--theme-input,#111821))!important;
+  border-color:color-mix(in srgb,var(--theme-primary,#3DDC97) 68%,var(--theme-border,#334155))!important;
+}
+
+.sealed-ranking-pos{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:25px!important;
+  height:25px!important;
+  border-radius:50%!important;
+  background:var(--theme-hover,#202938)!important;
+  color:var(--theme-text,#F8FAFC)!important;
+  font-size:.72rem!important;
+  font-weight:900!important;
+}
+
+.sealed-ranking-row.winner .sealed-ranking-pos{
+  background:var(--theme-primary,#3DDC97)!important;
+  color:var(--theme-bg-deep,#090D12)!important;
+}
+
+.sealed-ranking-team{
+  min-width:0!important;
+  color:var(--theme-text,#F8FAFC)!important;
+  font-size:.84rem!important;
+  font-weight:800!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+
+.sealed-ranking-value{
+  color:var(--theme-number,var(--theme-accent,#FF8A3D))!important;
+  font-size:.92rem!important;
+  font-weight:950!important;
+  white-space:nowrap!important;
+}
+
+/* BANDITORE: classifica direttamente sotto il valore vincente */
+#screen-auctioneer-board .sealed-ranking-auctioneer{
+  width:min(94%,560px)!important;
+  margin:12px auto 0!important;
+}
+#screen-auctioneer-board .sealed-ranking-auctioneer .sealed-ranking-title{
+  font-size:.82rem!important;
+}
+#screen-auctioneer-board .sealed-ranking-auctioneer .sealed-ranking-row{
+  padding:7px 10px!important;
+}
+#screen-auctioneer-board .sealed-ranking-auctioneer .sealed-ranking-team{
+  font-size:.92rem!important;
+}
+#screen-auctioneer-board .sealed-ranking-auctioneer .sealed-ranking-value{
+  font-size:1.02rem!important;
+}
+
+/* TELECOMANDO: compatta per non rompere il pannello destro */
+#screen-player-buzzer .sealed-ranking-player{
+  margin:8px 0 0!important;
+  max-height:132px!important;
+  overflow:hidden!important;
+}
+#screen-player-buzzer .sealed-ranking-player .sealed-ranking-title{
+  font-size:.58rem!important;
+  margin-bottom:4px!important;
+}
+#screen-player-buzzer .sealed-ranking-player .sealed-ranking-list{
+  max-height:108px!important;
+  gap:3px!important;
+}
+#screen-player-buzzer .sealed-ranking-player .sealed-ranking-row{
+  grid-template-columns:20px minmax(0,1fr) auto!important;
+  gap:5px!important;
+  padding:3px 5px!important;
+  border-radius:6px!important;
+}
+#screen-player-buzzer .sealed-ranking-player .sealed-ranking-pos{
+  width:18px!important;
+  height:18px!important;
+  font-size:.55rem!important;
+}
+#screen-player-buzzer .sealed-ranking-player .sealed-ranking-team{
+  font-size:.64rem!important;
+}
+#screen-player-buzzer .sealed-ranking-player .sealed-ranking-value{
+  font-size:.68rem!important;
+}
+
+/* Quando compare la classifica mobile, riduci solo un po' il numero
+   per lasciare spazio alla graduatoria senza tagli. */
+#screen-player-buzzer .player-auction-info:has(.sealed-ranking-player[style*="display: block"]) #player-current-value{
+  font-size:clamp(3.5rem,15vw,5rem)!important;
+}
 </style>
 
 <script id="liveasta-theme-preload">
@@ -5553,7 +5693,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 <body>
 
     <div id="screen-role" class="screen active">
-        <div class="home-version-badge">LIVEASTA V24</div>
+        <div class="home-version-badge">LIVEASTA V25</div>
         <button class="btn btn-secondary top-home-btn" onclick="openAdminLogin()">⚙ Impostazioni</button>
         <div class="setup-card">
             <h1 class="logo-text"><span class="rosa">LIVE</span><span class="rush">ASTA</span></h1>
@@ -5627,6 +5767,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                     <div id="player-auction-title">MIGLIOR OFFERTA</div>
                     <div id="player-current-winner">Nessuno</div>
                     <div id="player-current-value">0</div>
+                    <div id="sealed-ranking-player" class="sealed-ranking sealed-ranking-player" style="display:none;"></div>
                 </div>
             </div>
         </div>
@@ -5755,7 +5896,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
     <div id="screen-admin" class="screen">
         <div class="setup-card" style="max-width:1100px; width:96%; padding:24px;">
-            <div class="admin-version-badge">LIVEASTA · VERSIONE V24</div>
+            <div class="admin-version-badge">LIVEASTA · VERSIONE V25</div>
             <h1>Gestione stanze</h1>
             <p class="subtitle">Nome, password, modifica ed eliminazione</p>
 
@@ -5902,6 +6043,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                             <div id="current-value-display">0</div>
                             <div class="credit-label">CREDITI</div>
                         </div>
+                        <div id="sealed-ranking-auctioneer" class="sealed-ranking sealed-ranking-auctioneer" style="display:none;"></div>
                     </div>
                 </div>
 
@@ -6826,6 +6968,15 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
         async function saveLiveAuctionState(patch={}){
             if(!currentRoomId)return;
+
+            // Una nuova fase non deve ereditare la classifica della busta precedente.
+            if(
+                ['idle','ready','prep','active','sealed','sealed_reveal'].includes(String(patch?.phase||'')) &&
+                !Object.prototype.hasOwnProperty.call(patch,'sealed_ranking')
+            ){
+                patch={sealed_ranking:[],...patch};
+            }
+
             liveAuctionState={...(liveAuctionState||{}),...patch,updated_at:new Date().toISOString()};
             try{
                 await supabaseClient.from('fanta_app_data').upsert({
@@ -7215,6 +7366,11 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                 document.getElementById('winner-display').textContent=currentWinner||'INVENDUTO';
                 document.getElementById('current-value-display').textContent=String(currentAuctionValue);
                 document.getElementById('countdown-display').textContent='0';
+                if(state.mode==='sealed_result' && Array.isArray(state.sealed_ranking)){
+                    renderSealedBidRanking(state.sealed_ranking);
+                }else{
+                    clearSealedBidRanking();
+                }
                 return true;
             }
             return false;
@@ -9127,6 +9283,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                     document.getElementById('player-current-winner').innerText = 'Nessuno';
                     document.getElementById('player-current-winner').style.color = 'var(--text-muted)';
                     document.getElementById('player-current-value').innerText = '0';
+                    clearSealedBidRanking();
                     document.getElementById('phone-card-container').style.visibility = 'visible';
                     currentAuctionValue = 0;
                     currentWinner = '';
@@ -9223,6 +9380,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                     const deadline=Number(d.deadline_at)||Date.now()+(parseInt(d.seconds)||5)*1000;
                     playerSealedRevealDeadlineAt=deadline;
                     playerPendingSealedResult=null;
+                    clearSealedBidRanking();
                     const tick=()=>{
                         const rem=Math.max(0,Math.ceil((deadline-Date.now())/1000));
                         if(timer){timer.textContent=String(rem);timer.classList.toggle('danger',rem>0&&rem<=2);}
@@ -9247,6 +9405,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                         if(winner){winner.textContent=d.no_bids?'INVENDUTO':(d.winner||'--');winner.style.color=d.no_bids?'var(--text-muted)':'var(--accent-blue)';}
                         if(val)val.textContent=d.no_bids?'0':String(parseInt(d.value)||0);
                         if(timer){timer.textContent='0';timer.classList.remove('danger');}
+                        renderSealedBidRanking(d.ranking||[]);
                         playerSealedMode=false;
                         playerSealedToken=null;
                         playerSealedSubmitted=false;
@@ -10115,6 +10274,59 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
             }
         }
 
+
+        function normalizeSealedRanking(bids){
+            return (Array.isArray(bids)?bids:[])
+                .map((b,index)=>({
+                    team_id:String(b?.team_id||''),
+                    team_name:String(b?.team_name||'Squadra'),
+                    amount:Math.max(0,parseInt(b?.amount)||0),
+                    at:Number(b?.at)||0,
+                    original_index:index
+                }))
+                .filter(b=>b.amount>0)
+                .sort((a,b)=>b.amount-a.amount || a.at-b.at || a.original_index-b.original_index);
+        }
+
+        function sealedRankingMarkup(ranking){
+            const rows=normalizeSealedRanking(ranking);
+            if(!rows.length)return '';
+
+            return `
+                <div class="sealed-ranking-title">CLASSIFICA OFFERTE</div>
+                <div class="sealed-ranking-list">
+                    ${rows.map((bid,i)=>`
+                        <div class="sealed-ranking-row ${i===0?'winner':''}">
+                            <span class="sealed-ranking-pos">${i+1}</span>
+                            <span class="sealed-ranking-team">${escapeHtml(bid.team_name)}</span>
+                            <strong class="sealed-ranking-value">${bid.amount}</strong>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function renderSealedBidRanking(ranking){
+            const rows=normalizeSealedRanking(ranking);
+            const markup=sealedRankingMarkup(rows);
+
+            const pc=document.getElementById('sealed-ranking-auctioneer');
+            if(pc){
+                pc.innerHTML=markup;
+                pc.style.display=rows.length?'block':'none';
+            }
+
+            const player=document.getElementById('sealed-ranking-player');
+            if(player){
+                player.innerHTML=markup;
+                player.style.display=rows.length?'block':'none';
+            }
+        }
+
+        function clearSealedBidRanking(){
+            renderSealedBidRanking([]);
+        }
+
         async function finalizeSealedAuctionResult(){
             if(!currentAuctionPlayer)return;
 
@@ -10128,9 +10340,10 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
             }
 
             const token=sealedAuctionToken;
-            const bids=[...sealedBids.values()]
-                .filter(x=>sealedEligibleIds.includes(String(x.team_id)))
-                .sort((a,b)=>(parseInt(b.amount)||0)-(parseInt(a.amount)||0) || (Number(a.at)||0)-(Number(b.at)||0));
+            const bids=normalizeSealedRanking(
+                [...sealedBids.values()]
+                    .filter(x=>sealedEligibleIds.includes(String(x.team_id)))
+            );
             const winner=bids.length?bids[0]:null;
             let assignmentOk=true;
 
@@ -10175,14 +10388,25 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                 document.getElementById('current-value-display').textContent=winner?String(currentAuctionValue):'0';
                 document.getElementById('countdown-display').textContent='0';
 
+                // V25: dopo l'apertura buste mostra tutte le offerte ordinate.
+                renderSealedBidRanking(bids);
+
                 await saveLiveAuctionState({
-                    phase:'ended',mode:'normal',player:livePlayerSnapshot(),winner:currentWinner||'',value:currentAuctionValue||0,
+                    phase:'ended',mode:'sealed_result',player:livePlayerSnapshot(),winner:currentWinner||'',value:currentAuctionValue||0,
+                    sealed_ranking:bids.map(b=>({team_id:b.team_id,team_name:b.team_name,amount:b.amount,at:b.at})),
                     seconds:0,deadline_at:null,ready_token:null,ready_required_ids:[],ready_ids:[]
                 });
 
                 channel?.send({
                     type:'broadcast',event:'sealed_bid_end',
-                    payload:{token,winner:currentWinner||'',value:currentAuctionValue||0,player_id:String(currentAuctionPlayer.Id),no_bids:!winner}
+                    payload:{
+                        token,
+                        winner:currentWinner||'',
+                        value:currentAuctionValue||0,
+                        player_id:String(currentAuctionPlayer.Id),
+                        no_bids:!winner,
+                        ranking:bids.map(b=>({team_id:b.team_id,team_name:b.team_name,amount:b.amount,at:b.at}))
+                    }
                 }).catch(()=>{});
             }
 
@@ -10260,6 +10484,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
         }
 
         function startCountdown() {
+            clearSealedBidRanking();
             showAuctionPanels();
             // Se siamo arrivati qui, il READY è concluso.
             closeReadyGateDedicated();
@@ -11166,7 +11391,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 
 
 
-<script id="liveasta-v24-runtime">
+<script id="liveasta-v25-runtime">
 (function(){
   const TEAM_COLORS={
     'ATALANTA':['#191B1F','#3D8DB8'],
@@ -11350,9 +11575,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyBrand(){
-    document.title='LIVEASTA V24';
+    document.title='LIVEASTA V25';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V24';
+      el.textContent='LIVEASTA · VERSIONE V25';
     });
     document.querySelectorAll('.logo-text').forEach(el=>{
       const a=el.querySelector('.rosa');
@@ -11417,7 +11642,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 </script>
 
 
-<script id="liveasta-v24-theme-runtime">
+<script id="liveasta-v25-theme-runtime">
 (function(){
   const THEME_KEY='liveasta_theme';
   const THEMES=['broadcast','stadium','carbon','crimson','emerald','violet'];
