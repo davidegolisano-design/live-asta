@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>LIVEASTA V14</title>
+    <title>LIVEASTA V15</title>
     <meta name="theme-color" content="#0D1117">
     <meta name="color-scheme" content="dark">
     <meta name="mobile-web-app-capable" content="yes">
@@ -2756,7 +2756,7 @@
         }
 </style>
 
-<style id="liveasta-v14-clean-broadcast-dark">
+<style id="liveasta-v15-theme-switcher">
 /* ===== LAYOUT PC STABILE (migrato dal vecchio V74, senza palette legacy) ===== */
 .logo-text{
   display:flex!important;
@@ -4232,12 +4232,408 @@ html,body{
     0 2px 3px rgba(0,0,0,.92),
     0 0 4px rgba(0,0,0,.82)!important;
 }
+
+
+/* ==========================================================
+   LIVEASTA V15 — THEME SWITCHER
+   1. Broadcast Dark  (attuale)
+   2. Stadium Blue
+   3. Carbon Gold
+   4. Crimson Night
+   ========================================================== */
+
+/* ---- palette variables ---- */
+html[data-live-theme="broadcast"]{
+  --theme-bg:#0D1117;
+  --theme-bg-deep:#090D12;
+  --theme-card:#171E28;
+  --theme-panel:#151D27;
+  --theme-hover:#202938;
+  --theme-input:#111821;
+  --theme-border:#334155;
+  --theme-text:#F8FAFC;
+  --theme-muted:#B8C2CF;
+  --theme-soft:#93A1B1;
+  --theme-primary:#3DDC97;
+  --theme-primary-hover:#25C982;
+  --theme-accent:#FF8A3D;
+  --theme-danger:#FF5D73;
+  --theme-top-glow:rgba(61,220,151,.055);
+}
+
+html[data-live-theme="stadium"]{
+  --theme-bg:#071521;
+  --theme-bg-deep:#04101A;
+  --theme-card:#0D2233;
+  --theme-panel:#102A3C;
+  --theme-hover:#18384C;
+  --theme-input:#0A1B29;
+  --theme-border:#28516B;
+  --theme-text:#F4FAFF;
+  --theme-muted:#A7C2D4;
+  --theme-soft:#83A9C0;
+  --theme-primary:#37B7FF;
+  --theme-primary-hover:#219DDC;
+  --theme-accent:#71E0FF;
+  --theme-danger:#FF667B;
+  --theme-top-glow:rgba(55,183,255,.11);
+}
+
+html[data-live-theme="carbon"]{
+  --theme-bg:#0E0E0F;
+  --theme-bg-deep:#080809;
+  --theme-card:#18191B;
+  --theme-panel:#202124;
+  --theme-hover:#292A2E;
+  --theme-input:#131416;
+  --theme-border:#3B3D42;
+  --theme-text:#FAF7EE;
+  --theme-muted:#C4BDAE;
+  --theme-soft:#A69E91;
+  --theme-primary:#D7B45A;
+  --theme-primary-hover:#BD9840;
+  --theme-accent:#F0C86A;
+  --theme-danger:#E36A74;
+  --theme-top-glow:rgba(215,180,90,.09);
+}
+
+html[data-live-theme="crimson"]{
+  --theme-bg:#130E12;
+  --theme-bg-deep:#0B080A;
+  --theme-card:#22161D;
+  --theme-panel:#2A1B23;
+  --theme-hover:#35212B;
+  --theme-input:#1B1117;
+  --theme-border:#5A3342;
+  --theme-text:#FFF7FA;
+  --theme-muted:#D0AFBC;
+  --theme-soft:#B68E9C;
+  --theme-primary:#E75E72;
+  --theme-primary-hover:#CC455D;
+  --theme-accent:#F29A5B;
+  --theme-danger:#FF526A;
+  --theme-top-glow:rgba(231,94,114,.10);
+}
+
+/* ---- applicazione globale ---- */
+html[data-live-theme],
+html[data-live-theme] body{
+  background:var(--theme-bg)!important;
+  color:var(--theme-text)!important;
+}
+
+html[data-live-theme] body{
+  background:
+    radial-gradient(circle at 50% -12%,var(--theme-top-glow),transparent 31%),
+    linear-gradient(180deg,var(--theme-panel) 0%,var(--theme-bg) 52%,var(--theme-bg-deep) 100%)!important;
+}
+
+html[data-live-theme] .screen,
+html[data-live-theme] #screen-role,
+html[data-live-theme] #screen-room-choice,
+html[data-live-theme] #screen-room-create,
+html[data-live-theme] #screen-room-enter,
+html[data-live-theme] #screen-player-buzzer,
+html[data-live-theme] #screen-auctioneer-board,
+html[data-live-theme] #screen-room-control,
+html[data-live-theme] #screen-admin{
+  background-color:var(--theme-bg)!important;
+  color:var(--theme-text)!important;
+}
+
+/* Cards / gestione / modali */
+html[data-live-theme] .setup-card,
+html[data-live-theme] .control-card,
+html[data-live-theme] .roster-card,
+html[data-live-theme] .roster-team-card,
+html[data-live-theme] .nomination-control-card,
+html[data-live-theme] .ready-control-card,
+html[data-live-theme] .sealed-control-card,
+html[data-live-theme] .listone-info-card,
+html[data-live-theme] .admin-listone-box,
+html[data-live-theme] .admin-scroll,
+html[data-live-theme] .modal-content,
+html[data-live-theme] .modal-card,
+html[data-live-theme] .manual-assign-card,
+html[data-live-theme] .audio-mixer-card{
+  background:var(--theme-card)!important;
+  border-color:var(--theme-border)!important;
+  color:var(--theme-text)!important;
+}
+
+/* Testi secondari */
+html[data-live-theme] .subtitle,
+html[data-live-theme] .muted,
+html[data-live-theme] .hint,
+html[data-live-theme] .help,
+html[data-live-theme] .field-label,
+html[data-live-theme] .settings-label,
+html[data-live-theme] .timer-caption,
+html[data-live-theme] .bid-label,
+html[data-live-theme] .credit-label,
+html[data-live-theme] .auction-title{
+  color:var(--theme-muted)!important;
+}
+
+/* Input */
+html[data-live-theme] input,
+html[data-live-theme] select,
+html[data-live-theme] textarea,
+html[data-live-theme] .minimal-input{
+  background:var(--theme-input)!important;
+  color:var(--theme-text)!important;
+  border-color:var(--theme-border)!important;
+}
+html[data-live-theme] input::placeholder,
+html[data-live-theme] textarea::placeholder{
+  color:var(--theme-soft)!important;
+}
+html[data-live-theme] input:focus,
+html[data-live-theme] select:focus,
+html[data-live-theme] textarea:focus,
+html[data-live-theme] .minimal-input:focus{
+  border-color:var(--theme-primary)!important;
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--theme-primary) 16%,transparent)!important;
+}
+
+/* Bottoni standard. I 4 tasti di rilancio restano semanticamente colorati. */
+html[data-live-theme] .btn:not(.btn-secondary):not(.btn-danger):not(.btn-green):not(.buzzer-btn){
+  background:linear-gradient(
+    180deg,
+    color-mix(in srgb,var(--theme-primary) 90%,white 10%),
+    var(--theme-primary)
+  )!important;
+  color:var(--theme-bg-deep)!important;
+}
+html[data-live-theme] .btn-secondary,
+html[data-live-theme] .session-back,
+html[data-live-theme] .session-action{
+  background:var(--theme-hover)!important;
+  color:var(--theme-text)!important;
+  border-color:var(--theme-border)!important;
+}
+html[data-live-theme] .btn-green{
+  background:var(--theme-primary)!important;
+  color:var(--theme-bg-deep)!important;
+}
+html[data-live-theme] .btn-danger,
+html[data-live-theme] .control-team-delete{
+  background:var(--theme-danger)!important;
+  color:var(--theme-bg-deep)!important;
+}
+
+/* Header / sessione */
+html[data-live-theme] .session-nav,
+html[data-live-theme] .topbar,
+html[data-live-theme] .navbar{
+  color:var(--theme-text)!important;
+}
+html[data-live-theme] .room-pill,
+html[data-live-theme] .compact-room-pill,
+html[data-live-theme] .identity-pill,
+html[data-live-theme] .mini-stat{
+  background:var(--theme-panel)!important;
+  border-color:var(--theme-border)!important;
+  color:var(--theme-text)!important;
+}
+
+/* Tabelle */
+html[data-live-theme] table,
+html[data-live-theme] .control-table,
+html[data-live-theme] .admin-table,
+html[data-live-theme] .teams-control-table{
+  background:var(--theme-card)!important;
+  border-color:var(--theme-border)!important;
+}
+html[data-live-theme] th,
+html[data-live-theme] .control-table th,
+html[data-live-theme] .admin-table th,
+html[data-live-theme] .teams-control-table th{
+  background:var(--theme-hover)!important;
+  color:var(--theme-text)!important;
+  border-color:var(--theme-border)!important;
+}
+html[data-live-theme] td,
+html[data-live-theme] .control-table td,
+html[data-live-theme] .admin-table td,
+html[data-live-theme] .teams-control-table td{
+  color:var(--theme-text)!important;
+  border-color:var(--theme-border)!important;
+}
+
+/* Telecomando: non tocca la card colori sociali */
+html[data-live-theme] #screen-player-buzzer .phone-top-area{
+  background:var(--theme-input)!important;
+  border-color:var(--theme-border)!important;
+}
+html[data-live-theme] #screen-player-buzzer .player-live-side{
+  background:var(--theme-panel)!important;
+  border-color:var(--theme-border)!important;
+}
+html[data-live-theme] #screen-player-buzzer .player-auction-info,
+html[data-live-theme] #screen-player-buzzer .player-timer-box{
+  border-color:color-mix(in srgb,var(--theme-muted) 17%,transparent)!important;
+}
+html[data-live-theme] #screen-player-buzzer #player-current-value{
+  color:var(--theme-accent)!important;
+}
+
+/* Banditore: non tocca la card colori sociali */
+html[data-live-theme] #screen-auctioneer-board .dashboard{
+  background:var(--theme-bg)!important;
+  border-color:var(--theme-border)!important;
+}
+html[data-live-theme] #screen-auctioneer-board .col-timer,
+html[data-live-theme] #screen-auctioneer-board .col-info{
+  background:var(--theme-card)!important;
+  border-color:var(--theme-border)!important;
+}
+html[data-live-theme] #screen-auctioneer-board .timer-ring{
+  border-color:var(--theme-border)!important;
+}
+html[data-live-theme] #screen-auctioneer-board .bid-box{
+  background:var(--theme-input)!important;
+  border-color:var(--theme-border)!important;
+}
+html[data-live-theme] #screen-auctioneer-board #current-value-display,
+html[data-live-theme] #screen-auctioneer-board .arrow-btn{
+  color:var(--theme-accent)!important;
+}
+html[data-live-theme] #screen-auctioneer-board .arrow-btn{
+  background:var(--theme-accent)!important;
+  color:var(--theme-bg-deep)!important;
+}
+
+/* Gestione specifica */
+html[data-live-theme] #screen-room-control .nomination-control-status,
+html[data-live-theme] #screen-room-control .ready-control-status,
+html[data-live-theme] #screen-room-control .nomination-order-box,
+html[data-live-theme] #screen-room-control .nomination-order-row,
+html[data-live-theme] #screen-room-control .online-player-chip{
+  background:var(--theme-input)!important;
+  border-color:var(--theme-border)!important;
+  color:var(--theme-text)!important;
+}
+html[data-live-theme] #screen-room-control .nomination-order-row.current,
+html[data-live-theme] #screen-room-control .online-player-chip.current-turn{
+  background:color-mix(in srgb,var(--theme-primary) 12%,var(--theme-card))!important;
+  border-color:var(--theme-primary)!important;
+}
+
+/* Home / versione */
+html[data-live-theme] .home-version-badge{
+  background:var(--theme-input)!important;
+  border-color:var(--theme-border)!important;
+  color:var(--theme-muted)!important;
+}
+html[data-live-theme] .logo-text .rosa{color:var(--theme-text)!important}
+html[data-live-theme] .logo-text .rush{color:var(--theme-accent)!important}
+
+/* Theme picker */
+.theme-settings-card{
+  margin:14px 0!important;
+  padding:14px!important;
+  background:var(--theme-input,#111821)!important;
+  border:1px solid var(--theme-border,#334155)!important;
+  border-radius:14px!important;
+}
+.theme-settings-head{
+  display:flex!important;
+  align-items:flex-start!important;
+  justify-content:space-between!important;
+  gap:12px!important;
+  margin-bottom:12px!important;
+}
+.theme-settings-head b{
+  color:var(--theme-text,#F8FAFC)!important;
+  font-size:1rem!important;
+}
+.theme-settings-subtitle{
+  color:var(--theme-muted,#B8C2CF)!important;
+  font-size:.76rem!important;
+  margin-top:3px!important;
+}
+#theme-save-status{
+  color:var(--theme-primary,#3DDC97)!important;
+  font-size:.72rem!important;
+  font-weight:800!important;
+  white-space:nowrap!important;
+}
+.theme-picker{
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:8px!important;
+}
+.theme-option{
+  min-width:0!important;
+  padding:10px 8px!important;
+  border:1px solid var(--theme-border,#334155)!important;
+  border-radius:12px!important;
+  background:var(--theme-card,#171E28)!important;
+  color:var(--theme-text,#F8FAFC)!important;
+  cursor:pointer!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  gap:7px!important;
+  transition:transform .12s ease,border-color .12s ease,box-shadow .12s ease!important;
+}
+.theme-option:hover{
+  transform:translateY(-1px)!important;
+}
+.theme-option.active{
+  border-color:var(--theme-primary,#3DDC97)!important;
+  box-shadow:0 0 0 2px color-mix(in srgb,var(--theme-primary,#3DDC97) 18%,transparent)!important;
+}
+.theme-option strong{
+  font-size:.72rem!important;
+  line-height:1.05!important;
+  text-align:center!important;
+}
+.theme-swatches{
+  width:100%!important;
+  height:22px!important;
+  display:flex!important;
+  overflow:hidden!important;
+  border-radius:7px!important;
+  border:1px solid rgba(255,255,255,.12)!important;
+}
+.theme-swatches i{display:block!important;flex:1 1 0!important}
+.theme-option[data-theme-option="broadcast"] .theme-swatches i:nth-child(1){background:#0D1117!important}
+.theme-option[data-theme-option="broadcast"] .theme-swatches i:nth-child(2){background:#3DDC97!important}
+.theme-option[data-theme-option="broadcast"] .theme-swatches i:nth-child(3){background:#FF8A3D!important}
+.theme-option[data-theme-option="stadium"] .theme-swatches i:nth-child(1){background:#071521!important}
+.theme-option[data-theme-option="stadium"] .theme-swatches i:nth-child(2){background:#37B7FF!important}
+.theme-option[data-theme-option="stadium"] .theme-swatches i:nth-child(3){background:#71E0FF!important}
+.theme-option[data-theme-option="carbon"] .theme-swatches i:nth-child(1){background:#0E0E0F!important}
+.theme-option[data-theme-option="carbon"] .theme-swatches i:nth-child(2){background:#D7B45A!important}
+.theme-option[data-theme-option="carbon"] .theme-swatches i:nth-child(3){background:#F0C86A!important}
+.theme-option[data-theme-option="crimson"] .theme-swatches i:nth-child(1){background:#130E12!important}
+.theme-option[data-theme-option="crimson"] .theme-swatches i:nth-child(2){background:#E75E72!important}
+.theme-option[data-theme-option="crimson"] .theme-swatches i:nth-child(3){background:#F29A5B!important}
+
+@media(max-width:700px){
+  .theme-picker{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
 </style>
+
+<script id="liveasta-theme-preload">
+(function(){
+  try{
+    var t=localStorage.getItem('liveasta_theme')||'broadcast';
+    if(!['broadcast','stadium','carbon','crimson'].includes(t))t='broadcast';
+    document.documentElement.setAttribute('data-live-theme',t);
+  }catch(e){
+    document.documentElement.setAttribute('data-live-theme','broadcast');
+  }
+})();
+</script>
+
 </head>
 <body>
 
     <div id="screen-role" class="screen active">
-        <div class="home-version-badge">LIVEASTA V14</div>
+        <div class="home-version-badge">LIVEASTA V15</div>
         <button class="btn btn-secondary top-home-btn" onclick="openAdminLogin()">⚙ Impostazioni</button>
         <div class="setup-card">
             <h1 class="logo-text"><span class="rosa">LIVE</span><span class="rush">ASTA</span></h1>
@@ -4399,9 +4795,38 @@ html,body{
 
     <div id="screen-admin" class="screen">
         <div class="setup-card" style="max-width:1100px; width:96%; padding:24px;">
-            <div class="admin-version-badge">LIVEASTA · VERSIONE V14</div>
+            <div class="admin-version-badge">LIVEASTA · VERSIONE V15</div>
             <h1>Gestione stanze</h1>
             <p class="subtitle">Nome, password, modifica ed eliminazione</p>
+
+            <div class="theme-settings-card">
+                <div class="theme-settings-head">
+                    <div>
+                        <b>Tema app</b>
+                        <div class="theme-settings-subtitle">Cambia lo stile grafico di LIVEASTA su tutti i dispositivi.</div>
+                    </div>
+                    <span id="theme-save-status">Salvato</span>
+                </div>
+                <div class="theme-picker">
+                    <button type="button" class="theme-option" data-theme-option="broadcast" onclick="setLiveAstaTheme('broadcast')">
+                        <span class="theme-swatches"><i></i><i></i><i></i></span>
+                        <strong>Broadcast Dark</strong>
+                    </button>
+                    <button type="button" class="theme-option" data-theme-option="stadium" onclick="setLiveAstaTheme('stadium')">
+                        <span class="theme-swatches"><i></i><i></i><i></i></span>
+                        <strong>Stadium Blue</strong>
+                    </button>
+                    <button type="button" class="theme-option" data-theme-option="carbon" onclick="setLiveAstaTheme('carbon')">
+                        <span class="theme-swatches"><i></i><i></i><i></i></span>
+                        <strong>Carbon Gold</strong>
+                    </button>
+                    <button type="button" class="theme-option" data-theme-option="crimson" onclick="setLiveAstaTheme('crimson')">
+                        <span class="theme-swatches"><i></i><i></i><i></i></span>
+                        <strong>Crimson Night</strong>
+                    </button>
+                </div>
+            </div>
+
             <div style="display:flex; gap:8px; margin-bottom:10px;">
                 <button class="btn btn-secondary btn-small" onclick="loadRooms(true)">↻ Aggiorna</button>
                 <button class="btn btn-secondary btn-small" onclick="showScreen('screen-role')">Esci</button>
@@ -4907,6 +5332,7 @@ html,body{
 
         try {
             supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            window.supabaseClient = supabaseClient;
         } catch (e) {
             alert("Errore critico nell'avvio del database.");
         }
@@ -9295,7 +9721,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 
 
 
-<script id="liveasta-v14-runtime">
+<script id="liveasta-v15-runtime">
 (function(){
   const TEAM_COLORS={
     'ATALANTA':['#191B1F','#3D8DB8'],
@@ -9479,9 +9905,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyBrand(){
-    document.title='LIVEASTA V14';
+    document.title='LIVEASTA V15';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V14';
+      el.textContent='LIVEASTA · VERSIONE V15';
     });
     document.querySelectorAll('.logo-text').forEach(el=>{
       const a=el.querySelector('.rosa');
@@ -9542,6 +9968,108 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 
   window.LIVEASTA_TEAM_COLORS=TEAM_COLORS;
   window.updateLiveAstaTeamCards=applyTeamCards;
+})();
+</script>
+
+
+<script id="liveasta-v15-theme-runtime">
+(function(){
+  const THEME_KEY='liveasta_theme';
+  const THEMES=['broadcast','stadium','carbon','crimson'];
+  const META_COLORS={
+    broadcast:'#0D1117',
+    stadium:'#071521',
+    carbon:'#0E0E0F',
+    crimson:'#130E12'
+  };
+
+  function normalizeTheme(theme){
+    return THEMES.includes(theme)?theme:'broadcast';
+  }
+
+  function updateThemeButtons(theme){
+    document.querySelectorAll('[data-theme-option]').forEach(btn=>{
+      btn.classList.toggle('active',btn.dataset.themeOption===theme);
+      btn.setAttribute('aria-pressed',btn.dataset.themeOption===theme?'true':'false');
+    });
+  }
+
+  function updateThemeMeta(theme){
+    const meta=document.querySelector('meta[name="theme-color"]');
+    if(meta)meta.setAttribute('content',META_COLORS[theme]||META_COLORS.broadcast);
+  }
+
+  window.applyLiveAstaTheme=function(theme,persist=true){
+    theme=normalizeTheme(theme);
+    document.documentElement.setAttribute('data-live-theme',theme);
+    updateThemeButtons(theme);
+    updateThemeMeta(theme);
+    if(persist){
+      try{localStorage.setItem(THEME_KEY,theme)}catch(_){}
+    }
+    return theme;
+  };
+
+  window.setLiveAstaTheme=async function(theme){
+    theme=window.applyLiveAstaTheme(theme,true);
+    const status=document.getElementById('theme-save-status');
+    if(status)status.textContent='Salvataggio…';
+
+    try{
+      if(window.supabaseClient){
+        const {error}=await window.supabaseClient
+          .from('fanta_app_data')
+          .upsert({
+            key:'liveasta_theme',
+            data:{theme},
+            file_name:'tema-app',
+            updated_at:new Date().toISOString()
+          },{onConflict:'key'});
+        if(error)throw error;
+      }
+      if(status)status.textContent='Salvato';
+    }catch(e){
+      console.warn('Salvataggio tema globale non riuscito',e);
+      if(status)status.textContent='Salvato sul dispositivo';
+    }
+  };
+
+  window.loadLiveAstaTheme=async function(){
+    let local='broadcast';
+    try{local=normalizeTheme(localStorage.getItem(THEME_KEY)||'broadcast')}catch(_){}
+    window.applyLiveAstaTheme(local,false);
+
+    try{
+      if(window.supabaseClient){
+        const {data,error}=await window.supabaseClient
+          .from('fanta_app_data')
+          .select('data')
+          .eq('key','liveasta_theme')
+          .maybeSingle();
+        if(error)throw error;
+        const remote=normalizeTheme(data?.data?.theme||local);
+        window.applyLiveAstaTheme(remote,true);
+      }
+    }catch(e){
+      console.warn('Caricamento tema globale non riuscito',e);
+    }
+  };
+
+  function bootTheme(){
+    const initial=normalizeTheme(
+      document.documentElement.getAttribute('data-live-theme')||
+      (()=>{try{return localStorage.getItem(THEME_KEY)}catch(_){return null}})()||
+      'broadcast'
+    );
+    window.applyLiveAstaTheme(initial,false);
+    setTimeout(()=>window.loadLiveAstaTheme?.(),0);
+  }
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',bootTheme,{once:true});
+  }else{
+    bootTheme();
+  }
 })();
 </script>
 
