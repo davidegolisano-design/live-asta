@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>LIVEASTA V21</title>
+    <title>LIVEASTA V22</title>
     <meta name="theme-color" content="#0D1117">
     <meta name="color-scheme" content="dark">
     <meta name="mobile-web-app-capable" content="yes">
@@ -11,7 +11,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
     <meta name="description" content="LIVEASTA - asta fantasy calcio realtime a stanze">
-    <link rel="manifest" href="manifest.webmanifest?v=20">
+    <link rel="manifest" href="manifest-v22.webmanifest">
     <link rel="apple-touch-icon" href="icon-192.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
@@ -2756,7 +2756,7 @@
         }
 </style>
 
-<style id="liveasta-v21-theme-switcher">
+<style id="liveasta-v22-theme-switcher">
 /* ===== LAYOUT PC STABILE (migrato dal vecchio V74, senza palette legacy) ===== */
 .logo-text{
   display:flex!important;
@@ -5411,6 +5411,71 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
     transform:translateY(-21px)!important;
   }
 }
+
+
+/* ==========================================================
+   LIVEASTA V22
+   - nome/ruolo/squadra ancora più vicini alla miniatura
+   - status/safe-area sempre coerenti col tema
+   ========================================================== */
+
+/* TELECOMANDO */
+#screen-player-buzzer .phone-player-name{
+  transform:translateY(40px)!important;
+}
+#screen-player-buzzer .phone-player-meta{
+  transform:translateY(-40px)!important;
+}
+
+/* BANDITORE
+   top non interferisce con scaleX dell'auto-fit dei nomi lunghi. */
+#screen-auctioneer-board #auction-player-name-top{
+  position:relative!important;
+  top:31px!important;
+  margin-bottom:0!important;
+}
+#screen-auctioneer-board .auction-player-meta{
+  position:relative!important;
+  top:-33px!important;
+  margin-top:0!important;
+}
+
+/* Sempre una riga: niente wrap/tagli. */
+#screen-player-buzzer .phone-player-name,
+#screen-player-buzzer .phone-player-meta,
+#screen-auctioneer-board #auction-player-name-top,
+#screen-auctioneer-board .auction-player-meta{
+  white-space:nowrap!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
+  word-break:normal!important;
+  overflow-wrap:normal!important;
+  hyphens:none!important;
+}
+
+/* PWA: safe-area usa SEMPRE il background del tema locale. */
+@media (display-mode:standalone){
+  html[data-live-theme],
+  html[data-live-theme] body{
+    background-color:var(--theme-bg)!important;
+  }
+
+  html[data-live-theme] body::before,
+  html[data-live-theme] body::after{
+    background:var(--theme-bg)!important;
+    background-color:var(--theme-bg)!important;
+  }
+}
+
+/* Telefoni bassi: avviciniamo molto, ma lasciamo margine alla miniatura. */
+@media(max-height:760px){
+  #screen-player-buzzer .phone-player-name{
+    transform:translateY(30px)!important;
+  }
+  #screen-player-buzzer .phone-player-meta{
+    transform:translateY(-30px)!important;
+  }
+}
 </style>
 
 <script id="liveasta-theme-preload">
@@ -5427,19 +5492,21 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
   try{
     var t=localStorage.getItem('liveasta_theme')||'broadcast';
     if(!Object.prototype.hasOwnProperty.call(META_COLORS,t)) t='broadcast';
+    var color=META_COLORS[t];
 
     document.documentElement.setAttribute('data-live-theme',t);
+    document.documentElement.style.background=color;
 
-    /* Aggiorna subito il colore delle barre di sistema prima del primo paint. */
     var meta=document.querySelector('meta[name="theme-color"]');
     if(!meta){
       meta=document.createElement('meta');
-      meta.setAttribute('name','theme-color');
+      meta.name='theme-color';
       document.head.appendChild(meta);
     }
-    meta.setAttribute('content',META_COLORS[t]);
+    meta.content=color;
 
-    document.documentElement.style.backgroundColor=META_COLORS[t];
+    var ms=document.querySelector('meta[name="msapplication-navbutton-color"]');
+    if(ms) ms.content=color;
   }catch(e){
     document.documentElement.setAttribute('data-live-theme','broadcast');
   }
@@ -5456,7 +5523,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 <body>
 
     <div id="screen-role" class="screen active">
-        <div class="home-version-badge">LIVEASTA V21</div>
+        <div class="home-version-badge">LIVEASTA V22</div>
         <button class="btn btn-secondary top-home-btn" onclick="openAdminLogin()">⚙ Impostazioni</button>
         <div class="setup-card">
             <h1 class="logo-text"><span class="rosa">LIVE</span><span class="rush">ASTA</span></h1>
@@ -5658,7 +5725,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
     <div id="screen-admin" class="screen">
         <div class="setup-card" style="max-width:1100px; width:96%; padding:24px;">
-            <div class="admin-version-badge">LIVEASTA · VERSIONE V21</div>
+            <div class="admin-version-badge">LIVEASTA · VERSIONE V22</div>
             <h1>Gestione stanze</h1>
             <p class="subtitle">Nome, password, modifica ed eliminazione</p>
 
@@ -10824,7 +10891,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 
 
 
-<script id="liveasta-v21-runtime">
+<script id="liveasta-v22-runtime">
 (function(){
   const TEAM_COLORS={
     'ATALANTA':['#191B1F','#3D8DB8'],
@@ -10992,7 +11059,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
     if(el.scrollWidth>available){
       const ratio=Math.max(.72,available/el.scrollWidth);
       el.style.setProperty('transform-origin','center center','important');
-      const translate=(el.id==='phone-player-name')?'translateY(28px) ':'';
+      const translate=(el.id==='phone-player-name')?'translateY(40px) ':'';
       el.style.setProperty('transform',translate+`scaleX(${ratio})`,'important');
     }else if(el.id!=='phone-player-name'){
       el.style.removeProperty('transform');
@@ -11008,9 +11075,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyBrand(){
-    document.title='LIVEASTA V21';
+    document.title='LIVEASTA V22';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V21';
+      el.textContent='LIVEASTA · VERSIONE V22';
     });
     document.querySelectorAll('.logo-text').forEach(el=>{
       const a=el.querySelector('.rosa');
@@ -11075,7 +11142,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 </script>
 
 
-<script id="liveasta-v21-theme-runtime">
+<script id="liveasta-v22-theme-runtime">
 (function(){
   const THEME_KEY='liveasta_theme';
   const THEMES=['broadcast','stadium','carbon','crimson','emerald','violet'];
@@ -11105,17 +11172,23 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
     let meta=document.querySelector('meta[name="theme-color"]');
     if(!meta){
       meta=document.createElement('meta');
-      meta.setAttribute('name','theme-color');
+      meta.name='theme-color';
       document.head.appendChild(meta);
     }
-    meta.setAttribute('content',color);
+    meta.content=color;
 
-    const msMeta=document.querySelector('meta[name="msapplication-navbutton-color"]');
-    if(msMeta)msMeta.setAttribute('content',color);
+    let ms=document.querySelector('meta[name="msapplication-navbutton-color"]');
+    if(!ms){
+      ms=document.createElement('meta');
+      ms.name='msapplication-navbutton-color';
+      document.head.appendChild(ms);
+    }
+    ms.content=color;
 
-    /* Android PWA usa anche il colore della root durante le safe-area. */
-    document.documentElement.style.backgroundColor=color;
-    document.body?.style.setProperty('background-color',color,'important');
+    document.documentElement.style.setProperty('background-color',color,'important');
+    if(document.body){
+      document.body.style.setProperty('background-color',color,'important');
+    }
   }
 
   window.applyLiveAstaTheme=function(theme,persist=true){
