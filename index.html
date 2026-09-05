@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>LIVEASTA V12</title>
+    <title>LIVEASTA V13</title>
     <meta name="theme-color" content="#0D1117">
     <meta name="color-scheme" content="dark">
     <meta name="mobile-web-app-capable" content="yes">
@@ -2756,7 +2756,7 @@
         }
 </style>
 
-<style id="liveasta-v12-clean-broadcast-dark">
+<style id="liveasta-v13-clean-broadcast-dark">
 /* ===== LAYOUT PC STABILE (migrato dal vecchio V74, senza palette legacy) ===== */
 .logo-text{
   display:flex!important;
@@ -4129,12 +4129,66 @@ html,body{
   box-shadow:none!important;
   text-shadow:0 0 24px rgba(255,255,255,.20)!important;
 }
+
+
+/* ==========================================================
+   LIVEASTA V13
+   - nome calciatore banditore sempre su una sola riga
+   - colori sociali più morbidi
+   - Gestione senza crediti iniziali
+   ========================================================== */
+
+/* BANDITORE: mai a capo, mai ellissi, mai tagli.
+   Il JS riduce automaticamente il font finché entra. */
+#screen-auctioneer-board #auction-player-name-top{
+  width:96%!important;
+  max-width:96%!important;
+  min-width:0!important;
+  min-height:1em!important;
+  max-height:none!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+  padding:0 4px!important;
+  box-sizing:border-box!important;
+  white-space:nowrap!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
+  overflow-wrap:normal!important;
+  word-break:normal!important;
+  line-height:1!important;
+  text-align:center!important;
+  transform-origin:center center!important;
+}
+
+/* Mantieni anche ruolo/squadra leggibili sopra i colori sociali attenuati. */
+#screen-auctioneer-board .auction-player-meta{
+  white-space:nowrap!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
+}
+
+/* Colori club meno "sparati": un velo scuro uniforme senza toccare testo/miniatura. */
+#screen-player-buzzer .player-card-side,
+#screen-auctioneer-board #view-auction .auction-col.col-player{
+  background-blend-mode:multiply!important;
+  box-shadow:inset 0 0 0 9999px rgba(13,17,23,.08)!important;
+}
+
+/* Il contorno del testo resta netto anche sui pannelli chiari. */
+#screen-auctioneer-board #auction-player-name-top,
+#screen-auctioneer-board #auction-player-club{
+  -webkit-text-stroke:.8px rgba(0,0,0,.88)!important;
+  paint-order:stroke fill!important;
+  text-shadow:
+    0 2px 3px rgba(0,0,0,.95),
+    0 0 5px rgba(0,0,0,.88)!important;
+}
 </style>
 </head>
 <body>
 
     <div id="screen-role" class="screen active">
-        <div class="home-version-badge">LIVEASTA V12</div>
+        <div class="home-version-badge">LIVEASTA V13</div>
         <button class="btn btn-secondary top-home-btn" onclick="openAdminLogin()">⚙ Impostazioni</button>
         <div class="setup-card">
             <h1 class="logo-text"><span class="rosa">LIVE</span><span class="rush">ASTA</span></h1>
@@ -4296,7 +4350,7 @@ html,body{
 
     <div id="screen-admin" class="screen">
         <div class="setup-card" style="max-width:1100px; width:96%; padding:24px;">
-            <div class="admin-version-badge">LIVEASTA · VERSIONE V12</div>
+            <div class="admin-version-badge">LIVEASTA · VERSIONE V13</div>
             <h1>Gestione stanze</h1>
             <p class="subtitle">Nome, password, modifica ed eliminazione</p>
             <div style="display:flex; gap:8px; margin-bottom:10px;">
@@ -4516,7 +4570,7 @@ html,body{
                 <div class="setup-grid">
                     <div><span class="field-label">Nome stanza</span><input id="control-room-name" class="minimal-input"></div>
                     <div><span class="field-label">Password</span><input id="control-room-password" class="minimal-input"></div>
-                    <div><span class="field-label">Crediti iniziali</span><input id="control-room-credits" type="number" class="minimal-input" min="1"></div>
+                    
                     <div><span class="field-label">Timer asta</span><input id="control-room-timer" type="number" class="minimal-input" min="1" max="60"></div>
                     <div><span class="field-label">Countdown pre-asta</span><input id="control-room-prep" type="number" class="minimal-input" min="1" max="15"></div>
                     <div><span class="field-label">Timer busta chiusa</span><input id="control-sealed-timer" type="number" class="minimal-input" min="5" max="180" value="30"></div>
@@ -6585,14 +6639,39 @@ html,body{
             }
         }
 
-        function fitTextToBox(el, maxPx, minPx){
+        function fitTextToBox(el, maxPx, minPx, forceSingleLine=false){
             if(!el) return;
+
+            if(forceSingleLine){
+                el.style.setProperty('white-space','nowrap','important');
+                el.style.setProperty('overflow','visible','important');
+                el.style.setProperty('text-overflow','clip','important');
+                el.style.setProperty('overflow-wrap','normal','important');
+                el.style.setProperty('word-break','normal','important');
+                el.style.setProperty('max-height','none','important');
+            }
+
             el.style.fontSize=maxPx+'px';
             let size=maxPx;
-            const fits=()=>el.scrollWidth<=el.clientWidth+2 && el.scrollHeight<=el.clientHeight+2;
+
+            const fits=()=>{
+                if(forceSingleLine) return el.scrollWidth<=el.clientWidth+2;
+                return el.scrollWidth<=el.clientWidth+2 && el.scrollHeight<=el.clientHeight+2;
+            };
+
             while(size>minPx && !fits()){
                 size-=1;
                 el.style.fontSize=size+'px';
+            }
+
+            // Protezione per nomi eccezionalmente lunghi:
+            // rimane comunque una sola riga, senza tagli.
+            if(forceSingleLine && el.scrollWidth>el.clientWidth){
+                const ratio=Math.max(.68,el.clientWidth/el.scrollWidth);
+                el.style.setProperty('transform',`scaleX(${ratio})`,'important');
+                el.style.setProperty('transform-origin','center center','important');
+            }else if(forceSingleLine){
+                el.style.removeProperty('transform');
             }
         }
 
@@ -6616,8 +6695,9 @@ html,body{
             requestAnimationFrame(()=>{
                 fitTextToBox(
                     document.getElementById('auction-player-name-top'),
-                    mobile?28:44,
-                    mobile?13:18
+                    mobile?28:54,
+                    mobile?11:14,
+                    true
                 );
                 fitTextToBox(
                     document.getElementById('winner-display'),
@@ -8614,7 +8694,6 @@ html,body{
             document.querySelector('#control-room-pill b').innerText=currentRoom.name;
             document.getElementById('control-room-name').value=currentRoom.name||'';
             document.getElementById('control-room-password').value=currentRoom.password||'';
-            document.getElementById('control-room-credits').value=currentRoom.initial_credits||500;
             document.getElementById('control-room-timer').value=currentRoom.timer_seconds||auctionTimeLimit||5;
             const prepInput=document.getElementById('control-room-prep'); if(prepInput) prepInput.value=auctionPrepSeconds||5;
             const sealedInput=document.getElementById('control-sealed-timer'); if(sealedInput) sealedInput.value=sealedTimerSeconds||30;
@@ -8645,7 +8724,7 @@ html,body{
             const payload={
                 name:normalizeRoomCode(document.getElementById('control-room-name').value),
                 password:document.getElementById('control-room-password').value,
-                initial_credits:Math.max(1,parseInt(document.getElementById('control-room-credits').value)||1),
+                initial_credits:Math.max(1,parseInt(currentRoom?.initial_credits)||500),
                 timer_seconds:Math.max(1,parseInt(document.getElementById('control-room-timer').value)||5),
                 prep_seconds:prepSeconds,
                 sealed_timer_seconds:sealedSeconds,
@@ -9153,29 +9232,29 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 
 
 
-<script id="liveasta-v12-runtime">
+<script id="liveasta-v13-runtime">
 (function(){
   const TEAM_COLORS={
-    'ATALANTA':['#111111','#249FDB'],
-    'BOLOGNA':['#D71920','#173D8F'],
-    'CAGLIARI':['#D71920','#173D8F'],
-    'COMO':['#249FDB','#F7F7F2'],
-    'FIORENTINA':['#6F2DA8'],
-    'FROSINONE':['#F5D000','#249FDB'],
-    'GENOA':['#D71920','#173D8F'],
-    'INTER':['#111111','#249FDB'],
-    'JUVENTUS':['#F7F7F2','#111111'],
-    'LAZIO':['#F7F7F2','#79C8EF'],
-    'LECCE':['#F5D000','#D71920'],
-    'MILAN':['#D71920','#111111'],
-    'MONZA':['#F7F7F2','#D71920'],
-    'NAPOLI':['#249FDB'],
-    'PARMA':['#F5D000','#173D8F'],
-    'ROMA':['#F5D000','#D71920'],
-    'SASSUOLO':['#111111','#159447'],
-    'TORINO':['#7A263A'],
-    'UDINESE':['#F7F7F2','#111111'],
-    'VENEZIA':['#F58220','#111111','#159447']
+    'ATALANTA':['#15171A','#397FA3'],
+    'BOLOGNA':['#A63A40','#36527C'],
+    'CAGLIARI':['#A63A40','#36527C'],
+    'COMO':['#5D9DB9','#DDDCD5'],
+    'FIORENTINA':['#65437D'],
+    'FROSINONE':['#C5AD3E','#4B829D'],
+    'GENOA':['#A13B41','#344E6A'],
+    'INTER':['#15171A','#397FA3'],
+    'JUVENTUS':['#DDDCD5','#15171A'],
+    'LAZIO':['#DDDCD5','#80ADC0'],
+    'LECCE':['#C5AD3E','#A63A40'],
+    'MILAN':['#A63A40','#15171A'],
+    'MONZA':['#DDDCD5','#A63A40'],
+    'NAPOLI':['#4A91B2'],
+    'PARMA':['#C5AD3E','#3E5B83'],
+    'ROMA':['#C5AD3E','#A63A40'],
+    'SASSUOLO':['#15171A','#34754E'],
+    'TORINO':['#703846'],
+    'UDINESE':['#DDDCD5','#15171A'],
+    'VENEZIA':['#B97035','#15171A','#34754E']
   };
 
   const NAME_SELECTORS=[
@@ -9337,9 +9416,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyBrand(){
-    document.title='LIVEASTA V12';
+    document.title='LIVEASTA V13';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V12';
+      el.textContent='LIVEASTA · VERSIONE V13';
     });
     document.querySelectorAll('.logo-text').forEach(el=>{
       const a=el.querySelector('.rosa');
