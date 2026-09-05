@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>LIVEASTA V28</title>
+    <title>LIVEASTA V29</title>
     <meta name="theme-color" content="#0D1117">
     <meta name="color-scheme" content="dark">
     <meta name="mobile-web-app-capable" content="yes">
@@ -2756,7 +2756,7 @@
         }
 </style>
 
-<style id="liveasta-v28-theme-switcher">
+<style id="liveasta-v29-theme-switcher">
 /* ===== LAYOUT PC STABILE (migrato dal vecchio V74, senza palette legacy) ===== */
 .logo-text{
   display:flex!important;
@@ -3555,10 +3555,6 @@ width:auto!important;
   background:#172A23!important;
   border-color:#3DDC97!important;
   color:#3DDC97!important;
-}
-
-#screen-room-control .sealed-control-card{
-  border-color:#334155!important;
 }
 
 #screen-room-control .sealed-listone-banner{
@@ -5614,7 +5610,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V28
+   LIVEASTA V29
    ========================================================== */
 
 /* Versione home cliccabile = refresh */
@@ -5633,6 +5629,28 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 /* Ranking esclusivamente sul banditore */
 #screen-auctioneer-board .sealed-ranking-auctioneer{
   margin-top:10px!important;
+}
+
+
+/* ==========================================================
+   LIVEASTA V29 — BUSTA NEL LISTONE
+   ========================================================== */
+#screen-auctioneer-board .auction-list-toolbar .toolbar-sealed-btn{
+  flex:0 0 auto!important;
+  width:46px!important;
+  min-width:46px!important;
+  height:46px!important;
+  padding:0!important;
+  font-size:1.15rem!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  border-color:color-mix(in srgb,var(--theme-primary) 55%,var(--theme-border))!important;
+  color:var(--theme-primary)!important;
+  background:color-mix(in srgb,var(--theme-primary) 8%,var(--theme-card))!important;
+}
+#screen-auctioneer-board .auction-list-toolbar .toolbar-sealed-btn:hover{
+  background:color-mix(in srgb,var(--theme-primary) 16%,var(--theme-card))!important;
 }
 </style>
 
@@ -5686,7 +5704,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
              title="Aggiorna LIVEASTA"
              onclick="window.location.reload()"
              onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();window.location.reload();}">
-            LIVEASTA V28
+            LIVEASTA V29
         </div>
         <button class="btn btn-secondary top-home-btn" onclick="openAdminLogin()">⚙ Impostazioni</button>
         <div class="setup-card">
@@ -5889,7 +5907,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
     <div id="screen-admin" class="screen">
         <div class="setup-card" style="max-width:1100px; width:96%; padding:24px;">
-            <div class="admin-version-badge">LIVEASTA · VERSIONE V28</div>
+            <div class="admin-version-badge">LIVEASTA · VERSIONE V29</div>
             <h1>Gestione stanze</h1>
             <p class="subtitle">Nome, password, modifica ed eliminazione</p>
 
@@ -5973,6 +5991,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                         <div class="auction-list-toolbar">
                             <input type="text" id="player-search" class="minimal-input" placeholder="Cerca calciatore..." oninput="filterTable(event)" autocomplete="off">
                             <button class="btn btn-secondary toolbar-icon-btn" onclick="startRandomPlayer()" title="Giocatore casuale">🎲</button>
+                            <button class="btn btn-secondary toolbar-icon-btn toolbar-sealed-btn" onclick="openSealedPlayerPicker()" title="Offerta in busta chiusa">✉</button>
                             <button class="btn btn-secondary toolbar-roster-btn" onclick="openAllRosters()" title="Visualizza rose">ROSE</button>
                         </div>
 
@@ -6135,18 +6154,6 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                     <div><span class="field-label">Attaccanti</span><input id="control-limit-A" type="number" class="minimal-input" min="0"></div>
                 </div>
                 <button class="btn btn-compact" onclick="saveRoomConfig()">Salva impostazioni</button>
-            </div>
-            <div class="control-card sealed-control-card">
-                <div class="control-title">
-                    <div>
-                        <h3 style="margin:0;">Offerta in busta chiusa</h3>
-                        <div class="ready-control-note">Il banditore sceglie un calciatore. I giocatori inviano una sola offerta segreta e le buste si aprono allo scadere del timer.</div>
-                    </div>
-                    <span class="badge-ok">MODALITÀ SPECIALE</span>
-                </div>
-                <div class="toolbar-row" style="margin-top:12px;">
-                    <button class="btn btn-green btn-compact" type="button" onclick="openSealedPlayerPicker()">✉ Avvia busta chiusa</button>
-                </div>
             </div>
 
             <div class="control-card online-players-card">
@@ -6376,6 +6383,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
         let playerHasBidThisAuction = false;
         let playerPrepInterval = null;
         let playerSealedCountdownInterval = null;
+        let playerSealedRevealLocalEndAt = 0;
         let normalBidMaxima = new Map();
         let teamsCache = [];
         let purchasesCache = [];
@@ -6691,6 +6699,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                 mode:active&&sealedAuctionModeActive?'sealed':'normal',
                 sealed_token:active&&sealedAuctionModeActive?sealedAuctionToken:null,
                 sealed_seconds:active&&sealedAuctionModeActive?sealedTimerSeconds:null,
+                sealed_round:active&&sealedAuctionModeActive?sealedRound:1,
                 sealed_eligible_ids:active&&sealedAuctionModeActive?sealedEligibleIds:[],
                 updated_at:new Date().toISOString()
             };
@@ -6792,6 +6801,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
             sealedAuctionModeActive=gate.mode==='sealed';
             sealedAuctionToken=sealedAuctionModeActive?String(gate.sealed_token||''):null;
             sealedTimerSeconds=sealedAuctionModeActive?Math.max(5,parseInt(gate.sealed_seconds)||sealedTimerSeconds):sealedTimerSeconds;
+            sealedRound=sealedAuctionModeActive?Math.max(1,parseInt(gate.sealed_round)||1):1;
             sealedEligibleIds=sealedAuctionModeActive?(gate.sealed_eligible_ids||[]).map(String):[];
             currentAuctionPlayer=playersList.find(x=>String(x.Id)===String(p.id))||{
                 Id:p.id,Nome:p.nome,R:p.role,Squadra:p.club
@@ -6812,15 +6822,21 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
             const limits=roomLimits();
             if(!role || limits[role]===undefined) return [];
 
-            return teamsCache.filter(team=>{
+            const eligible=teamsCache.filter(team=>{
                 const counts=teamCounts(team.id);
                 const totalComplete=counts.total>=totalRoomSlots();
                 const roleComplete=(counts[role]||0)>=(limits[role]||0);
-
-                // READY richiesto solo a chi può ancora partecipare
-                // all'asta del ruolo del calciatore scelto.
                 return !totalComplete && !roleComplete;
             });
+
+            // In busta chiusa il READY riguarda solo chi può partecipare
+            // a QUEL round. Nel round 2+ sono quindi soltanto i pari merito.
+            if(sealedAuctionModeActive && Array.isArray(sealedEligibleIds) && sealedEligibleIds.length){
+                const allowed=new Set(sealedEligibleIds.map(String));
+                return eligible.filter(team=>allowed.has(String(team.id)));
+            }
+
+            return eligible;
         }
 
         function readyRequiredIds(){
@@ -6856,6 +6872,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                 mode:sealedAuctionModeActive?'sealed':'normal',
                 sealed_token:sealedAuctionModeActive?sealedAuctionToken:null,
                 sealed_seconds:sealedAuctionModeActive?sealedTimerSeconds:null,
+                sealed_round:sealedAuctionModeActive?sealedRound:1,
                 sealed_eligible_ids:sealedAuctionModeActive?sealedEligibleIds:[]
             };
             liveAuctionState={...(liveAuctionState||{}),...snapshot,updated_at:new Date().toISOString()};
@@ -6902,6 +6919,8 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
         }
 
         function showPlayerReadyBanner(data){
+            stopPlayerSealedCountdown();
+            playerSealedRevealLocalEndAt=0;
             const required=Array.isArray(data?.ready_required_ids)
                 ? data.ready_required_ids.map(String)
                 : [];
@@ -6960,6 +6979,27 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                 club:String(currentAuctionPlayer.Squadra||''),
                 url:playerImageUrl(currentAuctionPlayer.Id,currentAuctionPlayer.R)
             };
+        }
+
+        function liveStateForBroadcast(){
+            if(!liveAuctionState)return null;
+            const state={...liveAuctionState};
+
+            if(state.phase==='sealed'){
+                const remaining=Math.max(0,Math.ceil((Number(sealedDeadlineAt||state.sealed_deadline_at||state.deadline_at)-Date.now())/1000));
+                state.client_countdown_seconds=Math.min(
+                    Math.max(5,parseInt(state.sealed_seconds)||parseInt(sealedTimerSeconds)||30),
+                    remaining
+                );
+            }else if(state.phase==='sealed_reveal'){
+                const remaining=Math.max(0,Math.ceil((Number(sealedRevealDeadlineAt||state.deadline_at)-Date.now())/1000));
+                state.client_countdown_seconds=Math.min(
+                    Math.max(1,parseInt(state.sealed_seconds)||parseInt(sealedRevealSeconds)||5),
+                    remaining
+                );
+            }
+
+            return state;
         }
 
         async function saveLiveAuctionState(patch={}){
@@ -7097,10 +7137,10 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                 document.getElementById('player-auction-title').textContent='BUSTA CHIUSA';
                 document.getElementById('player-current-winner').textContent=playerSealedSubmitted?'Offerta inviata':'Inserisci la tua offerta';
                 document.getElementById('player-current-value').textContent='?';
-                const deadline=Number(state.sealed_deadline_at||state.deadline_at)||0;
                 const round=Math.max(1,parseInt(state.sealed_round)||1);
                 document.getElementById('player-auction-title').textContent=round>1?'SPAREGGIO BUSTA':'BUSTA CHIUSA';
-                startPlayerSealedCountdown(deadline,5);
+                const remaining=playerRemainingFromLiveState(state,'sealed');
+                startPlayerSealedCountdownSeconds(remaining,5);
                 return;
             }
 
@@ -7116,9 +7156,9 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                 document.getElementById('player-current-winner').textContent='ATTENDI';
                 document.getElementById('player-current-winner').style.color='var(--text-muted)';
                 document.getElementById('player-current-value').textContent='?';
-                const deadline=Number(state.deadline_at)||0;
-                playerSealedRevealDeadlineAt=deadline;
-                startPlayerSealedCountdown(deadline,2);
+                const remaining=playerRemainingFromLiveState(state,'reveal');
+                playerSealedRevealDeadlineAt=Number(state.deadline_at)||0;
+                playerSealedRevealLocalEndAt=startPlayerSealedCountdownSeconds(remaining,2);
                 return;
             }
 
@@ -7603,9 +7643,11 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
             if(av){av.classList.add('auction-view-hidden');av.style.display='none';}
 
             document.getElementById('nomination-stage-kicker').textContent=
-                nominationState.enabled && nominatingTeam
-                    ? `BANDITO DA ${nominatingTeam.name}`
-                    : 'GIOCATORE SCELTO';
+                sealedAuctionModeActive && sealedRound>1
+                    ? `SPAREGGIO BUSTA · ROUND ${sealedRound}`
+                    : (nominationState.enabled && nominatingTeam
+                        ? `BANDITO DA ${nominatingTeam.name}`
+                        : 'GIOCATORE SCELTO');
 
             document.getElementById('nomination-stage-title').textContent='IN ATTESA DEI PLAYER READY';
             document.getElementById('nomination-stage-team').textContent=currentAuctionPlayer.Nome||'--';
@@ -9175,27 +9217,63 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
             }
         }
 
-        function startPlayerSealedCountdown(deadlineAt,dangerAt=5){
+        function safeSealedSeconds(value,fallback=30,maxAllowed=180){
+            const n=parseInt(value);
+            if(!Number.isFinite(n) || n<0)return Math.max(0,parseInt(fallback)||0);
+            return Math.max(0,Math.min(maxAllowed,n));
+        }
+
+        function playerRemainingFromLiveState(state,kind='sealed'){
+            const maxSeconds=kind==='reveal'
+                ? Math.max(1,parseInt(state?.sealed_seconds)||parseInt(sealedRevealSeconds)||5)
+                : Math.max(5,parseInt(state?.sealed_seconds)||parseInt(sealedTimerSeconds)||30);
+
+            // Quando lo stato arriva dal banditore, questa è la durata residua
+            // calcolata DAL SUO orologio e trasformata in semplici secondi.
+            const synced=Number(state?.client_countdown_seconds);
+            if(Number.isFinite(synced)){
+                return Math.max(0,Math.min(maxSeconds,Math.ceil(synced)));
+            }
+
+            // Fallback per un restore iniziale dal DB: usa l'assoluto solo se
+            // produce un valore plausibile. Se gli orologi differiscono (es. 150s),
+            // non fidarti del timestamp remoto.
+            const deadline=Number(
+                kind==='reveal'
+                    ? state?.deadline_at
+                    : (state?.sealed_deadline_at||state?.deadline_at)
+            )||0;
+            const calculated=Math.ceil((deadline-Date.now())/1000);
+
+            if(calculated>=0 && calculated<=maxSeconds+2){
+                return Math.min(maxSeconds,calculated);
+            }
+
+            return Math.max(1,Math.min(maxSeconds,parseInt(state?.seconds)||maxSeconds));
+        }
+
+        function startPlayerSealedCountdownSeconds(seconds,dangerAt=5){
             stopPlayerSealedCountdown();
 
-            const deadline=Number(deadlineAt)||0;
+            const total=safeSealedSeconds(seconds,0,180);
+            const localEnd=Date.now()+total*1000;
             const timer=document.getElementById('player-countdown');
 
             const tick=()=>{
-                const rem=Math.max(0,Math.ceil((deadline-Date.now())/1000));
+                const rem=Math.max(0,Math.ceil((localEnd-Date.now())/1000));
                 if(timer){
                     timer.textContent=String(rem);
                     timer.classList.toggle('danger',rem>0&&rem<=dangerAt);
                 }
-                if(rem<=0) stopPlayerSealedCountdown();
+                if(rem<=0)stopPlayerSealedCountdown();
             };
 
             tick();
-            if(deadline>Date.now()){
-                // Separato dai timer READY/preparazione: non può essere fermato
-                // accidentalmente da un altro flusso del telecomando.
+            if(total>0){
                 playerSealedCountdownInterval=setInterval(tick,200);
             }
+
+            return localEnd;
         }
 
         function startLocalPlayerPreparation(seconds = 5) {
@@ -9316,6 +9394,8 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                     setPlayerAuctionVisualState('neutral');
                     isAuctionActive = false;
                     setPlayerBidButtonsEnabled(false);
+                    stopPlayerSealedCountdown();
+                    playerSealedRevealLocalEndAt=0;
                     document.getElementById('player-countdown').innerText = '--';
                     document.getElementById('player-countdown').classList.remove('danger');
                     updatePlayerTeamStatus();
@@ -9373,8 +9453,8 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                     }
                     if(val)val.textContent='?';
 
-                    const deadline=Number(d.deadline_at)||Date.now()+(parseInt(d.seconds)||30)*1000;
-                    startPlayerSealedCountdown(deadline,5);
+                    const localSeconds=safeSealedSeconds(d.seconds,30,180);
+                    startPlayerSealedCountdownSeconds(localSeconds,5);
                 });
 
                 channel.on('broadcast',{event:'sealed_bid_rejected'},(payload)=>{
@@ -9404,11 +9484,12 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                     if(title)title.textContent='APERTURA BUSTE';
                     if(winner){winner.textContent='ATTENDI';winner.style.color='var(--text-muted)';}
                     if(val)val.textContent='?';
-                    const deadline=Number(d.deadline_at)||Date.now()+(parseInt(d.seconds)||5)*1000;
-                    playerSealedRevealDeadlineAt=deadline;
+                    const revealSeconds=safeSealedSeconds(d.seconds,5,30);
+                    playerSealedRevealDeadlineAt=Number(d.deadline_at)||0;
+                    playerSealedRevealLocalEndAt=Date.now()+revealSeconds*1000;
                     playerPendingSealedResult=null;
                     clearSealedBidRanking();
-                    startPlayerSealedCountdown(deadline,2);
+                    startPlayerSealedCountdownSeconds(revealSeconds,2);
                 });
 
                 channel.on('broadcast',{event:'sealed_bid_end'},(payload)=>{
@@ -9431,13 +9512,14 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                         playerSealedToken=null;
                         playerSealedSubmitted=false;
                         playerSealedRevealDeadlineAt=0;
+                        playerSealedRevealLocalEndAt=0;
                         playerPendingSealedResult=null;
                         preparePlayerSealedControls(false);
                     };
 
                     // Protezione forte: anche se il broadcast dell'esito arrivasse in anticipo,
                     // il telecomando non mostra vincitore/importo prima dello ZERO del secondo countdown.
-                    const waitMs=Math.max(0,(Number(playerSealedRevealDeadlineAt)||0)-Date.now());
+                    const waitMs=Math.max(0,(Number(playerSealedRevealLocalEndAt)||0)-Date.now());
                     if(waitMs>25){
                         playerPendingSealedResult=d;
                         setTimeout(()=>{
@@ -9471,6 +9553,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                 });
                 channel.on('broadcast', { event: 'auction_started' }, (payload) => {
                     stopPlayerSealedCountdown();
+                    playerSealedRevealLocalEndAt=0;
                     playerSealedMode=false;
                     playerSealedToken=null;
                     playerSealedSubmitted=false;
@@ -9562,6 +9645,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                 });
                 channel.on('broadcast',{event:'force_state_reset'},async(payload)=>{
                     stopPlayerSealedCountdown();
+                    playerSealedRevealLocalEndAt=0;
                     if(playerPrepInterval){
                         clearInterval(playerPrepInterval);
                         playerPrepInterval=null;
@@ -10189,7 +10273,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                         channel.send({type:'broadcast',event:'ready_gate_state',payload:gate}).catch(()=>{});
                     }
                     if(liveAuctionState){
-                        channel.send({type:'broadcast',event:'live_state',payload:liveAuctionState}).catch(()=>{});
+                        channel.send({type:'broadcast',event:'live_state',payload:liveStateForBroadcast()}).catch(()=>{});
                     }
                     broadcastNominationState(nominationReady);
                 })
@@ -10293,7 +10377,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                         payload:sealedStartPayload
                     }).catch(()=>{});
                     if(liveAuctionState){
-                        channel?.send({type:'broadcast',event:'live_state',payload:liveAuctionState}).catch(()=>{});
+                        channel?.send({type:'broadcast',event:'live_state',payload:liveStateForBroadcast()}).catch(()=>{});
                     }
                 },350);
             }
@@ -10313,6 +10397,10 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
         async function receiveSealedBid(data){
             if(!sealedAuctionModeActive || !sealedAuctionToken || !currentAuctionPlayer)return;
             if(String(data?.token||'')!==String(sealedAuctionToken))return;
+
+            // Il banditore è l'autorità temporale: dopo la sua scadenza
+            // nessuna offerta tardiva viene accettata.
+            if(sealedDeadlineAt && Date.now()>sealedDeadlineAt+250)return;
             const teamId=String(data?.team_id||'');
             if(!sealedEligibleIds.includes(teamId))return;
             if(sealedBids.has(teamId))return;
@@ -10448,7 +10536,66 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
             document.getElementById('winner-display').textContent='NUOVA BUSTA';
             document.getElementById('winner-display').style.color='var(--accent-blue)';
             document.getElementById('current-value-display').textContent='--';
-            document.getElementById('countdown-display').textContent=String(sealedTimerSeconds);
+            document.getElementById('countdown-display').textContent='--';
+
+            // V29: prima del round 2 (e di ogni eventuale round successivo)
+            // si rifà il READY. Grazie a readyRequiredTeams() lo ricevono
+            // soltanto le squadre rimaste in parità.
+            if(readyModeEnabled){
+                beginReadyGate();
+                await saveReadyGateDedicated(true);
+
+                const required=readyRequiredIds();
+                const readyPayload={
+                    ready_token:readyGateToken,
+                    ready_required_ids:required,
+                    ready_ids:[],
+                    nome:currentAuctionPlayer.Nome,
+                    role:currentAuctionPlayer.R,
+                    club:currentAuctionPlayer.Squadra
+                };
+
+                if(channel){
+                    channel.send({
+                        type:'broadcast',
+                        event:'new_player',
+                        payload:{
+                            url:playerImageUrl(currentAuctionPlayer.Id,currentAuctionPlayer.R),
+                            nome:currentAuctionPlayer.Nome,
+                            player_id:currentAuctionPlayer.Id,
+                            role:currentAuctionPlayer.R,
+                            club:currentAuctionPlayer.Squadra,
+                            prep_seconds:0,
+                            ready_required:true,
+                            ready_token:readyGateToken,
+                            ready_required_ids:required,
+                            mode:'sealed',
+                            sealed_token:sealedAuctionToken,
+                            sealed_round:sealedRound,
+                            sealed_seconds:sealedTimerSeconds,
+                            sealed_eligible_ids:sealedEligibleIds
+                        }
+                    }).catch(()=>{});
+
+                    channel.send({
+                        type:'broadcast',
+                        event:'ready_state',
+                        payload:{
+                            token:readyGateToken,
+                            ready_count:0,
+                            total:required.length,
+                            waiting:true,
+                            required_ids:required,
+                            ready_ids:[]
+                        }
+                    }).catch(()=>{});
+                }
+
+                showAuctioneerReadyStage();
+                updateReadyGateDisplay();
+                evaluateReadyGate();
+                return;
+            }
 
             await startSealedAuctionTimer();
         }
@@ -11209,6 +11356,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                         ready_required_ids:readyModeEnabled?readyRequiredIds():[],
                         mode:'sealed',
                         sealed_token:sealedAuctionToken,
+                        sealed_round:sealedRound,
                         sealed_seconds:sealedTimerSeconds,
                         sealed_eligible_ids:sealedEligibleIds
                     }
@@ -11547,7 +11695,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 
 
 
-<script id="liveasta-v28-runtime">
+<script id="liveasta-v29-runtime">
 (function(){
   const TEAM_COLORS={
     'ATALANTA':['#191B1F','#3D8DB8'],
@@ -11731,9 +11879,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyBrand(){
-    document.title='LIVEASTA V28';
+    document.title='LIVEASTA V29';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V28';
+      el.textContent='LIVEASTA · VERSIONE V29';
     });
     document.querySelectorAll('.logo-text').forEach(el=>{
       const a=el.querySelector('.rosa');
@@ -11798,7 +11946,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 </script>
 
 
-<script id="liveasta-v28-theme-runtime">
+<script id="liveasta-v29-theme-runtime">
 (function(){
   const THEME_KEY='liveasta_theme';
   const THEMES=['broadcast','stadium','carbon','crimson','emerald','violet'];
