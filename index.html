@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>LIVEASTA V27</title>
+    <title>LIVEASTA V28</title>
     <meta name="theme-color" content="#0D1117">
     <meta name="color-scheme" content="dark">
     <meta name="mobile-web-app-capable" content="yes">
@@ -2756,7 +2756,7 @@
         }
 </style>
 
-<style id="liveasta-v27-theme-switcher">
+<style id="liveasta-v28-theme-switcher">
 /* ===== LAYOUT PC STABILE (migrato dal vecchio V74, senza palette legacy) ===== */
 .logo-text{
   display:flex!important;
@@ -5614,7 +5614,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V27
+   LIVEASTA V28
    ========================================================== */
 
 /* Versione home cliccabile = refresh */
@@ -5686,7 +5686,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
              title="Aggiorna LIVEASTA"
              onclick="window.location.reload()"
              onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();window.location.reload();}">
-            LIVEASTA V27
+            LIVEASTA V28
         </div>
         <button class="btn btn-secondary top-home-btn" onclick="openAdminLogin()">⚙ Impostazioni</button>
         <div class="setup-card">
@@ -5889,7 +5889,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
     <div id="screen-admin" class="screen">
         <div class="setup-card" style="max-width:1100px; width:96%; padding:24px;">
-            <div class="admin-version-badge">LIVEASTA · VERSIONE V27</div>
+            <div class="admin-version-badge">LIVEASTA · VERSIONE V28</div>
             <h1>Gestione stanze</h1>
             <p class="subtitle">Nome, password, modifica ed eliminazione</p>
 
@@ -6356,7 +6356,8 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
         let auctioneerLockToken = null;
         let auctioneerLockHeartbeatTimer = null;
         let auctioneerLockLostHandled = false;
-        const AUCTIONEER_LOCK_HEARTBEAT_MS = 10000;
+        const AUCTIONEER_LOCK_HEARTBEAT_MS = 5000;
+        const AUCTIONEER_LOCK_STALE_MS = 45000;
 
         let myTeamName = "";
         let auctionTimeLimit = 5;
@@ -9779,6 +9780,21 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
         }
 
         // --- LOCK ESCLUSIVO BANDITORE ---
+        function auctioneerLockLastSeen(row){
+            const raw=
+                row?.data?.heartbeat_at ||
+                row?.data?.acquired_at ||
+                row?.updated_at ||
+                '';
+            const ts=Date.parse(raw);
+            return Number.isFinite(ts)?ts:0;
+        }
+
+        function isAuctioneerLockFresh(row){
+            const last=auctioneerLockLastSeen(row);
+            return !!last && (Date.now()-last)<AUCTIONEER_LOCK_STALE_MS;
+        }
+
         function createAuctioneerLockToken(){
             try{
                 if(globalThis.crypto?.randomUUID) return crypto.randomUUID();
@@ -9834,26 +9850,71 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
         async function acquireAuctioneerRoomLock(room){
             if(!room?.id) return false;
 
-            // Se questo dispositivo aveva un proprio lock precedente,
+            // Se questo dispositivo possiede già un proprio lock precedente,
             // lo rilascia prima di tentare una stanza diversa.
             await releaseAuctioneerRoomLock();
 
             const lockKey=`liveasta_auctioneer_lock_${room.id}`;
             const token=createAuctioneerLockToken();
 
-            /*
-              LOCK STRETTO:
-              fanta_app_data.key è PRIMARY KEY.
-              Solo il PRIMO INSERT può riuscire.
-              Se il record esiste già, NON viene mai cancellato o sostituito
-              da chi prova ad entrare dopo.
-            */
-            const attempt=await insertAuctioneerLock(lockKey,token,room);
+            // 1) Il primo INSERT vince sempre grazie alla PRIMARY KEY.
+            let attempt=await insertAuctioneerLock(lockKey,token,room);
+            if(attempt.ok){
+                auctioneerLockKey=lockKey;
+                auctioneerLockToken=token;
+                auctioneerLockLostHandled=false;
+                startAuctioneerLockHeartbeat();
+                return true;
+            }
 
-            if(!attempt.ok){
-                // Qualunque conflitto significa: stanza già occupata.
+            // 2) Se esiste già un lock con heartbeat recente, NON si tocca:
+            //    il secondo banditore resta bloccato.
+            let existing=await readAuctioneerLock(lockKey);
+            if(existing && isAuctioneerLockFresh(existing)){
                 return false;
             }
+
+            // 3) Potrebbe essere rimasto un lock orfano da una chiusura/crash.
+            //    Prima di pulirlo ricontrolliamo dopo un breve intervallo.
+            if(existing){
+                const oldUpdatedAt=String(existing.updated_at||'');
+                const oldToken=String(existing?.data?.token||'');
+
+                await new Promise(resolve=>setTimeout(resolve,500));
+
+                const verify=await readAuctioneerLock(lockKey);
+
+                // Nel frattempo il banditore originale ha battuto heartbeat:
+                // blocca l'accesso e NON cancellare nulla.
+                if(verify && (
+                    isAuctioneerLockFresh(verify) ||
+                    String(verify.updated_at||'')!==oldUpdatedAt ||
+                    String(verify?.data?.token||'')!==oldToken
+                )){
+                    return false;
+                }
+
+                if(verify){
+                    // Delete "compare-and-swap": cancella solo la stessa versione
+                    // stale che abbiamo verificato. Se si aggiorna nel frattempo,
+                    // la DELETE non lo tocca.
+                    const {error:deleteError}=await supabaseClient
+                        .from('fanta_app_data')
+                        .delete()
+                        .eq('key',lockKey)
+                        .eq('updated_at',verify.updated_at);
+
+                    if(deleteError){
+                        console.warn('Pulizia lock banditore orfano non riuscita',deleteError);
+                        return false;
+                    }
+                }
+            }
+
+            // 4) Riprova l'INSERT atomico. Se un altro banditore è arrivato prima,
+            //    questo fallisce e rimaniamo bloccati.
+            attempt=await insertAuctioneerLock(lockKey,token,room);
+            if(!attempt.ok)return false;
 
             auctioneerLockKey=lockKey;
             auctioneerLockToken=token;
@@ -9865,11 +9926,13 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
         async function heartbeatAuctioneerRoomLock(){
             if(!auctioneerLockKey || !auctioneerLockToken) return;
 
-            const row=await readAuctioneerLock(auctioneerLockKey);
+            const key=auctioneerLockKey;
+            const token=auctioneerLockToken;
+            const row=await readAuctioneerLock(key);
 
-            // Se il record non c'è più oppure appartiene a un altro token,
-            // questo dispositivo non è più il titolare del lock.
-            if(!row || String(row?.data?.token||'')!==String(auctioneerLockToken)){
+            // Se non esiste più o appartiene a un altro token,
+            // questo dispositivo ha realmente perso il lock.
+            if(!row || String(row?.data?.token||'')!==String(token)){
                 stopAuctioneerLockHeartbeat();
 
                 if(!auctioneerLockLostHandled){
@@ -9883,19 +9946,40 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
             const now=new Date().toISOString();
             const nextData={
                 ...(row.data||{}),
-                token:auctioneerLockToken,
+                token,
                 heartbeat_at:now
             };
 
-            const {error}=await supabaseClient
+            // Aggiornamento condizionato alla stessa versione letta.
+            // Se qualcun altro avesse cambiato la riga, non sovrascriviamo.
+            const {data,error}=await supabaseClient
                 .from('fanta_app_data')
                 .update({
                     data:nextData,
                     updated_at:now
                 })
-                .eq('key',auctioneerLockKey);
+                .eq('key',key)
+                .eq('updated_at',row.updated_at)
+                .select('key')
+                .maybeSingle();
 
-            if(error) console.warn('Heartbeat lock banditore non riuscito',error);
+            if(error){
+                console.warn('Heartbeat lock banditore non riuscito',error);
+                return;
+            }
+
+            if(!data){
+                // La riga è cambiata tra read e update: ricontrolla subito.
+                const verify=await readAuctioneerLock(key);
+                if(!verify || String(verify?.data?.token||'')!==String(token)){
+                    stopAuctioneerLockHeartbeat();
+                    if(!auctioneerLockLostHandled){
+                        auctioneerLockLostHandled=true;
+                        alert('Questa sessione non è più il banditore autorizzato della stanza. La plancia verrà chiusa.');
+                        await forceAuctioneerExitAfterLockLoss();
+                    }
+                }
+            }
         }
 
         function startAuctioneerLockHeartbeat(){
@@ -11463,7 +11547,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 
 
 
-<script id="liveasta-v27-runtime">
+<script id="liveasta-v28-runtime">
 (function(){
   const TEAM_COLORS={
     'ATALANTA':['#191B1F','#3D8DB8'],
@@ -11647,9 +11731,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyBrand(){
-    document.title='LIVEASTA V27';
+    document.title='LIVEASTA V28';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V27';
+      el.textContent='LIVEASTA · VERSIONE V28';
     });
     document.querySelectorAll('.logo-text').forEach(el=>{
       const a=el.querySelector('.rosa');
@@ -11714,7 +11798,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 </script>
 
 
-<script id="liveasta-v27-theme-runtime">
+<script id="liveasta-v28-theme-runtime">
 (function(){
   const THEME_KEY='liveasta_theme';
   const THEMES=['broadcast','stadium','carbon','crimson','emerald','violet'];
@@ -11847,18 +11931,29 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 </script>
 
 
-<script id="liveasta-v26-auctioneer-lock-lifecycle">
+<script id="liveasta-v28-auctioneer-lock-lifecycle">
 (function(){
-  window.addEventListener('pagehide',()=>{
+  // Non interrompere manualmente l'heartbeat su pagehide/background.
+  // Se la pagina viene davvero chiusa il JS termina da solo.
+  // Se invece il browser la sospende temporaneamente, il primo banditore
+  // non deve perdere il lock solo perché ha cambiato app per un momento.
+
+  document.addEventListener('visibilitychange',()=>{
+    if(!document.hidden){
+      try{
+        if(auctioneerLockKey && auctioneerLockToken){
+          startAuctioneerLockHeartbeat();
+        }
+      }catch(e){}
+    }
+  });
+
+  window.addEventListener('pageshow',()=>{
     try{
-      stopAuctioneerLockHeartbeat?.();
+      if(auctioneerLockKey && auctioneerLockToken){
+        startAuctioneerLockHeartbeat();
+      }
     }catch(e){}
-    /*
-      Non cancelliamo il lock da pagehide/unload:
-      il rilascio affidabile avviene con il pulsante ESCI.
-      Così un secondo banditore non può prendere il posto del primo
-      semplicemente aprendo la stessa stanza.
-    */
   });
 })();
 </script>
