@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>LIVEASTA V18</title>
+    <title>LIVEASTA V19</title>
     <meta name="theme-color" content="#0D1117">
     <meta name="color-scheme" content="dark">
     <meta name="mobile-web-app-capable" content="yes">
@@ -2756,7 +2756,7 @@
         }
 </style>
 
-<style id="liveasta-v18-theme-switcher">
+<style id="liveasta-v19-theme-switcher">
 /* ===== LAYOUT PC STABILE (migrato dal vecchio V74, senza palette legacy) ===== */
 .logo-text{
   display:flex!important;
@@ -5178,25 +5178,99 @@ html[data-live-theme] small{
     font-size:clamp(4.9rem,21vw,6.45rem)!important;
   }
 }
+
+
+/* ==========================================================
+   LIVEASTA V19 — PWA system bars + portrait
+   ========================================================== */
+html[data-live-theme],
+html[data-live-theme] body{
+  background-color:var(--theme-bg)!important;
+}
+
+@media (display-mode:standalone){
+  html[data-live-theme],
+  html[data-live-theme] body{
+    background:var(--theme-bg)!important;
+    background-color:var(--theme-bg)!important;
+    min-height:100dvh!important;
+    min-width:100%!important;
+  }
+
+  body{
+    overscroll-behavior:none!important;
+  }
+
+  /* Safe-area dello stesso tema: nessuna fascia azzurra estranea. */
+  body::before{
+    content:""!important;
+    position:fixed!important;
+    top:0!important;
+    left:0!important;
+    right:0!important;
+    height:env(safe-area-inset-top)!important;
+    background:var(--theme-bg)!important;
+    z-index:99999!important;
+    pointer-events:none!important;
+  }
+  body::after{
+    content:""!important;
+    position:fixed!important;
+    bottom:0!important;
+    left:0!important;
+    right:0!important;
+    height:env(safe-area-inset-bottom)!important;
+    background:var(--theme-bg)!important;
+    z-index:99999!important;
+    pointer-events:none!important;
+  }
+}
 </style>
 
 <script id="liveasta-theme-preload">
 (function(){
+  const META_COLORS={
+    broadcast:'#0D1117',
+    stadium:'#071521',
+    carbon:'#0E0E0F',
+    crimson:'#130E12',
+    emerald:'#07130F',
+    violet:'#100C18'
+  };
+
   try{
     var t=localStorage.getItem('liveasta_theme')||'broadcast';
-    if(!['broadcast','stadium','carbon','crimson','emerald','violet'].includes(t))t='broadcast';
+    if(!Object.prototype.hasOwnProperty.call(META_COLORS,t)) t='broadcast';
+
     document.documentElement.setAttribute('data-live-theme',t);
+
+    /* Aggiorna subito il colore delle barre di sistema prima del primo paint. */
+    var meta=document.querySelector('meta[name="theme-color"]');
+    if(!meta){
+      meta=document.createElement('meta');
+      meta.setAttribute('name','theme-color');
+      document.head.appendChild(meta);
+    }
+    meta.setAttribute('content',META_COLORS[t]);
+
+    document.documentElement.style.backgroundColor=META_COLORS[t];
   }catch(e){
     document.documentElement.setAttribute('data-live-theme','broadcast');
   }
 })();
 </script>
 
+
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="msapplication-navbutton-color" content="#0D1117">
+
 </head>
 <body>
 
     <div id="screen-role" class="screen active">
-        <div class="home-version-badge">LIVEASTA V18</div>
+        <div class="home-version-badge">LIVEASTA V19</div>
         <button class="btn btn-secondary top-home-btn" onclick="openAdminLogin()">⚙ Impostazioni</button>
         <div class="setup-card">
             <h1 class="logo-text"><span class="rosa">LIVE</span><span class="rush">ASTA</span></h1>
@@ -5398,7 +5472,7 @@ html[data-live-theme] small{
 
     <div id="screen-admin" class="screen">
         <div class="setup-card" style="max-width:1100px; width:96%; padding:24px;">
-            <div class="admin-version-badge">LIVEASTA · VERSIONE V18</div>
+            <div class="admin-version-badge">LIVEASTA · VERSIONE V19</div>
             <h1>Gestione stanze</h1>
             <p class="subtitle">Nome, password, modifica ed eliminazione</p>
 
@@ -10564,7 +10638,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 
 
 
-<script id="liveasta-v18-runtime">
+<script id="liveasta-v19-runtime">
 (function(){
   const TEAM_COLORS={
     'ATALANTA':['#191B1F','#3D8DB8'],
@@ -10748,9 +10822,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyBrand(){
-    document.title='LIVEASTA V18';
+    document.title='LIVEASTA V19';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V18';
+      el.textContent='LIVEASTA · VERSIONE V19';
     });
     document.querySelectorAll('.logo-text').forEach(el=>{
       const a=el.querySelector('.rosa');
@@ -10815,7 +10889,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 </script>
 
 
-<script id="liveasta-v18-theme-runtime">
+<script id="liveasta-v19-theme-runtime">
 (function(){
   const THEME_KEY='liveasta_theme';
   const THEMES=['broadcast','stadium','carbon','crimson','emerald','violet'];
@@ -10840,8 +10914,22 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function updateThemeMeta(theme){
-    const meta=document.querySelector('meta[name="theme-color"]');
-    if(meta)meta.setAttribute('content',META_COLORS[theme]||META_COLORS.broadcast);
+    const color=META_COLORS[theme]||META_COLORS.broadcast;
+
+    let meta=document.querySelector('meta[name="theme-color"]');
+    if(!meta){
+      meta=document.createElement('meta');
+      meta.setAttribute('name','theme-color');
+      document.head.appendChild(meta);
+    }
+    meta.setAttribute('content',color);
+
+    const msMeta=document.querySelector('meta[name="msapplication-navbutton-color"]');
+    if(msMeta)msMeta.setAttribute('content',color);
+
+    /* Android PWA usa anche il colore della root durante le safe-area. */
+    document.documentElement.style.backgroundColor=color;
+    document.body?.style.setProperty('background-color',color,'important');
   }
 
   window.applyLiveAstaTheme=function(theme,persist=true){
@@ -10874,6 +10962,37 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }else{
     bootTheme();
   }
+})();
+</script>
+
+
+<script id="liveasta-v19-portrait-lock">
+(function(){
+  async function lockPortrait(){
+    try{
+      const standalone =
+        window.matchMedia('(display-mode: standalone)').matches ||
+        window.navigator.standalone === true;
+
+      if(!standalone) return;
+      if(screen.orientation && typeof screen.orientation.lock === 'function'){
+        await screen.orientation.lock('portrait-primary');
+      }
+    }catch(e){
+      /* Il manifest orientation resta il fallback principale. */
+    }
+  }
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',lockPortrait,{once:true});
+  }else{
+    lockPortrait();
+  }
+
+  window.addEventListener('pageshow',lockPortrait);
+  document.addEventListener('visibilitychange',()=>{
+    if(!document.hidden) lockPortrait();
+  });
 })();
 </script>
 
