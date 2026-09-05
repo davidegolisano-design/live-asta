@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>LIVEASTA V30</title>
+    <title>LIVEASTA V31</title>
     <meta name="theme-color" content="#0D1117">
     <meta name="color-scheme" content="dark">
     <meta name="mobile-web-app-capable" content="yes">
@@ -2756,7 +2756,7 @@
         }
 </style>
 
-<style id="liveasta-v30-theme-switcher">
+<style id="liveasta-v31-theme-switcher">
 /* ===== LAYOUT PC STABILE (migrato dal vecchio V74, senza palette legacy) ===== */
 .logo-text{
   display:flex!important;
@@ -5610,7 +5610,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V30
+   LIVEASTA V31
    ========================================================== */
 
 /* Versione home cliccabile = refresh */
@@ -5633,7 +5633,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V30 — BUSTA NEL LISTONE
+   LIVEASTA V31 — BUSTA NEL LISTONE
    ========================================================== */
 #screen-auctioneer-board .auction-list-toolbar .toolbar-sealed-btn{
   flex:0 0 auto!important;
@@ -5655,7 +5655,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V30 — TOOLBAR LISTONE TUTTA SU UNA RIGA
+   LIVEASTA V31 — TOOLBAR LISTONE TUTTA SU UNA RIGA
    ========================================================== */
 
 /* Search + dado + modalità busta + ROSE */
@@ -5744,6 +5744,57 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
     font-size:.58rem!important;
   }
 }
+
+
+/* ==========================================================
+   LIVEASTA V31 — BANDITORE GIOCATORE
+   ========================================================== */
+.auctioneer-player-control-card{
+  border-color:color-mix(in srgb,var(--theme-primary) 28%,var(--theme-border))!important;
+}
+.auctioneer-player-note{
+  margin-top:4px!important;
+  color:var(--theme-muted)!important;
+  font-size:.78rem!important;
+  line-height:1.35!important;
+}
+.auctioneer-player-control-row{
+  display:grid!important;
+  grid-template-columns:minmax(220px,1fr) auto!important;
+  gap:10px!important;
+  align-items:end!important;
+  margin-top:12px!important;
+}
+#auctioneer-player-team-select{
+  width:100%!important;
+  margin:0!important;
+}
+#auctioneer-player-toggle-btn{
+  min-height:46px!important;
+  white-space:nowrap!important;
+}
+#auctioneer-player-toggle-btn.active,
+#auctioneer-player-badge.active{
+  background:var(--theme-primary)!important;
+  color:var(--theme-bg-deep)!important;
+  border-color:var(--theme-primary)!important;
+}
+.auctioneer-player-status{
+  margin-top:9px!important;
+  color:var(--theme-muted)!important;
+  font-size:.76rem!important;
+}
+#screen-player-buzzer.hybrid-auctioneer-player #player-exit-btn{
+  display:none!important;
+}
+@media(max-width:760px){
+  .auctioneer-player-control-row{
+    grid-template-columns:1fr!important;
+  }
+  #auctioneer-player-toggle-btn{
+    width:100%!important;
+  }
+}
 </style>
 
 <script id="liveasta-theme-preload">
@@ -5796,7 +5847,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
              title="Aggiorna LIVEASTA"
              onclick="window.location.reload()"
              onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();window.location.reload();}">
-            LIVEASTA V30
+            LIVEASTA V31
         </div>
         <button class="btn btn-secondary top-home-btn" onclick="openAdminLogin()">⚙ Impostazioni</button>
         <div class="setup-card">
@@ -5837,8 +5888,8 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
     <!-- CONSOLE GIOCATORE -->
     <div id="screen-player-buzzer" class="screen">
         <div class="session-nav player-session-nav">
-            <button class="btn btn-secondary session-back" onclick="leaveCurrentSession()">← Esci</button>
-            <div class="session-title">Asta Live</div>
+            <button id="player-exit-btn" class="btn btn-secondary session-back" onclick="leaveCurrentSession()">← Esci</button>
+            <div id="player-session-title" class="session-title">Asta Live</div>
             <button class="btn btn-secondary session-back" id="player-roster-btn" onclick="togglePlayerRoster(true)">Rosa · 0</button>
         </div>
 
@@ -5999,7 +6050,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
     <div id="screen-admin" class="screen">
         <div class="setup-card" style="max-width:1100px; width:96%; padding:24px;">
-            <div class="admin-version-badge">LIVEASTA · VERSIONE V30</div>
+            <div class="admin-version-badge">LIVEASTA · VERSIONE V31</div>
             <h1>Gestione stanze</h1>
             <p class="subtitle">Nome, password, modifica ed eliminazione</p>
 
@@ -6262,6 +6313,28 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                     <div class="online-empty">Nessun giocatore online</div>
                 </div>
             </div>
+            <div class="control-card auctioneer-player-control-card">
+                <div class="control-title">
+                    <div>
+                        <h3 style="margin:0;">Banditore giocatore</h3>
+                        <div class="auctioneer-player-note">
+                            Se attivo, il banditore usa una squadra. Durante READY, countdown e asta
+                            il telefono diventa la schermata giocatore; a fine asta torna automaticamente al listone.
+                        </div>
+                    </div>
+                    <span id="auctioneer-player-badge" class="badge-ok">DISATTIVO</span>
+                </div>
+                <div class="auctioneer-player-control-row">
+                    <div>
+                        <span class="field-label">Squadra del banditore</span>
+                        <select id="auctioneer-player-team-select" class="minimal-input" onchange="changeAuctioneerPlayerTeam()"></select>
+                    </div>
+                    <button id="auctioneer-player-toggle-btn" class="btn btn-green btn-compact" type="button" onclick="toggleAuctioneerPlayerMode()">Attiva banditore giocatore</button>
+                </div>
+                <div id="auctioneer-player-status" class="auctioneer-player-status">Modalità disattivata.</div>
+            </div>
+
+
 
             <div class="control-card ready-control-card">
                 <div class="control-title">
@@ -6482,6 +6555,9 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
         let teamsCache = [];
         let purchasesCache = [];
         let myTeamId = null;
+        let auctioneerPlayerMode=false;
+        let auctioneerPlayerTeamId=null;
+        let hybridReturnTimer=null;
         let roomControlReturnScreen = 'screen-auctioneer-board';
         let nominationState={enabled:false,role:null,turn_team_id:null,order_team_ids:[]};
         let nominationReady=false;
@@ -6536,6 +6612,412 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
             window.supabaseClient = supabaseClient;
         } catch (e) {
             alert("Errore critico nell'avvio del database.");
+        }
+
+
+        function auctioneerPlayerStorageKey(){
+            return currentRoomId?`liveasta_auctioneer_player_${currentRoomId}`:'liveasta_auctioneer_player';
+        }
+
+        function currentAuctioneerPlayerTeam(){
+            return auctioneerPlayerTeamId
+                ? teamsCache.find(t=>String(t.id)===String(auctioneerPlayerTeamId))
+                : null;
+        }
+
+        function isAuctioneerPlayerIdentity(){
+            return !!(
+                auctioneerPlayerMode &&
+                auctioneerPlayerTeamId &&
+                myTeamId &&
+                String(auctioneerPlayerTeamId)===String(myTeamId) &&
+                auctioneerLockKey
+            );
+        }
+
+        function saveAuctioneerPlayerModeLocal(){
+            if(!currentRoomId)return;
+            try{
+                localStorage.setItem(auctioneerPlayerStorageKey(),JSON.stringify({
+                    enabled:!!auctioneerPlayerMode,
+                    team_id:auctioneerPlayerTeamId?String(auctioneerPlayerTeamId):null
+                }));
+            }catch(e){}
+        }
+
+        function loadAuctioneerPlayerMode(){
+            auctioneerPlayerMode=false;
+            auctioneerPlayerTeamId=null;
+            try{
+                const raw=JSON.parse(localStorage.getItem(auctioneerPlayerStorageKey())||'null');
+                if(raw?.team_id && teamsCache.some(t=>String(t.id)===String(raw.team_id))){
+                    auctioneerPlayerTeamId=String(raw.team_id);
+                    auctioneerPlayerMode=!!raw.enabled;
+                }
+            }catch(e){}
+
+            const team=currentAuctioneerPlayerTeam();
+            if(auctioneerPlayerMode&&team){
+                myTeamId=team.id;
+                myTeamName=team.name;
+            }else{
+                myTeamId=null;
+                myTeamName='';
+            }
+            renderAuctioneerPlayerControl();
+        }
+
+        function renderAuctioneerPlayerControl(){
+            const select=document.getElementById('auctioneer-player-team-select');
+            const badge=document.getElementById('auctioneer-player-badge');
+            const btn=document.getElementById('auctioneer-player-toggle-btn');
+            const status=document.getElementById('auctioneer-player-status');
+
+            if(select){
+                const selected=auctioneerPlayerTeamId?String(auctioneerPlayerTeamId):'';
+                select.innerHTML='<option value="">Seleziona squadra</option>'+
+                    teamsCache.map(t=>`<option value="${escapeHtml(t.id)}">${escapeHtml(t.name)}</option>`).join('');
+                select.value=selected;
+            }
+
+            const team=currentAuctioneerPlayerTeam();
+            const active=!!(auctioneerPlayerMode&&team);
+
+            if(badge){
+                badge.textContent=active?'ATTIVO':'DISATTIVO';
+                badge.classList.toggle('active',active);
+            }
+            if(btn){
+                btn.textContent=active?'Disattiva banditore giocatore':'Attiva banditore giocatore';
+                btn.classList.toggle('active',active);
+            }
+            if(status){
+                status.textContent=active
+                    ?`Giocherai come ${team.name}. La squadra è riservata al banditore.`
+                    :'Scegli una squadra e attiva la modalità.';
+            }
+        }
+
+        function changeAuctioneerPlayerTeam(){
+            const select=document.getElementById('auctioneer-player-team-select');
+            const id=String(select?.value||'')||null;
+
+            if(auctioneerPlayerMode&&id&&onlinePlayers.has(String(id))){
+                alert('Questa squadra è già collegata da un altro telefono.');
+                if(select)select.value=auctioneerPlayerTeamId||'';
+                return;
+            }
+
+            auctioneerPlayerTeamId=id;
+            const team=currentAuctioneerPlayerTeam();
+            if(auctioneerPlayerMode&&team){
+                myTeamId=team.id;
+                myTeamName=team.name;
+            }
+
+            saveAuctioneerPlayerModeLocal();
+            renderAuctioneerPlayerControl();
+        }
+
+        function toggleAuctioneerPlayerMode(){
+            if(auctioneerPlayerMode){
+                auctioneerPlayerMode=false;
+                myTeamId=null;
+                myTeamName='';
+                saveAuctioneerPlayerModeLocal();
+                renderAuctioneerPlayerControl();
+                return;
+            }
+
+            const select=document.getElementById('auctioneer-player-team-select');
+            auctioneerPlayerTeamId=String(select?.value||auctioneerPlayerTeamId||'')||null;
+            const team=currentAuctioneerPlayerTeam();
+
+            if(!team){
+                alert('Seleziona prima la squadra del banditore.');
+                return;
+            }
+            if(onlinePlayers.has(String(team.id))){
+                alert('Questa squadra è già collegata da un altro telefono.');
+                return;
+            }
+
+            auctioneerPlayerMode=true;
+            myTeamId=team.id;
+            myTeamName=team.name;
+            saveAuctioneerPlayerModeLocal();
+            renderAuctioneerPlayerControl();
+        }
+
+        function configureHybridPlayerIdentity(){
+            if(!auctioneerPlayerMode)return false;
+            const team=currentAuctioneerPlayerTeam();
+            if(!team)return false;
+
+            myTeamId=team.id;
+            myTeamName=team.name;
+
+            const room=document.getElementById('player-room-inline');
+            const teamName=document.getElementById('display-team-name');
+            const title=document.getElementById('player-session-title');
+            const exitBtn=document.getElementById('player-exit-btn');
+
+            if(room)room.textContent=currentRoomCode||currentRoom?.name||'--';
+            if(teamName)teamName.textContent=team.name;
+            if(title)title.textContent='Banditore + giocatore';
+            if(exitBtn)exitBtn.style.display='none';
+
+            document.getElementById('screen-player-buzzer')?.classList.add('hybrid-auctioneer-player');
+            setPlayerConnectionStatus('online');
+            updatePlayerTeamStatus();
+            return true;
+        }
+
+        function restoreHybridPlayerNav(){
+            const title=document.getElementById('player-session-title');
+            const exitBtn=document.getElementById('player-exit-btn');
+            if(title)title.textContent='Asta Live';
+            if(exitBtn)exitBtn.style.display='';
+            document.getElementById('screen-player-buzzer')?.classList.remove('hybrid-auctioneer-player');
+        }
+
+        function showHybridPlayerForCurrentAuction(){
+            if(!configureHybridPlayerIdentity()||!currentAuctionPlayer)return false;
+
+            if(hybridReturnTimer){
+                clearTimeout(hybridReturnTimer);
+                hybridReturnTimer=null;
+            }
+
+            const card=document.getElementById('phone-card-container');
+            if(card)card.style.visibility='visible';
+
+            setPlayerImage(document.getElementById('phone-card-image'),currentAuctionPlayer.Id,currentAuctionPlayer.R);
+            document.getElementById('phone-player-name').textContent=currentAuctionPlayer.Nome||'--';
+            document.getElementById('phone-player-role').textContent=currentAuctionPlayer.R||'-';
+            document.getElementById('phone-player-club').textContent=currentAuctionPlayer.Squadra||'-';
+
+            playerHasBidThisAuction=false;
+            currentAuctionValue=0;
+            currentWinner='';
+            playerSealedSubmitted=false;
+            setPlayerAuctionVisualState('neutral');
+            setPlayerBidButtonsEnabled(false);
+            preparePlayerSealedControls(false);
+            closePlayerReadyBanner();
+
+            document.getElementById('player-auction-title').textContent='IN ATTESA';
+            const winner=document.getElementById('player-current-winner');
+            winner.textContent='Preparazione';
+            winner.style.color='var(--text-muted)';
+            document.getElementById('player-current-value').textContent='0';
+            document.getElementById('player-countdown').textContent='--';
+
+            updatePlayerTeamStatus();
+            showScreen('screen-player-buzzer');
+            try{window.updateLiveAstaTeamCards?.()}catch(e){}
+            return true;
+        }
+
+        function showHybridReadyIfNeeded(){
+            if(!isAuctioneerPlayerIdentity()||!readyGateWaiting)return;
+            const required=readyRequiredIds();
+
+            document.getElementById('player-auction-title').textContent='ATTESA READY';
+            document.getElementById('player-current-value').textContent='0';
+            document.getElementById('player-countdown').textContent='--';
+
+            const winner=document.getElementById('player-current-winner');
+            winner.textContent=required.includes(String(myTeamId))?'Conferma READY':'In attesa degli altri';
+            winner.style.color='var(--text-muted)';
+
+            if(required.includes(String(myTeamId))){
+                showPlayerReadyBanner({
+                    ready_token:readyGateToken,
+                    ready_required_ids:required,
+                    ready_ids:[...readyPlayers],
+                    nome:currentAuctionPlayer?.Nome,
+                    role:currentAuctionPlayer?.R,
+                    club:currentAuctionPlayer?.Squadra
+                });
+            }else{
+                closePlayerReadyBanner();
+            }
+        }
+
+        function hybridStartNormalPrep(seconds){
+            if(!isAuctioneerPlayerIdentity())return;
+            playerSealedMode=false;
+            playerSealedToken=null;
+            preparePlayerSealedControls(false);
+            closePlayerReadyBanner();
+            startLocalPlayerPreparation(seconds);
+        }
+
+        function hybridStartNormalAuction(seconds){
+            if(!isAuctioneerPlayerIdentity())return;
+            if(playerPrepInterval){
+                clearInterval(playerPrepInterval);
+                playerPrepInterval=null;
+            }
+
+            playerSealedMode=false;
+            playerSealedToken=null;
+            preparePlayerSealedControls(false);
+            closePlayerReadyBanner();
+
+            isAuctionActive=true;
+            currentAuctionValue=0;
+            currentWinner='';
+            playerHasBidThisAuction=false;
+
+            const timer=document.getElementById('player-countdown');
+            timer.textContent=String(seconds);
+            timer.classList.remove('prep-countdown','danger','liveasta-last3');
+
+            document.getElementById('player-auction-title').textContent='MIGLIOR OFFERTA';
+            const winner=document.getElementById('player-current-winner');
+            winner.textContent='Nessuno';
+            winner.style.color='var(--text-muted)';
+            document.getElementById('player-current-value').textContent='0';
+
+            setPlayerAuctionVisualState('neutral');
+            setPlayerBidButtonsEnabled(true);
+            updatePlayerTeamStatus();
+        }
+
+        function hybridNormalTick(seconds){
+            if(!isAuctioneerPlayerIdentity())return;
+            const n=Math.max(0,parseInt(seconds)||0);
+            const timer=document.getElementById('player-countdown');
+            timer.textContent=String(n);
+            timer.classList.toggle('danger',n>0&&n<=2);
+        }
+
+        function hybridNormalBidUpdate(){
+            if(!isAuctioneerPlayerIdentity())return;
+
+            const winner=document.getElementById('player-current-winner');
+            winner.textContent=currentWinner||'Nessuno';
+
+            if(currentWinner===myTeamName){
+                playerHasBidThisAuction=true;
+                winner.style.color='var(--accent-green)';
+                setPlayerAuctionVisualState('winning');
+            }else{
+                winner.style.color=currentWinner?'var(--accent-red)':'var(--text-muted)';
+                setPlayerAuctionVisualState(playerHasBidThisAuction&&currentWinner?'losing':'neutral');
+            }
+
+            document.getElementById('player-current-value').textContent=String(currentAuctionValue||0);
+            updatePlayerTeamStatus();
+            refreshPlayerBidButtons();
+        }
+
+        function hybridStartSealedRound(){
+            if(!isAuctioneerPlayerIdentity())return;
+
+            closePlayerReadyBanner();
+            playerSealedMode=true;
+            playerSealedToken=String(sealedAuctionToken||'');
+            playerSealedSubmitted=false;
+            isAuctionActive=false;
+            setPlayerBidButtonsEnabled(false);
+
+            const allowed=sealedEligibleIds.map(String).includes(String(myTeamId));
+            preparePlayerSealedControls(allowed);
+
+            document.getElementById('player-auction-title').textContent=sealedRound>1?'SPAREGGIO BUSTA':'BUSTA CHIUSA';
+
+            const winner=document.getElementById('player-current-winner');
+            winner.textContent=allowed
+                ?(sealedRound>1?'Nuova offerta richiesta':'Inserisci la tua offerta')
+                :(sealedRound>1?'Spareggio in corso':'Non puoi partecipare');
+            winner.style.color=allowed?'var(--text-main)':'var(--text-muted)';
+
+            document.getElementById('player-current-value').textContent='?';
+            startPlayerSealedCountdownSeconds(sealedTimerSeconds,5);
+        }
+
+        function hybridStartSealedReveal(seconds){
+            if(!isAuctioneerPlayerIdentity())return;
+
+            playerSealedMode=true;
+            preparePlayerSealedControls(false);
+            document.getElementById('player-auction-title').textContent='APERTURA BUSTE';
+
+            const winner=document.getElementById('player-current-winner');
+            winner.textContent='ATTENDI';
+            winner.style.color='var(--text-muted)';
+
+            document.getElementById('player-current-value').textContent='?';
+            playerSealedRevealLocalEndAt=Date.now()+Math.max(1,parseInt(seconds)||5)*1000;
+            startPlayerSealedCountdownSeconds(seconds,2);
+        }
+
+        function scheduleHybridReturnToBanditore(delay=2400){
+            if(!isAuctioneerPlayerIdentity())return;
+            if(hybridReturnTimer)clearTimeout(hybridReturnTimer);
+
+            hybridReturnTimer=setTimeout(()=>{
+                hybridReturnTimer=null;
+                stopPlayerSealedCountdown();
+                closePlayerReadyBanner();
+                restoreHybridPlayerNav();
+                showScreen('screen-auctioneer-board');
+                backToList();
+            },Math.max(800,parseInt(delay)||2400));
+        }
+
+        async function hybridRenderNormalEnd(){
+            if(!isAuctioneerPlayerIdentity())return;
+
+            isAuctionActive=false;
+            setPlayerBidButtonsEnabled(false);
+            await loadRoomState();
+            updatePlayerTeamStatus();
+
+            document.getElementById('player-auction-title').textContent=currentWinner?'AGGIUDICATO A':'NESSUNA OFFERTA';
+
+            const winner=document.getElementById('player-current-winner');
+            winner.textContent=currentWinner||'INVENDUTO';
+
+            if(currentWinner===myTeamName){
+                winner.style.color='var(--accent-green)';
+                setPlayerAuctionVisualState('winning');
+            }else{
+                winner.style.color=currentWinner?'var(--accent-red)':'var(--text-muted)';
+                setPlayerAuctionVisualState(playerHasBidThisAuction&&currentWinner?'losing':'neutral');
+            }
+
+            document.getElementById('player-current-value').textContent=String(currentAuctionValue||0);
+            document.getElementById('player-countdown').textContent='0';
+            scheduleHybridReturnToBanditore();
+        }
+
+        async function hybridRenderSealedEnd(winnerName,value,noBids=false){
+            if(!isAuctioneerPlayerIdentity())return;
+
+            stopPlayerSealedCountdown();
+            playerSealedMode=false;
+            playerSealedToken=null;
+            playerSealedSubmitted=false;
+            preparePlayerSealedControls(false);
+
+            await loadRoomState();
+            updatePlayerTeamStatus();
+
+            document.getElementById('player-auction-title').textContent='BUSTE APERTE';
+
+            const winner=document.getElementById('player-current-winner');
+            winner.textContent=noBids?'INVENDUTO':(winnerName||'--');
+            winner.style.color=noBids
+                ?'var(--text-muted)'
+                :(winnerName===myTeamName?'var(--accent-green)':'var(--accent-red)');
+
+            document.getElementById('player-current-value').textContent=noBids?'0':String(parseInt(value)||0);
+            document.getElementById('player-countdown').textContent='0';
+            scheduleHybridReturnToBanditore();
         }
 
         function normalizeRoomCode(value) {
@@ -7049,6 +7531,16 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
             const btn=document.getElementById('ready-confirm-btn');
             btn.disabled=true;btn.textContent='PRONTO ✓';btn.classList.add('done');
             document.getElementById('ready-progress').textContent='In attesa degli altri giocatori…';
+
+            if(isAuctioneerPlayerIdentity()){
+                if(readyGateWaiting && String(playerReadyToken)===String(readyGateToken)){
+                    readyPlayers.add(String(myTeamId));
+                    persistReadyGateState();
+                    evaluateReadyGate();
+                }
+                return;
+            }
+
             channel.send({type:'broadcast',event:'player_ready',payload:{
                 token:playerReadyToken,team_id:myTeamId,team_name:myTeamName
             }}).catch(()=>{});
@@ -7394,6 +7886,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                 }
 
                 showSealedAuctionStage();
+            hybridStartSealedRound();
                 if(sealedTimerInterval)clearInterval(sealedTimerInterval);
                 sealedTimerInterval=setInterval(()=>{
                     showSealedAuctionStage();
@@ -9272,6 +9765,12 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                     }
 
                     document.getElementById('view-list').style.display = 'none';
+
+                    if(auctioneerPlayerMode){
+                        showHybridPlayerForCurrentAuction();
+                        if(readyModeEnabled)showHybridReadyIfNeeded();
+                    }
+
                     if(readyModeEnabled){
                         showAuctioneerReadyStage();
                         updateReadyGateDisplay();
@@ -9917,7 +10416,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
             }
         }
 
-        function submitSealedBid(){
+        async function submitSealedBid(){
             if(!playerSealedMode || !playerSealedToken || playerSealedSubmitted || !channel || !myTeamId)return;
 
             const input=document.getElementById('sealed-bid-input');
@@ -9936,16 +10435,23 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
             playerSealedSubmitted=true;
             preparePlayerSealedControls(true);
 
+            const sealedPayload={
+                token:playerSealedToken,
+                team_id:String(myTeamId),
+                team_name:String(myTeamName||''),
+                amount,
+                at:Date.now()
+            };
+
+            if(isAuctioneerPlayerIdentity()){
+                await receiveSealedBid(sealedPayload);
+                return;
+            }
+
             channel.send({
                 type:'broadcast',
                 event:'sealed_bid_submit',
-                payload:{
-                    token:playerSealedToken,
-                    team_id:String(myTeamId),
-                    team_name:String(myTeamName||''),
-                    amount,
-                    at:Date.now()
-                }
+                payload:sealedPayload
             }).catch(()=>{
                 playerSealedSubmitted=false;
                 preparePlayerSealedControls(true);
@@ -9956,6 +10462,12 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
         function buzz(amount) {
             if (!isAuctionActive) return;
             if (navigator.vibrate) navigator.vibrate(40);
+
+            if(isAuctioneerPlayerIdentity()){
+                handleBuzzReceived(myTeamName,amount,myTeamId);
+                return;
+            }
+
             if (channel) {
                 channel.send({
                     type: 'broadcast',
@@ -10286,6 +10798,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
             auctionTimeLimit = Math.max(1, parseInt(currentRoom?.timer_seconds || auctionTimeLimit) || 5);
             await loadAuctionedPlayers();
             await loadRoomState();
+            loadAuctioneerPlayerMode();
             await loadNominationState();
             await loadAuctionPrepSeconds();
             await loadReadyMode();
@@ -10361,7 +10874,12 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                         event:'team_availability_state',
                         payload:{
                             request_id:requestId,
-                            occupied_ids:[...onlinePlayers.keys()].map(String)
+                            occupied_ids:[
+                                ...new Set([
+                                    ...onlinePlayers.keys(),
+                                    ...(auctioneerPlayerMode&&auctioneerPlayerTeamId?[String(auctioneerPlayerTeamId)]:[])
+                                ])
+                            ].map(String)
                         }
                     }).catch(()=>{});
                 })
@@ -10693,6 +11211,11 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                     }).catch(()=>{});
                 }
 
+                if(auctioneerPlayerMode){
+                    showHybridPlayerForCurrentAuction();
+                    showHybridReadyIfNeeded();
+                }
+
                 showAuctioneerReadyStage();
                 updateReadyGateDisplay();
                 evaluateReadyGate();
@@ -10795,6 +11318,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                         ranking:bids.map(b=>({team_id:b.team_id,team_name:b.team_name,amount:b.amount,at:b.at}))
                     }
                 }).catch(()=>{});
+                hybridRenderSealedEnd(currentWinner||'',currentAuctionValue||0,!winner);
             }
 
             await clearPersistedSealedBids(token);
@@ -10858,6 +11382,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                 type:'broadcast',event:'sealed_reveal_start',
                 payload:{token:sealedAuctionToken,round:sealedRound,seconds:reveal,deadline_at:revealDeadline,player_id:String(currentAuctionPlayer.Id)}
             }).catch(()=>{});
+            hybridStartSealedReveal(reveal);
 
             if(sealedRevealInterval)clearInterval(sealedRevealInterval);
             const tick=()=>{
@@ -10903,6 +11428,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
             });
             playSound('audio-prep');
             if(channel) channel.send({type:'broadcast',event:'prep_started',payload:{seconds:prepTime,player_id:currentAuctionPlayer?.Id}}).catch(()=>{});
+            hybridStartNormalPrep(prepTime);
             
             const prepInterval = setInterval(() => {
                 prepTime--;
@@ -10943,11 +11469,13 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
             
             playSound('audio-start');
             if(channel) channel.send({type:'broadcast',event:'auction_started',payload:{player_id:currentAuctionPlayer?.Id,seconds:currentTimer}}).catch(()=>{});
+            hybridStartNormalAuction(currentTimer);
             
             timerInterval = setInterval(() => {
                 currentTimer--;
                 document.getElementById('countdown-display').innerText = currentTimer;
                 if(channel) channel.send({type:'broadcast',event:'timer_tick',payload:{seconds:currentTimer}}).catch(()=>{});
+                hybridNormalTick(currentTimer);
                 
                 if(currentTimer <= 2 && currentTimer > 0) {
                     document.getElementById('countdown-display').style.color = "var(--accent-red)";
@@ -11002,6 +11530,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
             playSound('audio-buzz');
             speakBidValue(currentAuctionValue);
             if(channel) channel.send({type:'broadcast',event:'auction_update',payload:{winner:currentWinner,value:currentAuctionValue}}).catch(()=>{});
+            hybridNormalBidUpdate();
         }
 
         async function endAuction() {
@@ -11088,6 +11617,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                 if(nextButton)nextButton.style.display='flex';
             }
             timerEl.innerText = "0";
+            hybridRenderNormalEnd();
         }
 
 
@@ -11255,6 +11785,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
             updateNominationUI();
             updateReadyControlUI();
             renderOnlinePlayers();
+            renderAuctioneerPlayerControl();
             document.querySelector('#control-room-pill b').innerText=currentRoom.name;
             document.getElementById('control-room-name').value=currentRoom.name||'';
             document.getElementById('control-room-password').value=currentRoom.password||'';
@@ -11479,6 +12010,11 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                         sealed_eligible_ids:sealedEligibleIds
                     }
                 }).catch(()=>{});
+            }
+
+            if(auctioneerPlayerMode){
+                showHybridPlayerForCurrentAuction();
+                if(readyModeEnabled)showHybridReadyIfNeeded();
             }
 
             if(readyModeEnabled){
@@ -11813,7 +12349,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 
 
 
-<script id="liveasta-v30-runtime">
+<script id="liveasta-v31-runtime">
 (function(){
   const TEAM_COLORS={
     'ATALANTA':['#191B1F','#3D8DB8'],
@@ -11997,9 +12533,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyBrand(){
-    document.title='LIVEASTA V30';
+    document.title='LIVEASTA V31';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V30';
+      el.textContent='LIVEASTA · VERSIONE V31';
     });
     document.querySelectorAll('.logo-text').forEach(el=>{
       const a=el.querySelector('.rosa');
@@ -12064,7 +12600,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 </script>
 
 
-<script id="liveasta-v30-theme-runtime">
+<script id="liveasta-v31-theme-runtime">
 (function(){
   const THEME_KEY='liveasta_theme';
   const THEMES=['broadcast','stadium','carbon','crimson','emerald','violet'];
