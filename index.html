@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>LIVEASTA V17</title>
+    <title>LIVEASTA V18</title>
     <meta name="theme-color" content="#0D1117">
     <meta name="color-scheme" content="dark">
     <meta name="mobile-web-app-capable" content="yes">
@@ -2756,7 +2756,7 @@
         }
 </style>
 
-<style id="liveasta-v17-theme-switcher">
+<style id="liveasta-v18-theme-switcher">
 /* ===== LAYOUT PC STABILE (migrato dal vecchio V74, senza palette legacy) ===== */
 .logo-text{
   display:flex!important;
@@ -4805,7 +4805,6 @@ html[data-live-theme] small{
 }
 
 #auction-dashboard.mode-pc #view-auction{
-  display:grid!important;
   grid-template-columns:1.04fr 1fr 1.12fr!important;
   grid-template-rows:minmax(0,1fr)!important;
   gap:6px!important;
@@ -5085,6 +5084,100 @@ html[data-live-theme] small{
     flex:1 1 100%!important;
   }
 }
+
+
+/* ==========================================================
+   LIVEASTA V18
+   ========================================================== */
+
+/* LISTONE PC: full screen quando non c'è asta.
+   La plancia asta è visibile SOLO se non ha auction-view-hidden. */
+#auction-dashboard.mode-pc #view-auction.auction-view-hidden{
+  display:none!important;
+}
+#auction-dashboard.mode-pc #view-auction:not(.auction-view-hidden){
+  display:grid!important;
+}
+#auction-dashboard.mode-pc #view-list{
+  width:100%!important;
+  max-width:100%!important;
+  flex:1 1 auto!important;
+}
+#auction-dashboard.mode-pc #view-list[style*="display: flex"],
+#auction-dashboard.mode-pc #view-list[style*="display:flex"]{
+  display:flex!important;
+}
+
+/* Accesso banditore privato */
+#auction-room-name-input{
+  width:100%!important;
+  box-sizing:border-box!important;
+}
+
+/* MOBILE: timer più grande, senza cambiare la geometria. */
+#screen-player-buzzer #player-countdown{
+  font-size:clamp(5.7rem,23vw,7.8rem)!important;
+  line-height:.80!important;
+}
+
+/* FEEDBACK VINCENTE/PERDENTE:
+   overlay esattamente su TUTTO il riquadro destro del giocatore. */
+#screen-player-buzzer .player-live-side{
+  position:relative!important;
+  isolation:isolate!important;
+}
+#screen-player-buzzer .player-live-side::before{
+  content:""!important;
+  position:absolute!important;
+  inset:0!important;
+  z-index:0!important;
+  pointer-events:none!important;
+  opacity:0!important;
+  transition:opacity .16s ease,background .16s ease!important;
+}
+#screen-player-buzzer .player-live-side > *{
+  position:relative!important;
+  z-index:1!important;
+}
+
+#screen-player-buzzer .phone-top-area.player-winning .player-live-side{
+  background:var(--theme-panel,#151D27)!important;
+  border-left-color:rgba(61,220,151,.78)!important;
+  box-shadow:inset 0 0 0 1px rgba(61,220,151,.28)!important;
+}
+#screen-player-buzzer .phone-top-area.player-winning .player-live-side::before{
+  opacity:1!important;
+  background:
+    radial-gradient(circle at 50% 42%,
+      rgba(67,235,147,.40) 0%,
+      rgba(41,197,116,.30) 46%,
+      rgba(22,126,76,.20) 100%)!important;
+}
+
+#screen-player-buzzer .phone-top-area.player-losing .player-live-side{
+  background:var(--theme-panel,#151D27)!important;
+  border-left-color:rgba(255,82,104,.78)!important;
+  box-shadow:inset 0 0 0 1px rgba(255,82,104,.28)!important;
+}
+#screen-player-buzzer .phone-top-area.player-losing .player-live-side::before{
+  opacity:1!important;
+  background:
+    radial-gradient(circle at 50% 42%,
+      rgba(255,84,105,.39) 0%,
+      rgba(214,56,80,.29) 46%,
+      rgba(133,31,49,.20) 100%)!important;
+}
+
+#screen-player-buzzer .phone-top-area.player-preparing .player-live-side::before,
+#screen-player-buzzer .phone-top-area:not(.player-winning):not(.player-losing) .player-live-side::before{
+  opacity:0!important;
+}
+
+@media(max-height:760px){
+  #screen-player-buzzer #player-countdown{
+    font-size:clamp(4.9rem,21vw,6.45rem)!important;
+  }
+}
 </style>
 
 <script id="liveasta-theme-preload">
@@ -5103,7 +5196,7 @@ html[data-live-theme] small{
 <body>
 
     <div id="screen-role" class="screen active">
-        <div class="home-version-badge">LIVEASTA V17</div>
+        <div class="home-version-badge">LIVEASTA V18</div>
         <button class="btn btn-secondary top-home-btn" onclick="openAdminLogin()">⚙ Impostazioni</button>
         <div class="setup-card">
             <h1 class="logo-text"><span class="rosa">LIVE</span><span class="rush">ASTA</span></h1>
@@ -5235,7 +5328,9 @@ html[data-live-theme] small{
                 </div>
 
                 <div id="auction-join-box" style="display:none;">
+                    <div id="auction-room-mode-help" class="setup-note" style="margin-bottom:8px;">Scegli la stanza esistente</div>
                     <select id="auction-room-select" class="minimal-input"></select>
+                    <input type="text" id="auction-room-name-input" class="minimal-input" placeholder="Nome stanza" maxlength="30" autocomplete="off" style="display:none;">
                     <input type="password" id="auction-room-password" placeholder="Password stanza" autocomplete="off">
                 </div>
 
@@ -5303,7 +5398,7 @@ html[data-live-theme] small{
 
     <div id="screen-admin" class="screen">
         <div class="setup-card" style="max-width:1100px; width:96%; padding:24px;">
-            <div class="admin-version-badge">LIVEASTA · VERSIONE V17</div>
+            <div class="admin-version-badge">LIVEASTA · VERSIONE V18</div>
             <h1>Gestione stanze</h1>
             <p class="subtitle">Nome, password, modifica ed eliminazione</p>
 
@@ -5311,7 +5406,7 @@ html[data-live-theme] small{
                 <div>
                     <b>Mostra stanze agli utenti</b>
                     <div class="admin-global-setting-help">
-                        Attivo: i giocatori scelgono la stanza da una lista. Disattivo: devono digitare il nome esatto della stanza.
+                        Attivo: giocatori e banditori scelgono la stanza da una lista. Disattivo: devono digitare il nome esatto della stanza.
                     </div>
                 </div>
                 <button type="button" id="admin-show-rooms-toggle" class="btn btn-secondary btn-small" onclick="toggleShowRoomsSetting()">
@@ -7194,6 +7289,7 @@ html[data-live-theme] small{
 
             updateShowRoomsAdminUI();
             applyPlayerRoomVisibilityUI();
+            applyAuctioneerRoomVisibilityUI();
             return showRoomsToUsers;
         }
 
@@ -7226,11 +7322,15 @@ html[data-live-theme] small{
             const previous=showRoomsToUsers;
             showRoomsToUsers=!showRoomsToUsers;
             updateShowRoomsAdminUI();
+            applyPlayerRoomVisibilityUI();
+            applyAuctioneerRoomVisibilityUI();
 
             const ok=await saveShowRoomsSetting();
             if(!ok){
                 showRoomsToUsers=previous;
                 updateShowRoomsAdminUI();
+                applyPlayerRoomVisibilityUI();
+                applyAuctioneerRoomVisibilityUI();
                 alert('Impossibile salvare questa impostazione.');
             }
         }
@@ -7246,6 +7346,21 @@ html[data-live-theme] small{
             if(help){
                 help.textContent=showRoomsToUsers
                     ?'Scegli la stanza creata dal banditore'
+                    :'Digita il nome esatto della stanza';
+            }
+        }
+
+        function applyAuctioneerRoomVisibilityUI(){
+            const select=document.getElementById('auction-room-select');
+            const input=document.getElementById('auction-room-name-input');
+            const help=document.getElementById('auction-room-mode-help');
+
+            if(select)select.style.display=showRoomsToUsers?'block':'none';
+            if(input)input.style.display=showRoomsToUsers?'none':'block';
+
+            if(help){
+                help.textContent=showRoomsToUsers
+                    ?'Scegli la stanza esistente'
                     :'Digita il nome esatto della stanza';
             }
         }
@@ -7481,7 +7596,7 @@ html[data-live-theme] small{
             }
         }
 
-        function setAuctioneerRoomMode(mode) {
+        async function setAuctioneerRoomMode(mode) {
             if(mode!=='create' && mode!=='join') return;
 
             auctioneerRoomMode = mode;
@@ -7500,7 +7615,11 @@ html[data-live-theme] small{
             if(label) label.textContent=mode==='create'?'CREA NUOVA STANZA':'ENTRA IN UNA STANZA';
             if(err) err.innerText='';
 
-            if(mode==='join') loadRooms();
+            if(mode==='join'){
+                await loadShowRoomsSetting();
+                applyAuctioneerRoomVisibilityUI();
+                if(showRoomsToUsers) await loadRooms();
+            }
         }
 
         function resetAuctioneerRoomMode(){
@@ -7516,6 +7635,12 @@ html[data-live-theme] small{
             if(fields) fields.style.display='none';
             if(createBox) createBox.style.display='none';
             if(joinBox) joinBox.style.display='none';
+
+            const manualRoom=document.getElementById('auction-room-name-input');
+            if(manualRoom) manualRoom.value='';
+            const password=document.getElementById('auction-room-password');
+            if(password) password.value='';
+
             if(err) err.innerText='';
         }
 
@@ -8280,17 +8405,19 @@ html[data-live-theme] small{
             }
         }
 
-        function setDeviceMode(mode) {
+        async function setDeviceMode(mode) {
             unlockAudio();
             const dashboard = document.getElementById('auction-dashboard');
             dashboard.classList.remove('mode-pc', 'mode-mobile');
             dashboard.classList.add('mode-' + mode);
             resetAuctioneerRoomMode();
             showScreen('screen-auctioneer-setup');
-            loadRooms();
-            
+
+            await loadShowRoomsSetting();
+            applyAuctioneerRoomVisibilityUI();
+            if(showRoomsToUsers) await loadRooms();
+
             // Il listone viene sempre verificato automaticamente sul database centrale.
-            // Non esiste più una sincronizzazione manuale lato banditore.
             fetchListone();
         }
 
@@ -8494,6 +8621,9 @@ html[data-live-theme] small{
         }
 
         function backToList() {
+            const auctionViewNow=document.getElementById('view-auction');
+            if(auctionViewNow)auctionViewNow.classList.add('auction-view-hidden');
+
             saveLiveAuctionState({
                 phase:'idle',player:null,winner:'',value:0,seconds:0,deadline_at:null,
                 ready_token:null,ready_required_ids:[],ready_ids:[]
@@ -9119,10 +9249,18 @@ html[data-live-theme] small{
                         timer_seconds: 5
                     });
                 } else {
-                    const roomId = document.getElementById('auction-room-select').value;
                     const password = document.getElementById('auction-room-password').value;
-                    if (!roomId) throw new Error('Seleziona una stanza esistente.');
-                    room = await getRoomById(roomId);
+
+                    if(showRoomsToUsers){
+                        const roomId = document.getElementById('auction-room-select').value;
+                        if (!roomId) throw new Error('Seleziona una stanza esistente.');
+                        room = await getRoomById(roomId);
+                    }else{
+                        const roomName = document.getElementById('auction-room-name-input').value;
+                        if (!roomName.trim()) throw new Error('Digita il nome della stanza.');
+                        room = await getRoomByExactName(roomName);
+                    }
+
                     if (!room) throw new Error('Stanza non trovata.');
                     if (room.password !== password) throw new Error('Password stanza errata.');
                 }
@@ -10426,7 +10564,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 
 
 
-<script id="liveasta-v17-runtime">
+<script id="liveasta-v18-runtime">
 (function(){
   const TEAM_COLORS={
     'ATALANTA':['#191B1F','#3D8DB8'],
@@ -10610,9 +10748,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyBrand(){
-    document.title='LIVEASTA V17';
+    document.title='LIVEASTA V18';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V17';
+      el.textContent='LIVEASTA · VERSIONE V18';
     });
     document.querySelectorAll('.logo-text').forEach(el=>{
       const a=el.querySelector('.rosa');
@@ -10677,7 +10815,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 </script>
 
 
-<script id="liveasta-v17-theme-runtime">
+<script id="liveasta-v18-theme-runtime">
 (function(){
   const THEME_KEY='liveasta_theme';
   const THEMES=['broadcast','stadium','carbon','crimson','emerald','violet'];
