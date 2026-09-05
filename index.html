@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>LIVEASTA V20</title>
+    <title>LIVEASTA V21</title>
     <meta name="theme-color" content="#0D1117">
     <meta name="color-scheme" content="dark">
     <meta name="mobile-web-app-capable" content="yes">
@@ -2756,7 +2756,7 @@
         }
 </style>
 
-<style id="liveasta-v20-theme-switcher">
+<style id="liveasta-v21-theme-switcher">
 /* ===== LAYOUT PC STABILE (migrato dal vecchio V74, senza palette legacy) ===== */
 .logo-text{
   display:flex!important;
@@ -5359,6 +5359,58 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
     background:var(--theme-bg)!important;
   }
 }
+
+
+/* ==========================================================
+   LIVEASTA V21
+   Nome + ruolo/squadra più stretti verso la miniatura
+   sia telecomando sia banditore.
+   ========================================================== */
+
+/* TELECOMANDO:
+   nome un po' più in basso, ruolo/squadra un po' più in alto. */
+#screen-player-buzzer .phone-player-name{
+  transform:translateY(28px)!important;
+}
+#screen-player-buzzer .phone-player-meta{
+  transform:translateY(-28px)!important;
+}
+
+/* BANDITORE:
+   usiamo top invece di transform sul nome, così non interferiamo
+   con l'auto-fit scaleX dei nomi molto lunghi. */
+#screen-auctioneer-board #auction-player-name-top{
+  position:relative!important;
+  top:15px!important;
+  margin-bottom:0!important;
+}
+#screen-auctioneer-board .auction-player-meta{
+  position:relative!important;
+  top:-17px!important;
+  margin-top:0!important;
+}
+
+/* Mantieni sempre una sola riga. */
+#screen-auctioneer-board #auction-player-name-top,
+#screen-auctioneer-board .auction-player-meta,
+#screen-player-buzzer .phone-player-name,
+#screen-player-buzzer .phone-player-meta{
+  white-space:nowrap!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
+  word-break:normal!important;
+  overflow-wrap:normal!important;
+}
+
+/* Schermi mobili bassi: leggermente meno spostamento per evitare collisioni. */
+@media(max-height:760px){
+  #screen-player-buzzer .phone-player-name{
+    transform:translateY(21px)!important;
+  }
+  #screen-player-buzzer .phone-player-meta{
+    transform:translateY(-21px)!important;
+  }
+}
 </style>
 
 <script id="liveasta-theme-preload">
@@ -5404,7 +5456,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 <body>
 
     <div id="screen-role" class="screen active">
-        <div class="home-version-badge">LIVEASTA V20</div>
+        <div class="home-version-badge">LIVEASTA V21</div>
         <button class="btn btn-secondary top-home-btn" onclick="openAdminLogin()">⚙ Impostazioni</button>
         <div class="setup-card">
             <h1 class="logo-text"><span class="rosa">LIVE</span><span class="rush">ASTA</span></h1>
@@ -5606,7 +5658,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
     <div id="screen-admin" class="screen">
         <div class="setup-card" style="max-width:1100px; width:96%; padding:24px;">
-            <div class="admin-version-badge">LIVEASTA · VERSIONE V20</div>
+            <div class="admin-version-badge">LIVEASTA · VERSIONE V21</div>
             <h1>Gestione stanze</h1>
             <p class="subtitle">Nome, password, modifica ed eliminazione</p>
 
@@ -10772,7 +10824,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 
 
 
-<script id="liveasta-v20-runtime">
+<script id="liveasta-v21-runtime">
 (function(){
   const TEAM_COLORS={
     'ATALANTA':['#191B1F','#3D8DB8'],
@@ -10940,7 +10992,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
     if(el.scrollWidth>available){
       const ratio=Math.max(.72,available/el.scrollWidth);
       el.style.setProperty('transform-origin','center center','important');
-      const translate=(el.id==='phone-player-name')?'translateY(13px) ':'';
+      const translate=(el.id==='phone-player-name')?'translateY(28px) ':'';
       el.style.setProperty('transform',translate+`scaleX(${ratio})`,'important');
     }else if(el.id!=='phone-player-name'){
       el.style.removeProperty('transform');
@@ -10956,9 +11008,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyBrand(){
-    document.title='LIVEASTA V20';
+    document.title='LIVEASTA V21';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V20';
+      el.textContent='LIVEASTA · VERSIONE V21';
     });
     document.querySelectorAll('.logo-text').forEach(el=>{
       const a=el.querySelector('.rosa');
@@ -11023,7 +11075,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 </script>
 
 
-<script id="liveasta-v20-theme-runtime">
+<script id="liveasta-v21-theme-runtime">
 (function(){
   const THEME_KEY='liveasta_theme';
   const THEMES=['broadcast','stadium','carbon','crimson','emerald','violet'];
