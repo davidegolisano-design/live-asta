@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>LIVEASTA V22</title>
+    <title>LIVEASTA V23</title>
     <meta name="theme-color" content="#0D1117">
     <meta name="color-scheme" content="dark">
     <meta name="mobile-web-app-capable" content="yes">
@@ -2756,7 +2756,7 @@
         }
 </style>
 
-<style id="liveasta-v22-theme-switcher">
+<style id="liveasta-v23-theme-switcher">
 /* ===== LAYOUT PC STABILE (migrato dal vecchio V74, senza palette legacy) ===== */
 .logo-text{
   display:flex!important;
@@ -5476,6 +5476,36 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
     transform:translateY(-30px)!important;
   }
 }
+
+
+/* ==========================================================
+   LIVEASTA V23
+   BANDITORE PC: nome + ruolo/squadra molto più vicini
+   alla miniatura. Mobile invariato.
+   ========================================================== */
+
+#screen-auctioneer-board #auction-player-name-top{
+  position:relative!important;
+  top:70px!important;
+  margin-bottom:0!important;
+}
+
+#screen-auctioneer-board .auction-player-meta{
+  position:relative!important;
+  top:-74px!important;
+  margin-top:0!important;
+}
+
+/* Mantieni sempre una riga e compatibilità con auto-fit. */
+#screen-auctioneer-board #auction-player-name-top,
+#screen-auctioneer-board .auction-player-meta{
+  white-space:nowrap!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
+  word-break:normal!important;
+  overflow-wrap:normal!important;
+  hyphens:none!important;
+}
 </style>
 
 <script id="liveasta-theme-preload">
@@ -5523,7 +5553,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 <body>
 
     <div id="screen-role" class="screen active">
-        <div class="home-version-badge">LIVEASTA V22</div>
+        <div class="home-version-badge">LIVEASTA V23</div>
         <button class="btn btn-secondary top-home-btn" onclick="openAdminLogin()">⚙ Impostazioni</button>
         <div class="setup-card">
             <h1 class="logo-text"><span class="rosa">LIVE</span><span class="rush">ASTA</span></h1>
@@ -5725,7 +5755,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
     <div id="screen-admin" class="screen">
         <div class="setup-card" style="max-width:1100px; width:96%; padding:24px;">
-            <div class="admin-version-badge">LIVEASTA · VERSIONE V22</div>
+            <div class="admin-version-badge">LIVEASTA · VERSIONE V23</div>
             <h1>Gestione stanze</h1>
             <p class="subtitle">Nome, password, modifica ed eliminazione</p>
 
@@ -10891,7 +10921,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 
 
 
-<script id="liveasta-v22-runtime">
+<script id="liveasta-v23-runtime">
 (function(){
   const TEAM_COLORS={
     'ATALANTA':['#191B1F','#3D8DB8'],
@@ -11075,9 +11105,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyBrand(){
-    document.title='LIVEASTA V22';
+    document.title='LIVEASTA V23';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V22';
+      el.textContent='LIVEASTA · VERSIONE V23';
     });
     document.querySelectorAll('.logo-text').forEach(el=>{
       const a=el.querySelector('.rosa');
@@ -11142,7 +11172,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 </script>
 
 
-<script id="liveasta-v22-theme-runtime">
+<script id="liveasta-v23-theme-runtime">
 (function(){
   const THEME_KEY='liveasta_theme';
   const THEMES=['broadcast','stadium','carbon','crimson','emerald','violet'];
