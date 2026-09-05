@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>LIVEASTA V23</title>
+    <title>LIVEASTA V24</title>
     <meta name="theme-color" content="#0D1117">
     <meta name="color-scheme" content="dark">
     <meta name="mobile-web-app-capable" content="yes">
@@ -2756,7 +2756,7 @@
         }
 </style>
 
-<style id="liveasta-v23-theme-switcher">
+<style id="liveasta-v24-theme-switcher">
 /* ===== LAYOUT PC STABILE (migrato dal vecchio V74, senza palette legacy) ===== */
 .logo-text{
   display:flex!important;
@@ -5553,7 +5553,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 <body>
 
     <div id="screen-role" class="screen active">
-        <div class="home-version-badge">LIVEASTA V23</div>
+        <div class="home-version-badge">LIVEASTA V24</div>
         <button class="btn btn-secondary top-home-btn" onclick="openAdminLogin()">⚙ Impostazioni</button>
         <div class="setup-card">
             <h1 class="logo-text"><span class="rosa">LIVE</span><span class="rush">ASTA</span></h1>
@@ -5755,7 +5755,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
     <div id="screen-admin" class="screen">
         <div class="setup-card" style="max-width:1100px; width:96%; padding:24px;">
-            <div class="admin-version-badge">LIVEASTA · VERSIONE V23</div>
+            <div class="admin-version-badge">LIVEASTA · VERSIONE V24</div>
             <h1>Gestione stanze</h1>
             <p class="subtitle">Nome, password, modifica ed eliminazione</p>
 
@@ -6213,6 +6213,16 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
         let currentRoom = null;
         let roomsCache = [];
         let auctioneerRoomMode = null;
+
+        // V24: lock esclusivo del banditore per stanza.
+        // Il lock vive in fanta_app_data ed è protetto dalla PK `key`,
+        // quindi due banditori non possono acquisirlo contemporaneamente.
+        let auctioneerLockKey = null;
+        let auctioneerLockToken = null;
+        let auctioneerLockHeartbeatTimer = null;
+        let auctioneerLockLostHandled = false;
+        const AUCTIONEER_LOCK_HEARTBEAT_MS = 10000;
+        const AUCTIONEER_LOCK_STALE_MS = 90000;
 
         let myTeamName = "";
         let auctionTimeLimit = 5;
@@ -8693,6 +8703,10 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                 try{ await supabaseClient.removeChannel(oldChannel); }catch(e){}
             }
 
+            // Se questo dispositivo era il banditore della stanza,
+            // libera immediatamente il posto per un nuovo banditore.
+            await releaseAuctioneerRoomLock();
+
             if (timerInterval) {
                 clearInterval(timerInterval);
                 timerInterval=null;
@@ -9583,6 +9597,227 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
             }
         }
 
+        // --- LOCK ESCLUSIVO BANDITORE ---
+        function createAuctioneerLockToken(){
+            try{
+                if(globalThis.crypto?.randomUUID) return crypto.randomUUID();
+            }catch(e){}
+            return `auctioneer_${Date.now()}_${Math.random().toString(36).slice(2,12)}`;
+        }
+
+        function stopAuctioneerLockHeartbeat(){
+            if(auctioneerLockHeartbeatTimer){
+                clearInterval(auctioneerLockHeartbeatTimer);
+                auctioneerLockHeartbeatTimer=null;
+            }
+        }
+
+        async function readAuctioneerLock(lockKey){
+            if(!lockKey)return null;
+            const {data,error}=await supabaseClient
+                .from('fanta_app_data')
+                .select('key,data,updated_at')
+                .eq('key',lockKey)
+                .maybeSingle();
+
+            if(error){
+                console.warn('Lettura lock banditore non riuscita',error);
+                return null;
+            }
+            return data||null;
+        }
+
+        function auctioneerLockLastSeen(row){
+            const raw=row?.data?.heartbeat_at || row?.data?.acquired_at || row?.updated_at || '';
+            const ts=Date.parse(raw);
+            return Number.isFinite(ts)?ts:0;
+        }
+
+        function isAuctioneerLockFresh(row){
+            const last=auctioneerLockLastSeen(row);
+            return !!last && (Date.now()-last)<AUCTIONEER_LOCK_STALE_MS;
+        }
+
+        async function insertAuctioneerLock(lockKey,token,room){
+            const now=new Date().toISOString();
+            const payload={
+                token,
+                room_id:String(room.id),
+                room_name:String(room.name||''),
+                acquired_at:now,
+                heartbeat_at:now
+            };
+
+            const {error}=await supabaseClient
+                .from('fanta_app_data')
+                .insert({
+                    key:lockKey,
+                    data:payload,
+                    file_name:'liveasta-auctioneer-lock',
+                    updated_at:now
+                });
+
+            return {ok:!error,error};
+        }
+
+        async function acquireAuctioneerRoomLock(room){
+            if(!room?.id) return false;
+
+            // Non trascinare mai il lock di una stanza precedente.
+            await releaseAuctioneerRoomLock();
+
+            const lockKey=`liveasta_auctioneer_lock_${room.id}`;
+            const token=createAuctioneerLockToken();
+
+            // Primo tentativo: la PK della tabella rende questa acquisizione atomica.
+            let attempt=await insertAuctioneerLock(lockKey,token,room);
+
+            if(!attempt.ok){
+                const existing=await readAuctioneerLock(lockKey);
+
+                // Lock attivo: un altro banditore è già dentro.
+                if(existing && isAuctioneerLockFresh(existing)){
+                    return false;
+                }
+
+                // Lock vecchio (browser chiuso/crash): lo eliminiamo soltanto
+                // dopo una seconda verifica, poi ritentiamo l'INSERT atomico.
+                if(existing){
+                    await new Promise(resolve=>setTimeout(resolve,180));
+                    const verify=await readAuctioneerLock(lockKey);
+
+                    if(verify && isAuctioneerLockFresh(verify)){
+                        return false;
+                    }
+
+                    if(verify){
+                        const verifyToken=String(verify?.data?.token||'');
+                        const {error:deleteError}=await supabaseClient
+                            .from('fanta_app_data')
+                            .delete()
+                            .eq('key',lockKey);
+
+                        if(deleteError){
+                            console.warn('Pulizia lock banditore scaduto non riuscita',deleteError);
+                            return false;
+                        }
+
+                        // Se qualcuno ha sostituito il record nel frattempo,
+                        // il successivo INSERT perderà comunque sulla PK.
+                        if(verifyToken && verifyToken!==String(existing?.data?.token||'')){
+                            return false;
+                        }
+                    }
+                }
+
+                attempt=await insertAuctioneerLock(lockKey,token,room);
+                if(!attempt.ok) return false;
+            }
+
+            auctioneerLockKey=lockKey;
+            auctioneerLockToken=token;
+            auctioneerLockLostHandled=false;
+            startAuctioneerLockHeartbeat();
+            return true;
+        }
+
+        async function heartbeatAuctioneerRoomLock(){
+            if(!auctioneerLockKey || !auctioneerLockToken) return;
+
+            const row=await readAuctioneerLock(auctioneerLockKey);
+
+            // Se il record non c'è più oppure appartiene a un altro token,
+            // questo dispositivo ha perso il diritto di essere banditore.
+            if(!row || String(row?.data?.token||'')!==String(auctioneerLockToken)){
+                stopAuctioneerLockHeartbeat();
+
+                if(!auctioneerLockLostHandled){
+                    auctioneerLockLostHandled=true;
+                    alert('Questa sessione non è più il banditore autorizzato della stanza. La plancia verrà chiusa.');
+                    await forceAuctioneerExitAfterLockLoss();
+                }
+                return;
+            }
+
+            const now=new Date().toISOString();
+            const nextData={
+                ...(row.data||{}),
+                token:auctioneerLockToken,
+                heartbeat_at:now
+            };
+
+            const {error}=await supabaseClient
+                .from('fanta_app_data')
+                .update({
+                    data:nextData,
+                    updated_at:now
+                })
+                .eq('key',auctioneerLockKey);
+
+            if(error) console.warn('Heartbeat lock banditore non riuscito',error);
+        }
+
+        function startAuctioneerLockHeartbeat(){
+            stopAuctioneerLockHeartbeat();
+            heartbeatAuctioneerRoomLock().catch(()=>{});
+            auctioneerLockHeartbeatTimer=setInterval(
+                ()=>heartbeatAuctioneerRoomLock().catch(()=>{}),
+                AUCTIONEER_LOCK_HEARTBEAT_MS
+            );
+        }
+
+        async function releaseAuctioneerRoomLock(){
+            stopAuctioneerLockHeartbeat();
+
+            const key=auctioneerLockKey;
+            const token=auctioneerLockToken;
+
+            auctioneerLockKey=null;
+            auctioneerLockToken=null;
+
+            if(!key || !token) return;
+
+            try{
+                const row=await readAuctioneerLock(key);
+
+                // Non cancellare mai il lock di un altro banditore.
+                if(row && String(row?.data?.token||'')===String(token)){
+                    await supabaseClient
+                        .from('fanta_app_data')
+                        .delete()
+                        .eq('key',key);
+                }
+            }catch(e){
+                console.warn('Rilascio lock banditore non riuscito',e);
+            }
+        }
+
+        async function forceAuctioneerExitAfterLockLoss(){
+            stopAuctioneerLockHeartbeat();
+
+            const oldChannel=channel;
+            realtimeConnectionGeneration++;
+            channel=null;
+
+            if(oldChannel){
+                try{await supabaseClient.removeChannel(oldChannel)}catch(e){}
+            }
+
+            if(timerInterval){
+                clearInterval(timerInterval);
+                timerInterval=null;
+            }
+
+            isAuctionActive=false;
+            auctioneerLockKey=null;
+            auctioneerLockToken=null;
+            currentRoomCode='';
+            currentRoomId='';
+            currentRoom=null;
+
+            showScreen('screen-role');
+        }
+
         // --- LOGICA BANDITORE ---
         async function joinAsAuctioneer() {
             const err = document.getElementById('auction-room-error');
@@ -9593,6 +9828,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
             }
             auctionTimeLimit = 5;
             let room;
+            let auctioneerLockAcquired=false;
             try {
                 if (auctioneerRoomMode === 'create') {
                     const name = document.getElementById('auction-new-room-name').value;
@@ -9621,8 +9857,17 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                     if (!room) throw new Error('Stanza non trovata.');
                     if (room.password !== password) throw new Error('Password stanza errata.');
                 }
+                const lockOk=await acquireAuctioneerRoomLock(room);
+                if(!lockOk){
+                    throw new Error('In questa stanza è già collegato un banditore. È consentito un solo banditore per stanza.');
+                }
+                auctioneerLockAcquired=true;
+
                 await connectToRoom(room);
             } catch(e) {
+                if(auctioneerLockAcquired){
+                    await releaseAuctioneerRoomLock();
+                }
                 err.innerText = e.message || 'Impossibile accedere alla stanza.';
                 return;
             }
@@ -10921,7 +11166,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 
 
 
-<script id="liveasta-v23-runtime">
+<script id="liveasta-v24-runtime">
 (function(){
   const TEAM_COLORS={
     'ATALANTA':['#191B1F','#3D8DB8'],
@@ -11105,9 +11350,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyBrand(){
-    document.title='LIVEASTA V23';
+    document.title='LIVEASTA V24';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V23';
+      el.textContent='LIVEASTA · VERSIONE V24';
     });
     document.querySelectorAll('.logo-text').forEach(el=>{
       const a=el.querySelector('.rosa');
@@ -11172,7 +11417,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 </script>
 
 
-<script id="liveasta-v23-theme-runtime">
+<script id="liveasta-v24-theme-runtime">
 (function(){
   const THEME_KEY='liveasta_theme';
   const THEMES=['broadcast','stadium','carbon','crimson','emerald','violet'];
@@ -11300,6 +11545,17 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   window.addEventListener('pageshow',lockPortrait);
   document.addEventListener('visibilitychange',()=>{
     if(!document.hidden) lockPortrait();
+  });
+})();
+</script>
+
+
+<script id="liveasta-v24-auctioneer-lock-lifecycle">
+(function(){
+  window.addEventListener('pagehide',()=>{
+    try{
+      stopAuctioneerLockHeartbeat?.();
+    }catch(e){}
   });
 })();
 </script>
