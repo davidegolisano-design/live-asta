@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>LIVEASTA V11</title>
+    <title>LIVEASTA V12</title>
     <meta name="theme-color" content="#0D1117">
     <meta name="color-scheme" content="dark">
     <meta name="mobile-web-app-capable" content="yes">
@@ -2756,7 +2756,7 @@
         }
 </style>
 
-<style id="liveasta-v11-clean-broadcast-dark">
+<style id="liveasta-v12-clean-broadcast-dark">
 /* ===== LAYOUT PC STABILE (migrato dal vecchio V74, senza palette legacy) ===== */
 .logo-text{
   display:flex!important;
@@ -4057,12 +4057,84 @@ html,body{
     transform:scale(1.13)!important;
   }
 }
+
+
+/* ==========================================================
+   LIVEASTA V12 — fix tasti rilancio + pre-countdown bianco
+   ========================================================== */
+
+/* Pulsante abilitato: colore sempre coerente con lo stato reale */
+#screen-player-buzzer .buzzer-btn.btn-plus-1:not(:disabled){
+  background:linear-gradient(180deg,#55C4FF,#3AA8E8)!important;
+  color:#071019!important;
+  opacity:1!important;
+  filter:none!important;
+  border-color:rgba(255,255,255,.28)!important;
+  box-shadow:0 8px 20px rgba(0,0,0,.18)!important;
+}
+#screen-player-buzzer .buzzer-btn.btn-plus-5:not(:disabled){
+  background:linear-gradient(180deg,#4BE2A3,#32CF8A)!important;
+  color:#07110C!important;
+  opacity:1!important;
+  filter:none!important;
+  border-color:rgba(255,255,255,.28)!important;
+  box-shadow:0 8px 20px rgba(0,0,0,.18)!important;
+}
+#screen-player-buzzer .buzzer-btn.btn-plus-10:not(:disabled){
+  background:linear-gradient(180deg,#FFA563,#FF8A3D)!important;
+  color:#180D05!important;
+  opacity:1!important;
+  filter:none!important;
+  border-color:rgba(255,255,255,.28)!important;
+  box-shadow:0 8px 20px rgba(0,0,0,.18)!important;
+}
+#screen-player-buzzer .buzzer-btn.btn-plus-20:not(:disabled){
+  background:linear-gradient(180deg,#FF7587,#FF5D73)!important;
+  color:#19070B!important;
+  opacity:1!important;
+  filter:none!important;
+  border-color:rgba(255,255,255,.28)!important;
+  box-shadow:0 8px 20px rgba(0,0,0,.18)!important;
+}
+
+/* Pulsanti non utilizzabili realmente grigi */
+#screen-player-buzzer .buzzer-btn:disabled{
+  background:linear-gradient(180deg,#4A4F57,#2D3137)!important;
+  color:#9299A2!important;
+  border-color:#555C65!important;
+  opacity:.72!important;
+  filter:grayscale(1)!important;
+  box-shadow:none!important;
+  cursor:not-allowed!important;
+}
+
+/* Countdown PRIMA dell'asta: sempre bianco, anche a 3-2-1 */
+#screen-player-buzzer .phone-top-area.player-preparing #player-countdown,
+#screen-player-buzzer .phone-top-area.player-preparing #player-countdown.prep-countdown,
+#screen-player-buzzer .phone-top-area.player-preparing #player-countdown.liveasta-last3,
+#screen-player-buzzer .phone-top-area.player-preparing #player-countdown.danger{
+  color:#FFFFFF!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  text-shadow:0 0 24px rgba(255,255,255,.22)!important;
+}
+
+#screen-auctioneer-board #countdown-display.prep-countdown,
+#screen-auctioneer-board #countdown-display.prep-countdown.liveasta-last3,
+#screen-auctioneer-board #countdown-display.prep-countdown.danger{
+  color:#FFFFFF!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  text-shadow:0 0 24px rgba(255,255,255,.20)!important;
+}
 </style>
 </head>
 <body>
 
     <div id="screen-role" class="screen active">
-        <div class="home-version-badge">LIVEASTA V11</div>
+        <div class="home-version-badge">LIVEASTA V12</div>
         <button class="btn btn-secondary top-home-btn" onclick="openAdminLogin()">⚙ Impostazioni</button>
         <div class="setup-card">
             <h1 class="logo-text"><span class="rosa">LIVE</span><span class="rush">ASTA</span></h1>
@@ -4224,7 +4296,7 @@ html,body{
 
     <div id="screen-admin" class="screen">
         <div class="setup-card" style="max-width:1100px; width:96%; padding:24px;">
-            <div class="admin-version-badge">LIVEASTA · VERSIONE V11</div>
+            <div class="admin-version-badge">LIVEASTA · VERSIONE V12</div>
             <h1>Gestione stanze</h1>
             <p class="subtitle">Nome, password, modifica ed eliminazione</p>
             <div style="display:flex; gap:8px; margin-bottom:10px;">
@@ -5431,6 +5503,11 @@ html,body{
                 isAuctionActive=false;
                 setPlayerBidButtonsEnabled(false);
                 setPlayerAuctionVisualState('preparing');
+                const prepEl=document.getElementById('player-countdown');
+                if(prepEl){
+                    prepEl.classList.remove('danger','liveasta-last3');
+                    prepEl.classList.add('prep-countdown');
+                }
                 if(remaining>0)startLocalPlayerPreparation(remaining);
                 else{
                     document.getElementById('player-auction-title').textContent='AVVIO ASTA…';
@@ -7193,7 +7270,8 @@ html,body{
             }
             if (timer) {
                 timer.innerText = remaining;
-                timer.classList.toggle('danger', remaining <= 2);
+                timer.classList.remove('danger','liveasta-last3');
+                timer.classList.add('prep-countdown');
             }
 
             playerPrepInterval = setInterval(() => {
@@ -7205,7 +7283,8 @@ html,body{
                 }
                 if (timer) {
                     timer.innerText = remaining;
-                    timer.classList.toggle('danger', remaining <= 2);
+                    timer.classList.remove('danger','liveasta-last3');
+                timer.classList.add('prep-countdown');
                 }
             }, 1000);
         }
@@ -7274,6 +7353,8 @@ html,body{
                     document.getElementById('player-current-winner').style.color = 'var(--text-muted)';
                     document.getElementById('player-current-value').innerText = '0';
                     document.getElementById('phone-card-container').style.visibility = 'visible';
+                    currentAuctionValue = 0;
+                    currentWinner = '';
                     currentAuctionPlayer = playersList.find(p => String(p.Id) === String(data.player_id)) || {Id:data.player_id,R:data.role,Nome:data.nome,Squadra:data.club};
                     playerHasBidThisAuction = false;
                     setPlayerAuctionVisualState('neutral');
@@ -7430,7 +7511,8 @@ html,body{
                     const t = Math.max(0, parseInt(payload.payload?.seconds) || 0);
                     const el = document.getElementById('player-countdown');
                     el.innerText = t;
-                    el.classList.toggle('danger', t > 0 && t <= 2);
+                    el.classList.remove('danger','liveasta-last3');
+                    el.classList.add('prep-countdown');
                 });
                 channel.on('broadcast', { event: 'auction_started' }, (payload) => {
                     playerSealedMode=false;
@@ -7442,6 +7524,10 @@ html,body{
                         playerPrepInterval = null;
                     }
                     isAuctionActive = true;
+                    currentAuctionValue = 0;
+                    currentWinner = '';
+                    const prepTimerEl=document.getElementById('player-countdown');
+                    if(prepTimerEl)prepTimerEl.classList.remove('prep-countdown','danger','liveasta-last3');
                     setPlayerAuctionVisualState('neutral');
                     document.getElementById('player-auction-title').innerText = 'MIGLIOR OFFERTA';
                     document.getElementById('player-current-winner').innerText = 'Nessuno';
@@ -8166,7 +8252,10 @@ html,body{
             document.getElementById('auction-title-display').innerText = "IN ATTESA";
             document.getElementById('winner-display').innerText = "--";
             document.getElementById('winner-display').style.color = "var(--text-muted)";
-            document.getElementById('countdown-display').style.color = "var(--text-main)";
+            const prepCountdownEl=document.getElementById('countdown-display');
+            prepCountdownEl.style.color = "#FFFFFF";
+            prepCountdownEl.classList.remove('danger','liveasta-last3');
+            prepCountdownEl.classList.add('prep-countdown');
             
             currentWinner = "";
             currentAuctionValue = 0;
@@ -8216,8 +8305,10 @@ html,body{
             
             document.getElementById('auction-title-display').innerText = "MIGLIOR OFFERENTE";
             document.getElementById('winner-display').innerText = "NESSUNO";
-            document.getElementById('countdown-display').innerText = currentTimer;
-            document.getElementById('countdown-display').style.color = "var(--accent-green)";
+            const activeCountdownEl=document.getElementById('countdown-display');
+            activeCountdownEl.classList.remove('prep-countdown','danger','liveasta-last3');
+            activeCountdownEl.innerText = currentTimer;
+            activeCountdownEl.style.color = "var(--accent-green)";
             
             playSound('audio-start');
             if(channel) channel.send({type:'broadcast',event:'auction_started',payload:{player_id:currentAuctionPlayer?.Id,seconds:currentTimer}}).catch(()=>{});
@@ -9062,7 +9153,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 
 
 
-<script id="liveasta-v11-runtime">
+<script id="liveasta-v12-runtime">
 (function(){
   const TEAM_COLORS={
     'ATALANTA':['#111111','#249FDB'],
@@ -9246,9 +9337,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyBrand(){
-    document.title='LIVEASTA V11';
+    document.title='LIVEASTA V12';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V11';
+      el.textContent='LIVEASTA · VERSIONE V12';
     });
     document.querySelectorAll('.logo-text').forEach(el=>{
       const a=el.querySelector('.rosa');
