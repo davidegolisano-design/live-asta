@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>LIVEASTA V19</title>
+    <title>LIVEASTA V20</title>
     <meta name="theme-color" content="#0D1117">
     <meta name="color-scheme" content="dark">
     <meta name="mobile-web-app-capable" content="yes">
@@ -11,7 +11,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
     <meta name="description" content="LIVEASTA - asta fantasy calcio realtime a stanze">
-    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="manifest" href="manifest.webmanifest?v=20">
     <link rel="apple-touch-icon" href="icon-192.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
@@ -2756,7 +2756,7 @@
         }
 </style>
 
-<style id="liveasta-v19-theme-switcher">
+<style id="liveasta-v20-theme-switcher">
 /* ===== LAYOUT PC STABILE (migrato dal vecchio V74, senza palette legacy) ===== */
 .logo-text{
   display:flex!important;
@@ -5225,6 +5225,140 @@ html[data-live-theme] body{
     pointer-events:none!important;
   }
 }
+
+
+/* ==========================================================
+   LIVEASTA V20 — PWA + GESTIONE CLEANUP
+   ========================================================== */
+
+/* ===== GESTIONE: elimina gli sfondi neri legacy nelle colonne Azioni ===== */
+html[data-live-theme] #screen-room-control .control-table th:last-child,
+html[data-live-theme] #screen-room-control .teams-control-table th:last-child{
+  background:var(--theme-hover)!important;
+  background-image:none!important;
+  box-shadow:-6px 0 12px color-mix(in srgb,var(--theme-bg) 22%,transparent)!important;
+}
+
+html[data-live-theme] #screen-room-control .control-table td:last-child,
+html[data-live-theme] #screen-room-control .teams-control-table td:last-child{
+  background:var(--theme-card)!important;
+  background-image:none!important;
+  box-shadow:-6px 0 12px color-mix(in srgb,var(--theme-bg) 18%,transparent)!important;
+}
+
+html[data-live-theme] #screen-room-control .control-table tbody tr:nth-child(even) td:last-child,
+html[data-live-theme] #screen-room-control .teams-control-table tbody tr:nth-child(even) td:last-child{
+  background:color-mix(in srgb,var(--theme-card) 94%,var(--theme-hover) 6%)!important;
+}
+
+/* Pulsanti squadre coerenti con il tema */
+html[data-live-theme] #screen-room-control .control-teams-actions{
+  background:transparent!important;
+  box-shadow:none!important;
+}
+html[data-live-theme] #screen-room-control .control-teams-actions .manual-assign-btn{
+  background:var(--theme-accent)!important;
+  color:var(--theme-bg-deep)!important;
+  border-color:transparent!important;
+}
+html[data-live-theme] #screen-room-control .control-teams-actions .btn:not(.manual-assign-btn):not(.btn-danger){
+  background:var(--theme-primary)!important;
+  color:var(--theme-bg-deep)!important;
+  border-color:transparent!important;
+}
+html[data-live-theme] #screen-room-control .control-teams-actions .btn-danger{
+  background:var(--theme-danger)!important;
+  color:var(--theme-bg-deep)!important;
+  border-color:transparent!important;
+}
+
+/* Pulsanti Annulla/ripristina singoli: niente celle nere */
+html[data-live-theme] #screen-room-control .control-table td:last-child .btn-danger,
+html[data-live-theme] #screen-room-control .control-table td:last-child button{
+  background:transparent!important;
+  color:var(--theme-danger)!important;
+  border:1px solid var(--theme-danger)!important;
+  box-shadow:none!important;
+}
+html[data-live-theme] #screen-room-control .control-table td:last-child .btn-danger:hover,
+html[data-live-theme] #screen-room-control .control-table td:last-child button:hover{
+  background:color-mix(in srgb,var(--theme-danger) 14%,transparent)!important;
+}
+
+/* Acquisti/Rose: titolo, contatore e reset totale sempre allineati */
+#screen-room-control .control-card > .control-title{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  align-items:center!important;
+  gap:12px!important;
+  width:100%!important;
+  box-sizing:border-box!important;
+}
+
+#screen-room-control .control-title-actions{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+  gap:10px!important;
+  flex-wrap:nowrap!important;
+  min-width:0!important;
+}
+
+#screen-room-control .control-title-actions #control-purchase-count{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  min-height:34px!important;
+  white-space:nowrap!important;
+  margin:0!important;
+}
+
+#screen-room-control .control-title-actions .btn{
+  min-height:38px!important;
+  margin:0!important;
+  padding:7px 14px!important;
+  white-space:nowrap!important;
+  flex:0 0 auto!important;
+}
+
+/* Il reset totale usa il danger del tema, non un rosso fisso */
+html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
+  background:var(--theme-danger)!important;
+  color:var(--theme-bg-deep)!important;
+  border-color:transparent!important;
+}
+
+/* Responsive: sotto 760px va su due righe pulite, mai sovrapposto */
+@media(max-width:760px){
+  #screen-room-control .control-card > .control-title{
+    grid-template-columns:1fr!important;
+    align-items:stretch!important;
+  }
+  #screen-room-control .control-title-actions{
+    width:100%!important;
+    justify-content:space-between!important;
+    flex-wrap:wrap!important;
+  }
+  #screen-room-control .control-title-actions .btn{
+    flex:1 1 100%!important;
+    width:100%!important;
+  }
+}
+
+/* ===== PWA SAFE AREA =====
+   Il contenuto della app usa sempre il colore del tema corrente. */
+@media (display-mode:standalone){
+  html[data-live-theme],
+  html[data-live-theme] body{
+    background:var(--theme-bg)!important;
+    background-color:var(--theme-bg)!important;
+  }
+
+  html[data-live-theme] body::before,
+  html[data-live-theme] body::after{
+    background:var(--theme-bg)!important;
+  }
+}
 </style>
 
 <script id="liveasta-theme-preload">
@@ -5270,7 +5404,7 @@ html[data-live-theme] body{
 <body>
 
     <div id="screen-role" class="screen active">
-        <div class="home-version-badge">LIVEASTA V19</div>
+        <div class="home-version-badge">LIVEASTA V20</div>
         <button class="btn btn-secondary top-home-btn" onclick="openAdminLogin()">⚙ Impostazioni</button>
         <div class="setup-card">
             <h1 class="logo-text"><span class="rosa">LIVE</span><span class="rush">ASTA</span></h1>
@@ -5472,7 +5606,7 @@ html[data-live-theme] body{
 
     <div id="screen-admin" class="screen">
         <div class="setup-card" style="max-width:1100px; width:96%; padding:24px;">
-            <div class="admin-version-badge">LIVEASTA · VERSIONE V19</div>
+            <div class="admin-version-badge">LIVEASTA · VERSIONE V20</div>
             <h1>Gestione stanze</h1>
             <p class="subtitle">Nome, password, modifica ed eliminazione</p>
 
@@ -10638,7 +10772,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 
 
 
-<script id="liveasta-v19-runtime">
+<script id="liveasta-v20-runtime">
 (function(){
   const TEAM_COLORS={
     'ATALANTA':['#191B1F','#3D8DB8'],
@@ -10822,9 +10956,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyBrand(){
-    document.title='LIVEASTA V19';
+    document.title='LIVEASTA V20';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V19';
+      el.textContent='LIVEASTA · VERSIONE V20';
     });
     document.querySelectorAll('.logo-text').forEach(el=>{
       const a=el.querySelector('.rosa');
@@ -10889,7 +11023,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 </script>
 
 
-<script id="liveasta-v19-theme-runtime">
+<script id="liveasta-v20-theme-runtime">
 (function(){
   const THEME_KEY='liveasta_theme';
   const THEMES=['broadcast','stadium','carbon','crimson','emerald','violet'];
@@ -10957,11 +11091,30 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
     window.applyLiveAstaTheme(theme,false);
   }
 
+  function reapplySystemTheme(){
+    let theme='broadcast';
+    try{theme=normalizeTheme(localStorage.getItem(THEME_KEY)||'broadcast')}catch(_){}
+    updateThemeMeta(theme);
+  }
+
   if(document.readyState==='loading'){
-    document.addEventListener('DOMContentLoaded',bootTheme,{once:true});
+    document.addEventListener('DOMContentLoaded',()=>{
+      bootTheme();
+      reapplySystemTheme();
+      setTimeout(reapplySystemTheme,120);
+      setTimeout(reapplySystemTheme,650);
+    },{once:true});
   }else{
     bootTheme();
+    reapplySystemTheme();
+    setTimeout(reapplySystemTheme,120);
+    setTimeout(reapplySystemTheme,650);
   }
+
+  window.addEventListener('pageshow',reapplySystemTheme);
+  document.addEventListener('visibilitychange',()=>{
+    if(!document.hidden)reapplySystemTheme();
+  });
 })();
 </script>
 
