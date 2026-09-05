@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>LIVEASTA V32</title>
+    <title>LIVEASTA V33</title>
     <meta name="theme-color" content="#0D1117">
     <meta name="color-scheme" content="dark">
     <meta name="mobile-web-app-capable" content="yes">
@@ -2756,7 +2756,7 @@
         }
 </style>
 
-<style id="liveasta-v32-theme-switcher">
+<style id="liveasta-v33-theme-switcher">
 /* ===== LAYOUT PC STABILE (migrato dal vecchio V74, senza palette legacy) ===== */
 .logo-text{
   display:flex!important;
@@ -5610,7 +5610,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V32
+   LIVEASTA V33
    ========================================================== */
 
 /* Versione home cliccabile = refresh */
@@ -5633,7 +5633,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V32 — BUSTA NEL LISTONE
+   LIVEASTA V33 — BUSTA NEL LISTONE
    ========================================================== */
 #screen-auctioneer-board .auction-list-toolbar .toolbar-sealed-btn{
   flex:0 0 auto!important;
@@ -5655,7 +5655,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V32 — TOOLBAR LISTONE TUTTA SU UNA RIGA
+   LIVEASTA V33 — TOOLBAR LISTONE TUTTA SU UNA RIGA
    ========================================================== */
 
 /* Search + dado + modalità busta + ROSE */
@@ -5747,7 +5747,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V32 — BANDITORE GIOCATORE
+   LIVEASTA V33 — BANDITORE GIOCATORE
    ========================================================== */
 .auctioneer-player-control-card{
   border-color:color-mix(in srgb,var(--theme-primary) 28%,var(--theme-border))!important;
@@ -5798,7 +5798,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V32
+   LIVEASTA V33
    ========================================================== */
 
 /* MODALITÀ BUSTA:
@@ -5924,6 +5924,295 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 #screen-room-control .online-player-chip.absent .online-player-dot{
   background:#F59E0B!important;
 }
+
+
+/* ==========================================================
+   LIVEASTA V33
+   ========================================================== */
+
+/* ===== STATO GIOCATORE: palette definitiva ===== */
+#screen-player-buzzer #player-connection-pill.offline{
+  color:#FF667A!important;
+  border-color:rgba(255,82,104,.48)!important;
+  background:rgba(255,82,104,.10)!important;
+}
+#screen-player-buzzer #player-connection-pill.offline .player-connection-dot{
+  background:#FF5268!important;
+  box-shadow:0 0 9px rgba(255,82,104,.58)!important;
+}
+
+#screen-player-buzzer #player-connection-pill.connecting{
+  color:#FFB55B!important;
+  border-color:rgba(255,159,67,.48)!important;
+  background:rgba(255,159,67,.10)!important;
+}
+#screen-player-buzzer #player-connection-pill.connecting .player-connection-dot{
+  background:#FF9F43!important;
+  box-shadow:0 0 9px rgba(255,159,67,.58)!important;
+}
+
+#screen-player-buzzer #player-connection-pill.online{
+  color:#7BF0B4!important;
+  border-color:rgba(61,220,151,.50)!important;
+  background:rgba(61,220,151,.10)!important;
+}
+#screen-player-buzzer #player-connection-pill.online .player-connection-dot{
+  background:#3DDC97!important;
+  box-shadow:0 0 9px rgba(61,220,151,.62)!important;
+}
+
+#screen-player-buzzer #player-connection-pill.absent{
+  color:#C6A4FF!important;
+  border-color:rgba(168,116,255,.52)!important;
+  background:rgba(168,116,255,.11)!important;
+}
+#screen-player-buzzer #player-connection-pill.absent .player-connection-dot{
+  background:#A874FF!important;
+  box-shadow:0 0 9px rgba(168,116,255,.62)!important;
+}
+
+/* Anche la scelta ASSENTE usa il viola. */
+.player-availability-choice.absent-choice .availability-choice-dot{
+  background:#A874FF!important;
+  box-shadow:0 0 10px rgba(168,116,255,.52)!important;
+}
+
+/* ===== BANDITORE SMARTPHONE: layout pulito ===== */
+@media(max-width:760px){
+
+  /* Header in 2 righe:
+     ESCI | titolo+online | GESTIONE
+     STANZA centrata sotto. */
+  #screen-auctioneer-board > .session-nav{
+    position:absolute!important;
+    top:max(6px,env(safe-area-inset-top))!important;
+    left:8px!important;
+    right:8px!important;
+    transform:none!important;
+    width:auto!important;
+    max-width:none!important;
+    min-height:72px!important;
+    height:72px!important;
+    padding:0!important;
+    display:grid!important;
+    grid-template-columns:72px minmax(0,1fr) 86px!important;
+    grid-template-rows:38px 28px!important;
+    grid-template-areas:
+      "back center manage"
+      "room room room"!important;
+    gap:4px 7px!important;
+    align-items:center!important;
+  }
+
+  #screen-auctioneer-board > .session-nav > .session-back:first-child{
+    grid-area:back!important;
+    width:72px!important;
+    height:36px!important;
+    min-height:36px!important;
+    padding:0 7px!important;
+    margin:0!important;
+    font-size:.68rem!important;
+    border-radius:11px!important;
+  }
+
+  #screen-auctioneer-board > .session-nav > .session-back:last-child{
+    grid-area:manage!important;
+    width:86px!important;
+    height:36px!important;
+    min-height:36px!important;
+    padding:0 6px!important;
+    margin:0!important;
+    font-size:.66rem!important;
+    border-radius:11px!important;
+  }
+
+  #screen-auctioneer-board .auction-session-center{
+    grid-area:center!important;
+    min-width:0!important;
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:1px!important;
+    line-height:1!important;
+  }
+
+  #screen-auctioneer-board .auction-session-center .session-title{
+    max-width:100%!important;
+    font-size:.72rem!important;
+    line-height:1!important;
+    letter-spacing:.045em!important;
+    white-space:nowrap!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+  }
+
+  #screen-auctioneer-board .auction-online-pill{
+    min-height:18px!important;
+    height:18px!important;
+    padding:1px 7px!important;
+    margin:0!important;
+    font-size:.54rem!important;
+    border-radius:999px!important;
+    white-space:nowrap!important;
+  }
+
+  #screen-auctioneer-board .auction-online-dot{
+    width:6px!important;
+    height:6px!important;
+  }
+
+  #screen-auctioneer-board .auction-nav-room-pill{
+    grid-area:room!important;
+    justify-self:center!important;
+    max-width:calc(100% - 20px)!important;
+    min-height:25px!important;
+    height:25px!important;
+    padding:2px 10px!important;
+    margin:0!important;
+    font-size:.58rem!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+  }
+
+  /* Il contenuto parte sotto l'header, senza sovrapposizioni. */
+  #auction-dashboard.mode-mobile{
+    width:100%!important;
+    height:100dvh!important;
+    min-height:100dvh!important;
+    padding:86px 7px max(5px,env(safe-area-inset-bottom))!important;
+    margin:0!important;
+    box-sizing:border-box!important;
+    overflow:hidden!important;
+  }
+
+  #auction-dashboard.mode-mobile .dashboard-layout,
+  #auction-dashboard.mode-mobile #view-list{
+    width:100%!important;
+    height:100%!important;
+    min-height:0!important;
+  }
+
+  #auction-dashboard.mode-mobile #view-list .dashboard-left{
+    width:100%!important;
+    height:100%!important;
+    min-height:0!important;
+    padding:0!important;
+    border-radius:0!important;
+    border:0!important;
+    background:transparent!important;
+  }
+
+  /* Toolbar più proporzionata ma sempre su UNA riga. */
+  #screen-auctioneer-board .auction-list-toolbar{
+    grid-template-columns:minmax(116px,1fr) 44px minmax(140px,154px) 58px!important;
+    gap:5px!important;
+    margin:0 0 7px!important;
+  }
+
+  #screen-auctioneer-board .auction-list-toolbar #player-search,
+  #screen-auctioneer-board .auction-list-toolbar .toolbar-icon-btn,
+  #screen-auctioneer-board .auction-list-toolbar .toolbar-sealed-mode-btn,
+  #screen-auctioneer-board .auction-list-toolbar .toolbar-roster-btn{
+    height:42px!important;
+    min-height:42px!important;
+  }
+
+  #screen-auctioneer-board .auction-list-toolbar #player-search{
+    padding:0 10px!important;
+    font-size:.72rem!important;
+    border-radius:10px!important;
+  }
+
+  #screen-auctioneer-board .auction-list-toolbar .toolbar-icon-btn{
+    width:44px!important;
+    min-width:44px!important;
+    font-size:1rem!important;
+    border-radius:10px!important;
+  }
+
+  #screen-auctioneer-board .toolbar-sealed-mode-btn{
+    min-width:0!important;
+    padding:0 5px!important;
+    font-size:.54rem!important;
+    letter-spacing:0!important;
+    border-radius:10px!important;
+    line-height:1.05!important;
+  }
+
+  #screen-auctioneer-board .toolbar-roster-btn{
+    width:58px!important;
+    min-width:58px!important;
+    padding:0 4px!important;
+    font-size:.57rem!important;
+    border-radius:10px!important;
+  }
+
+  #auction-dashboard.mode-mobile #view-list .list-section-title{
+    min-height:24px!important;
+    margin:4px 2px 5px!important;
+    font-size:.66rem!important;
+  }
+
+  #auction-dashboard.mode-mobile #view-list .table-container{
+    flex:1 1 auto!important;
+    min-height:0!important;
+    border-radius:11px!important;
+    overflow:auto!important;
+  }
+
+  #auction-dashboard.mode-mobile #view-list table{
+    table-layout:fixed!important;
+    width:100%!important;
+  }
+
+  #auction-dashboard.mode-mobile #view-list th:nth-child(1){width:13%!important}
+  #auction-dashboard.mode-mobile #view-list th:nth-child(2){width:43%!important}
+  #auction-dashboard.mode-mobile #view-list th:nth-child(3){width:29%!important}
+  #auction-dashboard.mode-mobile #view-list th:nth-child(4){width:15%!important}
+
+  #auction-dashboard.mode-mobile #view-list th{
+    padding:8px 7px!important;
+    font-size:.62rem!important;
+    line-height:1!important;
+    white-space:nowrap!important;
+  }
+
+  #auction-dashboard.mode-mobile #view-list td{
+    padding:8px 7px!important;
+    font-size:.74rem!important;
+    line-height:1.05!important;
+    white-space:nowrap!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+  }
+
+  #auction-dashboard.mode-mobile #view-list .role-badge{
+    min-width:28px!important;
+    padding:4px 6px!important;
+    font-size:.66rem!important;
+    border-radius:999px!important;
+  }
+
+  /* Footer "Già banditi" più compatto. */
+  #auction-dashboard.mode-mobile .auctioned-section-head{
+    gap:6px!important;
+    margin:6px 0 0!important;
+  }
+
+  #auction-dashboard.mode-mobile .auctioned-section-head .collapsed-toggle,
+  #auction-dashboard.mode-mobile .restore-all-btn{
+    min-height:38px!important;
+    height:38px!important;
+    padding:5px 9px!important;
+    font-size:.60rem!important;
+    border-radius:10px!important;
+  }
+
+  #auction-dashboard.mode-mobile .restore-all-btn{
+    white-space:nowrap!important;
+  }
+}
 </style>
 
 <script id="liveasta-theme-preload">
@@ -5976,7 +6265,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
              title="Aggiorna LIVEASTA"
              onclick="window.location.reload()"
              onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();window.location.reload();}">
-            LIVEASTA V32
+            LIVEASTA V33
         </div>
         <button class="btn btn-secondary top-home-btn" onclick="openAdminLogin()">⚙ Impostazioni</button>
         <div class="setup-card">
@@ -6190,7 +6479,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
     <div id="screen-admin" class="screen">
         <div class="setup-card" style="max-width:1100px; width:96%; padding:24px;">
-            <div class="admin-version-badge">LIVEASTA · VERSIONE V32</div>
+            <div class="admin-version-badge">LIVEASTA · VERSIONE V33</div>
             <h1>Gestione stanze</h1>
             <p class="subtitle">Nome, password, modifica ed eliminazione</p>
 
@@ -6802,9 +7091,11 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
             if(auctioneerPlayerMode&&team){
                 myTeamId=team.id;
                 myTeamName=team.name;
+                playerAvailabilityMode=absentTeamIds.has(String(team.id))?'absent':'online';
             }else{
                 myTeamId=null;
                 myTeamName='';
+                playerAvailabilityMode='online';
             }
             renderAuctioneerPlayerControl();
         }
@@ -6817,9 +7108,19 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
             if(select){
                 const selected=auctioneerPlayerTeamId?String(auctioneerPlayerTeamId):'';
-                select.innerHTML='<option value="">Seleziona squadra</option>'+
-                    teamsCache.map(t=>`<option value="${escapeHtml(t.id)}">${escapeHtml(t.name)}</option>`).join('');
-                select.value=selected;
+
+                // Come un giocatore normale: il banditore può scegliere soltanto
+                // una squadra libera. La propria selezione resta visibile per
+                // permettere di disattivare/cambiare modalità senza sparire.
+                const freeTeams=teamsCache.filter(t=>
+                    String(t.id)===selected ||
+                    !onlinePlayers.has(String(t.id))
+                );
+
+                select.innerHTML='<option value="">Seleziona squadra libera</option>'+
+                    freeTeams.map(t=>`<option value="${escapeHtml(t.id)}">${escapeHtml(t.name)}</option>`).join('');
+
+                select.value=freeTeams.some(t=>String(t.id)===selected)?selected:'';
             }
 
             const team=currentAuctioneerPlayerTeam();
@@ -6868,6 +7169,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                 myTeamName='';
                 saveAuctioneerPlayerModeLocal();
                 renderAuctioneerPlayerControl();
+                renderOnlinePlayers();
                 return;
             }
 
@@ -6880,7 +7182,8 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                 return;
             }
             if(onlinePlayers.has(String(team.id))){
-                alert('Questa squadra è già collegata da un altro telefono.');
+                alert('Questa squadra non è più libera: è già collegata da un altro telefono.');
+                renderAuctioneerPlayerControl();
                 return;
             }
 
@@ -6889,6 +7192,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
             myTeamName=team.name;
             saveAuctioneerPlayerModeLocal();
             renderAuctioneerPlayerControl();
+            renderOnlinePlayers();
         }
 
         function configureHybridPlayerIdentity(){
@@ -9314,7 +9618,24 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
             const order=ensureNominationOrder();
             const position=new Map(order.map((id,i)=>[String(id),i]));
-            const items=[...onlinePlayers.values()].sort((a,b)=>{
+
+            const items=[...onlinePlayers.values()];
+
+            // Il banditore-giocatore è un giocatore reale a tutti gli effetti:
+            // deve comparire ONLINE anche se usa lo stesso dispositivo del banditore.
+            if(auctioneerPlayerMode && auctioneerPlayerTeamId){
+                const hostTeam=teamsCache.find(t=>String(t.id)===String(auctioneerPlayerTeamId));
+                if(hostTeam && !items.some(p=>String(p.team_id)===String(hostTeam.id))){
+                    items.push({
+                        team_id:String(hostTeam.id),
+                        team_name:String(hostTeam.name),
+                        presence_at:Date.now(),
+                        hybrid_auctioneer:true
+                    });
+                }
+            }
+
+            items.sort((a,b)=>{
                 const pa=position.has(String(a.team_id))?position.get(String(a.team_id)):9999;
                 const pb=position.has(String(b.team_id))?position.get(String(b.team_id)):9999;
                 return pa-pb || String(a.team_name).localeCompare(String(b.team_name),'it');
@@ -9336,7 +9657,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                 const absent=absentTeamIds.has(String(p.team_id));
                 return `<div class="online-player-chip ${turn?'current-turn':''} ${absent?'absent':''}">
                     <span class="online-player-dot"></span>
-                    <span>${escapeHtml(p.team_name)}${absent?' · ASSENTE':''}</span>
+                    <span>${escapeHtml(p.team_name)}${p.hybrid_auctioneer?' · BANDITORE':''}${absent?' · ASSENTE':''}</span>
                 </div>`;
             }).join('');
         }
@@ -12736,7 +13057,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 
 
 
-<script id="liveasta-v32-runtime">
+<script id="liveasta-v33-runtime">
 (function(){
   const TEAM_COLORS={
     'ATALANTA':['#191B1F','#3D8DB8'],
@@ -12920,9 +13241,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyBrand(){
-    document.title='LIVEASTA V32';
+    document.title='LIVEASTA V33';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V32';
+      el.textContent='LIVEASTA · VERSIONE V33';
     });
     document.querySelectorAll('.logo-text').forEach(el=>{
       const a=el.querySelector('.rosa');
@@ -12987,7 +13308,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 </script>
 
 
-<script id="liveasta-v32-theme-runtime">
+<script id="liveasta-v33-theme-runtime">
 (function(){
   const THEME_KEY='liveasta_theme';
   const THEMES=['broadcast','stadium','carbon','crimson','emerald','violet'];
