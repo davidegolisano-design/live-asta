@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>LIVEASTA V13</title>
+    <title>LIVEASTA V14</title>
     <meta name="theme-color" content="#0D1117">
     <meta name="color-scheme" content="dark">
     <meta name="mobile-web-app-capable" content="yes">
@@ -2756,7 +2756,7 @@
         }
 </style>
 
-<style id="liveasta-v13-clean-broadcast-dark">
+<style id="liveasta-v14-clean-broadcast-dark">
 /* ===== LAYOUT PC STABILE (migrato dal vecchio V74, senza palette legacy) ===== */
 .logo-text{
   display:flex!important;
@@ -4183,12 +4183,61 @@ html,body{
     0 2px 3px rgba(0,0,0,.95),
     0 0 5px rgba(0,0,0,.88)!important;
 }
+
+
+/* ==========================================================
+   LIVEASTA V14
+   - auto-fit reale nome banditore
+   - colori sociali visibili ma non neon
+   ========================================================== */
+
+/* IMPORTANTE: niente multiply.
+   In V13 il blend con il fondo scuro trasformava Napoli e
+   Udinese quasi in nero. */
+#screen-player-buzzer .player-card-side,
+#screen-auctioneer-board #view-auction .auction-col.col-player{
+  background-blend-mode:normal!important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.055)!important;
+  filter:none!important;
+}
+
+/* Nome banditore: il JS gli assegna una larghezza reale e
+   riduce il font con !important fino a farlo entrare. */
+#screen-auctioneer-board #auction-player-name-top{
+  display:block!important;
+  min-width:0!important;
+  max-height:none!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+  padding:0!important;
+  box-sizing:border-box!important;
+  white-space:nowrap!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
+  overflow-wrap:normal!important;
+  word-break:normal!important;
+  line-height:1!important;
+  text-align:center!important;
+  transform-origin:center center!important;
+  z-index:5!important;
+}
+
+/* Contorno leggibile anche sul bianco, senza appesantire troppo */
+#screen-auctioneer-board #auction-player-name-top,
+#screen-auctioneer-board #auction-player-club{
+  color:#FFFFFF!important;
+  -webkit-text-stroke:.65px rgba(0,0,0,.90)!important;
+  paint-order:stroke fill!important;
+  text-shadow:
+    0 2px 3px rgba(0,0,0,.92),
+    0 0 4px rgba(0,0,0,.82)!important;
+}
 </style>
 </head>
 <body>
 
     <div id="screen-role" class="screen active">
-        <div class="home-version-badge">LIVEASTA V13</div>
+        <div class="home-version-badge">LIVEASTA V14</div>
         <button class="btn btn-secondary top-home-btn" onclick="openAdminLogin()">⚙ Impostazioni</button>
         <div class="setup-card">
             <h1 class="logo-text"><span class="rosa">LIVE</span><span class="rush">ASTA</span></h1>
@@ -4350,7 +4399,7 @@ html,body{
 
     <div id="screen-admin" class="screen">
         <div class="setup-card" style="max-width:1100px; width:96%; padding:24px;">
-            <div class="admin-version-badge">LIVEASTA · VERSIONE V13</div>
+            <div class="admin-version-badge">LIVEASTA · VERSIONE V14</div>
             <h1>Gestione stanze</h1>
             <p class="subtitle">Nome, password, modifica ed eliminazione</p>
             <div style="display:flex; gap:8px; margin-bottom:10px;">
@@ -6642,36 +6691,50 @@ html,body{
         function fitTextToBox(el, maxPx, minPx, forceSingleLine=false){
             if(!el) return;
 
+            // Rimuove eventuali scale precedenti prima di misurare.
+            el.style.removeProperty('transform');
+
             if(forceSingleLine){
+                el.style.setProperty('display','block','important');
                 el.style.setProperty('white-space','nowrap','important');
                 el.style.setProperty('overflow','visible','important');
                 el.style.setProperty('text-overflow','clip','important');
                 el.style.setProperty('overflow-wrap','normal','important');
                 el.style.setProperty('word-break','normal','important');
                 el.style.setProperty('max-height','none','important');
+                el.style.setProperty('line-height','1','important');
+
+                // La misura deve dipendere dal riquadro, non dalla larghezza
+                // eventualmente già espansa del testo.
+                const box=el.closest('.col-player') || el.parentElement;
+                const available=Math.max(40,(box?.clientWidth||el.clientWidth||100)-24);
+                el.style.setProperty('width',available+'px','important');
+                el.style.setProperty('max-width',available+'px','important');
+                el.style.setProperty('min-width','0','important');
             }
 
-            el.style.fontSize=maxPx+'px';
             let size=maxPx;
+            el.style.setProperty('font-size',size+'px','important');
 
             const fits=()=>{
-                if(forceSingleLine) return el.scrollWidth<=el.clientWidth+2;
-                return el.scrollWidth<=el.clientWidth+2 && el.scrollHeight<=el.clientHeight+2;
+                if(forceSingleLine){
+                    return el.scrollWidth <= el.clientWidth + 1;
+                }
+                return el.scrollWidth<=el.clientWidth+2 &&
+                       el.scrollHeight<=el.clientHeight+2;
             };
 
             while(size>minPx && !fits()){
                 size-=1;
-                el.style.fontSize=size+'px';
+                el.style.setProperty('font-size',size+'px','important');
             }
 
-            // Protezione per nomi eccezionalmente lunghi:
-            // rimane comunque una sola riga, senza tagli.
+            // Ultima protezione per nomi eccezionalmente lunghi:
+            // sempre una sola riga, mai tagliata.
             if(forceSingleLine && el.scrollWidth>el.clientWidth){
-                const ratio=Math.max(.68,el.clientWidth/el.scrollWidth);
+                const ratio=Math.max(.58,el.clientWidth/el.scrollWidth);
                 el.style.setProperty('transform',`scaleX(${ratio})`,'important');
                 el.style.setProperty('transform-origin','center center','important');
-            }else if(forceSingleLine){
-                el.style.removeProperty('transform');
             }
         }
 
@@ -6695,8 +6758,8 @@ html,body{
             requestAnimationFrame(()=>{
                 fitTextToBox(
                     document.getElementById('auction-player-name-top'),
-                    mobile?28:54,
-                    mobile?11:14,
+                    mobile?28:48,
+                    mobile?11:12,
                     true
                 );
                 fitTextToBox(
@@ -9232,29 +9295,29 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 
 
 
-<script id="liveasta-v13-runtime">
+<script id="liveasta-v14-runtime">
 (function(){
   const TEAM_COLORS={
-    'ATALANTA':['#15171A','#397FA3'],
-    'BOLOGNA':['#A63A40','#36527C'],
-    'CAGLIARI':['#A63A40','#36527C'],
-    'COMO':['#5D9DB9','#DDDCD5'],
-    'FIORENTINA':['#65437D'],
-    'FROSINONE':['#C5AD3E','#4B829D'],
-    'GENOA':['#A13B41','#344E6A'],
-    'INTER':['#15171A','#397FA3'],
-    'JUVENTUS':['#DDDCD5','#15171A'],
-    'LAZIO':['#DDDCD5','#80ADC0'],
-    'LECCE':['#C5AD3E','#A63A40'],
-    'MILAN':['#A63A40','#15171A'],
-    'MONZA':['#DDDCD5','#A63A40'],
-    'NAPOLI':['#4A91B2'],
-    'PARMA':['#C5AD3E','#3E5B83'],
-    'ROMA':['#C5AD3E','#A63A40'],
-    'SASSUOLO':['#15171A','#34754E'],
-    'TORINO':['#703846'],
-    'UDINESE':['#DDDCD5','#15171A'],
-    'VENEZIA':['#B97035','#15171A','#34754E']
+    'ATALANTA':['#191B1F','#3D8DB8'],
+    'BOLOGNA':['#B6454E','#365B91'],
+    'CAGLIARI':['#B6454E','#365B91'],
+    'COMO':['#5EA9CC','#E9E6DE'],
+    'FIORENTINA':['#75508B'],
+    'FROSINONE':['#D2B93F','#4E8EB1'],
+    'GENOA':['#B6454E','#344F76'],
+    'INTER':['#191B1F','#3D8DB8'],
+    'JUVENTUS':['#E6E2DA','#191B1F'],
+    'LAZIO':['#E6E2DA','#8CC6DF'],
+    'LECCE':['#D7BC3E','#B6454E'],
+    'MILAN':['#B6454E','#191B1F'],
+    'MONZA':['#E6E2DA','#B6454E'],
+    'NAPOLI':['#5CAAD1'],
+    'PARMA':['#D7BC3E','#3B5D8D'],
+    'ROMA':['#D7BC3E','#B6454E'],
+    'SASSUOLO':['#191B1F','#3D815A'],
+    'TORINO':['#7D4350'],
+    'UDINESE':['#E6E2DA','#191B1F'],
+    'VENEZIA':['#C27B3B','#191B1F','#3D815A']
   };
 
   const NAME_SELECTORS=[
@@ -9416,9 +9479,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyBrand(){
-    document.title='LIVEASTA V13';
+    document.title='LIVEASTA V14';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V13';
+      el.textContent='LIVEASTA · VERSIONE V14';
     });
     document.querySelectorAll('.logo-text').forEach(el=>{
       const a=el.querySelector('.rosa');
