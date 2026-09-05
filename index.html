@@ -2,9 +2,14 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>LIVEASTA V9</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>LIVEASTA V10</title>
     <meta name="theme-color" content="#0D1117">
+    <meta name="color-scheme" content="dark">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
     <meta name="description" content="LIVEASTA - asta fantasy calcio realtime a stanze">
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="apple-touch-icon" href="icon-192.png">
@@ -327,8 +332,8 @@
         }
         body {
             background:
-                radial-gradient(circle at 15% 0%, rgba(113,0,255,.32), transparent 34%),
-                radial-gradient(circle at 90% 20%, rgba(99,0,255,.20), transparent 28%),
+                radial-gradient(circle at 15% 0%, rgba(61,220,151,.055), transparent 34%),
+                radial-gradient(circle at 90% 20%, rgba(77,183,255,.035), transparent 28%),
                 linear-gradient(145deg,#0D1117 0%,#171E28 55%,#111821 100%);
         }
         .setup-card,.control-card,.roster-card {
@@ -1231,7 +1236,7 @@
             overflow:hidden!important;
             transition:background .22s ease, box-shadow .22s ease, border-color .22s ease!important;
             background:
-                radial-gradient(circle at 50% 25%,rgba(119,0,255,.18),transparent 46%),
+                radial-gradient(circle at 50% 25%,rgba(61,220,151,.035),transparent 46%),
                 rgba(17,24,33,.72)!important;
         }
         #screen-player-buzzer .phone-top-area.player-winning{
@@ -2368,7 +2373,7 @@
             box-sizing:border-box;
             overflow:auto;
             background:
-                radial-gradient(circle at 50% 34%,rgba(116,36,255,.34),transparent 43%),
+                radial-gradient(circle at 50% 34%,rgba(61,220,151,.10),transparent 43%),
                 linear-gradient(145deg,#111821 0%,#202938 58%,#111821 100%);
         }
         .nomination-stage.open{display:flex}
@@ -2751,7 +2756,7 @@
         }
 </style>
 
-<style id="liveasta-v9-clean-broadcast-dark">
+<style id="liveasta-v10-clean-broadcast-dark">
 /* ===== LAYOUT PC STABILE (migrato dal vecchio V74, senza palette legacy) ===== */
 .logo-text{
   display:flex!important;
@@ -3606,11 +3611,208 @@ width:auto!important;
   border:0!important;
   box-shadow:none!important;
 }
+
+
+/* ==========================================================
+   LIVEASTA V10
+   - geometria destra telecomando ripristinata come V4
+   - timer leggermente spostato a sinistra
+   - versione visibile in home
+   - contorno testo banditore sui fondi chiari
+   - safe-area / PWA theme integration
+   ========================================================== */
+
+/* VERSIONE HOME */
+#screen-role{
+  position:relative!important;
+}
+.home-version-badge{
+  position:absolute!important;
+  top:max(12px,env(safe-area-inset-top))!important;
+  left:max(12px,env(safe-area-inset-left))!important;
+  z-index:40!important;
+  padding:6px 9px!important;
+  border-radius:8px!important;
+  background:#111821!important;
+  border:1px solid #334155!important;
+  color:#B8C2CF!important;
+  font-size:.68rem!important;
+  font-weight:800!important;
+  letter-spacing:.10em!important;
+  line-height:1!important;
+  box-shadow:0 4px 12px rgba(0,0,0,.22)!important;
+}
+
+/* BANDITORE: nome e squadra leggibili anche su bianco */
+#screen-auctioneer-board #auction-player-name-top,
+#screen-auctioneer-board .auction-player-meta,
+#screen-auctioneer-board #auction-player-club{
+  color:#FFFFFF!important;
+  -webkit-text-stroke:.8px rgba(0,0,0,.86)!important;
+  paint-order:stroke fill!important;
+  text-shadow:
+    0 2px 3px rgba(0,0,0,.95),
+    0 0 4px rgba(0,0,0,.90),
+    1px 0 1px rgba(0,0,0,.80),
+    -1px 0 1px rgba(0,0,0,.80)!important;
+}
+
+/* TELECOMANDO: geometria della colonna destra come nella V4 */
+#screen-player-buzzer .player-live-side{
+  position:relative!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr)!important;
+  grid-template-rows:1fr 1fr!important;
+  gap:0!important;
+  width:100%!important;
+  height:100%!important;
+  min-width:0!important;
+  min-height:0!important;
+  padding:0!important;
+  box-sizing:border-box!important;
+  align-items:stretch!important;
+  justify-items:stretch!important;
+  overflow:hidden!important;
+}
+
+#screen-player-buzzer .player-timer-box,
+#screen-player-buzzer .player-auction-info{
+  position:relative!important;
+  inset:auto!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:none!important;
+  min-width:0!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:0 8px!important;
+  box-sizing:border-box!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+  transform:none!important;
+  overflow:hidden!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+}
+
+#screen-player-buzzer .player-timer-box{
+  border:0!important;
+  border-bottom:1px solid rgba(184,194,207,.15)!important;
+  background:transparent!important;
+}
+#screen-player-buzzer .player-auction-info{
+  border:0!important;
+  background:transparent!important;
+}
+
+#screen-player-buzzer .player-timer-box>*,
+#screen-player-buzzer .player-auction-info>*{
+  width:100%!important;
+  max-width:100%!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+  text-align:center!important;
+  align-self:center!important;
+}
+
+/* Solo il timer viene spostato un poco a sinistra */
+#screen-player-buzzer .player-timer-box>*{
+  transform:translateX(-4px)!important;
+}
+#screen-player-buzzer .player-auction-info>*{
+  transform:none!important;
+}
+
+/* Tipografia numerica: stesso font del timer, misure V4 stabili */
+#screen-player-buzzer #player-countdown{
+  margin:0!important;
+  padding:0!important;
+  font-family:'Inter',sans-serif!important;
+  font-size:clamp(5.4rem,22vw,7.25rem)!important;
+  font-weight:800!important;
+  font-style:normal!important;
+  font-variant-numeric:tabular-nums!important;
+  letter-spacing:-.04em!important;
+  line-height:.90!important;
+  text-align:center!important;
+  white-space:nowrap!important;
+  overflow:visible!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+#screen-player-buzzer #player-current-value{
+  margin:0!important;
+  padding:0!important;
+  font-family:'Inter',sans-serif!important;
+  font-size:clamp(5rem,20.5vw,6.7rem)!important;
+  font-weight:800!important;
+  font-style:normal!important;
+  font-variant-numeric:tabular-nums!important;
+  letter-spacing:-.04em!important;
+  line-height:.90!important;
+  text-align:center!important;
+  white-space:nowrap!important;
+  overflow:visible!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+#screen-player-buzzer #player-current-winner{
+  display:block!important;
+  width:100%!important;
+  text-align:center!important;
+}
+
+/* 0-3 rossi, solo testo */
+#screen-player-buzzer #player-countdown.liveasta-last3,
+#screen-player-buzzer #player-countdown.danger{
+  color:#FF334F!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+
+/* FULL PHONE / SAFE AREA.
+   In browser normale il browser resta proprietario delle sue barre;
+   in PWA installata LIVEASTA può estendere il tema fino alle safe-area. */
+html,body{
+  background:#0D1117!important;
+  min-height:100%!important;
+}
+@media (display-mode:standalone){
+  html,body{
+    width:100%!important;
+    min-height:100dvh!important;
+    background:#0D1117!important;
+  }
+  .screen{
+    box-sizing:border-box!important;
+    padding-top:env(safe-area-inset-top)!important;
+    padding-left:env(safe-area-inset-left)!important;
+    padding-right:env(safe-area-inset-right)!important;
+    padding-bottom:env(safe-area-inset-bottom)!important;
+  }
+}
+
+/* telefoni bassi: mantieni proporzioni senza sovrapposizioni */
+@media(max-height:760px){
+  #screen-player-buzzer #player-countdown{
+    font-size:clamp(4.6rem,21vw,6rem)!important;
+  }
+  #screen-player-buzzer #player-current-value{
+    font-size:clamp(4.3rem,19vw,5.7rem)!important;
+  }
+}
 </style>
 </head>
 <body>
 
     <div id="screen-role" class="screen active">
+        <div class="home-version-badge">LIVEASTA V10</div>
         <button class="btn btn-secondary top-home-btn" onclick="openAdminLogin()">⚙ Impostazioni</button>
         <div class="setup-card">
             <h1 class="logo-text"><span class="rosa">LIVE</span><span class="rush">ASTA</span></h1>
@@ -3772,7 +3974,7 @@ width:auto!important;
 
     <div id="screen-admin" class="screen">
         <div class="setup-card" style="max-width:1100px; width:96%; padding:24px;">
-            <div class="admin-version-badge">LIVEASTA · VERSIONE V9</div>
+            <div class="admin-version-badge">LIVEASTA · VERSIONE V10</div>
             <h1>Gestione stanze</h1>
             <p class="subtitle">Nome, password, modifica ed eliminazione</p>
             <div style="display:flex; gap:8px; margin-bottom:10px;">
@@ -8610,7 +8812,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 
 
 
-<script id="liveasta-v9-runtime">
+<script id="liveasta-v10-runtime">
 (function(){
   const TEAM_COLORS={
     'ATALANTA':['#111111','#249FDB'],
@@ -8794,9 +8996,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyBrand(){
-    document.title='LIVEASTA V9';
+    document.title='LIVEASTA V10';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V9';
+      el.textContent='LIVEASTA · VERSIONE V10';
     });
     document.querySelectorAll('.logo-text').forEach(el=>{
       const a=el.querySelector('.rosa');
