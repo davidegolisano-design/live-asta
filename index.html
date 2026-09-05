@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>LIVEASTA V29</title>
+    <title>LIVEASTA V30</title>
     <meta name="theme-color" content="#0D1117">
     <meta name="color-scheme" content="dark">
     <meta name="mobile-web-app-capable" content="yes">
@@ -2756,7 +2756,7 @@
         }
 </style>
 
-<style id="liveasta-v29-theme-switcher">
+<style id="liveasta-v30-theme-switcher">
 /* ===== LAYOUT PC STABILE (migrato dal vecchio V74, senza palette legacy) ===== */
 .logo-text{
   display:flex!important;
@@ -5610,7 +5610,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V29
+   LIVEASTA V30
    ========================================================== */
 
 /* Versione home cliccabile = refresh */
@@ -5633,7 +5633,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V29 — BUSTA NEL LISTONE
+   LIVEASTA V30 — BUSTA NEL LISTONE
    ========================================================== */
 #screen-auctioneer-board .auction-list-toolbar .toolbar-sealed-btn{
   flex:0 0 auto!important;
@@ -5651,6 +5651,98 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 }
 #screen-auctioneer-board .auction-list-toolbar .toolbar-sealed-btn:hover{
   background:color-mix(in srgb,var(--theme-primary) 16%,var(--theme-card))!important;
+}
+
+
+/* ==========================================================
+   LIVEASTA V30 — TOOLBAR LISTONE TUTTA SU UNA RIGA
+   ========================================================== */
+
+/* Search + dado + modalità busta + ROSE */
+#screen-auctioneer-board .auction-list-toolbar{
+  display:grid!important;
+  grid-template-columns:minmax(280px,1fr) 58px minmax(210px,250px) 82px!important;
+  gap:8px!important;
+  align-items:stretch!important;
+  width:100%!important;
+}
+
+#screen-auctioneer-board .auction-list-toolbar #player-search{
+  width:100%!important;
+  min-width:0!important;
+  height:50px!important;
+  margin:0!important;
+}
+
+#screen-auctioneer-board .auction-list-toolbar .toolbar-icon-btn,
+#screen-auctioneer-board .auction-list-toolbar .toolbar-roster-btn,
+#screen-auctioneer-board .auction-list-toolbar .toolbar-sealed-mode-btn{
+  height:50px!important;
+  margin:0!important;
+  box-sizing:border-box!important;
+  white-space:nowrap!important;
+}
+
+/* OFF: tasto normale, neutro */
+#screen-auctioneer-board .toolbar-sealed-mode-btn{
+  width:100%!important;
+  padding:0 14px!important;
+  font-size:.76rem!important;
+  font-weight:950!important;
+  letter-spacing:.035em!important;
+  color:var(--theme-text)!important;
+  background:var(--theme-card)!important;
+  border:1px solid var(--theme-border)!important;
+  box-shadow:none!important;
+}
+
+/* ON: cambia colore in base al tema corrente */
+#screen-auctioneer-board .toolbar-sealed-mode-btn.active{
+  color:var(--theme-bg-deep)!important;
+  background:var(--theme-primary)!important;
+  border-color:var(--theme-primary)!important;
+  box-shadow:0 0 0 2px color-mix(in srgb,var(--theme-primary) 24%,transparent)!important;
+}
+
+#screen-auctioneer-board .toolbar-sealed-mode-btn:hover{
+  filter:brightness(1.08)!important;
+}
+
+/* ROSE resta sempre sulla stessa riga */
+#screen-auctioneer-board .toolbar-roster-btn{
+  width:82px!important;
+  min-width:82px!important;
+}
+
+/* Vecchio tasto icona busta non più usato */
+#screen-auctioneer-board .toolbar-sealed-btn{
+  display:none!important;
+}
+
+@media(max-width:760px){
+  #screen-auctioneer-board .auction-list-toolbar{
+    grid-template-columns:minmax(110px,1fr) 46px minmax(128px,158px) 60px!important;
+    gap:5px!important;
+  }
+
+  #screen-auctioneer-board .auction-list-toolbar #player-search,
+  #screen-auctioneer-board .auction-list-toolbar .toolbar-icon-btn,
+  #screen-auctioneer-board .auction-list-toolbar .toolbar-roster-btn,
+  #screen-auctioneer-board .auction-list-toolbar .toolbar-sealed-mode-btn{
+    height:46px!important;
+  }
+
+  #screen-auctioneer-board .toolbar-sealed-mode-btn{
+    padding:0 5px!important;
+    font-size:.54rem!important;
+    letter-spacing:0!important;
+  }
+
+  #screen-auctioneer-board .toolbar-roster-btn{
+    width:60px!important;
+    min-width:60px!important;
+    font-size:.58rem!important;
+  }
 }
 </style>
 
@@ -5704,7 +5796,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
              title="Aggiorna LIVEASTA"
              onclick="window.location.reload()"
              onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();window.location.reload();}">
-            LIVEASTA V29
+            LIVEASTA V30
         </div>
         <button class="btn btn-secondary top-home-btn" onclick="openAdminLogin()">⚙ Impostazioni</button>
         <div class="setup-card">
@@ -5907,7 +5999,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
     <div id="screen-admin" class="screen">
         <div class="setup-card" style="max-width:1100px; width:96%; padding:24px;">
-            <div class="admin-version-badge">LIVEASTA · VERSIONE V29</div>
+            <div class="admin-version-badge">LIVEASTA · VERSIONE V30</div>
             <h1>Gestione stanze</h1>
             <p class="subtitle">Nome, password, modifica ed eliminazione</p>
 
@@ -5984,14 +6076,16 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
                 <div id="view-list">
                     <div class="dashboard-left">
-                        <div id="sealed-listone-banner" class="sealed-listone-banner">
-                            <span><strong>BUSTA CHIUSA</strong> · Seleziona il calciatore direttamente dal listone.</span>
-                            <button class="btn btn-secondary btn-small" type="button" onclick="cancelSealedListonePick()">Annulla</button>
-                        </div>
                         <div class="auction-list-toolbar">
                             <input type="text" id="player-search" class="minimal-input" placeholder="Cerca calciatore..." oninput="filterTable(event)" autocomplete="off">
                             <button class="btn btn-secondary toolbar-icon-btn" onclick="startRandomPlayer()" title="Giocatore casuale">🎲</button>
-                            <button class="btn btn-secondary toolbar-icon-btn toolbar-sealed-btn" onclick="openSealedPlayerPicker()" title="Offerta in busta chiusa">✉</button>
+                            <button id="toolbar-sealed-mode-btn"
+                                    class="btn btn-secondary toolbar-sealed-mode-btn"
+                                    onclick="toggleSealedListoneMode()"
+                                    aria-pressed="false"
+                                    title="Attiva o disattiva la modalità busta chiusa">
+                                ATTIVA MODALITÀ BUSTA
+                            </button>
                             <button class="btn btn-secondary toolbar-roster-btn" onclick="openAllRosters()" title="Visualizza rose">ROSE</button>
                         </div>
 
@@ -8745,6 +8839,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
         }
 
         function refreshPlayerLists() {
+            updateSealedModeButton();
             const search = document.getElementById('player-search');
             const term = search ? search.value.toLowerCase() : '';
             const available = getAvailablePlayers().filter(p =>
@@ -9134,7 +9229,12 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                 return;
             }
             const player = availablePlayers[Math.floor(Math.random() * availablePlayers.length)];
-            selectAndStartPlayer(player.Id);
+
+            if(sealedListonePickMode){
+                chooseSealedPlayerFromListone(player.Id);
+            }else{
+                selectAndStartPlayer(player.Id);
+            }
         }
 
         function selectAndStartPlayer(id, skipConfirm=false) {
@@ -9146,6 +9246,8 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
             if(player) {
                 currentAuctionPlayer = player;
                 sealedAuctionModeActive=false;
+                sealedListonePickMode=false;
+                updateSealedModeButton();
                 sealedAuctionToken=null;
                 sealedBids=new Map();
                 sealedEligibleIds=[];
@@ -10707,6 +10809,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
             sealedDeadlineAt=0;
             sealedRevealDeadlineAt=0;
             sealedListonePickMode=false;
+            updateSealedModeButton();
 
             const nextButton=document.getElementById('btn-next');
             if(assignmentOk){
@@ -11252,27 +11355,42 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
             broadcastStateChanged();
         }
 
-        function openSealedPlayerPicker(){
+        function updateSealedModeButton(){
+            const btn=document.getElementById('toolbar-sealed-mode-btn');
+            if(!btn)return;
+
+            btn.classList.toggle('active',!!sealedListonePickMode);
+            btn.textContent=sealedListonePickMode
+                ?'MODALITÀ BUSTA ATTIVA'
+                :'ATTIVA MODALITÀ BUSTA';
+            btn.setAttribute('aria-pressed',sealedListonePickMode?'true':'false');
+        }
+
+        function toggleSealedListoneMode(){
             if(!currentRoomId)return;
-            sealedListonePickMode=true;
-            closeRoomControl();
-            hideNominationStage();
-            const av=document.getElementById('view-auction');
-            const lv=document.getElementById('view-list');
-            if(av){av.classList.add('auction-view-hidden');av.style.display='none';}
-            if(lv)lv.style.display='flex';
-            document.getElementById('sealed-listone-banner')?.classList.add('open');
+            sealedListonePickMode=!sealedListonePickMode;
+            updateSealedModeButton();
+
             const search=document.getElementById('player-search');
-            if(search){search.value='';setTimeout(()=>search.focus(),50);}
+            if(search && sealedListonePickMode)search.focus();
+
             refreshPlayerLists();
         }
 
-        function closeSealedPlayerPicker(){ cancelSealedListonePick(); }
+        function openSealedPlayerPicker(){
+            sealedListonePickMode=true;
+            updateSealedModeButton();
+            refreshPlayerLists();
+        }
+
+        function closeSealedPlayerPicker(){
+            sealedListonePickMode=false;
+            updateSealedModeButton();
+            refreshPlayerLists();
+        }
 
         function cancelSealedListonePick(){
-            sealedListonePickMode=false;
-            document.getElementById('sealed-listone-banner')?.classList.remove('open');
-            refreshPlayerLists();
+            closeSealedPlayerPicker();
         }
 
         async function chooseSealedPlayerFromListone(id){
@@ -11280,7 +11398,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
             if(!player || auctionedPlayerIds.has(String(id)))return;
             if(!confirm(`Avviare l'offerta in busta chiusa per ${player.Nome}?`))return;
             sealedListonePickMode=false;
-            document.getElementById('sealed-listone-banner')?.classList.remove('open');
+            updateSealedModeButton();
             await startSealedAuctionForPlayer(player);
         }
 
@@ -11695,7 +11813,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 
 
 
-<script id="liveasta-v29-runtime">
+<script id="liveasta-v30-runtime">
 (function(){
   const TEAM_COLORS={
     'ATALANTA':['#191B1F','#3D8DB8'],
@@ -11879,9 +11997,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyBrand(){
-    document.title='LIVEASTA V29';
+    document.title='LIVEASTA V30';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V29';
+      el.textContent='LIVEASTA · VERSIONE V30';
     });
     document.querySelectorAll('.logo-text').forEach(el=>{
       const a=el.querySelector('.rosa');
@@ -11946,7 +12064,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 </script>
 
 
-<script id="liveasta-v29-theme-runtime">
+<script id="liveasta-v30-theme-runtime">
 (function(){
   const THEME_KEY='liveasta_theme';
   const THEMES=['broadcast','stadium','carbon','crimson','emerald','violet'];
