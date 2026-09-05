@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>LIVEASTA V25</title>
+    <title>LIVEASTA V26</title>
     <meta name="theme-color" content="#0D1117">
     <meta name="color-scheme" content="dark">
     <meta name="mobile-web-app-capable" content="yes">
@@ -2756,7 +2756,7 @@
         }
 </style>
 
-<style id="liveasta-v25-theme-switcher">
+<style id="liveasta-v26-theme-switcher">
 /* ===== LAYOUT PC STABILE (migrato dal vecchio V74, senza palette legacy) ===== */
 .logo-text{
   display:flex!important;
@@ -5693,7 +5693,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 <body>
 
     <div id="screen-role" class="screen active">
-        <div class="home-version-badge">LIVEASTA V25</div>
+        <div class="home-version-badge">LIVEASTA V26</div>
         <button class="btn btn-secondary top-home-btn" onclick="openAdminLogin()">⚙ Impostazioni</button>
         <div class="setup-card">
             <h1 class="logo-text"><span class="rosa">LIVE</span><span class="rush">ASTA</span></h1>
@@ -5896,7 +5896,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
     <div id="screen-admin" class="screen">
         <div class="setup-card" style="max-width:1100px; width:96%; padding:24px;">
-            <div class="admin-version-badge">LIVEASTA · VERSIONE V25</div>
+            <div class="admin-version-badge">LIVEASTA · VERSIONE V26</div>
             <h1>Gestione stanze</h1>
             <p class="subtitle">Nome, password, modifica ed eliminazione</p>
 
@@ -6364,7 +6364,6 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
         let auctioneerLockHeartbeatTimer = null;
         let auctioneerLockLostHandled = false;
         const AUCTIONEER_LOCK_HEARTBEAT_MS = 10000;
-        const AUCTIONEER_LOCK_STALE_MS = 90000;
 
         let myTeamName = "";
         let auctionTimeLimit = 5;
@@ -9786,16 +9785,6 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
             return data||null;
         }
 
-        function auctioneerLockLastSeen(row){
-            const raw=row?.data?.heartbeat_at || row?.data?.acquired_at || row?.updated_at || '';
-            const ts=Date.parse(raw);
-            return Number.isFinite(ts)?ts:0;
-        }
-
-        function isAuctioneerLockFresh(row){
-            const last=auctioneerLockLastSeen(row);
-            return !!last && (Date.now()-last)<AUCTIONEER_LOCK_STALE_MS;
-        }
 
         async function insertAuctioneerLock(lockKey,token,room){
             const now=new Date().toISOString();
@@ -9822,55 +9811,25 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
         async function acquireAuctioneerRoomLock(room){
             if(!room?.id) return false;
 
-            // Non trascinare mai il lock di una stanza precedente.
+            // Se questo dispositivo aveva un proprio lock precedente,
+            // lo rilascia prima di tentare una stanza diversa.
             await releaseAuctioneerRoomLock();
 
             const lockKey=`liveasta_auctioneer_lock_${room.id}`;
             const token=createAuctioneerLockToken();
 
-            // Primo tentativo: la PK della tabella rende questa acquisizione atomica.
-            let attempt=await insertAuctioneerLock(lockKey,token,room);
+            /*
+              LOCK STRETTO:
+              fanta_app_data.key è PRIMARY KEY.
+              Solo il PRIMO INSERT può riuscire.
+              Se il record esiste già, NON viene mai cancellato o sostituito
+              da chi prova ad entrare dopo.
+            */
+            const attempt=await insertAuctioneerLock(lockKey,token,room);
 
             if(!attempt.ok){
-                const existing=await readAuctioneerLock(lockKey);
-
-                // Lock attivo: un altro banditore è già dentro.
-                if(existing && isAuctioneerLockFresh(existing)){
-                    return false;
-                }
-
-                // Lock vecchio (browser chiuso/crash): lo eliminiamo soltanto
-                // dopo una seconda verifica, poi ritentiamo l'INSERT atomico.
-                if(existing){
-                    await new Promise(resolve=>setTimeout(resolve,180));
-                    const verify=await readAuctioneerLock(lockKey);
-
-                    if(verify && isAuctioneerLockFresh(verify)){
-                        return false;
-                    }
-
-                    if(verify){
-                        const verifyToken=String(verify?.data?.token||'');
-                        const {error:deleteError}=await supabaseClient
-                            .from('fanta_app_data')
-                            .delete()
-                            .eq('key',lockKey);
-
-                        if(deleteError){
-                            console.warn('Pulizia lock banditore scaduto non riuscita',deleteError);
-                            return false;
-                        }
-
-                        // Se qualcuno ha sostituito il record nel frattempo,
-                        // il successivo INSERT perderà comunque sulla PK.
-                        if(verifyToken && verifyToken!==String(existing?.data?.token||'')){
-                            return false;
-                        }
-                    }
-                }
-
-                attempt=await insertAuctioneerLock(lockKey,token,room);
-                if(!attempt.ok) return false;
+                // Qualunque conflitto significa: stanza già occupata.
+                return false;
             }
 
             auctioneerLockKey=lockKey;
@@ -9886,7 +9845,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
             const row=await readAuctioneerLock(auctioneerLockKey);
 
             // Se il record non c'è più oppure appartiene a un altro token,
-            // questo dispositivo ha perso il diritto di essere banditore.
+            // questo dispositivo non è più il titolare del lock.
             if(!row || String(row?.data?.token||'')!==String(auctioneerLockToken)){
                 stopAuctioneerLockHeartbeat();
 
@@ -10018,7 +9977,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                 }
                 const lockOk=await acquireAuctioneerRoomLock(room);
                 if(!lockOk){
-                    throw new Error('In questa stanza è già collegato un banditore. È consentito un solo banditore per stanza.');
+                    throw new Error("Accesso bloccato: in questa stanza c\'è già un banditore attivo. Può entrare un nuovo banditore solo dopo che quello attuale ha premuto ESCI.");
                 }
                 auctioneerLockAcquired=true;
 
@@ -11391,7 +11350,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 
 
 
-<script id="liveasta-v25-runtime">
+<script id="liveasta-v26-runtime">
 (function(){
   const TEAM_COLORS={
     'ATALANTA':['#191B1F','#3D8DB8'],
@@ -11575,9 +11534,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyBrand(){
-    document.title='LIVEASTA V25';
+    document.title='LIVEASTA V26';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V25';
+      el.textContent='LIVEASTA · VERSIONE V26';
     });
     document.querySelectorAll('.logo-text').forEach(el=>{
       const a=el.querySelector('.rosa');
@@ -11642,7 +11601,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 </script>
 
 
-<script id="liveasta-v25-theme-runtime">
+<script id="liveasta-v26-theme-runtime">
 (function(){
   const THEME_KEY='liveasta_theme';
   const THEMES=['broadcast','stadium','carbon','crimson','emerald','violet'];
@@ -11775,12 +11734,18 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 </script>
 
 
-<script id="liveasta-v24-auctioneer-lock-lifecycle">
+<script id="liveasta-v26-auctioneer-lock-lifecycle">
 (function(){
   window.addEventListener('pagehide',()=>{
     try{
       stopAuctioneerLockHeartbeat?.();
     }catch(e){}
+    /*
+      Non cancelliamo il lock da pagehide/unload:
+      il rilascio affidabile avviene con il pulsante ESCI.
+      Così un secondo banditore non può prendere il posto del primo
+      semplicemente aprendo la stessa stanza.
+    */
   });
 })();
 </script>
