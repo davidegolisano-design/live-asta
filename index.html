@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>LIVEASTA V36</title>
+    <title>LIVEASTA V37</title>
     <meta name="theme-color" content="#0D1117">
     <meta name="color-scheme" content="dark">
     <meta name="mobile-web-app-capable" content="yes">
@@ -2757,7 +2757,7 @@
         }
 </style>
 
-<style id="liveasta-v36-theme-switcher">
+<style id="liveasta-v37-theme-switcher">
 /* ===== LAYOUT PC STABILE (migrato dal vecchio V74, senza palette legacy) ===== */
 .logo-text{
   display:flex!important;
@@ -5611,7 +5611,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V36
+   LIVEASTA V37
    ========================================================== */
 
 /* Versione home cliccabile = refresh */
@@ -5634,7 +5634,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V36 — BUSTA NEL LISTONE
+   LIVEASTA V37 — BUSTA NEL LISTONE
    ========================================================== */
 #screen-auctioneer-board .auction-list-toolbar .toolbar-sealed-btn{
   flex:0 0 auto!important;
@@ -5656,7 +5656,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V36 — TOOLBAR LISTONE TUTTA SU UNA RIGA
+   LIVEASTA V37 — TOOLBAR LISTONE TUTTA SU UNA RIGA
    ========================================================== */
 
 /* Search + dado + modalità busta + ROSE */
@@ -5748,7 +5748,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V36 — BANDITORE GIOCATORE
+   LIVEASTA V37 — BANDITORE GIOCATORE
    ========================================================== */
 .auctioneer-player-control-card{
   border-color:color-mix(in srgb,var(--theme-primary) 28%,var(--theme-border))!important;
@@ -5799,7 +5799,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V36
+   LIVEASTA V37
    ========================================================== */
 
 /* MODALITÀ BUSTA:
@@ -5928,7 +5928,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V36
+   LIVEASTA V37
    ========================================================== */
 
 /* ===== STATO GIOCATORE: palette definitiva ===== */
@@ -6217,7 +6217,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V36 — iPhone PWA safe-area + audio buste
+   LIVEASTA V37 — iPhone PWA safe-area + audio buste
    ========================================================== */
 
 /* In PWA iPhone gli elementi assoluti della home devono partire
@@ -6254,7 +6254,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V36 — DISTRIBUZIONE AUDIO + AUDIT MINIATURE
+   LIVEASTA V37 — DISTRIBUZIONE AUDIO + AUDIT MINIATURE
    ========================================================== */
 
 .audio-routing-section{
@@ -6402,7 +6402,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V36 — QR ACCESSO RAPIDO HOME
+   LIVEASTA V37 — QR ACCESSO RAPIDO HOME
    ========================================================== */
 #screen-role .home-qr-block{
   width:100%!important;
@@ -6444,9 +6444,15 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 #screen-role #home-site-qr img,
 #screen-role #home-site-qr canvas{
-  display:block!important;
   width:132px!important;
   height:132px!important;
+}
+
+/* qrcode.js crea sia canvas sia img e usa lo stile inline per mostrarne uno solo.
+   Non forziamo display:block: altrimenti su desktop compaiono due QR affiancati. */
+#screen-role #home-site-qr > img[style*="display: none"],
+#screen-role #home-site-qr > canvas[style*="display: none"]{
+  display:none!important;
 }
 
 #screen-role .home-qr-url{
@@ -6530,6 +6536,24 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
     font-size:.50rem!important;
   }
 }
+
+
+/* ==========================================================
+   LIVEASTA V37 — QR DUPLICATO DESKTOP FIX
+   ========================================================== */
+#screen-role #home-site-qr{
+  position:relative!important;
+  overflow:hidden!important;
+}
+
+/* Mantiene un solo renderer QR visibile anche se il browser ignora
+   gli inline style della libreria. */
+#screen-role #home-site-qr > canvas + img{
+  display:none!important;
+}
+
+/* Se qrcode.js decide invece di usare l'immagine, il canvas inline-hidden
+   resta nascosto grazie alla regola [style*="display: none"] sopra. */
 </style>
 
 <script id="liveasta-theme-preload">
@@ -6582,7 +6606,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
              title="Aggiorna LIVEASTA"
              onclick="window.location.reload()"
              onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();window.location.reload();}">
-            LIVEASTA V36
+            LIVEASTA V37
         </div>
         <button class="btn btn-secondary top-home-btn" onclick="openAdminLogin()">⚙ Impostazioni</button>
         <div class="setup-card">
@@ -6805,7 +6829,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
     <div id="screen-admin" class="screen">
         <div class="setup-card" style="max-width:1100px; width:96%; padding:24px;">
-            <div class="admin-version-badge">LIVEASTA · VERSIONE V36</div>
+            <div class="admin-version-badge">LIVEASTA · VERSIONE V37</div>
             <h1>Gestione stanze</h1>
             <p class="subtitle">Nome, password, modifica ed eliminazione</p>
 
@@ -13811,7 +13835,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 
 
 
-<script id="liveasta-v36-runtime">
+<script id="liveasta-v37-runtime">
 (function(){
   const TEAM_COLORS={
     'ATALANTA':['#191B1F','#3D8DB8'],
@@ -13995,9 +14019,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyBrand(){
-    document.title='LIVEASTA V36';
+    document.title='LIVEASTA V37';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V36';
+      el.textContent='LIVEASTA · VERSIONE V37';
     });
     document.querySelectorAll('.logo-text').forEach(el=>{
       const a=el.querySelector('.rosa');
@@ -14062,7 +14086,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 </script>
 
 
-<script id="liveasta-v36-theme-runtime">
+<script id="liveasta-v37-theme-runtime">
 (function(){
   const THEME_KEY='liveasta_theme';
   const THEMES=['broadcast','stadium','carbon','crimson','emerald','violet'];
@@ -14165,7 +14189,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 
 
 
-<script id="liveasta-v36-home-qr">
+<script id="liveasta-v37-home-qr">
 (function(){
   function publicLiveAstaUrl(){
     const u=new URL(window.location.href);
@@ -14206,6 +14230,13 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
       colorDark:'#000000',
       colorLight:'#FFFFFF',
       correctLevel:QRCode.CorrectLevel.H
+    });
+
+    // qrcode.js può creare sia canvas sia img come renderer alternativi.
+    // Se per qualsiasi motivo risultano entrambi visibili, ne lasciamo uno solo.
+    requestAnimationFrame(()=>{
+      const visible=[...target.children].filter(el=>getComputedStyle(el).display!=='none');
+      visible.slice(1).forEach(el=>el.style.display='none');
     });
   }
 
