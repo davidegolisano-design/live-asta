@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>LIVEASTA V33</title>
+    <title>LIVEASTA V35</title>
     <meta name="theme-color" content="#0D1117">
     <meta name="color-scheme" content="dark">
     <meta name="mobile-web-app-capable" content="yes">
@@ -2756,7 +2756,7 @@
         }
 </style>
 
-<style id="liveasta-v33-theme-switcher">
+<style id="liveasta-v35-theme-switcher">
 /* ===== LAYOUT PC STABILE (migrato dal vecchio V74, senza palette legacy) ===== */
 .logo-text{
   display:flex!important;
@@ -5610,7 +5610,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V33
+   LIVEASTA V35
    ========================================================== */
 
 /* Versione home cliccabile = refresh */
@@ -5633,7 +5633,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V33 — BUSTA NEL LISTONE
+   LIVEASTA V35 — BUSTA NEL LISTONE
    ========================================================== */
 #screen-auctioneer-board .auction-list-toolbar .toolbar-sealed-btn{
   flex:0 0 auto!important;
@@ -5655,7 +5655,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V33 — TOOLBAR LISTONE TUTTA SU UNA RIGA
+   LIVEASTA V35 — TOOLBAR LISTONE TUTTA SU UNA RIGA
    ========================================================== */
 
 /* Search + dado + modalità busta + ROSE */
@@ -5747,7 +5747,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V33 — BANDITORE GIOCATORE
+   LIVEASTA V35 — BANDITORE GIOCATORE
    ========================================================== */
 .auctioneer-player-control-card{
   border-color:color-mix(in srgb,var(--theme-primary) 28%,var(--theme-border))!important;
@@ -5798,7 +5798,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V33
+   LIVEASTA V35
    ========================================================== */
 
 /* MODALITÀ BUSTA:
@@ -5927,7 +5927,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V33
+   LIVEASTA V35
    ========================================================== */
 
 /* ===== STATO GIOCATORE: palette definitiva ===== */
@@ -6213,6 +6213,191 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
     white-space:nowrap!important;
   }
 }
+
+
+/* ==========================================================
+   LIVEASTA V35 — iPhone PWA safe-area + audio buste
+   ========================================================== */
+
+/* In PWA iPhone gli elementi assoluti della home devono partire
+   DOPO la safe-area, non semplicemente a top:18px. */
+@media (display-mode:standalone){
+  #screen-role .top-home-btn{
+    top:calc(env(safe-area-inset-top) + 12px)!important;
+    right:calc(env(safe-area-inset-right) + 12px)!important;
+    z-index:100!important;
+  }
+
+  #screen-role .home-version-badge{
+    top:calc(env(safe-area-inset-top) + 12px)!important;
+    left:calc(env(safe-area-inset-left) + 12px)!important;
+    z-index:100!important;
+  }
+
+  /* Mantiene spazio reale sopra la card centrale anche su Dynamic Island. */
+  #screen-role{
+    padding-top:calc(env(safe-area-inset-top) + 74px)!important;
+    padding-bottom:max(16px,env(safe-area-inset-bottom))!important;
+    box-sizing:border-box!important;
+  }
+}
+
+/* Fallback WebKit/iOS standalone: stessa protezione anche quando
+   la media query display-mode non viene applicata perfettamente. */
+@supports (padding-top:env(safe-area-inset-top)){
+  #screen-role .top-home-btn{
+    top:max(18px,calc(env(safe-area-inset-top) + 12px))!important;
+    right:max(12px,calc(env(safe-area-inset-right) + 12px))!important;
+  }
+}
+
+
+/* ==========================================================
+   LIVEASTA V35 — DISTRIBUZIONE AUDIO + AUDIT MINIATURE
+   ========================================================== */
+
+.audio-routing-section{
+  margin-top:14px!important;
+  padding-top:14px!important;
+  border-top:1px solid var(--theme-border)!important;
+}
+
+.audio-routing-head{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:10px!important;
+}
+
+.audio-routing-subtitle{
+  margin-top:4px!important;
+  color:var(--theme-muted)!important;
+  font-size:.70rem!important;
+  line-height:1.3!important;
+}
+
+.audio-routing-help{
+  margin-top:9px!important;
+  color:var(--theme-muted)!important;
+  font-size:.70rem!important;
+}
+
+.audio-routing-targets{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:7px!important;
+  margin-top:10px!important;
+}
+
+.audio-routing-row{
+  min-width:0!important;
+  min-height:54px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:10px!important;
+  padding:8px 10px!important;
+  box-sizing:border-box!important;
+  border-radius:10px!important;
+  border:1px solid var(--theme-border)!important;
+  background:var(--theme-input)!important;
+}
+
+.audio-routing-row.muted{
+  border-color:color-mix(in srgb,var(--theme-danger) 58%,var(--theme-border))!important;
+  background:color-mix(in srgb,var(--theme-danger) 8%,var(--theme-input))!important;
+}
+
+.audio-routing-device{
+  min-width:0!important;
+  display:flex!important;
+  flex-direction:column!important;
+  gap:2px!important;
+}
+
+.audio-routing-device b{
+  min-width:0!important;
+  color:var(--theme-text)!important;
+  font-size:.76rem!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+
+.audio-routing-device small{
+  color:var(--theme-muted)!important;
+  font-size:.58rem!important;
+  white-space:nowrap!important;
+}
+
+.audio-routing-checkbox{
+  flex:0 0 auto!important;
+  display:flex!important;
+  align-items:center!important;
+  gap:6px!important;
+  color:var(--theme-text)!important;
+  font-size:.60rem!important;
+  font-weight:900!important;
+  white-space:nowrap!important;
+}
+
+.audio-routing-checkbox input{
+  width:18px!important;
+  height:18px!important;
+  margin:0!important;
+  accent-color:var(--theme-danger)!important;
+}
+
+.audio-routing-status{
+  min-height:16px!important;
+  margin-top:7px!important;
+  color:var(--theme-muted)!important;
+  font-size:.62rem!important;
+}
+
+.miniature-check-status{
+  margin-top:8px!important;
+  padding:8px 10px!important;
+  border-radius:9px!important;
+  background:var(--theme-input)!important;
+  color:var(--theme-muted)!important;
+  font-size:.72rem!important;
+  line-height:1.35!important;
+}
+
+#admin-miniature-export-btn:disabled{
+  opacity:.45!important;
+  cursor:not-allowed!important;
+}
+
+@media(max-width:760px){
+  .audio-routing-head{
+    align-items:stretch!important;
+    flex-direction:column!important;
+  }
+
+  .audio-routing-head .btn{
+    width:100%!important;
+  }
+
+  .audio-routing-targets{
+    grid-template-columns:1fr!important;
+  }
+
+  .audio-routing-row{
+    min-height:58px!important;
+  }
+
+  #screen-admin .admin-listone-actions{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    gap:7px!important;
+  }
+
+  #screen-admin .admin-listone-actions .btn{
+    width:100%!important;
+  }
+}
 </style>
 
 <script id="liveasta-theme-preload">
@@ -6265,7 +6450,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
              title="Aggiorna LIVEASTA"
              onclick="window.location.reload()"
              onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();window.location.reload();}">
-            LIVEASTA V33
+            LIVEASTA V35
         </div>
         <button class="btn btn-secondary top-home-btn" onclick="openAdminLogin()">⚙ Impostazioni</button>
         <div class="setup-card">
@@ -6479,7 +6664,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
     <div id="screen-admin" class="screen">
         <div class="setup-card" style="max-width:1100px; width:96%; padding:24px;">
-            <div class="admin-version-badge">LIVEASTA · VERSIONE V33</div>
+            <div class="admin-version-badge">LIVEASTA · VERSIONE V35</div>
             <h1>Gestione stanze</h1>
             <p class="subtitle">Nome, password, modifica ed eliminazione</p>
 
@@ -6504,9 +6689,12 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                 <div class="admin-listone-head"><b>Listone centrale</b><span id="admin-listone-count">--</span></div>
                 <div class="admin-listone-actions">
                     <button class="btn btn-green btn-small" onclick="document.getElementById('admin-listone-file').click()">Carica Excel ufficiale</button>
+                    <button id="admin-miniature-check-btn" class="btn btn-secondary btn-small" onclick="checkMissingMiniatures()">Controlla miniature</button>
+                    <button id="admin-miniature-export-btn" class="btn btn-secondary btn-small" onclick="downloadMissingMiniaturesExcel()" disabled>Scarica Excel mancanti</button>
                 </div>
                 <input id="admin-listone-file" type="file" accept=".xlsx,.xls" style="display:none" onchange="uploadCentralListone(this.files[0])">
                 <div id="central-listone-status">Caricamento stato listone…</div>
+                <div id="admin-miniature-check-status" class="miniature-check-status">Controllo miniature non ancora eseguito.</div>
             </div>
             <div class="admin-scroll">
                 <table class="admin-table">
@@ -6825,6 +7013,19 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                     <div class="audio-channel voice-channel"><div class="audio-channel-head"><b>Volume voce</b><button onclick="testBidVoice()" type="button">▶</button></div><input id="vol-bid-voice" type="range" min="0" max="100" oninput="updateAudioLabel(this);saveAudioSettings()"><span class="audio-percent">100%</span></div>
                     <div class="audio-channel voice-channel"><div class="audio-channel-head"><b>Velocità voce</b><button onclick="testBidVoice()" type="button">▶</button></div><input id="rate-bid-voice" type="range" min="80" max="140" step="5" oninput="updateAudioLabel(this,true);saveAudioSettings()"><span class="audio-percent">1.40×</span></div>
                 </div>
+
+                <div class="audio-routing-section">
+                    <div class="audio-routing-head">
+                        <div>
+                            <b>Distribuzione audio</b>
+                            <div class="audio-routing-subtitle">Modalità <strong>IN PRESENZA</strong> · predefinita. Di base i suoni restano attivi su tutti i dispositivi.</div>
+                        </div>
+                        <button class="btn btn-secondary btn-small" type="button" onclick="unmuteAllAudioTargets()">Audio a tutti</button>
+                    </div>
+                    <div class="audio-routing-help">Spunta <b>LEVA AUDIO</b> sui dispositivi che non devono riprodurre effetti e voce delle offerte.</div>
+                    <div id="audio-routing-targets" class="audio-routing-targets"></div>
+                    <div id="audio-routing-status" class="audio-routing-status"></div>
+                </div>
                 </div>
             </div>
             <div class="control-card">
@@ -6974,6 +7175,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
         let currentAuctionValue = 0;
         
         let playersList = [];
+        let miniatureAuditResult = null;
         let auctionedPlayerIds = new Set();
         let currentAuctionPlayer = null;
         let playerHasBidThisAuction = false;
@@ -7398,7 +7600,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
             document.getElementById('player-current-value').textContent='?';
             playerSealedRevealLocalEndAt=Date.now()+Math.max(1,parseInt(seconds)||5)*1000;
-            startPlayerSealedCountdownSeconds(seconds,2);
+            startPlayerSealedCountdownSeconds(seconds,2,true);
         }
 
         function scheduleHybridReturnToBanditore(delay=2400){
@@ -8206,7 +8408,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                 document.getElementById('player-current-value').textContent='?';
                 const remaining=playerRemainingFromLiveState(state,'reveal');
                 playerSealedRevealDeadlineAt=Number(state.deadline_at)||0;
-                playerSealedRevealLocalEndAt=startPlayerSealedCountdownSeconds(remaining,2);
+                playerSealedRevealLocalEndAt=startPlayerSealedCountdownSeconds(remaining,2,true);
                 return;
             }
 
@@ -8425,9 +8627,16 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                 sealedRevealDeadlineAt=deadline;
                 const nextButton=document.getElementById('btn-next');
                 if(nextButton)nextButton.style.display='none';
+                let lastRestoreRevealSoundSecond=null;
                 const tick=()=>{
                     const rem=Math.max(0,Math.ceil((deadline-Date.now())/1000));
                     document.getElementById('countdown-display').textContent=String(rem);
+
+                    if(!isAuctioneerPlayerIdentity() && rem>0 && rem!==lastRestoreRevealSoundSecond){
+                        lastRestoreRevealSoundSecond=rem;
+                        playSound('audio-prep');
+                    }
+
                     if(rem<=0){
                         if(sealedRevealInterval){clearInterval(sealedRevealInterval);sealedRevealInterval=null;}
                         finalizeSealedAuctionResult();
@@ -10164,6 +10373,196 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
             return jsonData.filter(row => row && row.Id && row.Nome);
         }
 
+
+        async function fetchOfficialListoneForAudit(){
+            const {data,error}=await supabaseClient
+                .from('fanta_app_data')
+                .select('data,file_name,updated_at')
+                .eq('key','official_listone')
+                .maybeSingle();
+
+            if(error)throw error;
+            if(!data || !Array.isArray(data.data) || !data.data.length){
+                throw new Error('Nessun listone centrale pubblicato.');
+            }
+            return data;
+        }
+
+        async function miniatureAssetExists(playerId){
+            const relative=playerImageUrl(playerId);
+            const url=new URL(relative,window.location.href).href;
+
+            try{
+                const head=await fetch(url,{
+                    method:'HEAD',
+                    cache:'no-store',
+                    credentials:'same-origin'
+                });
+
+                if(head.ok)return true;
+
+                // Alcuni hosting possono non gestire HEAD: prova GET solo in quel caso.
+                if(head.status===405 || head.status===501){
+                    const get=await fetch(url,{
+                        method:'GET',
+                        cache:'no-store',
+                        credentials:'same-origin'
+                    });
+                    return get.ok;
+                }
+                return false;
+            }catch(e){
+                try{
+                    const get=await fetch(url,{
+                        method:'GET',
+                        cache:'no-store',
+                        credentials:'same-origin'
+                    });
+                    return get.ok;
+                }catch(_){
+                    return false;
+                }
+            }
+        }
+
+        async function checkMissingMiniatures(){
+            const btn=document.getElementById('admin-miniature-check-btn');
+            const exportBtn=document.getElementById('admin-miniature-export-btn');
+            const status=document.getElementById('admin-miniature-check-status');
+
+            if(btn)btn.disabled=true;
+            if(exportBtn)exportBtn.disabled=true;
+            miniatureAuditResult=null;
+
+            try{
+                if(status)status.textContent='Caricamento listone centrale…';
+
+                const source=await fetchOfficialListoneForAudit();
+                const list=source.data.slice();
+                const missing=[];
+                let checked=0;
+                let present=0;
+                let cursor=0;
+                const workers=Math.min(14,Math.max(1,list.length));
+
+                const worker=async()=>{
+                    while(true){
+                        const index=cursor++;
+                        if(index>=list.length)return;
+
+                        const p=list[index];
+                        const exists=await miniatureAssetExists(p.Id);
+
+                        if(exists){
+                            present++;
+                        }else{
+                            missing.push({
+                                Id:String(p.Id??''),
+                                Nome:String(p.Nome??''),
+                                Ruolo:String(p.R??p.Ruolo??''),
+                                Squadra:String(p.Squadra??''),
+                                File_atteso:`${String(p.Id??'').trim()}.webp`,
+                                Percorso:`assets/players/${String(p.Id??'').trim()}.webp`,
+                                Stato:'MANCANTE'
+                            });
+                        }
+
+                        checked++;
+                        if(status && (checked===list.length || checked%10===0)){
+                            status.textContent=`Controllo miniature: ${checked}/${list.length} · mancanti ${missing.length}`;
+                        }
+                    }
+                };
+
+                await Promise.all(Array.from({length:workers},worker));
+
+                missing.sort((a,b)=>{
+                    const ra=String(a.Ruolo||'');
+                    const rb=String(b.Ruolo||'');
+                    return ra.localeCompare(rb,'it') ||
+                           String(a.Squadra).localeCompare(String(b.Squadra),'it') ||
+                           String(a.Nome).localeCompare(String(b.Nome),'it');
+                });
+
+                miniatureAuditResult={
+                    checked_at:new Date(),
+                    listone_file:source.file_name||'Listone centrale',
+                    listone_updated_at:source.updated_at||null,
+                    total:list.length,
+                    present,
+                    missing
+                };
+
+                if(status){
+                    status.innerHTML=
+                        `<b>${missing.length} miniature mancanti</b> su ${list.length} giocatori · `+
+                        `${present} presenti. Controllo completato.`;
+                }
+                if(exportBtn)exportBtn.disabled=false;
+            }catch(e){
+                if(status)status.textContent='Controllo non riuscito: '+(e.message||e);
+                alert('Controllo miniature non riuscito: '+(e.message||e));
+            }finally{
+                if(btn)btn.disabled=false;
+            }
+        }
+
+        function downloadMissingMiniaturesExcel(){
+            const result=miniatureAuditResult;
+            if(!result){
+                alert('Esegui prima "Controlla miniature".');
+                return;
+            }
+            if(!window.XLSX){
+                alert('Modulo Excel non disponibile.');
+                return;
+            }
+
+            const checkedAt=result.checked_at instanceof Date
+                ? result.checked_at
+                : new Date(result.checked_at);
+
+            const summaryRows=[
+                ['Controllo miniature LIVEASTA',''],
+                ['Data controllo',checkedAt.toLocaleString('it-IT')],
+                ['Listone',result.listone_file||''],
+                ['Totale giocatori',result.total],
+                ['Miniature presenti',result.present],
+                ['Miniature mancanti',result.missing.length],
+                ['Copertura %',result.total?Math.round((result.present/result.total)*10000)/100:0]
+            ];
+
+            const missingRows=result.missing.map(x=>({
+                ID:x.Id,
+                Nome:x.Nome,
+                Ruolo:x.Ruolo,
+                Squadra:x.Squadra,
+                'File atteso':x.File_atteso,
+                Percorso:x.Percorso,
+                Stato:x.Stato
+            }));
+
+            const wb=XLSX.utils.book_new();
+
+            const wsSummary=XLSX.utils.aoa_to_sheet(summaryRows);
+            wsSummary['!cols']=[
+                {wch:24},
+                {wch:38}
+            ];
+            XLSX.utils.book_append_sheet(wb,wsSummary,'Riepilogo');
+
+            const wsMissing=XLSX.utils.json_to_sheet(missingRows,{
+                header:['ID','Nome','Ruolo','Squadra','File atteso','Percorso','Stato']
+            });
+            wsMissing['!cols']=[
+                {wch:10},{wch:28},{wch:9},{wch:20},{wch:18},{wch:36},{wch:12}
+            ];
+            XLSX.utils.book_append_sheet(wb,wsMissing,'Miniature mancanti');
+
+            const stamp=checkedAt.toISOString().slice(0,10);
+            XLSX.writeFile(wb,`LIVEASTA_Miniature_Mancanti_${stamp}.xlsx`);
+        }
+
         async function uploadCentralListone(file) {
             if (!file) return;
             const statusEl = document.getElementById('central-listone-status');
@@ -10507,12 +10906,13 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
             return Math.max(1,Math.min(maxSeconds,parseInt(state?.seconds)||maxSeconds));
         }
 
-        function startPlayerSealedCountdownSeconds(seconds,dangerAt=5){
+        function startPlayerSealedCountdownSeconds(seconds,dangerAt=5,withSound=false){
             stopPlayerSealedCountdown();
 
             const total=safeSealedSeconds(seconds,0,180);
             const localEnd=Date.now()+total*1000;
             const timer=document.getElementById('player-countdown');
+            let lastSoundSecond=null;
 
             const tick=()=>{
                 const rem=Math.max(0,Math.ceil((localEnd-Date.now())/1000));
@@ -10520,6 +10920,14 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                     timer.textContent=String(rem);
                     timer.classList.toggle('danger',rem>0&&rem<=dangerAt);
                 }
+
+                // In apertura buste usa lo stesso suono della preparazione,
+                // una sola volta per ogni secondo visualizzato.
+                if(withSound && rem>0 && rem!==lastSoundSecond){
+                    lastSoundSecond=rem;
+                    playSound('audio-prep');
+                }
+
                 if(rem<=0)stopPlayerSealedCountdown();
             };
 
@@ -10621,6 +11029,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
             await loadNominationState();
             await loadReadyMode();
             await loadMyAvailabilityMode();
+            await loadAudioRoutingSettings();
             setPlayerConnectionStatus('connecting');
 
             if (channel) {
@@ -10628,6 +11037,9 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                 const playerChannelGeneration=realtimeConnectionGeneration;
 
                 channel.on('presence',{event:'sync'},()=>{});
+                channel.on('broadcast',{event:'audio_route_updated'},(payload)=>{
+                    applyAudioRoutingPayload(payload.payload||{});
+                });
                 channel.on('broadcast', { event: 'new_player' }, (payload) => {
                     nominationReady=false;nominationRequestPending=false;closeNominationPicker();updateNominationUI();
                     const data = payload.payload;
@@ -10672,6 +11084,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                     }
                 });
                 channel.on('broadcast',{event:'sealed_bid_start'},(payload)=>{
+                    playSound('audio-start');
                     const d=payload.payload||{};
                     const token=String(d.token||'');
                     if(!token)return;
@@ -10745,7 +11158,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                     playerSealedRevealLocalEndAt=Date.now()+revealSeconds*1000;
                     playerPendingSealedResult=null;
                     clearSealedBidRanking();
-                    startPlayerSealedCountdownSeconds(revealSeconds,2);
+                    startPlayerSealedCountdownSeconds(revealSeconds,2,true);
                 });
 
                 channel.on('broadcast',{event:'sealed_bid_end'},(payload)=>{
@@ -10753,6 +11166,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                     if(String(d.token)!==String(playerSealedToken))return;
 
                     const renderResult=()=>{
+                        playSound('audio-end');
                         if(playerPrepInterval){clearInterval(playerPrepInterval);playerPrepInterval=null;}
                         stopPlayerSealedCountdown();
                         preparePlayerSealedControls(false);
@@ -10799,6 +11213,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                 });
 
                 channel.on('broadcast', { event: 'prep_started' }, (payload) => {
+                    playSound('audio-prep');
                     closePlayerReadyBanner();
                     isAuctionActive = false;
                     setPlayerBidButtonsEnabled(false);
@@ -10810,6 +11225,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                     startLocalPlayerPreparation(t);
                 });
                 channel.on('broadcast', { event: 'prep_tick' }, (payload) => {
+                    playSound('audio-prep');
                     isAuctionActive = false;
                     setPlayerBidButtonsEnabled(false);
                     setPlayerAuctionVisualState('preparing');
@@ -10820,6 +11236,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                     el.classList.add('prep-countdown');
                 });
                 channel.on('broadcast', { event: 'auction_started' }, (payload) => {
+                    playSound('audio-start');
                     stopPlayerSealedCountdown();
                     playerSealedRevealLocalEndAt=0;
                     playerSealedMode=false;
@@ -10853,6 +11270,8 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                 channel.on('broadcast', { event: 'auction_update' }, (payload) => {
                     const data = payload.payload;
                     currentAuctionValue = parseInt(data.value)||0;
+                    playSound('audio-buzz');
+                    speakBidValue(currentAuctionValue);
                     const winnerEl = document.getElementById('player-current-winner');
                     winnerEl.innerText = data.winner;
                     if (data.winner === myTeamName) {
@@ -10872,6 +11291,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                     document.getElementById('player-auction-title').innerText = d.reason || 'OFFERTA NON VALIDA';
                 });
                 channel.on('broadcast', { event: 'auction_end' }, async (payload) => {
+                    playSound('audio-end');
                     const data = payload.payload; isAuctionActive = false; setPlayerBidButtonsEnabled(false);
                     document.getElementById('player-auction-title').innerText = data.winner === '' ? 'NESSUNA OFFERTA' : 'AGGIUDICATO A';
                     const winnerEl = document.getElementById('player-current-winner');
@@ -11466,6 +11886,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
             await loadAuctionedPlayers();
             await loadRoomState();
             await loadAbsentTeams();
+            await loadAudioRoutingSettings();
             loadAuctioneerPlayerMode();
             await loadNominationState();
             await loadAuctionPrepSeconds();
@@ -11658,6 +12079,8 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                 winner:'',value:0,seconds:sealedTimerSeconds,deadline_at:sealedDeadlineAt,
                 ready_token:null,ready_required_ids:[],ready_ids:[]
             });
+
+            playSound('audio-start');
 
             if(channel){
                 const sealedStartPayload={
@@ -11978,6 +12401,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
             }
 
             if(assignmentOk){
+                playSound('audio-end');
                 document.getElementById('auction-title-display').textContent=winner?'AGGIUDICATO A':'ESITO BUSTA';
                 document.getElementById('winner-display').textContent=winner?(currentWinner||winner.team_name):'INVENDUTO';
                 document.getElementById('winner-display').style.color=winner?'var(--accent-blue)':'var(--text-muted)';
@@ -12071,9 +12495,19 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
             hybridStartSealedReveal(reveal);
 
             if(sealedRevealInterval)clearInterval(sealedRevealInterval);
+            let lastRevealSoundSecond=null;
             const tick=()=>{
                 reveal=Math.max(0,Math.ceil((revealDeadline-Date.now())/1000));
                 timerEl.textContent=String(reveal);
+
+                // Banditore normale: stesso beep della preparazione.
+                // Se è banditore+giocatore il suono viene già riprodotto
+                // dal countdown della schermata giocatore, quindi niente doppio audio.
+                if(!isAuctioneerPlayerIdentity() && reveal>0 && reveal!==lastRevealSoundSecond){
+                    lastRevealSoundSecond=reveal;
+                    playSound('audio-prep');
+                }
+
                 if(reveal<=0){
                     if(sealedRevealInterval){clearInterval(sealedRevealInterval);sealedRevealInterval=null;}
                     finalizeSealedAuctionResult();
@@ -12472,6 +12906,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
             updateReadyControlUI();
             renderOnlinePlayers();
             renderAuctioneerPlayerControl();
+            renderAudioRoutingTargets();
             document.querySelector('#control-room-pill b').innerText=currentRoom.name;
             document.getElementById('control-room-name').value=currentRoom.name||'';
             document.getElementById('control-room-password').value=currentRoom.password||'';
@@ -12910,6 +13345,179 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
             const ws=XLSX.utils.json_to_sheet(rows); const wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,'Rose'); XLSX.writeFile(wb,`Rose_${(currentRoomCode||'LIVEASTA').replace(/[^a-z0-9_-]+/gi,'_')}.xlsx`);
         }
 
+        const defaultAudioRoutingSettings={
+            mode:'presence',
+            mutedTargets:[]
+        };
+        let audioRoutingSettings={
+            mode:'presence',
+            mutedTargets:[]
+        };
+
+        function audioRoutingKey(){
+            return currentRoomId?`liveasta_audio_route_${currentRoomId}`:'';
+        }
+
+        function audioTargetIdForThisDevice(){
+            // Se questo dispositivo è il banditore (anche banditore+giocatore),
+            // è un solo dispositivo fisico e viene controllato dalla riga BANDITORE.
+            if(auctioneerLockKey && currentRoomId)return 'auctioneer';
+            if(myTeamId)return `team:${String(myTeamId)}`;
+            return null;
+        }
+
+        function isThisDeviceAudioMuted(){
+            const target=audioTargetIdForThisDevice();
+            if(!target)return false;
+            return (audioRoutingSettings.mutedTargets||[]).map(String).includes(String(target));
+        }
+
+        function applyAudioRoutingPayload(data){
+            audioRoutingSettings={
+                ...defaultAudioRoutingSettings,
+                ...(data||{}),
+                mutedTargets:Array.isArray(data?.mutedTargets)
+                    ?[...new Set(data.mutedTargets.map(String))]
+                    :[]
+            };
+            renderAudioRoutingTargets();
+        }
+
+        async function loadAudioRoutingSettings(){
+            audioRoutingSettings={...defaultAudioRoutingSettings,mutedTargets:[]};
+            if(!currentRoomId)return audioRoutingSettings;
+
+            try{
+                const {data,error}=await supabaseClient
+                    .from('fanta_app_data')
+                    .select('data')
+                    .eq('key',audioRoutingKey())
+                    .maybeSingle();
+
+                if(error)throw error;
+                if(data?.data)applyAudioRoutingPayload(data.data);
+            }catch(e){
+                console.warn('Caricamento distribuzione audio non riuscito',e);
+            }
+
+            renderAudioRoutingTargets();
+            return audioRoutingSettings;
+        }
+
+        async function saveAudioRoutingSettings(){
+            if(!currentRoomId)return;
+
+            const status=document.getElementById('audio-routing-status');
+            if(status)status.textContent='Salvataggio…';
+
+            const payload={
+                mode:'presence',
+                mutedTargets:[...new Set((audioRoutingSettings.mutedTargets||[]).map(String))],
+                updated_at:new Date().toISOString()
+            };
+
+            try{
+                const {error}=await supabaseClient
+                    .from('fanta_app_data')
+                    .upsert({
+                        key:audioRoutingKey(),
+                        data:payload,
+                        file_name:'audio-routing',
+                        updated_at:payload.updated_at
+                    },{onConflict:'key'});
+
+                if(error)throw error;
+
+                audioRoutingSettings=payload;
+                if(status)status.textContent='Distribuzione audio aggiornata.';
+
+                if(channel){
+                    channel.send({
+                        type:'broadcast',
+                        event:'audio_route_updated',
+                        payload
+                    }).catch(()=>{});
+                }
+            }catch(e){
+                if(status)status.textContent='Salvataggio non riuscito.';
+                alert('Impossibile salvare la distribuzione audio: '+(e.message||e));
+            }
+
+            renderAudioRoutingTargets();
+        }
+
+        function audioRoutingStatusForTeam(teamId){
+            const id=String(teamId);
+            if(auctioneerPlayerMode && String(auctioneerPlayerTeamId||'')===id){
+                return 'STESSO DISPOSITIVO BANDITORE';
+            }
+            if(absentTeamIds.has(id))return 'ASSENTE';
+            if(onlinePlayers.has(id))return 'ONLINE';
+            return 'OFFLINE';
+        }
+
+        function renderAudioRoutingTargets(){
+            const box=document.getElementById('audio-routing-targets');
+            if(!box)return;
+
+            const muted=new Set((audioRoutingSettings.mutedTargets||[]).map(String));
+            const rows=[];
+
+            rows.push({
+                target:'auctioneer',
+                label:auctioneerPlayerMode&&currentAuctioneerPlayerTeam()
+                    ?`Banditore · ${currentAuctioneerPlayerTeam().name}`
+                    :'Banditore',
+                status:'BANDITORE'
+            });
+
+            teamsCache.forEach(team=>{
+                // Banditore+giocatore = un solo telefono, quindi niente doppia riga.
+                if(auctioneerPlayerMode &&
+                   String(auctioneerPlayerTeamId||'')===String(team.id)){
+                    return;
+                }
+                rows.push({
+                    target:`team:${String(team.id)}`,
+                    label:team.name,
+                    status:audioRoutingStatusForTeam(team.id)
+                });
+            });
+
+            box.innerHTML=rows.map(row=>{
+                const checked=muted.has(String(row.target));
+                return `<label class="audio-routing-row ${checked?'muted':''}">
+                    <span class="audio-routing-device">
+                        <b>${escapeHtml(row.label)}</b>
+                        <small>${escapeHtml(row.status)}</small>
+                    </span>
+                    <span class="audio-routing-checkbox">
+                        <input type="checkbox"
+                               data-audio-target="${escapeHtml(row.target)}"
+                               ${checked?'checked':''}
+                               onchange="setAudioTargetMuted(this.dataset.audioTarget,this.checked)">
+                        <span>LEVA AUDIO</span>
+                    </span>
+                </label>`;
+            }).join('');
+        }
+
+        async function setAudioTargetMuted(target,muted){
+            if(!target)return;
+            const set=new Set((audioRoutingSettings.mutedTargets||[]).map(String));
+            if(muted)set.add(String(target));
+            else set.delete(String(target));
+            audioRoutingSettings={...audioRoutingSettings,mode:'presence',mutedTargets:[...set]};
+            renderAudioRoutingTargets();
+            await saveAudioRoutingSettings();
+        }
+
+        async function unmuteAllAudioTargets(){
+            audioRoutingSettings={...audioRoutingSettings,mode:'presence',mutedTargets:[]};
+            renderAudioRoutingTargets();
+            await saveAudioRoutingSettings();
+        }
+
         const AUDIO_SETTINGS_KEY = 'fanta_buzzer_audio_v2';
         const defaultAudioSettings = {
             voiceEnabled: true,
@@ -12919,8 +13527,10 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
         };
         let audioSettings = JSON.parse(JSON.stringify(defaultAudioSettings));
 
-        function openAudioMixer(){
+        async function openAudioMixer(){
             loadAudioSettings();
+            await loadAudioRoutingSettings();
+            renderAudioRoutingTargets();
             document.getElementById('audio-mixer-modal')?.classList.add('open');
             unlockAudio();
         }
@@ -12954,7 +13564,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
             const label=el?.parentElement?.querySelector('.audio-percent'); if(!label)return;
             label.textContent=isRate ? ((parseInt(el.value)||100)/100).toFixed(2).replace(/0$/,'')+'×' : (parseInt(el.value)||0)+'%';
         }
-        function playSound(elementId) {
+        function playSound(elementId,force=false) {
+            if(!force && isThisDeviceAudioMuted())return;
+
             const master = document.getElementById(elementId);
             if (!master) return;
             const volume = Math.max(0,Math.min(1,audioSettings.volumes[elementId] ?? 1));
@@ -12975,9 +13587,10 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
                 master.play().catch(()=>{});
             }
         }
-        function testAuctionAudio(id){ playSound(id); }
+        function testAuctionAudio(id){ playSound(id,true); }
         function speakBidValue(value,force=false){
             if(!('speechSynthesis' in window)) return;
+            if(!force && isThisDeviceAudioMuted()) return;
             if(!force && !audioSettings.voiceEnabled) return;
             const n=parseInt(value); if(!Number.isFinite(n)) return;
             window.speechSynthesis.cancel(); // mai creare una coda: pronuncia sempre l'ultima offerta
@@ -13057,7 +13670,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 
 
 
-<script id="liveasta-v33-runtime">
+<script id="liveasta-v35-runtime">
 (function(){
   const TEAM_COLORS={
     'ATALANTA':['#191B1F','#3D8DB8'],
@@ -13241,9 +13854,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyBrand(){
-    document.title='LIVEASTA V33';
+    document.title='LIVEASTA V35';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V33';
+      el.textContent='LIVEASTA · VERSIONE V35';
     });
     document.querySelectorAll('.logo-text').forEach(el=>{
       const a=el.querySelector('.rosa');
@@ -13308,7 +13921,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 </script>
 
 
-<script id="liveasta-v33-theme-runtime">
+<script id="liveasta-v35-theme-runtime">
 (function(){
   const THEME_KEY='liveasta_theme';
   const THEMES=['broadcast','stadium','carbon','crimson','emerald','violet'];
