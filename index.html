@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>LIVEASTA V37</title>
+    <title>LIVEASTA V38</title>
     <meta name="theme-color" content="#0D1117">
     <meta name="color-scheme" content="dark">
     <meta name="mobile-web-app-capable" content="yes">
@@ -2757,7 +2757,7 @@
         }
 </style>
 
-<style id="liveasta-v37-theme-switcher">
+<style id="liveasta-v38-theme-switcher">
 /* ===== LAYOUT PC STABILE (migrato dal vecchio V74, senza palette legacy) ===== */
 .logo-text{
   display:flex!important;
@@ -5611,7 +5611,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V37
+   LIVEASTA V38
    ========================================================== */
 
 /* Versione home cliccabile = refresh */
@@ -5634,7 +5634,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V37 — BUSTA NEL LISTONE
+   LIVEASTA V38 — BUSTA NEL LISTONE
    ========================================================== */
 #screen-auctioneer-board .auction-list-toolbar .toolbar-sealed-btn{
   flex:0 0 auto!important;
@@ -5656,7 +5656,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V37 — TOOLBAR LISTONE TUTTA SU UNA RIGA
+   LIVEASTA V38 — TOOLBAR LISTONE TUTTA SU UNA RIGA
    ========================================================== */
 
 /* Search + dado + modalità busta + ROSE */
@@ -5748,7 +5748,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V37 — BANDITORE GIOCATORE
+   LIVEASTA V38 — BANDITORE GIOCATORE
    ========================================================== */
 .auctioneer-player-control-card{
   border-color:color-mix(in srgb,var(--theme-primary) 28%,var(--theme-border))!important;
@@ -5799,7 +5799,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V37
+   LIVEASTA V38
    ========================================================== */
 
 /* MODALITÀ BUSTA:
@@ -5928,7 +5928,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V37
+   LIVEASTA V38
    ========================================================== */
 
 /* ===== STATO GIOCATORE: palette definitiva ===== */
@@ -6217,7 +6217,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V37 — iPhone PWA safe-area + audio buste
+   LIVEASTA V38 — iPhone PWA safe-area + audio buste
    ========================================================== */
 
 /* In PWA iPhone gli elementi assoluti della home devono partire
@@ -6254,7 +6254,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V37 — DISTRIBUZIONE AUDIO + AUDIT MINIATURE
+   LIVEASTA V38 — DISTRIBUZIONE AUDIO + AUDIT MINIATURE
    ========================================================== */
 
 .audio-routing-section{
@@ -6402,7 +6402,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V37 — QR ACCESSO RAPIDO HOME
+   LIVEASTA V38 — QR ACCESSO RAPIDO HOME
    ========================================================== */
 #screen-role .home-qr-block{
   width:100%!important;
@@ -6539,21 +6539,34 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V37 — QR DUPLICATO DESKTOP FIX
+   LIVEASTA V38 — QR DUPLICATO DESKTOP FIX
    ========================================================== */
 #screen-role #home-site-qr{
   position:relative!important;
   overflow:hidden!important;
 }
 
-/* Mantiene un solo renderer QR visibile anche se il browser ignora
-   gli inline style della libreria. */
-#screen-role #home-site-qr > canvas + img{
+/* Se qrcode.js decide invece di usare l'immagine, il canvas inline-hidden
+   resta nascosto grazie alla regola [style*="display: none"] sopra. */
+
+
+/* ==========================================================
+   LIVEASTA V38 — QR DESKTOP RENDER FIX
+   ========================================================== */
+
+/* qrcode.js decide da solo se usare IMG o CANVAS.
+   Rispettiamo il display inline della libreria: quello nascosto resta nascosto,
+   quello scelto resta visibile. */
+#screen-role #home-site-qr > img[style*="display: none"],
+#screen-role #home-site-qr > canvas[style*="display: none"]{
   display:none!important;
 }
 
-/* Se qrcode.js decide invece di usare l'immagine, il canvas inline-hidden
-   resta nascosto grazie alla regola [style*="display: none"] sopra. */
+#screen-role #home-site-qr > img:not([style*="display: none"]),
+#screen-role #home-site-qr > canvas:not([style*="display: none"]){
+  max-width:100%!important;
+  max-height:100%!important;
+}
 </style>
 
 <script id="liveasta-theme-preload">
@@ -6606,7 +6619,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
              title="Aggiorna LIVEASTA"
              onclick="window.location.reload()"
              onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();window.location.reload();}">
-            LIVEASTA V37
+            LIVEASTA V38
         </div>
         <button class="btn btn-secondary top-home-btn" onclick="openAdminLogin()">⚙ Impostazioni</button>
         <div class="setup-card">
@@ -6829,7 +6842,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
     <div id="screen-admin" class="screen">
         <div class="setup-card" style="max-width:1100px; width:96%; padding:24px;">
-            <div class="admin-version-badge">LIVEASTA · VERSIONE V37</div>
+            <div class="admin-version-badge">LIVEASTA · VERSIONE V38</div>
             <h1>Gestione stanze</h1>
             <p class="subtitle">Nome, password, modifica ed eliminazione</p>
 
@@ -13835,7 +13848,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 
 
 
-<script id="liveasta-v37-runtime">
+<script id="liveasta-v38-runtime">
 (function(){
   const TEAM_COLORS={
     'ATALANTA':['#191B1F','#3D8DB8'],
@@ -14019,9 +14032,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyBrand(){
-    document.title='LIVEASTA V37';
+    document.title='LIVEASTA V38';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V37';
+      el.textContent='LIVEASTA · VERSIONE V38';
     });
     document.querySelectorAll('.logo-text').forEach(el=>{
       const a=el.querySelector('.rosa');
@@ -14086,7 +14099,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 </script>
 
 
-<script id="liveasta-v37-theme-runtime">
+<script id="liveasta-v38-theme-runtime">
 (function(){
   const THEME_KEY='liveasta_theme';
   const THEMES=['broadcast','stadium','carbon','crimson','emerald','violet'];
@@ -14189,7 +14202,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 
 
 
-<script id="liveasta-v37-home-qr">
+<script id="liveasta-v38-home-qr">
 (function(){
   function publicLiveAstaUrl(){
     const u=new URL(window.location.href);
@@ -14230,13 +14243,6 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
       colorDark:'#000000',
       colorLight:'#FFFFFF',
       correctLevel:QRCode.CorrectLevel.H
-    });
-
-    // qrcode.js può creare sia canvas sia img come renderer alternativi.
-    // Se per qualsiasi motivo risultano entrambi visibili, ne lasciamo uno solo.
-    requestAnimationFrame(()=>{
-      const visible=[...target.children].filter(el=>getComputedStyle(el).display!=='none');
-      visible.slice(1).forEach(el=>el.style.display='none');
     });
   }
 
