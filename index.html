@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>LIVEASTA V39</title>
+    <title>LIVEASTA V40</title>
     <meta name="theme-color" content="#0D1117">
     <meta name="color-scheme" content="dark">
     <meta name="mobile-web-app-capable" content="yes">
@@ -1946,7 +1946,6 @@
 
 
 /* ===== V34 TURNI AUTOMATICI ===== */
-#player-nominate-btn{display:none!important}
 .nomination-waiting-team{color:var(--lime)!important;text-transform:uppercase}
 .nomination-waiting-role{color:var(--lime)!important}
 
@@ -2757,7 +2756,7 @@
         }
 </style>
 
-<style id="liveasta-v39-theme-switcher">
+<style id="liveasta-v40-theme-switcher">
 /* ===== LAYOUT PC STABILE (migrato dal vecchio V74, senza palette legacy) ===== */
 .logo-text{
   display:flex!important;
@@ -5611,7 +5610,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V39
+   LIVEASTA V40
    ========================================================== */
 
 /* Versione home cliccabile = refresh */
@@ -5634,7 +5633,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V39 — BUSTA NEL LISTONE
+   LIVEASTA V40 — BUSTA NEL LISTONE
    ========================================================== */
 #screen-auctioneer-board .auction-list-toolbar .toolbar-sealed-btn{
   flex:0 0 auto!important;
@@ -5656,7 +5655,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V39 — TOOLBAR LISTONE TUTTA SU UNA RIGA
+   LIVEASTA V40 — TOOLBAR LISTONE TUTTA SU UNA RIGA
    ========================================================== */
 
 /* Search + dado + modalità busta + ROSE */
@@ -5748,7 +5747,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V39 — BANDITORE GIOCATORE
+   LIVEASTA V40 — BANDITORE GIOCATORE
    ========================================================== */
 .auctioneer-player-control-card{
   border-color:color-mix(in srgb,var(--theme-primary) 28%,var(--theme-border))!important;
@@ -5799,7 +5798,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V39
+   LIVEASTA V40
    ========================================================== */
 
 /* MODALITÀ BUSTA:
@@ -5928,7 +5927,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V39
+   LIVEASTA V40
    ========================================================== */
 
 /* ===== STATO GIOCATORE: palette definitiva ===== */
@@ -6217,7 +6216,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V39 — iPhone PWA safe-area + audio buste
+   LIVEASTA V40 — iPhone PWA safe-area + audio buste
    ========================================================== */
 
 /* In PWA iPhone gli elementi assoluti della home devono partire
@@ -6254,7 +6253,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V39 — DISTRIBUZIONE AUDIO + AUDIT MINIATURE
+   LIVEASTA V40 — DISTRIBUZIONE AUDIO + AUDIT MINIATURE
    ========================================================== */
 
 .audio-routing-section{
@@ -6402,7 +6401,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V39 — QR ACCESSO RAPIDO HOME
+   LIVEASTA V40 — QR ACCESSO RAPIDO HOME
    ========================================================== */
 #screen-role .home-qr-block{
   width:100%!important;
@@ -6539,7 +6538,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V39 — QR DUPLICATO DESKTOP FIX
+   LIVEASTA V40 — QR DUPLICATO DESKTOP FIX
    ========================================================== */
 #screen-role #home-site-qr{
   position:relative!important;
@@ -6551,7 +6550,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V39 — QR DESKTOP RENDER FIX
+   LIVEASTA V40 — QR DESKTOP RENDER FIX
    ========================================================== */
 
 /* qrcode.js decide da solo se usare IMG o CANVAS.
@@ -6566,6 +6565,74 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 #screen-role #home-site-qr > canvas:not([style*="display: none"]){
   max-width:100%!important;
   max-height:100%!important;
+}
+
+
+/* ==========================================================
+   LIVEASTA V40 — RIAPRI LISTONE BANDITURA SENZA RESET
+   ========================================================== */
+#screen-player-buzzer #player-nominate-btn{
+  display:none;
+}
+
+#screen-player-buzzer #player-nominate-btn.nomination-turn-active{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:calc(100% - 20px)!important;
+  max-width:760px!important;
+  min-height:62px!important;
+  margin:7px auto 8px!important;
+  padding:8px 14px!important;
+  box-sizing:border-box!important;
+  border:1px solid color-mix(in srgb,var(--theme-primary) 78%,white 8%)!important;
+  background:linear-gradient(180deg,
+    color-mix(in srgb,var(--theme-primary) 92%,white 8%),
+    color-mix(in srgb,var(--theme-primary) 72%,var(--theme-accent) 28%))!important;
+  color:var(--theme-bg-deep)!important;
+  box-shadow:0 8px 24px color-mix(in srgb,var(--theme-primary) 22%,transparent)!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:clip!important;
+}
+
+#screen-player-buzzer #player-nominate-btn.nomination-turn-active .nominate-small{
+  font-size:.56rem!important;
+  line-height:1!important;
+  margin:0 0 4px!important;
+  white-space:nowrap!important;
+}
+
+#screen-player-buzzer #player-nominate-btn.nomination-turn-active strong{
+  font-size:.88rem!important;
+  line-height:1.05!important;
+  white-space:nowrap!important;
+}
+
+#screen-player-buzzer #player-nominate-btn.nomination-turn-active #player-nominate-role{
+  margin-top:4px!important;
+  font-size:.58rem!important;
+  line-height:1!important;
+  white-space:nowrap!important;
+}
+
+@media(max-width:760px){
+  #screen-player-buzzer #player-nominate-btn.nomination-turn-active{
+    width:calc(100% - 14px)!important;
+    min-height:56px!important;
+    margin:5px auto 6px!important;
+    padding:6px 9px!important;
+    border-radius:11px!important;
+  }
+
+  #screen-player-buzzer #player-nominate-btn.nomination-turn-active strong{
+    font-size:.77rem!important;
+  }
+
+  #screen-player-buzzer #player-nominate-btn.nomination-turn-active .nominate-small{
+    font-size:.48rem!important;
+  }
 }
 </style>
 
@@ -6619,7 +6686,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
              title="Aggiorna LIVEASTA"
              onclick="window.location.reload()"
              onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();window.location.reload();}">
-            LIVEASTA V39
+            LIVEASTA V40
         </div>
         <button class="btn btn-secondary top-home-btn" onclick="openAdminLogin()">⚙ Impostazioni</button>
         <div class="setup-card">
@@ -6695,7 +6762,9 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
         </div>
 
         <button id="player-nominate-btn" class="player-nominate-btn" type="button" onclick="openNominationPicker()" style="display:none;">
-            <span class="nominate-small">È IL TUO TURNO</span><strong>BANDISCI UN GIOCATORE</strong><span id="player-nominate-role">Ruolo P</span>
+            <span class="nominate-small">È IL TUO TURNO DI BANDITURA</span>
+            <strong>APRI LISTONE PER BANDIRE</strong>
+            <span id="player-nominate-role">Ruolo P</span>
         </button>
 
         <div class="phone-top-area" id="phone-card-container" style="visibility:hidden;">
@@ -6842,7 +6911,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
     <div id="screen-admin" class="screen">
         <div class="setup-card" style="max-width:1100px; width:96%; padding:24px;">
-            <div class="admin-version-badge">LIVEASTA · VERSIONE V39</div>
+            <div class="admin-version-badge">LIVEASTA · VERSIONE V40</div>
             <h1>Gestione stanze</h1>
             <p class="subtitle">Nome, password, modifica ed eliminazione</p>
 
@@ -9026,7 +9095,12 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
         async function advanceNominationTurn(){if(!nominationState.enabled)return;const old=nominationState.turn_team_id;await loadRoomState();normalizeNominationState(old);nominationReady=false;await saveNominationState(false);}
         function updateNominationUI(){
             const mine=nominationState.enabled&&nominationReady&&nominationState.role&&String(nominationState.turn_team_id)===String(myTeamId);
-            const b=document.getElementById('player-nominate-btn');if(b){b.style.display='none';b.disabled=true;}
+            const b=document.getElementById('player-nominate-btn');
+            if(b){
+                b.style.display=mine?'flex':'none';
+                b.disabled=!mine;
+                b.classList.toggle('nomination-turn-active',!!mine);
+            }
             const r=document.getElementById('player-nominate-role');if(r)r.textContent=nominationState.role?`Ruolo ${nominationState.role} · ${nominationRoleName(nominationState.role)}`:'Rosa completata';
             const badge=document.getElementById('nomination-control-badge');if(badge){badge.textContent=nominationState.enabled?'ATTIVA':'DISATTIVA';badge.classList.toggle('active',!!nominationState.enabled);}
             const t=document.getElementById('nomination-toggle-btn');if(t)t.textContent=nominationState.enabled?'Disattiva banditura a turni':'Attiva banditura a turni';
@@ -9146,7 +9220,12 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
             if(!playersList.length){const {data}=await supabaseClient.from('fanta_app_data').select('data').eq('key','official_listone').maybeSingle();if(Array.isArray(data?.data))playersList=data.data;}
             document.getElementById('nomination-search').value='';document.getElementById('nomination-picker-title').textContent=`Scegli un ${nominationRoleName(nominationState.role)}`;document.getElementById('nomination-picker-subtitle').textContent=`Solo ruolo ${nominationState.role}`;renderNominationCandidates();document.getElementById('nomination-picker-overlay').classList.add('open');
         }
-        function closeNominationPicker(){document.getElementById('nomination-picker-overlay')?.classList.remove('open');}
+        function closeNominationPicker(){
+            document.getElementById('nomination-picker-overlay')?.classList.remove('open');
+            // Se è ancora il tuo turno, non serve alcun reset: il pulsante
+            // APRI LISTONE PER BANDIRE resta disponibile nella schermata giocatore.
+            updateNominationUI();
+        }
         function renderNominationCandidates(){
             const box=document.getElementById('nomination-candidates'),q=(document.getElementById('nomination-search')?.value||'').toLowerCase();
             const list=playersList.filter(p=>String(p.R).toUpperCase()===String(nominationState.role)).filter(p=>!auctionedPlayerIds.has(String(p.Id))).filter(p=>!q||`${p.Nome} ${p.Squadra}`.toLowerCase().includes(q)).slice(0,150);
@@ -13850,7 +13929,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 
 
 
-<script id="liveasta-v39-runtime">
+<script id="liveasta-v40-runtime">
 (function(){
   const TEAM_COLORS={
     'ATALANTA':['#191B1F','#3D8DB8'],
@@ -14034,9 +14113,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyBrand(){
-    document.title='LIVEASTA V39';
+    document.title='LIVEASTA V40';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V39';
+      el.textContent='LIVEASTA · VERSIONE V40';
     });
     document.querySelectorAll('.logo-text').forEach(el=>{
       const a=el.querySelector('.rosa');
@@ -14101,7 +14180,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 </script>
 
 
-<script id="liveasta-v39-theme-runtime">
+<script id="liveasta-v40-theme-runtime">
 (function(){
   const THEME_KEY='liveasta_theme';
   const THEMES=['broadcast','stadium','carbon','crimson','emerald','violet'];
@@ -14204,7 +14283,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 
 
 
-<script id="liveasta-v39-home-qr">
+<script id="liveasta-v40-home-qr">
 (function(){
   function publicLiveAstaUrl(){
     const u=new URL(window.location.href);
