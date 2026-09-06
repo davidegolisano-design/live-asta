@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>LIVEASTA V38</title>
+    <title>LIVEASTA V39</title>
     <meta name="theme-color" content="#0D1117">
     <meta name="color-scheme" content="dark">
     <meta name="mobile-web-app-capable" content="yes">
@@ -2757,7 +2757,7 @@
         }
 </style>
 
-<style id="liveasta-v38-theme-switcher">
+<style id="liveasta-v39-theme-switcher">
 /* ===== LAYOUT PC STABILE (migrato dal vecchio V74, senza palette legacy) ===== */
 .logo-text{
   display:flex!important;
@@ -5611,7 +5611,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V38
+   LIVEASTA V39
    ========================================================== */
 
 /* Versione home cliccabile = refresh */
@@ -5634,7 +5634,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V38 — BUSTA NEL LISTONE
+   LIVEASTA V39 — BUSTA NEL LISTONE
    ========================================================== */
 #screen-auctioneer-board .auction-list-toolbar .toolbar-sealed-btn{
   flex:0 0 auto!important;
@@ -5656,7 +5656,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V38 — TOOLBAR LISTONE TUTTA SU UNA RIGA
+   LIVEASTA V39 — TOOLBAR LISTONE TUTTA SU UNA RIGA
    ========================================================== */
 
 /* Search + dado + modalità busta + ROSE */
@@ -5748,7 +5748,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V38 — BANDITORE GIOCATORE
+   LIVEASTA V39 — BANDITORE GIOCATORE
    ========================================================== */
 .auctioneer-player-control-card{
   border-color:color-mix(in srgb,var(--theme-primary) 28%,var(--theme-border))!important;
@@ -5799,7 +5799,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V38
+   LIVEASTA V39
    ========================================================== */
 
 /* MODALITÀ BUSTA:
@@ -5928,7 +5928,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V38
+   LIVEASTA V39
    ========================================================== */
 
 /* ===== STATO GIOCATORE: palette definitiva ===== */
@@ -6217,7 +6217,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V38 — iPhone PWA safe-area + audio buste
+   LIVEASTA V39 — iPhone PWA safe-area + audio buste
    ========================================================== */
 
 /* In PWA iPhone gli elementi assoluti della home devono partire
@@ -6254,7 +6254,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V38 — DISTRIBUZIONE AUDIO + AUDIT MINIATURE
+   LIVEASTA V39 — DISTRIBUZIONE AUDIO + AUDIT MINIATURE
    ========================================================== */
 
 .audio-routing-section{
@@ -6402,7 +6402,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V38 — QR ACCESSO RAPIDO HOME
+   LIVEASTA V39 — QR ACCESSO RAPIDO HOME
    ========================================================== */
 #screen-role .home-qr-block{
   width:100%!important;
@@ -6539,7 +6539,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V38 — QR DUPLICATO DESKTOP FIX
+   LIVEASTA V39 — QR DUPLICATO DESKTOP FIX
    ========================================================== */
 #screen-role #home-site-qr{
   position:relative!important;
@@ -6551,7 +6551,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
 
 /* ==========================================================
-   LIVEASTA V38 — QR DESKTOP RENDER FIX
+   LIVEASTA V39 — QR DESKTOP RENDER FIX
    ========================================================== */
 
 /* qrcode.js decide da solo se usare IMG o CANVAS.
@@ -6619,7 +6619,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
              title="Aggiorna LIVEASTA"
              onclick="window.location.reload()"
              onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();window.location.reload();}">
-            LIVEASTA V38
+            LIVEASTA V39
         </div>
         <button class="btn btn-secondary top-home-btn" onclick="openAdminLogin()">⚙ Impostazioni</button>
         <div class="setup-card">
@@ -6842,7 +6842,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
     <div id="screen-admin" class="screen">
         <div class="setup-card" style="max-width:1100px; width:96%; padding:24px;">
-            <div class="admin-version-badge">LIVEASTA · VERSIONE V38</div>
+            <div class="admin-version-badge">LIVEASTA · VERSIONE V39</div>
             <h1>Gestione stanze</h1>
             <p class="subtitle">Nome, password, modifica ed eliminazione</p>
 
@@ -8240,9 +8240,11 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
             });
 
             // Modalità ASSENTE:
-            // nelle aste normali/busta il READY non aspetta quella squadra.
-            // Nella banditura a turni invece è obbligatoria e NON viene saltata.
-            if(!nominationState.enabled && absentTeamIds.size){
+            // il READY non deve MAI aspettare una squadra assente.
+            // Questo vale anche con banditura a turni attiva.
+            // L'assenza NON modifica però l'ordine dei turni di banditura:
+            // quando arriva il suo turno, quella squadra deve comunque bandire.
+            if(absentTeamIds.size){
                 eligible=eligible.filter(team=>!absentTeamIds.has(String(team.id)));
             }
 
@@ -8325,8 +8327,8 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
             persistReadyGateState();
 
             // OFFLINE continua a essere obbligatorio.
-            // Solo la modalità ASSENTE esplicita può togliere una squadra dal READY,
-            // e mai quando la banditura a turni è attiva.
+            // Solo la modalità ASSENTE esplicita toglie una squadra dal READY.
+            // La banditura a turni resta comunque obbligatoria nel suo turno.
             if(req.length===0 || req.every(id=>readyPlayers.has(String(id)))){
                 readyGateWaiting=false;
                 broadcastReadyState();
@@ -9806,7 +9808,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
             if(note){
                 note.textContent=nominationState.enabled
-                    ?'Banditura a turni attiva: la modalità ASSENTE non salta né il READY né il tuo turno di banditura.'
+                    ?'Banditura a turni attiva: da ASSENTE salti i READY, ma il tuo turno di banditura resta obbligatorio.'
                     :'In modalità ASSENTE il banditore non aspetterà il tuo READY.';
                 note.classList.toggle('mandatory',!!nominationState.enabled);
             }
@@ -9856,7 +9858,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
             setPlayerConnectionStatus('online');
             closePlayerAvailabilityModal();
 
-            if(absent && !nominationState.enabled){
+            if(absent){
                 closePlayerReadyBanner();
             }
 
@@ -9890,7 +9892,7 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
                 else absentTeamIds.delete(String(myTeamId));
 
                 renderOnlinePlayers();
-                if(readyGateWaiting && !nominationState.enabled){
+                if(readyGateWaiting){
                     evaluateReadyGate();
                     saveReadyGateDedicated(true);
                 }
@@ -12185,10 +12187,10 @@ html[data-live-theme] #screen-room-control .control-title-actions .btn-danger{
 
                     renderOnlinePlayers();
 
-                    // Se cambia stato durante un READY normale/busta,
-                    // ricalcola subito chi è realmente obbligato.
-                    // In banditura a turni l'assenza viene ignorata.
-                    if(readyGateWaiting && !nominationState.enabled){
+                    // Se cambia stato durante un READY, ricalcola subito
+                    // chi è realmente obbligato. L'ASSENTE non deve mai bloccare il READY,
+                    // anche se la banditura a turni è attiva.
+                    if(readyGateWaiting){
                         evaluateReadyGate();
                         await saveReadyGateDedicated(readyGateWaiting);
                     }
@@ -13848,7 +13850,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 
 
 
-<script id="liveasta-v38-runtime">
+<script id="liveasta-v39-runtime">
 (function(){
   const TEAM_COLORS={
     'ATALANTA':['#191B1F','#3D8DB8'],
@@ -14032,9 +14034,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyBrand(){
-    document.title='LIVEASTA V38';
+    document.title='LIVEASTA V39';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V38';
+      el.textContent='LIVEASTA · VERSIONE V39';
     });
     document.querySelectorAll('.logo-text').forEach(el=>{
       const a=el.querySelector('.rosa');
@@ -14099,7 +14101,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 </script>
 
 
-<script id="liveasta-v38-theme-runtime">
+<script id="liveasta-v39-theme-runtime">
 (function(){
   const THEME_KEY='liveasta_theme';
   const THEMES=['broadcast','stadium','carbon','crimson','emerald','violet'];
@@ -14202,7 +14204,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 
 
 
-<script id="liveasta-v38-home-qr">
+<script id="liveasta-v39-home-qr">
 (function(){
   function publicLiveAstaUrl(){
     const u=new URL(window.location.href);
