@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>LIVEASTA V94</title>
+    <title>LIVEASTA V95</title>
     <meta name="theme-color" content="#0D1117">
     <meta name="color-scheme" content="dark">
     <meta name="mobile-web-app-capable" content="yes">
@@ -12519,6 +12519,93 @@ html.audio-modal-open{
 .nomination-auto-bid-one-copy small{color:#AEB8C4;font-size:.68rem;line-height:1.25}
 </style>
 
+
+<style id="liveasta-v95-ranking-ready-random">
+/* ==========================================================
+   LIVEASTA V95
+   - Attesa turno: il quadrante destro NON cambia rispetto all'esito asta
+   - Random automatico in Gestione
+   ========================================================== */
+@media (min-width:761px){
+  /* Nella pausa tra due turni cambia soltanto il quadrante centrale.
+     Destra = esattamente ASTA VINTA / OFFERTA / CLASSIFICA appena vista. */
+  #auction-dashboard.mode-pc #view-auction.nomination-turn-desktop .col-info{
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:center!important;
+    justify-content:center!important;
+    min-height:0!important;
+    overflow:hidden!important;
+    padding:14px 16px!important;
+  }
+  #auction-dashboard.mode-pc #view-auction.nomination-turn-desktop .col-info > #auction-title-display,
+  #auction-dashboard.mode-pc #view-auction.nomination-turn-desktop .col-info > #winner-display,
+  #auction-dashboard.mode-pc #view-auction.nomination-turn-desktop .col-info > .bid-box{
+    display:block!important;
+  }
+  #auction-dashboard.mode-pc #view-auction.nomination-turn-desktop #sealed-ranking-auctioneer{
+    width:min(94%,560px)!important;
+    max-width:none!important;
+    min-height:0!important;
+    margin:10px auto 0!important;
+    align-self:auto!important;
+  }
+  #auction-dashboard.mode-pc #view-auction.nomination-turn-desktop #sealed-ranking-auctioneer .sealed-ranking-title{
+    margin:0 0 10px!important;
+    font-size:clamp(.82rem,1.05vw,1.05rem)!important;
+  }
+  #auction-dashboard.mode-pc #view-auction.nomination-turn-desktop #sealed-ranking-auctioneer .sealed-ranking-list{
+    max-height:210px!important;
+    min-height:0!important;
+    gap:8px!important;
+    overflow-y:auto!important;
+  }
+  #auction-dashboard.mode-pc #view-auction.nomination-turn-desktop #sealed-ranking-auctioneer .sealed-ranking-row{
+    min-height:56px!important;
+    grid-template-columns:32px minmax(0,1fr) auto!important;
+    gap:10px!important;
+    padding:9px 12px!important;
+    border-radius:14px!important;
+  }
+  #auction-dashboard.mode-pc #view-auction.nomination-turn-desktop #sealed-ranking-auctioneer .sealed-ranking-team{
+    font-size:clamp(.96rem,1.15vw,1.25rem)!important;
+  }
+  #auction-dashboard.mode-pc #view-auction.nomination-turn-desktop #sealed-ranking-auctioneer .sealed-ranking-value{
+    font-size:clamp(1rem,1.18vw,1.28rem)!important;
+  }
+  /* Se non c'è asta precedente, usa il messaggio vuoto; altrimenti non copre il risultato. */
+  #auction-dashboard.mode-pc #view-auction.nomination-turn-desktop .auctioneer-turn-ranking-empty.show{
+    display:flex!important;
+  }
+}
+
+.auto-random-control-card .control-title{align-items:flex-start!important;gap:12px}
+.auto-random-note{margin-top:4px;color:#AEB8C4;font-size:.76rem;line-height:1.35}
+.auto-random-note b{color:#F5B942;font-weight:900}
+.auto-random-master-switch{
+  flex:0 0 auto;display:flex;align-items:center;gap:8px;cursor:pointer;
+  border:1px solid rgba(61,220,151,.45);border-radius:12px;padding:9px 11px;
+  background:rgba(61,220,151,.08);color:#fff;font-size:.75rem;font-weight:950;letter-spacing:.05em;
+}
+.auto-random-master-switch input{width:19px!important;height:19px!important;margin:0!important;accent-color:#3DDC97}
+.auto-random-role-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:13px 0 10px}
+.auto-random-role{position:relative;display:grid;place-items:center;min-height:52px;border-radius:13px;border:1px solid rgba(255,255,255,.13);background:#111821;cursor:pointer;overflow:hidden}
+.auto-random-role input{position:absolute;opacity:0;pointer-events:none}
+.auto-random-role span{font-size:1rem;font-weight:1000;color:#D8E0EA}
+.auto-random-role:has(input:checked){box-shadow:inset 0 0 0 2px currentColor,0 8px 22px rgba(0,0,0,.16)}
+.auto-random-role.role-P:has(input:checked){color:#FF405E;background:rgba(255,64,94,.15)}
+.auto-random-role.role-D:has(input:checked){color:#22C55E;background:rgba(34,197,94,.14)}
+.auto-random-role.role-C:has(input:checked){color:#4DB7FF;background:rgba(77,183,255,.14)}
+.auto-random-role.role-A:has(input:checked){color:#F5B942;background:rgba(245,185,66,.14)}
+.auto-random-role:has(input:checked) span{color:#fff}
+.auto-random-status{border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:9px 11px;background:rgba(17,24,33,.42);color:#AEB8C4;font-size:.72rem;line-height:1.3}
+.auto-random-status.active{border-color:rgba(61,220,151,.38);color:#DFF8EC;background:rgba(61,220,151,.07)}
+@media (max-width:760px){
+  .auto-random-control-card .control-title{flex-direction:column}
+  .auto-random-master-switch{width:100%;justify-content:center;box-sizing:border-box}
+}
+</style>
+
 </head>
 <body>
 
@@ -12529,7 +12616,7 @@ html.audio-modal-open{
              aria-label="Apri Impostazioni LIVEASTA"
              onclick="openAdminLogin()"
              onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openAdminLogin();}">
-            LIVEASTA V94
+            LIVEASTA V95
         </div>
         <div class="setup-card">
             <h1 class="logo-text"><span class="rosa">LIVE</span><span class="rush">ASTA</span></h1>
@@ -12932,7 +13019,7 @@ html.audio-modal-open{
 
     <div id="screen-admin" class="screen">
         <div class="setup-card" style="max-width:1100px; width:96%; padding:24px;">
-            <div class="admin-version-badge">LIVEASTA · VERSIONE V94</div>
+            <div class="admin-version-badge">LIVEASTA · VERSIONE V95</div>
             <h1>Gestione stanze</h1>
             <p class="subtitle">Nome, password, modifica ed eliminazione</p>
 
@@ -13522,6 +13609,26 @@ html.audio-modal-open{
                 </div>
             </div>
 
+            <div class="control-card auto-random-control-card">
+                <div class="control-title">
+                    <div>
+                        <h3 style="margin:0;">Random automatico</h3>
+                        <div class="auto-random-note">Avvia automaticamente giocatori casuali scegliendo solo tra i ruoli selezionati. <b>(Si consiglia la modalità READY attiva)</b></div>
+                    </div>
+                    <label class="auto-random-master-switch" title="Attiva random automatico">
+                        <input id="auto-random-enabled" type="checkbox" onchange="setAutoRandomEnabled(this.checked)">
+                        <span>ATTIVA RANDOM</span>
+                    </label>
+                </div>
+                <div class="auto-random-role-grid" aria-label="Ruoli random automatico">
+                    <label class="auto-random-role role-P"><input id="auto-random-role-P" type="checkbox" onchange="setAutoRandomRole('P',this.checked)"><span>P</span></label>
+                    <label class="auto-random-role role-D"><input id="auto-random-role-D" type="checkbox" onchange="setAutoRandomRole('D',this.checked)"><span>D</span></label>
+                    <label class="auto-random-role role-C"><input id="auto-random-role-C" type="checkbox" onchange="setAutoRandomRole('C',this.checked)"><span>C</span></label>
+                    <label class="auto-random-role role-A"><input id="auto-random-role-A" type="checkbox" onchange="setAutoRandomRole('A',this.checked)"><span>A</span></label>
+                </div>
+                <div id="auto-random-status" class="auto-random-status">DISATTIVO</div>
+            </div>
+
             <div class="control-card nomination-control-card">
                 <div class="control-title"><div><h3 style="margin:0;">Banditura giocatori a turni</h3><div id="nomination-control-note" class="nomination-control-note">Si completa un ruolo alla volta. Chi ha completato il reparto viene saltato automaticamente.</div></div><span id="nomination-control-badge" class="badge-ok">DISATTIVA</span></div>
                 <div id="nomination-control-status" class="nomination-control-status">Modalità disattivata</div>
@@ -13953,6 +14060,11 @@ html.audio-modal-open{
         let roomControlReturnScreen = 'screen-auctioneer-board';
         let nominationState={enabled:false,role:null,turn_team_id:null,order_team_ids:[]};
         let nominationAutoBidOneEnabled=false;
+        // V95 — modalità AUTO RANDOM: nomina automatica continua sui ruoli scelti.
+        let autoRandomEnabled=false;
+        let autoRandomRoles=new Set(['P','D','C','A']);
+        let autoRandomLaunchTimer=null;
+        let autoRandomStarting=false;
         let nominationReady=false;
         let nominationRequestPending=false;
 
@@ -14739,6 +14851,8 @@ html.audio-modal-open{
         async function loadRoomAuctionExtraSettings(){
             normalBidCooldownMs=DEFAULT_NORMAL_BID_COOLDOWN_MS;
             nominationAutoBidOneEnabled=false;
+            autoRandomEnabled=false;
+            autoRandomRoles=new Set(['P','D','C','A']);
             const key=roomAuctionExtraSettingsKey();
             if(!key)return;
             try{
@@ -14749,6 +14863,10 @@ html.audio-modal-open{
                 const ms=parseInt(cfg.normal_bid_cooldown_ms);
                 if(Number.isFinite(ms))normalBidCooldownMs=Math.max(100,Math.min(5000,ms));
                 nominationAutoBidOneEnabled=!!cfg.nomination_auto_bid_one;
+                autoRandomEnabled=!!cfg.auto_random_enabled;
+                const storedRoles=Array.isArray(cfg.auto_random_roles)?cfg.auto_random_roles:[];
+                const validRoles=storedRoles.map(r=>String(r||'').toUpperCase()).filter(r=>['P','D','C','A'].includes(r));
+                autoRandomRoles=new Set(validRoles.length?validRoles:['P','D','C','A']);
             }catch(e){
                 console.warn('Caricamento impostazioni extra asta non riuscito',e);
             }
@@ -14763,7 +14881,9 @@ html.audio-modal-open{
                     key,
                     data:{
                         normal_bid_cooldown_ms:normalBidCooldownMs,
-                        nomination_auto_bid_one:!!nominationAutoBidOneEnabled
+                        nomination_auto_bid_one:!!nominationAutoBidOneEnabled,
+                        auto_random_enabled:!!autoRandomEnabled,
+                        auto_random_roles:[...autoRandomRoles]
                     },
                     file_name:'impostazioni-extra-asta',
                     updated_at:new Date().toISOString()
@@ -14789,6 +14909,129 @@ html.audio-modal-open{
             if(!team)return null;
             const max=maxBidForTeam(team,currentAuctionPlayer.R);
             return max>=1?team:null;
+        }
+
+        function autoRandomSelectedRolesFromControl(){
+            return ['P','D','C','A'].filter(role=>document.getElementById('auto-random-role-'+role)?.checked);
+        }
+
+        function renderAutoRandomControlUI(){
+            const master=document.getElementById('auto-random-enabled');
+            if(master)master.checked=!!autoRandomEnabled;
+            ['P','D','C','A'].forEach(role=>{
+                const el=document.getElementById('auto-random-role-'+role);
+                if(el)el.checked=autoRandomRoles.has(role);
+            });
+            const status=document.getElementById('auto-random-status');
+            if(status){
+                const roles=[...autoRandomRoles].join(' · ')||'nessun ruolo';
+                status.innerHTML=autoRandomEnabled
+                    ? `ATTIVO · ruoli <b>${escapeHtml(roles)}</b> · la prossima asta parte automaticamente.`
+                    : `DISATTIVO · ruoli predisposti <b>${escapeHtml(roles)}</b>.`;
+                status.classList.toggle('active',!!autoRandomEnabled);
+            }
+        }
+
+        function autoRandomHasBidderForRole(role){
+            const r=String(role||'').toUpperCase();
+            if(!r)return false;
+            if(isMantraRoom())return teamsCache.some(team=>maxBidForTeam(team,r)>=1);
+            const limits=roomLimits();
+            if(limits[r]===undefined || (limits[r]||0)<=0)return false;
+            return teamsCache.some(team=>{
+                const counts=teamCounts(team.id);
+                return counts.total<totalRoomSlots() && (counts[r]||0)<(limits[r]||0) && maxBidForTeam(team,r)>=1;
+            });
+        }
+
+        function autoRandomCandidates(){
+            const allowed=new Set([...autoRandomRoles].map(r=>String(r).toUpperCase()));
+            if(!allowed.size)return [];
+            return getAvailablePlayers().filter(player=>{
+                const role=String(playerRole(player)||'').toUpperCase();
+                return allowed.has(role) && autoRandomHasBidderForRole(role);
+            });
+        }
+
+        function cancelAutoRandomLaunch(){
+            if(autoRandomLaunchTimer){clearTimeout(autoRandomLaunchTimer);autoRandomLaunchTimer=null;}
+            autoRandomStarting=false;
+        }
+
+        function scheduleAutoRandomAuction(delay=250){
+            cancelAutoRandomLaunch();
+            if(!autoRandomEnabled)return;
+            autoRandomLaunchTimer=setTimeout(()=>{
+                autoRandomLaunchTimer=null;
+                startAutoRandomAuctionNow();
+            },Math.max(0,parseInt(delay)||0));
+        }
+
+        async function startAutoRandomAuctionNow(){
+            if(!autoRandomEnabled || autoRandomStarting || !currentRoomId)return false;
+            if(nominationState.enabled)return false;
+            if(isAuctionActive || readyGateWaiting || auctionPrepInterval || sealedAuctionModeActive)return false;
+
+            const candidates=autoRandomCandidates();
+            if(!candidates.length){
+                autoRandomEnabled=false;
+                cancelAutoRandomLaunch();
+                await saveRoomAuctionExtraSettings();
+                renderAutoRandomControlUI();
+                alert('AUTO RANDOM terminato: non ci sono più giocatori disponibili nei ruoli selezionati con almeno una squadra abilitata a offrire.');
+                return false;
+            }
+
+            autoRandomStarting=true;
+            try{
+                const player=candidates[Math.floor(Math.random()*candidates.length)];
+                // Se si parte da Gestione, riporta prima il banditore alla plancia.
+                if(document.getElementById('screen-room-control')?.classList.contains('active'))closeRoomControl();
+                selectAndStartPlayer(player.Id,true);
+                return true;
+            }finally{
+                setTimeout(()=>{autoRandomStarting=false;},120);
+            }
+        }
+
+        async function setAutoRandomEnabled(enabled){
+            const selected=autoRandomSelectedRolesFromControl();
+            if(enabled && !selected.length){
+                alert('Seleziona almeno un ruolo tra P, D, C e A.');
+                const master=document.getElementById('auto-random-enabled');
+                if(master)master.checked=false;
+                autoRandomEnabled=false;
+                return;
+            }
+            if(enabled && nominationState.enabled){
+                alert('AUTO RANDOM non può essere usato insieme alla banditura a turni. Disattiva prima la banditura a turni.');
+                const master=document.getElementById('auto-random-enabled');
+                if(master)master.checked=false;
+                autoRandomEnabled=false;
+                return;
+            }
+            autoRandomRoles=new Set(selected.length?selected:[...autoRandomRoles]);
+            autoRandomEnabled=!!enabled;
+            await saveRoomAuctionExtraSettings();
+            renderAutoRandomControlUI();
+            if(autoRandomEnabled)scheduleAutoRandomAuction(180);
+            else cancelAutoRandomLaunch();
+        }
+
+        async function setAutoRandomRole(role,checked){
+            const r=String(role||'').toUpperCase();
+            if(!['P','D','C','A'].includes(r))return;
+            if(checked)autoRandomRoles.add(r); else autoRandomRoles.delete(r);
+            if(autoRandomEnabled && !autoRandomRoles.size){
+                autoRandomEnabled=false;
+                const master=document.getElementById('auto-random-enabled');
+                if(master)master.checked=false;
+                cancelAutoRandomLaunch();
+                alert('AUTO RANDOM disattivato: deve rimanere selezionato almeno un ruolo.');
+            }
+            await saveRoomAuctionExtraSettings();
+            renderAutoRandomControlUI();
+            if(autoRandomEnabled && !isAuctionActive && !readyGateWaiting && !auctionPrepInterval)scheduleAutoRandomAuction(180);
         }
 
         function sealedBidsStateKey(token=sealedAuctionToken){
@@ -15056,7 +15299,7 @@ html.audio-modal-open{
             readyGateToken=String(gate.token||'');
             readyPlayers=new Set((gate.ready_ids||[]).map(String));
             readySkipPlayers=new Set((gate.skip_ids||[]).map(String));
-            readyOfflineExcludedIds=new Set((gate.offline_excluded_ids||[]).map(String));
+            readyOfflineExcludedIds=new Set(); // V95: offline non esclude dal READY
 
             // Mostra il giocatore corretto e la fase READY.
             restoreAuctioneerVisualFromState({player:p});
@@ -15092,12 +15335,9 @@ html.audio-modal-open{
                 eligible=eligible.filter(team=>!absentTeamIds.has(String(team.id)));
             }
 
-            // Se un giocatore lascia fisicamente la stanza DURANTE questo READY,
-            // non deve congelare l'asta. Se rientra mentre il gate è ancora aperto,
-            // viene reinserito automaticamente.
-            if(readyOfflineExcludedIds.size){
-                eligible=eligible.filter(team=>!readyOfflineExcludedIds.has(String(team.id)));
-            }
+            // V95 — OFFLINE NON ESCLUDE DAL READY.
+            // Se un giocatore perde connessione resta nella lista e continua a essere
+            // obbligatorio. Le sole esclusioni valide sono ASSENTE volontario e slot/reparto completato.
 
             // In busta chiusa il READY riguarda solo chi può partecipare
             // a QUEL round. Nel round 2+ sono quindi soltanto i pari merito.
@@ -15111,91 +15351,30 @@ html.audio-modal-open{
 
 
         function readyMarkTeamOffline(teamId){
-            const id=String(teamId||'');
-            if(!readyGateWaiting || !id)return;
-
-            readyOfflineExcludedIds.add(id);
-            evaluateReadyGate();
-            saveReadyGateDedicated(readyGateWaiting);
+            // V95: la disconnessione non modifica mai i partecipanti obbligati al READY.
+            // Manteniamo la funzione come no-op per compatibilità con gli eventi realtime esistenti.
+            return;
         }
 
         function readyMarkTeamOnline(teamId){
-            const id=String(teamId||'');
-            if(!readyGateWaiting || !id)return;
-
-            if(readyOfflineExcludedIds.delete(id)){
-                evaluateReadyGate();
-                saveReadyGateDedicated(readyGateWaiting);
-            }
+            // Nessun reinserimento necessario: gli offline non vengono più esclusi.
+            return;
         }
 
         function presenceTeamIdsFromPayload(payload,field){
             const source=payload?.[field];
             if(!Array.isArray(source))return [];
-            return source
-                .map(p=>String(p?.team_id||''))
-                .filter(Boolean);
+            return source.map(p=>String(p?.team_id||'')).filter(Boolean);
         }
 
         function handleReadyPresenceLeave(payload){
-            if(!readyGateWaiting)return;
-
-            const ids=presenceTeamIdsFromPayload(payload,'leftPresences');
-            if(ids.length){
-                ids.forEach(readyMarkTeamOffline);
-                return;
-            }
-
-            // Fallback per browser/versioni Realtime che non espongono leftPresences.
-            if(readyPresenceReconcileTimer)clearTimeout(readyPresenceReconcileTimer);
-            readyPresenceReconcileTimer=setTimeout(()=>{
-                readyPresenceReconcileTimer=null;
-                if(!readyGateWaiting || !channel || typeof channel.presenceState!=='function')return;
-
-                const state=channel.presenceState()||{};
-                const present=new Set();
-
-                Object.values(state).forEach(entries=>{
-                    (Array.isArray(entries)?entries:[]).forEach(entry=>{
-                        if(String(entry?.type||'')==='player' && entry?.team_id){
-                            present.add(String(entry.team_id));
-                        }
-                    });
-                });
-
-                if(auctioneerPlayerMode&&auctioneerPlayerTeamId){
-                    present.add(String(auctioneerPlayerTeamId));
-                }
-
-                // Consideriamo solo le squadre che sarebbero eleggibili a questo READY.
-                const role=String(currentAuctionPlayer?.R||'').toUpperCase();
-                const limits=roomLimits();
-                teamsCache.forEach(team=>{
-                    const id=String(team.id);
-                    if(absentTeamIds.has(id))return;
-
-                    let eligible=false;
-                    if(isMantraRoom()){
-                        eligible=!!role && maxBidForTeam(team,role)>=1;
-                    }else if(role && limits[role]!==undefined){
-                        const counts=teamCounts(team.id);
-                        eligible=counts.total<totalRoomSlots() && (counts[role]||0)<(limits[role]||0);
-                    }
-
-                    if(eligible && !present.has(id)){
-                        readyOfflineExcludedIds.add(id);
-                    }
-                });
-
-                evaluateReadyGate();
-                saveReadyGateDedicated(readyGateWaiting);
-            },900);
+            // V95: offline = ancora obbligatorio. Nessuna modifica al gate READY.
+            return;
         }
 
         function handleReadyPresenceJoin(payload){
-            if(!readyGateWaiting)return;
-            const ids=presenceTeamIdsFromPayload(payload,'newPresences');
-            ids.forEach(readyMarkTeamOnline);
+            // Il giocatore era già presente nel gate anche mentre offline.
+            return;
         }
 
         function readyRequiredIds(){
@@ -16175,6 +16354,10 @@ html.audio-modal-open{
         async function toggleNominationMode(){
             await loadRoomState();
             await loadNominationState();
+            if(!nominationState.enabled && autoRandomEnabled){
+                alert('Disattiva prima AUTO RANDOM: non può essere usato insieme alla banditura a turni.');
+                return;
+            }
             nominationState.enabled=!nominationState.enabled;
             if(nominationState.enabled){
                 nominationState.role=firstIncompleteRole();
@@ -22675,7 +22858,13 @@ html.audio-modal-open{
                     showNominationWaitingBoard();
                 },700);
             }else{
-                if(nextButton)nextButton.style.display='flex';
+                if(autoRandomEnabled){
+                    if(nextButton)nextButton.style.display='none';
+                    // Lascia visibile l'esito per un istante, poi avvia senza intervento manuale.
+                    scheduleAutoRandomAuction(850);
+                }else{
+                    if(nextButton)nextButton.style.display='flex';
+                }
             }
             timerEl.innerText = "0";
             hybridRenderNormalEnd();
@@ -22743,6 +22932,7 @@ html.audio-modal-open{
         }
 
         async function resetRoomRuntimeState(){
+            cancelAutoRandomLaunch();
             if(!currentRoomId)return;
 
             const ok=confirm(
@@ -22907,6 +23097,7 @@ html.audio-modal-open{
             ensureNominationOrder();
             updateNominationUI();
             updateReadyControlUI();
+            renderAutoRandomControlUI();
             renderOnlinePlayers();
             renderAuctioneerPlayerControl();
             renderAudioRoutingTargets();
@@ -22969,6 +23160,9 @@ html.audio-modal-open{
             const cooldownSeconds=Number.isFinite(rawCooldown)?Math.max(.1,Math.min(5,rawCooldown)):.5;
             normalBidCooldownMs=Math.round(cooldownSeconds*1000);
             nominationAutoBidOneEnabled=!!document.getElementById('nomination-auto-bid-one')?.checked;
+            const randomRoleSelection=autoRandomSelectedRolesFromControl();
+            if(randomRoleSelection.length)autoRandomRoles=new Set(randomRoleSelection);
+            autoRandomEnabled=!!document.getElementById('auto-random-enabled')?.checked && autoRandomRoles.size>0 && !nominationState.enabled;
             const prepSeconds=Math.max(1,Math.min(15,parseInt(document.getElementById('control-room-prep')?.value)||5));
             const sealedSeconds=Math.max(5,Math.min(180,parseInt(document.getElementById('control-sealed-timer')?.value)||30));
             const revealSeconds=Math.max(1,Math.min(30,parseInt(document.getElementById('control-sealed-reveal-timer')?.value)||5));
@@ -24809,9 +25003,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyBrand(){
-    document.title='LIVEASTA V94';
+    document.title='LIVEASTA V95';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V94';
+      el.textContent='LIVEASTA · VERSIONE V95';
     });
     document.querySelectorAll('.logo-text').forEach(el=>{
       const a=el.querySelector('.rosa');
@@ -25222,9 +25416,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyV85Brand(){
-    document.title='LIVEASTA V94';
+    document.title='LIVEASTA V95';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V94';
+      el.textContent='LIVEASTA · VERSIONE V95';
     });
   }
 
