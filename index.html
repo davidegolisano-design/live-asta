@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>LIVEASTA V98</title>
+    <title>LIVEASTA V97</title>
     <meta name="theme-color" content="#0D1117">
     <meta name="color-scheme" content="dark">
     <meta name="mobile-web-app-capable" content="yes">
@@ -12610,7 +12610,7 @@ html.audio-modal-open{
 
 <style id="liveasta-v96-final-ui-fixes">
 /* ==========================================================
-   LIVEASTA V98 — palette ruoli unica in tutta l'app
+   LIVEASTA V97 — palette ruoli unica in tutta l'app
    P = giallo · D = verde · C = blu · A = rosso
    ========================================================== */
 html body .role-P,
@@ -12751,7 +12751,6 @@ html body .auto-random-role:has(input:checked) span{color:#fff!important}
 
 </head>
 <body>
-    <button id="monitor-exit-btn" type="button" aria-label="Esci dalla modalità monitor" onclick="leaveMonitorMode()">×</button>
 
     <div id="screen-role" class="screen active">
         <div class="home-version-badge home-version-settings"
@@ -12760,7 +12759,7 @@ html body .auto-random-role:has(input:checked) span{color:#fff!important}
              aria-label="Apri Impostazioni LIVEASTA"
              onclick="openAdminLogin()"
              onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openAdminLogin();}">
-            LIVEASTA V98
+            LIVEASTA V97
         </div>
         <div class="setup-card">
             <h1 class="logo-text"><span class="rosa">LIVE</span><span class="rush">ASTA</span></h1>
@@ -12790,20 +12789,6 @@ html body .auto-random-role:has(input:checked) span{color:#fff!important}
 
             <button class="btn" onclick="openPlayerLobby()">Giocatore</button>
             <button class="btn btn-secondary" onclick="showScreen('screen-device-choice')">Banditore</button>
-            <button class="btn btn-green" onclick="openMonitorLobby()">Guarda l'asta</button>
-        </div>
-    </div>
-
-    <div id="screen-monitor-setup" class="screen">
-        <div class="setup-card access-wizard-card">
-            <h1>Guarda l'asta</h1>
-            <p class="subtitle">Postazione monitor · sola visualizzazione</p>
-            <p class="monitor-login-note">Inserisci nome stanza e password. La schermata seguirà automaticamente la plancia del banditore, comprese le Rose e il loro scorrimento.</p>
-            <input type="text" id="monitor-room-name" class="minimal-input" placeholder="Nome stanza" maxlength="30" autocomplete="off" enterkeyhint="next">
-            <input type="text" id="monitor-room-password" class="liveasta-secret-input" placeholder="Password stanza" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" data-lpignore="true" data-1p-ignore="true" data-bwignore="true" data-form-type="other" enterkeyhint="go">
-            <button id="monitor-enter-btn" class="btn btn-green" type="button" onclick="joinAsMonitor()">GUARDA L'ASTA</button>
-            <button class="btn btn-secondary" type="button" onclick="closeMonitorLobby()">Indietro</button>
-            <div id="monitor-room-error" class="monitor-login-error"></div>
         </div>
     </div>
 
@@ -13177,7 +13162,7 @@ html body .auto-random-role:has(input:checked) span{color:#fff!important}
 
     <div id="screen-admin" class="screen">
         <div class="setup-card" style="max-width:1100px; width:96%; padding:24px;">
-            <div class="admin-version-badge">LIVEASTA · VERSIONE V98</div>
+            <div class="admin-version-badge">LIVEASTA · VERSIONE V97</div>
             <h1>Gestione stanze</h1>
             <p class="subtitle">Nome, password, modifica ed eliminazione</p>
 
@@ -14159,18 +14144,6 @@ html body .auto-random-role:has(input:checked) span{color:#fff!important}
         let currentRoom = null;
         let roomsCache = [];
         let auctioneerRoomMode = null;
-
-        // V98 — postazione monitor sola lettura.
-        let monitorMode=false;
-        let monitorUiView='board';
-        let monitorUiScrollTop=0;
-        let monitorUiSort='role';
-        let monitorRefreshTimer=null;
-        let monitorFallbackTimer=null;
-        let monitorLocalCountdownTimer=null;
-        let monitorScrollBroadcastTimer=null;
-        let monitorScrollPersistTimer=null;
-        let monitorApplyingRemoteScroll=false;
 
         // V24: lock esclusivo del banditore per stanza.
         // Il lock vive in fanta_app_data ed è protetto dalla PK `key`,
@@ -17662,9 +17635,6 @@ html body .auto-random-role:has(input:checked) span{color:#fff!important}
             saveCurrentActorUiPrefs();
             updatePlayerTeamStatus();
             renderAllRosters();
-            if(monitorIsAuctioneerPublisher() && document.getElementById('screen-all-rosters')?.classList.contains('active')){
-                publishMonitorUiState({view:'rosters',scroll_top:currentMonitorRostersScroll(),sort:rosterSortMode},true);
-            }
         }
 
 
@@ -19849,393 +19819,6 @@ html body .auto-random-role:has(input:checked) span{color:#fff!important}
             });
         }
 
-
-        function monitorUiStateKey(){
-            return currentRoomId ? `monitor_ui_${currentRoomId}` : '';
-        }
-
-        function monitorIsAuctioneerPublisher(){
-            return !monitorMode && !!currentRoomId && !!auctioneerLockToken;
-        }
-
-        function currentMonitorRostersScroll(){
-            return Math.max(0,Math.round(document.getElementById('all-rosters-grid')?.scrollTop||0));
-        }
-
-        async function publishMonitorUiState(patch={},persist=true){
-            if(!monitorIsAuctioneerPublisher() || !channel)return;
-            const view=String(patch.view||(
-                document.getElementById('screen-all-rosters')?.classList.contains('active')?'rosters':'board'
-            ));
-            const payload={
-                view:view==='rosters'?'rosters':'board',
-                scroll_top:Number.isFinite(Number(patch.scroll_top))?Math.max(0,Math.round(Number(patch.scroll_top))):currentMonitorRostersScroll(),
-                sort:['role','name','price'].includes(String(patch.sort||rosterSortMode))?String(patch.sort||rosterSortMode):'role',
-                at:Date.now()
-            };
-            channel.send({type:'broadcast',event:'monitor_ui_state',payload}).catch(()=>{});
-            if(!persist)return;
-            const key=monitorUiStateKey();
-            if(!key)return;
-            try{
-                await supabaseClient.from('fanta_app_data').upsert({
-                    key,
-                    data:payload,
-                    file_name:'stato-monitor-banditore',
-                    updated_at:new Date().toISOString()
-                },{onConflict:'key'});
-            }catch(e){console.warn('Salvataggio stato monitor non riuscito',e);}
-        }
-
-        async function loadPersistedMonitorUiState(){
-            const key=monitorUiStateKey();
-            if(!key)return null;
-            try{
-                const {data,error}=await supabaseClient.from('fanta_app_data').select('data').eq('key',key).maybeSingle();
-                if(error)throw error;
-                return data?.data||null;
-            }catch(e){return null;}
-        }
-
-        function openMonitorLobby(){
-            monitorMode=false;
-            document.body.classList.remove('monitor-mode');
-            const n=document.getElementById('monitor-room-name');
-            const p=document.getElementById('monitor-room-password');
-            const e=document.getElementById('monitor-room-error');
-            if(n)n.value='';
-            if(p)p.value='';
-            if(e)e.textContent='';
-            showScreen('screen-monitor-setup');
-            setTimeout(()=>n?.focus(),80);
-        }
-
-        function closeMonitorLobby(){
-            const e=document.getElementById('monitor-room-error');
-            if(e)e.textContent='';
-            showScreen('screen-role');
-        }
-
-        function stopMonitorTimers(){
-            clearTimeout(monitorRefreshTimer);monitorRefreshTimer=null;
-            clearInterval(monitorFallbackTimer);monitorFallbackTimer=null;
-            clearInterval(monitorLocalCountdownTimer);monitorLocalCountdownTimer=null;
-            clearTimeout(monitorScrollBroadcastTimer);monitorScrollBroadcastTimer=null;
-            clearTimeout(monitorScrollPersistTimer);monitorScrollPersistTimer=null;
-        }
-
-        async function leaveMonitorMode(){
-            stopMonitorTimers();
-            monitorMode=false;
-            monitorUiView='board';
-            monitorUiScrollTop=0;
-            document.body.classList.remove('monitor-mode');
-            const old=channel;channel=null;realtimeConnectionGeneration++;
-            if(old){try{await supabaseClient.removeChannel(old);}catch(e){}}
-            currentRoomCode='';currentRoomId='';currentRoom=null;
-            currentAuctionPlayer=null;currentWinner='';currentAuctionValue=0;
-            readyGateWaiting=false;readyPlayers=new Set();readySkipPlayers=new Set();
-            showScreen('screen-role');
-        }
-
-        function scheduleMonitorRefresh(delay=70){
-            if(!monitorMode)return;
-            clearTimeout(monitorRefreshTimer);
-            monitorRefreshTimer=setTimeout(()=>refreshMonitorDisplay().catch(()=>{}),Math.max(0,delay));
-        }
-
-        function monitorSetCountdown(seconds,deadlineAt=0){
-            clearInterval(monitorLocalCountdownTimer);monitorLocalCountdownTimer=null;
-            const el=document.getElementById('countdown-display');
-            const tick=()=>{
-                const v=deadlineAt?Math.max(0,Math.ceil((deadlineAt-Date.now())/1000)):Math.max(0,parseInt(seconds)||0);
-                if(el)el.textContent=String(v);
-                return v;
-            };
-            tick();
-            if(deadlineAt>Date.now())monitorLocalCountdownTimer=setInterval(()=>tick(),250);
-        }
-
-        function applyMonitorUiState(data={},refresh=true){
-            if(!monitorMode)return;
-            const nextView=data.view==='rosters'?'rosters':'board';
-            const nextScroll=Math.max(0,Math.round(Number(data.scroll_top)||0));
-            const nextSort=['role','name','price'].includes(String(data.sort))?String(data.sort):monitorUiSort;
-            const viewChanged=nextView!==monitorUiView;
-            const sortChanged=nextSort!==monitorUiSort;
-            monitorUiView=nextView;
-            monitorUiScrollTop=nextScroll;
-            monitorUiSort=nextSort;
-
-            // Lo scroll delle Rose deve sembrare telecomandato in tempo reale:
-            // se siamo già nella stessa vista non ricarichiamo il database ad ogni pixel.
-            if(refresh && !viewChanged && !sortChanged && monitorUiView==='rosters' &&
-               document.getElementById('screen-all-rosters')?.classList.contains('active')){
-                requestAnimationFrame(()=>applyMonitorRostersScroll());
-                return;
-            }
-            if(refresh && !viewChanged && monitorUiView==='board')return;
-            if(refresh)scheduleMonitorRefresh(0);
-        }
-
-        function applyMonitorRostersScroll(){
-            if(!monitorMode||monitorUiView!=='rosters')return;
-            const grid=document.getElementById('all-rosters-grid');
-            if(!grid)return;
-            monitorApplyingRemoteScroll=true;
-            grid.scrollTop=monitorUiScrollTop;
-            requestAnimationFrame(()=>{grid.scrollTop=monitorUiScrollTop;monitorApplyingRemoteScroll=false;});
-        }
-
-        async function renderMonitorBoard(){
-            if(!monitorMode)return;
-            showScreen('screen-auctioneer-board');
-            const dashboard=document.getElementById('auction-dashboard');
-            dashboard?.classList.remove('mode-mobile');
-            dashboard?.classList.add('mode-pc');
-
-            await loadRoomState();
-            await loadNominationState();
-            const gate=await loadReadyGateState();
-            const state=await loadLiveAuctionState();
-
-            // READY ha la precedenza visiva, esattamente come sul banditore.
-            if(gate?.active){
-                readyGateWaiting=true;
-                readyGateToken=String(gate.token||gate.ready_token||'');
-                readyPlayers=new Set((gate.ready_ids||[]).map(String));
-                readySkipPlayers=new Set((gate.skip_ids||[]).map(String));
-                const p=state?.player||gate.player||null;
-                if(p){
-                    currentAuctionPlayer=playersList.find(x=>String(x.Id)===String(p.id))||{
-                        Id:p.id,Nome:p.nome,R:p.role,Squadra:p.club,FVM:p.fvm
-                    };
-                }
-                if(currentAuctionPlayer){showAuctioneerReadyStage();return;}
-            }
-            readyGateWaiting=false;
-
-            if(state?.player)restoreAuctioneerVisualFromState(state);
-            currentWinner=String(state?.winner||'');
-            currentAuctionValue=parseInt(state?.value)||0;
-
-            if(state?.phase==='ready'){
-                readyGateWaiting=true;
-                readyGateToken=String(state.ready_token||'');
-                readyPlayers=new Set((state.ready_ids||[]).map(String));
-                readySkipPlayers=new Set((state.skip_ids||[]).map(String));
-                if(state.player){
-                    const p=state.player;
-                    currentAuctionPlayer=playersList.find(x=>String(x.Id)===String(p.id))||{
-                        Id:p.id,Nome:p.nome,R:p.role,Squadra:p.club,FVM:p.fvm
-                    };
-                }
-                if(currentAuctionPlayer){showAuctioneerReadyStage();return;}
-            }
-
-            if(state?.phase==='prep'){
-                showAuctionPanels();
-                document.getElementById('auction-title-display').textContent='IN ATTESA';
-                document.getElementById('winner-display').textContent='--';
-                document.getElementById('current-value-display').textContent='0';
-                monitorSetCountdown(liveRemainingSeconds(state),Number(state.deadline_at)||0);
-                return;
-            }
-            if(state?.phase==='active'){
-                showAuctionPanels();
-                document.getElementById('auction-title-display').textContent='MIGLIOR OFFERENTE';
-                document.getElementById('winner-display').textContent=currentWinner||'NESSUNO';
-                document.getElementById('current-value-display').textContent=String(currentAuctionValue);
-                if(Array.isArray(state.normal_bid_ranking)&&state.normal_bid_ranking.length){
-                    renderAuctioneerBidRanking(state.normal_bid_ranking,'CLASSIFICA OFFERTE · MASSIMO PER SQUADRA');
-                }else clearSealedBidRanking();
-                monitorSetCountdown(normalLiveRemainingSeconds(state),Number(state.deadline_at)||0);
-                return;
-            }
-            if(state?.phase==='sealed'){
-                sealedAuctionModeActive=true;
-                sealedAuctionToken=String(state.sealed_token||'');
-                sealedRound=Math.max(1,parseInt(state.sealed_round)||1);
-                sealedEligibleIds=(state.sealed_eligible_ids||[]).map(String);
-                sealedDeadlineAt=Number(state.sealed_deadline_at||state.deadline_at)||0;
-                sealedBids=new Map();
-                try{
-                    const key=sealedBidsStateKey(sealedAuctionToken);
-                    const {data}=await supabaseClient.from('fanta_app_data').select('data').eq('key',key).maybeSingle();
-                    (data?.data?.bids||[]).forEach(b=>sealedBids.set(String(b.team_id),b));
-                }catch(e){}
-                showSealedAuctionStage();
-                return;
-            }
-            if(state?.phase==='sealed_reveal'){
-                showAuctionPanels();
-                document.getElementById('auction-title-display').textContent='APERTURA BUSTE';
-                document.getElementById('winner-display').textContent='ATTENDI';
-                document.getElementById('current-value-display').textContent='?';
-                monitorSetCountdown(liveRemainingSeconds(state),Number(state.deadline_at)||0);
-                return;
-            }
-            if(state?.phase==='ended'){
-                showAuctionPanels();
-                document.getElementById('auction-title-display').textContent=currentWinner?'ASTA VINTA DA':'ESITO ASTA';
-                document.getElementById('winner-display').textContent=currentWinner||'INVENDUTO';
-                document.getElementById('current-value-display').textContent=String(currentAuctionValue);
-                document.getElementById('countdown-display').textContent='0';
-                clearInterval(monitorLocalCountdownTimer);monitorLocalCountdownTimer=null;
-                if(state.mode==='sealed_result'&&Array.isArray(state.sealed_ranking))renderSealedBidRanking(state.sealed_ranking);
-                else if(Array.isArray(state.normal_bid_ranking)&&state.normal_bid_ranking.length)renderAuctioneerBidRanking(state.normal_bid_ranking,'CLASSIFICA OFFERTE · MASSIMO PER SQUADRA');
-                else clearSealedBidRanking();
-                return;
-            }
-
-            // Nessuna asta live: se la banditura a turni è attiva mostriamo il turno,
-            // altrimenti il listone come sulla plancia banditore.
-            clearInterval(monitorLocalCountdownTimer);monitorLocalCountdownTimer=null;
-            if(nominationState.enabled){
-                nominationReady=true;
-                showNominationTurnStage();
-                return;
-            }
-            hideNominationStage();
-            const av=document.getElementById('view-auction');
-            const lv=document.getElementById('view-list');
-            if(av){av.classList.add('auction-view-hidden');av.style.display='none';}
-            if(lv)lv.style.display='flex';
-            refreshPlayerLists();
-        }
-
-        async function renderMonitorRosters(){
-            if(!monitorMode)return;
-            await loadRoomState();
-            rosterSortMode=monitorUiSort;
-            syncRosterSortSelectors();
-            renderAllRosters();
-            showScreen('screen-all-rosters');
-            requestAnimationFrame(()=>applyMonitorRostersScroll());
-        }
-
-        async function refreshMonitorDisplay(){
-            if(!monitorMode||!currentRoomId)return;
-            if(monitorUiView==='rosters')await renderMonitorRosters();
-            else await renderMonitorBoard();
-        }
-
-        function subscribeMonitorRoomEvents(){
-            if(!channel)return;
-            channel
-                .on('broadcast',{event:'monitor_ui_state'},payload=>applyMonitorUiState(payload.payload||{},true))
-                .on('broadcast',{event:'timer_tick'},payload=>{
-                    if(!monitorMode||monitorUiView!=='board')return;
-                    const el=document.getElementById('countdown-display');
-                    if(el)el.textContent=String(Math.max(0,parseInt(payload.payload?.seconds)||0));
-                })
-                .on('broadcast',{event:'prep_tick'},payload=>{
-                    if(!monitorMode||monitorUiView!=='board')return;
-                    const el=document.getElementById('countdown-display');
-                    if(el)el.textContent=String(Math.max(0,parseInt(payload.payload?.seconds)||0));
-                })
-                .on('broadcast',{event:'auction_update'},payload=>{
-                    if(!monitorMode||monitorUiView!=='board')return;
-                    const d=payload.payload||{};
-                    const w=document.getElementById('winner-display');
-                    const v=document.getElementById('current-value-display');
-                    if(w)w.textContent=String(d.winner||'NESSUNO');
-                    if(v)v.textContent=String(parseInt(d.value)||0);
-                    scheduleMonitorRefresh(140);
-                })
-                .on('broadcast',{event:'ready_state'},()=>scheduleMonitorRefresh(60))
-                .on('broadcast',{event:'ready_gate_state'},()=>scheduleMonitorRefresh(60))
-                .on('broadcast',{event:'live_state'},()=>scheduleMonitorRefresh(60))
-                .on('broadcast',{event:'auction_started'},()=>scheduleMonitorRefresh(40))
-                .on('broadcast',{event:'prep_started'},()=>scheduleMonitorRefresh(40))
-                .on('broadcast',{event:'auction_end'},()=>scheduleMonitorRefresh(60))
-                .on('broadcast',{event:'nomination_state'},()=>scheduleMonitorRefresh(60))
-                .on('broadcast',{event:'state_changed'},()=>scheduleMonitorRefresh(100))
-                .on('broadcast',{event:'force_state_reset'},()=>scheduleMonitorRefresh(60))
-                .on('broadcast',{event:'player_availability'},async()=>{await loadAbsentTeams();scheduleMonitorRefresh(30);})
-                .on('broadcast',{event:'player_online_fallback'},payload=>{touchFallbackOnlinePlayer(payload.payload||{});renderOnlinePlayers();})
-                .on('broadcast',{event:'player_offline_now'},payload=>{const id=String(payload.payload?.team_id||'');if(id)onlinePlayers.delete(id);renderOnlinePlayers();})
-                .on('presence',{event:'sync'},()=>syncOnlinePlayersFromPresence())
-                .on('presence',{event:'join'},()=>syncOnlinePlayersFromPresence())
-                .on('presence',{event:'leave'},()=>syncOnlinePlayersFromPresence())
-                .subscribe(status=>{
-                    if(status==='SUBSCRIBED'&&monitorMode){
-                        syncOnlinePlayersFromPresence();
-                        channel.send({type:'broadcast',event:'live_state_request',payload:{monitor:true,at:Date.now()}}).catch(()=>{});
-                        scheduleMonitorRefresh(0);
-                    }
-                });
-        }
-
-        async function joinAsMonitor(){
-            const err=document.getElementById('monitor-room-error');
-            const btn=document.getElementById('monitor-enter-btn');
-            if(err)err.textContent='';
-            const roomName=String(document.getElementById('monitor-room-name')?.value||'').trim();
-            const password=String(document.getElementById('monitor-room-password')?.value||'');
-            if(!roomName){if(err)err.textContent='Inserisci il nome della stanza.';return;}
-            if(!password){if(err)err.textContent='Inserisci la password della stanza.';return;}
-            if(btn){btn.disabled=true;btn.textContent='CONNESSIONE…';}
-            try{
-                const room=await getRoomByExactName(roomName);
-                if(!room)throw new Error('Stanza non trovata.');
-                if(room.approved!==true)throw new Error('Questa stanza non è ancora attiva.');
-                if(String(room.password)!==password)throw new Error('Password stanza errata.');
-
-                monitorMode=true;
-                document.body.classList.add('monitor-mode');
-                await connectToRoom(room);
-                const dashboard=document.getElementById('auction-dashboard');
-                dashboard?.classList.remove('mode-mobile');
-                dashboard?.classList.add('mode-pc');
-                await fetchListone();
-                await loadAuctionedPlayers();
-                await loadRoomState();
-                await loadAbsentTeams();
-                await loadNominationState();
-                await loadReadyMode();
-                const roomPill=document.querySelector('#auction-room-pill b');
-                if(roomPill)roomPill.textContent=currentRoomCode||'--';
-                const ui=await loadPersistedMonitorUiState();
-                applyMonitorUiState(ui||{view:'board',scroll_top:0,sort:'role'},false);
-                subscribeMonitorRoomEvents();
-                await refreshMonitorDisplay();
-                clearInterval(monitorFallbackTimer);
-                monitorFallbackTimer=setInterval(()=>scheduleMonitorRefresh(0),2500);
-            }catch(e){
-                monitorMode=false;
-                document.body.classList.remove('monitor-mode');
-                if(err)err.textContent=e.message||'Impossibile collegarsi alla stanza.';
-            }finally{
-                if(btn){btn.disabled=false;btn.textContent="GUARDA L'ASTA";}
-            }
-        }
-
-        function installMonitorRemoteBridge(){
-            const grid=document.getElementById('all-rosters-grid');
-            if(grid&&grid.dataset.monitorBridge!=='1'){
-                grid.dataset.monitorBridge='1';
-                grid.addEventListener('scroll',()=>{
-                    if(monitorMode||monitorApplyingRemoteScroll||!monitorIsAuctioneerPublisher())return;
-                    const scrollTop=currentMonitorRostersScroll();
-                    clearTimeout(monitorScrollBroadcastTimer);
-                    monitorScrollBroadcastTimer=setTimeout(()=>publishMonitorUiState({view:'rosters',scroll_top:scrollTop},false),35);
-                    clearTimeout(monitorScrollPersistTimer);
-                    monitorScrollPersistTimer=setTimeout(()=>publishMonitorUiState({view:'rosters',scroll_top:scrollTop},true),420);
-                },{passive:true});
-            }
-            const name=document.getElementById('monitor-room-name');
-            const pass=document.getElementById('monitor-room-password');
-            if(name&&name.dataset.monitorEnter!=='1'){
-                name.dataset.monitorEnter='1';
-                name.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();pass?.focus();}});
-            }
-            if(pass&&pass.dataset.monitorEnter!=='1'){
-                pass.dataset.monitorEnter='1';
-                pass.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();joinAsMonitor();}});
-            }
-        }
-
         function showScreen(screenId) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById(screenId).classList.add('active');
@@ -20848,7 +20431,6 @@ html body .auto-random-role:has(input:checked) span{color:#fff!important}
                 nominationReady=true;
                 showNominationWaitingBoard();
                 broadcastNominationState(true);
-                if(monitorIsAuctioneerPublisher())publishMonitorUiState({view:'board'},true);
                 return;
             }
 
@@ -20859,7 +20441,6 @@ html body .auto-random-role:has(input:checked) span{color:#fff!important}
             document.getElementById('view-list').style.display='flex';
             document.getElementById('btn-next').style.display='none';
             refreshPlayerLists();
-            if(monitorIsAuctioneerPublisher())publishMonitorUiState({view:'board'},true);
         }
 
         // --- LOGICA GIOCATORE ---
@@ -22327,7 +21908,6 @@ html body .auto-random-role:has(input:checked) span{color:#fff!important}
             showScreen('screen-auctioneer-board');
             refreshPlayerLists();
             subscribeCommonRoomEvents();
-            setTimeout(()=>{if(monitorIsAuctioneerPublisher())publishMonitorUiState({view:'board',scroll_top:0,sort:rosterSortMode},true);},250);
 
             const restoredLive=await restoreAuctioneerFromLiveState();
             if(!restoredLive && nominationState.enabled){
@@ -23481,12 +23061,10 @@ html body .auto-random-role:has(input:checked) span{color:#fff!important}
             await loadRoomState();
             renderAllRosters();
             showScreen('screen-all-rosters');
-            if(monitorIsAuctioneerPublisher())publishMonitorUiState({view:'rosters',scroll_top:0,sort:rosterSortMode},true);
         }
 
         function closeAllRosters() {
             showScreen('screen-auctioneer-board');
-            if(monitorIsAuctioneerPublisher())publishMonitorUiState({view:'board',scroll_top:0,sort:rosterSortMode},true);
         }
 
         function renderAllRosters() {
@@ -25636,9 +25214,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyBrand(){
-    document.title='LIVEASTA V98';
+    document.title='LIVEASTA V97';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V98';
+      el.textContent='LIVEASTA · VERSIONE V97';
     });
     document.querySelectorAll('.logo-text').forEach(el=>{
       const a=el.querySelector('.rosa');
@@ -26049,9 +25627,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyV85Brand(){
-    document.title='LIVEASTA V98';
+    document.title='LIVEASTA V97';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V98';
+      el.textContent='LIVEASTA · VERSIONE V97';
     });
   }
 
@@ -26518,35 +26096,6 @@ html body #phone-player-role.role-A,
 html body #auction-player-role.role-A,
 html body #auctioneer-ready-player-role.role-A,
 html body #room-roster-player-preview-role.role-A{background:#EF4444!important;color:#fff!important}
-
-
-/* =========================================================
-   LIVEASTA V98 — MODALITÀ MONITOR / GUARDA L'ASTA
-   Postazione sola lettura controllata dal banditore.
-   ========================================================= */
-#screen-monitor-setup{overflow-y:auto;justify-content:flex-start;padding:18px 12px}
-#screen-monitor-setup .setup-card{margin:auto;width:min(430px,94vw)}
-.monitor-login-note{font-size:.78rem;line-height:1.45;color:var(--text-muted);margin:4px 0 14px;text-align:center}
-.monitor-login-error{min-height:1.35em;color:var(--accent-red);font-size:.78rem;font-weight:800;text-align:center;margin:4px 0 0}
-
-#monitor-exit-btn{
-  display:none;position:fixed;top:max(12px,env(safe-area-inset-top));right:max(12px,env(safe-area-inset-right));
-  z-index:100000;width:54px;height:54px;border-radius:50%;border:1px solid rgba(255,255,255,.34);
-  background:rgba(7,21,33,.78);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
-  color:#fff;font-size:1.8rem;font-weight:900;line-height:1;align-items:center;justify-content:center;
-  box-shadow:0 10px 28px rgba(0,0,0,.34);cursor:pointer;
-}
-body.monitor-mode #monitor-exit-btn{display:flex}
-body.monitor-mode #screen-auctioneer-board,
-body.monitor-mode #screen-all-rosters{user-select:none;-webkit-user-select:none}
-/* Il monitor non deve poter pilotare nessun comando della plancia. */
-body.monitor-mode #screen-auctioneer-board .dashboard,
-body.monitor-mode #screen-all-rosters .all-rosters-page{pointer-events:none!important}
-body.monitor-mode #screen-all-rosters .all-rosters-grid{pointer-events:none!important;scrollbar-width:thin}
-body.monitor-mode #screen-auctioneer-board #btn-next{display:none!important}
-@media (max-width:700px){
-  #monitor-exit-btn{width:48px;height:48px;font-size:1.55rem}
-}
 </style>
 <script id="liveasta-v97-role-badge-sync">
 (function(){
@@ -26585,10 +26134,6 @@ body.monitor-mode #screen-auctioneer-board #btn-next{display:none!important}
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init,{once:true});
   else init();
 })();
-
-        window.addEventListener('DOMContentLoaded',()=>{
-            installMonitorRemoteBridge();
-        });
 </script>
 
 </body>
