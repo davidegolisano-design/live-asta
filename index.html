@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>LIVEASTA V81</title>
+    <title>LIVEASTA V83</title>
     <meta name="theme-color" content="#0D1117">
     <meta name="color-scheme" content="dark">
     <meta name="mobile-web-app-capable" content="yes">
@@ -11177,6 +11177,48 @@ html.audio-modal-open{
 }
 </style>
 
+
+<style id="liveasta-v82-player-buttons-bottom">
+/* ==========================================================
+   LIVEASTA V82 — PLAYER: TASTI SEMPRE ANCORATI IN BASSO
+   Solo layout. Nessuna modifica a offerte, READY o timer.
+   ========================================================== */
+#screen-player-buzzer > .buzzer-bottom-area{
+  margin-top:auto!important;
+  margin-bottom:0!important;
+  flex:0 0 auto!important;
+  align-self:center!important;
+}
+</style>
+
+
+
+<style id="liveasta-v83-player-stage-fill">
+/* ==========================================================
+   LIVEASTA V83 — PLAYER: RIQUADRO ASTA USA TUTTO LO SPAZIO
+   Il riquadro centrale cresce fino ai tasti, che restano in basso.
+   Nessuna modifica a offerte, READY, timer o slider.
+   ========================================================== */
+#screen-player-buzzer > .phone-top-area{
+  flex:1 1 0!important;
+  flex-basis:0!important;
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  align-self:stretch!important;
+  margin-top:0!important;
+  margin-bottom:0!important;
+}
+
+/* I tasti restano rigorosamente in fondo; il riquadro centrale
+   assorbe tutto lo spazio disponibile sopra di loro. */
+#screen-player-buzzer > .buzzer-bottom-area{
+  flex:0 0 auto!important;
+  margin-top:0!important;
+  margin-bottom:0!important;
+}
+</style>
+
 </head>
 <body>
 
@@ -11187,7 +11229,7 @@ html.audio-modal-open{
              aria-label="Apri Impostazioni LIVEASTA"
              onclick="openAdminLogin()"
              onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openAdminLogin();}">
-            LIVEASTA V81
+            LIVEASTA V83
         </div>
         <div class="setup-card">
             <h1 class="logo-text"><span class="rosa">LIVE</span><span class="rush">ASTA</span></h1>
@@ -22899,9 +22941,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyBrand(){
-    document.title='LIVEASTA V81';
+    document.title='LIVEASTA V83';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V81';
+      el.textContent='LIVEASTA · VERSIONE V83';
     });
     document.querySelectorAll('.logo-text').forEach(el=>{
       const a=el.querySelector('.rosa');
