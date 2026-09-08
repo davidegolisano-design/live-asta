@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>LIVEASTA V88</title>
+    <title>LIVEASTA V89</title>
     <meta name="theme-color" content="#0D1117">
     <meta name="color-scheme" content="dark">
     <meta name="mobile-web-app-capable" content="yes">
@@ -12190,7 +12190,7 @@ html.audio-modal-open{
 
     <div id="screen-admin" class="screen">
         <div class="setup-card" style="max-width:1100px; width:96%; padding:24px;">
-            <div class="admin-version-badge">LIVEASTA · VERSIONE V88</div>
+            <div class="admin-version-badge">LIVEASTA · VERSIONE V89</div>
             <h1>Gestione stanze</h1>
             <p class="subtitle">Nome, password, modifica ed eliminazione</p>
 
@@ -15675,6 +15675,9 @@ html.audio-modal-open{
                 sel.innerHTML='<option value="">Tutte le squadre risultano già collegate</option>';
                 sel.disabled=true;
                 if(help)help.textContent='Non ci sono squadre disponibili in questo momento.';
+                if(typeof startPlayerOccupiedRetryCountdown==='function'){
+                    setTimeout(()=>startPlayerOccupiedRetryCountdown(null,''),0);
+                }
                 return;
             }
 
@@ -19229,8 +19232,12 @@ html.audio-modal-open{
                 // Ultimo controllo subito prima dell'accesso, per evitare doppioni.
                 const occupied=await fetchOccupiedTeamIds(room,700);
                 if(occupied.has(String(teamId))){
-                    await refreshPlayerTeamChoices();
-                    throw new Error('Questa squadra è appena entrata nella stanza. Scegline un’altra.');
+                    if(typeof startPlayerOccupiedRetryCountdown==='function'){
+                        startPlayerOccupiedRetryCountdown(room,teamId);
+                    }else{
+                        err.innerText='Questa squadra è già occupata. Riprova tra qualche secondo.';
+                    }
+                    return;
                 }
 
                 await closePlayerSetupChannel();
@@ -20467,8 +20474,14 @@ html.audio-modal-open{
                 }
                 const lockOk=await acquireAuctioneerRoomLock(room);
                 if(!lockOk){
-                    throw new Error("Accesso bloccato: in questa stanza c\'è già un banditore attivo. Può entrare un nuovo banditore solo dopo che quello attuale ha premuto ESCI.");
+                    if(typeof startAuctioneerOccupiedRetryCountdown==='function'){
+                        await startAuctioneerOccupiedRetryCountdown(room);
+                    }else{
+                        err.innerText="Accesso bloccato: in questa stanza c'è già un banditore attivo. Riprova tra qualche secondo.";
+                    }
+                    return;
                 }
+                if(typeof stopAuctioneerOccupiedRetryCountdown==='function')stopAuctioneerOccupiedRetryCountdown(false);
                 auctioneerLockAcquired=true;
 
                 await connectToRoom(room);
@@ -23756,9 +23769,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyBrand(){
-    document.title='LIVEASTA V88';
+    document.title='LIVEASTA V89';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V88';
+      el.textContent='LIVEASTA · VERSIONE V89';
     });
     document.querySelectorAll('.logo-text').forEach(el=>{
       const a=el.querySelector('.rosa');
@@ -24163,9 +24176,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyV85Brand(){
-    document.title='LIVEASTA V88';
+    document.title='LIVEASTA V89';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V88';
+      el.textContent='LIVEASTA · VERSIONE V89';
     });
   }
 
@@ -24321,6 +24334,283 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
     hardenInputs();resetPlayerWizard();renderAuctionWizard();
     new MutationObserver(records=>{for(const rec of records)for(const node of rec.addedNodes)if(node?.nodeType===1)hardenInputs(node);}).observe(document.body,{childList:true,subtree:true});
   }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
+})();
+</script>
+
+
+<style id="liveasta-v89-access-enter-retry-style">
+/* V89 — accesso: INVIO/VAI = avanti e countdown occupazione. */
+#player-room-error.liveasta-access-retry,
+#auction-room-error.liveasta-access-retry{
+  white-space:pre-line!important;
+  font-variant-numeric:tabular-nums;
+  line-height:1.42!important;
+  padding:9px 11px!important;
+  border:1px solid rgba(255,173,61,.32);
+  border-radius:10px;
+  background:rgba(255,173,61,.07);
+  color:#ffd69a!important;
+}
+#player-room-error.liveasta-access-retry.liveasta-access-free,
+#auction-room-error.liveasta-access-retry.liveasta-access-free{
+  border-color:rgba(61,220,151,.34);
+  background:rgba(61,220,151,.08);
+  color:#8fffc9!important;
+}
+.access-wizard-actions .liveasta-access-retry-blocked{
+  pointer-events:none!important;
+  opacity:.62!important;
+  filter:saturate(.65)!important;
+}
+</style>
+<script id="liveasta-v89-access-enter-retry-script">
+(function(){
+  'use strict';
+
+  const PLAYER_RETRY_MS=22000; // coerente con heartbeat fallback/cleanup giocatori
+  const RETRY_TICK_MS=250;
+  const RETRY_CHECK_MS=2500;
+
+  let playerRetryTimer=null;
+  let playerRetryDeadline=0;
+  let playerRetryRoom=null;
+  let playerRetryTeamId='';
+  let playerRetryChecking=false;
+  let playerRetryLastCheck=0;
+  let playerRetryOriginalButton='';
+
+  let auctionRetryTimer=null;
+  let auctionRetryDeadline=0;
+  let auctionRetryRoom=null;
+  let auctionRetryChecking=false;
+  let auctionRetryLastCheck=0;
+  let auctionRetryOriginalButton='';
+
+  function screenActive(id){return !!document.getElementById(id)?.classList.contains('active');}
+  function secondsLeft(deadline){return Math.max(0,Math.ceil((deadline-Date.now())/1000));}
+
+  function markRetryButton(id,blocked,seconds,original){
+    const btn=document.getElementById(id);if(!btn)return;
+    btn.classList.toggle('liveasta-access-retry-blocked',!!blocked);
+    if(blocked){
+      btn.setAttribute('aria-disabled','true');
+      btn.textContent=`ATTENDI ${Math.max(0,seconds)}s`;
+    }else{
+      btn.removeAttribute('aria-disabled');
+      if(original)btn.textContent=original;
+    }
+  }
+
+  function setRetryMessage(id,message,isFree=false){
+    const el=document.getElementById(id);if(!el)return;
+    el.classList.add('liveasta-access-retry');
+    el.classList.toggle('liveasta-access-free',!!isFree);
+    el.textContent=message;
+  }
+
+  function clearRetryMessage(id){
+    const el=document.getElementById(id);if(!el)return;
+    el.classList.remove('liveasta-access-retry','liveasta-access-free');
+  }
+
+  window.stopPlayerOccupiedRetryCountdown=function(clearMessage=true){
+    if(playerRetryTimer){clearInterval(playerRetryTimer);playerRetryTimer=null;}
+    playerRetryDeadline=0;playerRetryRoom=null;playerRetryTeamId='';playerRetryChecking=false;playerRetryLastCheck=0;
+    markRetryButton('player-wizard-next',false,0,playerRetryOriginalButton);
+    playerRetryOriginalButton='';
+    if(clearMessage)clearRetryMessage('player-room-error');
+  };
+
+  async function resolvePlayerRetryRoom(room){
+    if(room?.id)return room;
+    try{return await getPlayerSetupRoom();}catch(e){return null;}
+  }
+
+  async function playerPlaceIsFree(){
+    if(playerRetryChecking||!playerRetryRoom?.id)return false;
+    playerRetryChecking=true;
+    playerRetryLastCheck=Date.now();
+    try{
+      const occupied=await fetchOccupiedTeamIds(playerRetryRoom,700);
+      if(playerRetryTeamId){
+        return !occupied.has(String(playerRetryTeamId));
+      }
+      const {data,error}=await supabaseClient
+        .from('fanta_teams').select('id').eq('room_id',playerRetryRoom.id);
+      if(error)return false;
+      return (data||[]).some(t=>!occupied.has(String(t.id)));
+    }catch(e){
+      return false;
+    }finally{playerRetryChecking=false;}
+  }
+
+  async function finishPlayerRetryFree(){
+    const generic=!playerRetryTeamId;
+    const err=document.getElementById('player-room-error');
+    const original=playerRetryOriginalButton;
+    window.stopPlayerOccupiedRetryCountdown(false);
+    if(generic){
+      try{await refreshPlayerTeamChoices();}catch(e){}
+      setRetryMessage('player-room-error','Posto disponibile. Puoi continuare ora.',true);
+    }else{
+      setRetryMessage('player-room-error','Posto libero. Premi ENTRA per riprovare.',true);
+    }
+    const btn=document.getElementById('player-wizard-next');
+    if(btn && original)btn.textContent=original;
+    setTimeout(()=>{if(err?.classList.contains('liveasta-access-free'))clearRetryMessage('player-room-error');},5000);
+  }
+
+  async function tickPlayerRetry(forceCheck=false){
+    if(!screenActive('screen-player-setup')){window.stopPlayerOccupiedRetryCountdown();return;}
+    const left=secondsLeft(playerRetryDeadline);
+    const label=playerRetryTeamId?'Questa squadra è già occupata.':'Tutti i posti risultano occupati.';
+    setRetryMessage('player-room-error',`${label}\nRIPROVA TRA ${left} s`);
+    markRetryButton('player-wizard-next',true,left,playerRetryOriginalButton);
+
+    const due=forceCheck || Date.now()-playerRetryLastCheck>=RETRY_CHECK_MS || left<=0;
+    if(!due||playerRetryChecking)return;
+    const free=await playerPlaceIsFree();
+    if(free){await finishPlayerRetryFree();return;}
+    if(left<=0)playerRetryDeadline=Date.now()+PLAYER_RETRY_MS;
+  }
+
+  window.startPlayerOccupiedRetryCountdown=async function(room,teamId=''){
+    const resolved=await resolvePlayerRetryRoom(room);
+    if(!resolved?.id)return;
+    const same=playerRetryTimer && String(playerRetryRoom?.id)===String(resolved.id) && String(playerRetryTeamId||'')===String(teamId||'');
+    playerRetryRoom=resolved;
+    playerRetryTeamId=String(teamId||'');
+    if(!same)playerRetryDeadline=Date.now()+PLAYER_RETRY_MS;
+    const btn=document.getElementById('player-wizard-next');
+    if(!playerRetryOriginalButton)playerRetryOriginalButton=btn?.textContent||'AVANTI';
+    if(!playerRetryTimer)playerRetryTimer=setInterval(()=>tickPlayerRetry(false),RETRY_TICK_MS);
+    await tickPlayerRetry(true);
+  };
+
+  window.stopAuctioneerOccupiedRetryCountdown=function(clearMessage=true){
+    if(auctionRetryTimer){clearInterval(auctionRetryTimer);auctionRetryTimer=null;}
+    auctionRetryDeadline=0;auctionRetryRoom=null;auctionRetryChecking=false;auctionRetryLastCheck=0;
+    markRetryButton('auction-wizard-next',false,0,auctionRetryOriginalButton);
+    auctionRetryOriginalButton='';
+    if(clearMessage)clearRetryMessage('auction-room-error');
+  };
+
+  async function readAuctionRetryLock(){
+    if(!auctionRetryRoom?.id)return null;
+    try{return await readAuctioneerLock(`liveasta_auctioneer_lock_${auctionRetryRoom.id}`);}catch(e){return null;}
+  }
+
+  async function auctionLockIsFree(){
+    if(auctionRetryChecking)return false;
+    auctionRetryChecking=true;auctionRetryLastCheck=Date.now();
+    try{
+      const row=await readAuctionRetryLock();
+      return !row || !isAuctioneerLockFresh(row);
+    }catch(e){return false;}finally{auctionRetryChecking=false;}
+  }
+
+  async function refreshAuctionRetryDeadline(){
+    const row=await readAuctionRetryLock();
+    if(!row || !isAuctioneerLockFresh(row))return true;
+    const last=auctioneerLockLastSeen(row)||Date.now();
+    auctionRetryDeadline=Math.max(Date.now()+1000,last+AUCTIONEER_LOCK_STALE_MS);
+    return false;
+  }
+
+  async function finishAuctionRetryFree(){
+    const original=auctionRetryOriginalButton;
+    window.stopAuctioneerOccupiedRetryCountdown(false);
+    setRetryMessage('auction-room-error','Banditore libero. Puoi riprovare ora.',true);
+    const btn=document.getElementById('auction-wizard-next');if(btn&&original)btn.textContent=original;
+    setTimeout(()=>clearRetryMessage('auction-room-error'),5000);
+  }
+
+  async function tickAuctionRetry(forceCheck=false){
+    if(!screenActive('screen-auctioneer-setup')){window.stopAuctioneerOccupiedRetryCountdown();return;}
+    let left=secondsLeft(auctionRetryDeadline);
+    setRetryMessage('auction-room-error',`Accesso bloccato: c'è già un banditore attivo.\nRIPROVA TRA ${left} s`);
+    markRetryButton('auction-wizard-next',true,left,auctionRetryOriginalButton);
+
+    const due=forceCheck || Date.now()-auctionRetryLastCheck>=RETRY_CHECK_MS || left<=0;
+    if(!due||auctionRetryChecking)return;
+    const free=await auctionLockIsFree();
+    if(free){await finishAuctionRetryFree();return;}
+    if(left<=0){
+      const becameFree=await refreshAuctionRetryDeadline();
+      if(becameFree){await finishAuctionRetryFree();return;}
+      left=secondsLeft(auctionRetryDeadline);
+    }
+  }
+
+  window.startAuctioneerOccupiedRetryCountdown=async function(room){
+    if(!room?.id)return;
+    window.stopAuctioneerOccupiedRetryCountdown(false);
+    auctionRetryRoom=room;
+    const btn=document.getElementById('auction-wizard-next');
+    auctionRetryOriginalButton=btn?.textContent||'ENTRA';
+    const row=await readAuctionRetryLock();
+    const last=auctioneerLockLastSeen(row)||Date.now();
+    auctionRetryDeadline=Math.max(Date.now()+1000,last+AUCTIONEER_LOCK_STALE_MS);
+    auctionRetryTimer=setInterval(()=>tickAuctionRetry(false),RETRY_TICK_MS);
+    await tickAuctionRetry(false);
+  };
+
+  function visible(el){return !!el && getComputedStyle(el).display!=='none' && !el.disabled;}
+  function focusNext(id){const el=document.getElementById(id);if(el){el.focus({preventScroll:true});return true;}return false;}
+
+  function updateEnterHints(){
+    const hints={
+      'player-room-name-input':'next','player-room-password':'next','player-pin':'next','player-pin-confirm':'go',
+      'auction-new-room-name':'next','auction-new-room-password':'next','auction-room-name-input':'next','auction-room-password':'go',
+      'auction-mantra-max-roster':'go','admin-pin':'go','sealed-bid-input':'go'
+    };
+    Object.entries(hints).forEach(([id,h])=>document.getElementById(id)?.setAttribute('enterkeyhint',h));
+    const pinConfirm=document.getElementById('player-pin-confirm');
+    const pin=document.getElementById('player-pin');
+    if(pin)pin.setAttribute('enterkeyhint',visible(pinConfirm)?'next':'go');
+  }
+
+  document.addEventListener('keydown',function(e){
+    if(e.key!=='Enter' || e.shiftKey || e.ctrlKey || e.altKey || e.metaKey)return;
+    const t=e.target;if(!t || !['INPUT','SELECT'].includes(t.tagName))return;
+    const id=t.id||'';
+
+    if(screenActive('screen-player-setup')){
+      if(playerRetryTimer){e.preventDefault();return;}
+      if(id==='player-room-name-input'){e.preventDefault();focusNext('player-room-password');return;}
+      if(id==='player-room-password'){e.preventDefault();window.playerAccessWizardNext?.();return;}
+      if(id==='player-pin'){
+        e.preventDefault();
+        const c=document.getElementById('player-pin-confirm');
+        if(visible(c))focusNext('player-pin-confirm');else window.playerAccessWizardNext?.();
+        return;
+      }
+      if(id==='player-pin-confirm'){e.preventDefault();window.playerAccessWizardNext?.();return;}
+    }
+
+    if(screenActive('screen-auctioneer-setup')){
+      if(auctionRetryTimer){e.preventDefault();return;}
+      if(id==='auction-new-room-name'){e.preventDefault();focusNext('auction-new-room-password');return;}
+      if(id==='auction-new-room-password'){e.preventDefault();window.auctionAccessWizardNext?.();return;}
+      if(id==='auction-room-name-input'){e.preventDefault();focusNext('auction-room-password');return;}
+      if(id==='auction-room-password'||id==='auction-mantra-max-roster'){e.preventDefault();window.auctionAccessWizardNext?.();return;}
+    }
+
+    if(screenActive('screen-admin-login')&&id==='admin-pin'){e.preventDefault();adminLogin();return;}
+    if(screenActive('screen-player-buzzer')&&id==='sealed-bid-input'){e.preventDefault();submitSealedBid();return;}
+  },true);
+
+  document.addEventListener('focusin',updateEnterHints,true);
+
+  const oldPlayerBack=window.playerAccessWizardBack;
+  if(typeof oldPlayerBack==='function')window.playerAccessWizardBack=function(){window.stopPlayerOccupiedRetryCountdown();return oldPlayerBack.apply(this,arguments);};
+  const oldAuctionBack=window.auctionAccessWizardBack;
+  if(typeof oldAuctionBack==='function')window.auctionAccessWizardBack=function(){window.stopAuctioneerOccupiedRetryCountdown();return oldAuctionBack.apply(this,arguments);};
+  const oldResetAuctionMode=window.resetAuctioneerRoomMode;
+  if(typeof oldResetAuctionMode==='function')window.resetAuctioneerRoomMode=function(){window.stopAuctioneerOccupiedRetryCountdown();return oldResetAuctionMode.apply(this,arguments);};
+
+  function boot(){updateEnterHints();}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
 })();
 </script>
