@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>LIVEASTA V96</title>
+    <title>LIVEASTA V97</title>
     <meta name="theme-color" content="#0D1117">
     <meta name="color-scheme" content="dark">
     <meta name="mobile-web-app-capable" content="yes">
@@ -12610,7 +12610,7 @@ html.audio-modal-open{
 
 <style id="liveasta-v96-final-ui-fixes">
 /* ==========================================================
-   LIVEASTA V96 — palette ruoli unica in tutta l'app
+   LIVEASTA V97 — palette ruoli unica in tutta l'app
    P = giallo · D = verde · C = blu · A = rosso
    ========================================================== */
 html body .role-P,
@@ -12716,9 +12716,11 @@ html body .auto-random-role:has(input:checked) span{color:#fff!important}
 
 /* Asta completata: vero stato terminale a pieno schermo della plancia banditore. */
 #screen-auctioneer-board .nomination-stage.auction-completed-fullscreen{
-  inset:0!important;
-  top:0!important;
-  z-index:5000!important;
+  left:0!important;
+  right:0!important;
+  bottom:0!important;
+  top:54px!important;
+  z-index:100!important;
   padding:20px!important;
   background:
     radial-gradient(circle at 50% 45%,rgba(70,197,255,.16),transparent 36%),
@@ -12757,7 +12759,7 @@ html body .auto-random-role:has(input:checked) span{color:#fff!important}
              aria-label="Apri Impostazioni LIVEASTA"
              onclick="openAdminLogin()"
              onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openAdminLogin();}">
-            LIVEASTA V96
+            LIVEASTA V97
         </div>
         <div class="setup-card">
             <h1 class="logo-text"><span class="rosa">LIVE</span><span class="rush">ASTA</span></h1>
@@ -13160,7 +13162,7 @@ html body .auto-random-role:has(input:checked) span{color:#fff!important}
 
     <div id="screen-admin" class="screen">
         <div class="setup-card" style="max-width:1100px; width:96%; padding:24px;">
-            <div class="admin-version-badge">LIVEASTA · VERSIONE V96</div>
+            <div class="admin-version-badge">LIVEASTA · VERSIONE V97</div>
             <h1>Gestione stanze</h1>
             <p class="subtitle">Nome, password, modifica ed eliminazione</p>
 
@@ -16584,7 +16586,7 @@ html body .auto-random-role:has(input:checked) span{color:#fff!important}
             const av=document.getElementById('view-auction');
             const stage=document.getElementById('nomination-stage');
 
-            /* V96 — fine asta: quando non esiste più alcun ruolo/turno disponibile,
+            /* V97 — fine asta: quando non esiste più alcun ruolo/turno disponibile,
                la plancia banditore diventa una schermata terminale a pieno schermo. */
             if(!role){
                 const readyDesktop=document.getElementById('auctioneer-ready-desktop');
@@ -16854,7 +16856,7 @@ html body .auto-random-role:has(input:checked) span{color:#fff!important}
             const nextBtn=document.getElementById('btn-next');
             if(nextBtn)nextBtn.style.display='none';
 
-            // V96: a rose complete la schermata finale ha precedenza anche in modalità banditore+giocatore.
+            // V97: a rose complete la schermata finale ha precedenza anche in modalità banditore+giocatore.
             if(!nominationState.role){
                 showScreen('screen-auctioneer-board');
                 showNominationTurnStage();
@@ -25212,9 +25214,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyBrand(){
-    document.title='LIVEASTA V96';
+    document.title='LIVEASTA V97';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V96';
+      el.textContent='LIVEASTA · VERSIONE V97';
     });
     document.querySelectorAll('.logo-text').forEach(el=>{
       const a=el.querySelector('.rosa');
@@ -25625,9 +25627,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyV85Brand(){
-    document.title='LIVEASTA V96';
+    document.title='LIVEASTA V97';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V96';
+      el.textContent='LIVEASTA · VERSIONE V97';
     });
   }
 
@@ -26061,6 +26063,76 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
 
   function boot(){updateEnterHints();}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
+})();
+</script>
+
+
+
+<style id="liveasta-v97-role-and-complete-fixes">
+/* V97 — la schermata ASTA COMPLETATA occupa tutta la plancia, ma lascia sempre visibile la barra banditore. */
+#screen-auctioneer-board .nomination-stage.auction-completed-fullscreen{
+  inset:54px 0 0 0!important;
+  z-index:100!important;
+}
+#screen-auctioneer-board .session-nav{
+  z-index:130!important;
+}
+
+/* V97 — palette ruoli definitiva anche sui badge accanto alle miniature.
+   P giallo · D verde · C blu · A rosso. */
+html body #phone-player-role.role-P,
+html body #auction-player-role.role-P,
+html body #auctioneer-ready-player-role.role-P,
+html body #room-roster-player-preview-role.role-P{background:#FFD43B!important;color:#17120A!important}
+html body #phone-player-role.role-D,
+html body #auction-player-role.role-D,
+html body #auctioneer-ready-player-role.role-D,
+html body #room-roster-player-preview-role.role-D{background:#22C55E!important;color:#06140B!important}
+html body #phone-player-role.role-C,
+html body #auction-player-role.role-C,
+html body #auctioneer-ready-player-role.role-C,
+html body #room-roster-player-preview-role.role-C{background:#3B82F6!important;color:#fff!important}
+html body #phone-player-role.role-A,
+html body #auction-player-role.role-A,
+html body #auctioneer-ready-player-role.role-A,
+html body #room-roster-player-preview-role.role-A{background:#EF4444!important;color:#fff!important}
+</style>
+<script id="liveasta-v97-role-badge-sync">
+(function(){
+  const ids=['phone-player-role','auction-player-role','auctioneer-ready-player-role','room-roster-player-preview-role'];
+  const roleClasses=['role-P','role-D','role-C','role-A'];
+
+  function classicRoleFromLabel(value){
+    const raw=String(value||'').trim();
+    if(!raw || raw==='-') return '';
+    const up=raw.toUpperCase();
+    if(['P','D','C','A'].includes(up)) return up;
+    const tokens=raw.split(/[;,/|+\-\s]+/).filter(Boolean).map(x=>x.toLowerCase());
+    if(tokens.some(x=>x==='por'||x==='p')) return 'P';
+    if(tokens.some(x=>['dc','dd','ds','b','d'].includes(x))) return 'D';
+    if(tokens.some(x=>['e','m','c','w','t'].includes(x))) return 'C';
+    if(tokens.some(x=>['a','pc'].includes(x))) return 'A';
+    return '';
+  }
+
+  function syncRoleBadge(el){
+    if(!el) return;
+    const role=classicRoleFromLabel(el.textContent);
+    roleClasses.forEach(c=>el.classList.remove(c));
+    if(role) el.classList.add('role-'+role);
+  }
+
+  function attach(id){
+    const el=document.getElementById(id);
+    if(!el || el.dataset.roleColorObserver==='1') return;
+    el.dataset.roleColorObserver='1';
+    syncRoleBadge(el);
+    new MutationObserver(()=>syncRoleBadge(el)).observe(el,{childList:true,characterData:true,subtree:true});
+  }
+
+  function init(){ ids.forEach(attach); }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init,{once:true});
+  else init();
 })();
 </script>
 
