@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>LIVEASTA V84</title>
+    <title>LIVEASTA V87</title>
     <meta name="theme-color" content="#0D1117">
     <meta name="color-scheme" content="dark">
     <meta name="mobile-web-app-capable" content="yes">
@@ -10949,6 +10949,11 @@ html.audio-modal-open{
 }
 #screen-auctioneer-board .auction-quick-reset{
   color:#fff!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
+  letter-spacing:.025em!important;
+  min-width:86px!important;
+  max-width:none!important;
 }
 
 /* Su smartphone le azioni entrano nella seconda riga dell'header:
@@ -10977,6 +10982,12 @@ html.audio-modal-open{
   #screen-auctioneer-board .auction-quick-reset{
     grid-area:reset!important;
     width:86px!important;
+    min-width:86px!important;
+    padding:0 3px!important;
+    font-size:.54rem!important;
+    letter-spacing:.015em!important;
+    overflow:visible!important;
+    text-overflow:clip!important;
     justify-self:end!important;
   }
   #screen-auctioneer-board .auction-nav-room-pill{
@@ -11245,7 +11256,7 @@ html.audio-modal-open{
 #screen-player-buzzer .buzzer-btn.btn-plus-2:not(:disabled){
   background:linear-gradient(180deg,#FF6474,#E63B50)!important;
   border-color:#FF9AA5!important;
-  color:#fff!important;
+  color:#07110C!important;
   opacity:1!important;
   filter:none!important;
   box-shadow:0 8px 20px rgba(230,59,80,.30)!important;
@@ -11455,6 +11466,316 @@ html.audio-modal-open{
 #player-ready-overlay{display:none!important}
 </style>
 
+
+
+<style id="liveasta-v85-auction-typography">
+/* ==========================================================
+   LIVEASTA V86 — TIPOGRAFIA ASTA RESPONSIVE
+   Obiettivo: testi più leggibili, mai tagliati/sovrapposti.
+   Le medaglie priorità mantengono la loro misura; si adatta solo il testo.
+   ========================================================== */
+
+/* ---------- TELECOMANDO GIOCATORE ---------- */
+#screen-player-buzzer #phone-player-name{
+  width:100%!important;
+  min-width:0!important;
+  min-height:34px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:8px!important;
+  padding:0 5px!important;
+  box-sizing:border-box!important;
+  font-size:clamp(1.28rem,5.8vw,1.72rem)!important;
+  line-height:1!important;
+  font-weight:950!important;
+  white-space:nowrap!important;
+  overflow:visible!important;
+}
+#screen-player-buzzer #phone-player-name-text{
+  flex:0 1 auto!important;
+  min-width:0!important;
+  max-width:none!important;
+  display:block!important;
+  white-space:nowrap!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
+  line-height:1!important;
+  transform-origin:center center!important;
+}
+/* La medaglia di fascia non viene mai compressa. */
+#screen-player-buzzer #phone-player-priority-badge{
+  flex:0 0 auto!important;
+}
+
+#screen-player-buzzer .phone-player-meta{
+  width:100%!important;
+  min-width:0!important;
+  min-height:30px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:7px!important;
+  padding:0 4px!important;
+  box-sizing:border-box!important;
+  font-size:clamp(.88rem,3.8vw,1.08rem)!important;
+  line-height:1!important;
+  font-weight:900!important;
+  white-space:nowrap!important;
+  overflow:visible!important;
+}
+#screen-player-buzzer #phone-player-role{
+  flex:0 0 auto!important;
+  width:29px!important;
+  height:29px!important;
+  min-width:29px!important;
+  min-height:29px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  font-size:.78rem!important;
+  font-weight:950!important;
+  line-height:1!important;
+}
+#screen-player-buzzer .phone-meta-dot{
+  flex:0 0 auto!important;
+  line-height:1!important;
+}
+#screen-player-buzzer #phone-player-club{
+  flex:0 1 auto!important;
+  min-width:0!important;
+  max-width:none!important;
+  display:block!important;
+  white-space:nowrap!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
+  line-height:1!important;
+  transform-origin:left center!important;
+}
+
+/* ---------- PLANCIA BANDITORE ---------- */
+#screen-auctioneer-board #auction-dashboard #auction-player-name-top{
+  width:100%!important;
+  min-width:0!important;
+  min-height:38px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  box-sizing:border-box!important;
+  font-size:clamp(1.45rem,2.65vw,2.35rem)!important;
+  line-height:1!important;
+  font-weight:950!important;
+  white-space:nowrap!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
+  transform-origin:center center!important;
+}
+#screen-auctioneer-board #auction-dashboard #auction-player-meta{
+  width:100%!important;
+  min-width:0!important;
+  min-height:36px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:9px!important;
+  padding:0 7px!important;
+  box-sizing:border-box!important;
+  font-size:clamp(1.02rem,1.55vw,1.48rem)!important;
+  line-height:1!important;
+  font-weight:900!important;
+  white-space:nowrap!important;
+  overflow:visible!important;
+}
+#screen-auctioneer-board #auction-dashboard #auction-player-role{
+  flex:0 0 auto!important;
+  width:35px!important;
+  height:35px!important;
+  min-width:35px!important;
+  min-height:35px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  font-size:.9rem!important;
+  font-weight:950!important;
+  line-height:1!important;
+}
+#screen-auctioneer-board #auction-dashboard #auction-player-meta .meta-dot{
+  flex:0 0 auto!important;
+}
+#screen-auctioneer-board #auction-dashboard #auction-player-club{
+  flex:0 1 auto!important;
+  min-width:0!important;
+  max-width:none!important;
+  display:block!important;
+  white-space:nowrap!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
+  line-height:1!important;
+  transform-origin:left center!important;
+}
+
+/* Banditore su smartphone: più grande del precedente, ma con limiti adatti
+   alla colonna stretta. Il JS V85 riduce solo quando serve davvero. */
+#screen-auctioneer-board #auction-dashboard.mode-mobile #auction-player-name-top{
+  min-height:32px!important;
+  font-size:clamp(1.22rem,5.2vw,1.72rem)!important;
+}
+#screen-auctioneer-board #auction-dashboard.mode-mobile #auction-player-meta{
+  min-height:31px!important;
+  gap:7px!important;
+  font-size:clamp(.88rem,3.7vw,1.12rem)!important;
+}
+#screen-auctioneer-board #auction-dashboard.mode-mobile #auction-player-role{
+  width:29px!important;
+  height:29px!important;
+  min-width:29px!important;
+  min-height:29px!important;
+  font-size:.76rem!important;
+}
+
+/* Telefoni molto stretti: preserva la leggibilità senza tagli. */
+@media(max-width:380px){
+  #screen-player-buzzer #phone-player-name{
+    font-size:clamp(1.18rem,5.5vw,1.52rem)!important;
+    gap:6px!important;
+  }
+  #screen-player-buzzer .phone-player-meta{
+    font-size:clamp(.82rem,3.7vw,.98rem)!important;
+    gap:6px!important;
+  }
+  #screen-player-buzzer #phone-player-role{
+    width:27px!important;height:27px!important;min-width:27px!important;min-height:27px!important;
+  }
+}
+</style>
+
+<style id="liveasta-v86-user-fixes">
+/* ==========================================================
+   LIVEASTA V86 — FINITURE UI + CANCEL OFFERTA ESATTA
+   ========================================================== */
+
+/* Il +2 resta rosso, ma il testo è nero come sugli altri rilanci. */
+#screen-player-buzzer .buzzer-btn.btn-plus-2:not(:disabled),
+#screen-player-buzzer .buzzer-btn.btn-plus-2:not(:disabled):active{
+  color:#07110C!important;
+  -webkit-text-fill-color:#07110C!important;
+}
+
+/* RESET plancia: testo sempre completo, mai RES… */
+#screen-auctioneer-board .auction-quick-reset{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  white-space:nowrap!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
+  min-width:94px!important;
+  width:auto!important;
+  padding-inline:9px!important;
+  letter-spacing:.02em!important;
+}
+@media(max-width:760px){
+  #screen-auctioneer-board > .session-nav{
+    grid-template-columns:72px minmax(0,1fr) 94px!important;
+  }
+  #screen-auctioneer-board .auction-quick-reset{
+    width:94px!important;
+    min-width:94px!important;
+    padding:0 3px!important;
+    font-size:.53rem!important;
+  }
+  #screen-auctioneer-board > .session-nav > .session-back:last-child{
+    width:94px!important;
+  }
+}
+</style>
+
+
+<style id="liveasta-v87-ready-wizard-passwords">
+/* LIVEASTA V87 — READY LIST FULL HEIGHT + ACCESS WIZARD */
+#screen-player-buzzer .player-live-side.ready-phase{
+  grid-template-rows:minmax(0,1fr)!important;
+  gap:0!important;
+}
+#screen-player-buzzer .player-live-side.ready-phase .player-ready-side-panel{
+  grid-row:1 / -1!important;
+  align-self:stretch!important;
+  min-height:0!important;
+  height:100%!important;
+  max-height:none!important;
+  grid-template-rows:auto minmax(0,1fr)!important;
+}
+#screen-player-buzzer .player-live-side.ready-phase .player-ready-eligible{
+  min-height:0!important;
+  height:100%!important;
+  overflow:hidden!important;
+}
+#screen-player-buzzer .player-live-side.ready-phase .player-ready-team-list{
+  min-height:0!important;
+  max-height:none!important;
+  height:100%!important;
+  overflow-y:auto!important;
+  scrollbar-width:thin;
+}
+.liveasta-secret-input{
+  -webkit-text-security:disc!important;
+  text-security:disc!important;
+}
+#screen-player-setup,#screen-auctioneer-setup{
+  overflow:hidden!important;
+  justify-content:center!important;
+}
+#screen-player-setup .access-wizard-card,#screen-auctioneer-setup .setup-card{
+  width:min(94vw,440px)!important;
+  max-width:440px!important;
+  max-height:calc(100dvh - 24px)!important;
+  padding:clamp(18px,3.2vh,30px) clamp(16px,5vw,28px)!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:center!important;
+  overflow:hidden!important;
+}
+#screen-player-setup h1,#screen-auctioneer-setup h1{
+  margin:0 0 8px!important;
+  font-size:clamp(1.45rem,6vw,2rem)!important;
+}
+.access-wizard-head{display:flex;flex-direction:column;gap:7px;margin:2px 0 14px}
+.access-wizard-progress{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.access-wizard-progress.auction{grid-template-columns:repeat(2,1fr)}
+.access-wizard-progress i{height:5px;border-radius:999px;background:rgba(255,255,255,.13);transition:.18s ease}
+.access-wizard-progress i.done,.access-wizard-progress i.active{background:var(--accent-blue);box-shadow:0 0 10px rgba(61,220,151,.26)}
+.access-wizard-step-label{color:var(--text-muted);font-size:.68rem;font-weight:900;letter-spacing:.09em}
+.access-wizard-step,.auction-access-step{display:none;min-height:0}
+.access-wizard-step.active,.auction-access-step.active{display:block!important}
+#screen-player-setup .access-wizard-step .subtitle,#screen-auctioneer-setup .auction-access-step .subtitle{margin:0 0 14px!important;font-size:.82rem!important}
+#screen-player-setup input,#screen-player-setup select,#screen-auctioneer-setup #auction-mode-fields input,#screen-auctioneer-setup #auction-mode-fields select{margin-bottom:10px!important;padding:13px 12px!important;font-size:1rem!important}
+#screen-player-setup .player-team-help{margin:0!important;min-height:34px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:.72rem}
+#screen-player-setup .player-pin-panel{margin:0!important;padding:12px!important}
+.access-wizard-error{min-height:20px;margin:5px 0 2px!important;font-size:.72rem!important}
+.access-wizard-actions{display:grid;grid-template-columns:.82fr 1.18fr;gap:10px;margin-top:8px}
+.access-wizard-actions .btn{margin:0!important;padding:13px 8px!important}
+#screen-player-setup #player-wizard-next,#screen-auctioneer-setup #auction-wizard-next{background:linear-gradient(135deg,#3DDC97,#25C982)!important}
+
+#screen-auctioneer-setup.wizard-mode-active #auction-mode-question{display:none!important}
+#screen-auctioneer-setup #auction-mode-fields{min-height:0}
+#screen-auctioneer-setup .auction-mode-selected{margin-bottom:8px!important}
+#screen-auctioneer-setup .auction-mode-selected .btn{display:none!important}
+#screen-auctioneer-setup .auction-mode-choice{margin:10px 0!important}
+#screen-auctioneer-setup .auction-mode-big{min-height:110px!important;padding:12px!important}
+#screen-auctioneer-setup .listone-info-card{margin:8px 0 0!important;padding:8px 10px!important}
+#screen-auctioneer-setup .listone-info-value{font-size:.62rem!important}
+#screen-auctioneer-setup .auction-setup-root-back{margin-top:8px!important}
+#screen-auctioneer-setup.wizard-mode-active .auction-setup-root-back{display:none!important}
+#screen-auctioneer-setup #auction-create-step-2{max-height:min(53dvh,460px);overflow-y:auto;overscroll-behavior:contain;padding-right:2px}
+@media(max-height:720px){
+  #screen-player-setup .access-wizard-card,#screen-auctioneer-setup .setup-card{padding:14px 14px!important}
+  #screen-player-setup h1,#screen-auctioneer-setup h1{font-size:1.35rem!important}
+  .access-wizard-head{margin-bottom:9px}
+  #screen-player-setup input,#screen-player-setup select,#screen-auctioneer-setup #auction-mode-fields input,#screen-auctioneer-setup #auction-mode-fields select{padding:11px 10px!important;margin-bottom:8px!important}
+  .access-wizard-actions .btn{padding:11px 7px!important}
+}
+</style>
+
 </head>
 <body>
 
@@ -11465,7 +11786,7 @@ html.audio-modal-open{
              aria-label="Apri Impostazioni LIVEASTA"
              onclick="openAdminLogin()"
              onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openAdminLogin();}">
-            LIVEASTA V84
+            LIVEASTA V87
         </div>
         <div class="setup-card">
             <h1 class="logo-text"><span class="rosa">LIVE</span><span class="rush">ASTA</span></h1>
@@ -11509,48 +11830,71 @@ html.audio-modal-open{
     </div>
 
     <div id="screen-player-setup" class="screen">
-        <div class="setup-card">
+        <div class="setup-card access-wizard-card">
             <h1>Entra nell'asta</h1>
-            <p class="subtitle" id="player-room-mode-help">Scegli la stanza creata dal banditore</p>
-            <select id="player-room-select" class="minimal-input" onchange="refreshPlayerTeamChoices()"></select>
-            <input type="text" id="player-room-name-input" class="minimal-input" placeholder="Nome stanza" maxlength="30" autocomplete="off" style="display:none;" oninput="schedulePlayerTeamChoicesRefresh()">
-            <input type="password" id="player-room-password" placeholder="Password stanza" autocomplete="off" oninput="schedulePlayerTeamChoicesRefresh()">
-            <select id="player-team-select" class="minimal-input" disabled onchange="handlePlayerTeamSelection()">
-                <option value="">Inserisci prima la password...</option>
-            </select>
-            <div id="player-team-help" class="player-team-help">Le squadre già collegate non vengono mostrate.</div>
-            <div id="player-room-error" class="form-error"></div>
 
-            <div id="player-pin-panel" class="player-pin-panel" style="display:none;">
-                <div id="player-pin-title" class="player-pin-title">PIN giocatore</div>
-                <div id="player-pin-help" class="player-pin-help"></div>
-
-                <input id="player-pin"
-                       class="minimal-input"
-                       type="password"
-                       inputmode="numeric"
-                       pattern="[0-9]*"
-                       maxlength="6"
-                       placeholder="PIN 6 cifre"
-                       autocomplete="one-time-code"
-                       oninput="this.value=this.value.replace(/\\D/g,'').slice(0,6);clearPlayerPinError()">
-
-                <input id="player-pin-confirm"
-                       class="minimal-input"
-                       type="password"
-                       inputmode="numeric"
-                       pattern="[0-9]*"
-                       maxlength="6"
-                       placeholder="Ripeti PIN 6 cifre"
-                       autocomplete="one-time-code"
-                       style="display:none;"
-                       oninput="this.value=this.value.replace(/\\D/g,'').slice(0,6);clearPlayerPinError()">
-
-                <div id="player-pin-error" class="form-error"></div>
+            <div class="access-wizard-head">
+                <div class="access-wizard-progress"><i></i><i></i><i></i></div>
+                <div id="player-wizard-step-label" class="access-wizard-step-label">1 / 3 · STANZA</div>
             </div>
 
-            <button class="btn" id="player-enter-btn" onclick="joinAsPlayer()">Entra</button>
-            <button class="btn btn-secondary" onclick="showScreen('screen-role')">Indietro</button>
+            <div id="player-wizard-step-1" class="access-wizard-step active">
+                <p class="subtitle" id="player-room-mode-help">Scegli la stanza creata dal banditore</p>
+                <select id="player-room-select" class="minimal-input" onchange="refreshPlayerTeamChoices()"></select>
+                <input type="text" id="player-room-name-input" class="minimal-input" placeholder="Nome stanza" maxlength="30" autocomplete="off" style="display:none;" oninput="schedulePlayerTeamChoicesRefresh()">
+                <input type="text" id="player-room-password" class="liveasta-secret-input" placeholder="Password stanza" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" data-lpignore="true" data-1p-ignore="true" data-bwignore="true" data-form-type="other" oninput="schedulePlayerTeamChoicesRefresh()">
+            </div>
+
+            <div id="player-wizard-step-2" class="access-wizard-step">
+                <p class="subtitle">Scegli la tua squadra</p>
+                <select id="player-team-select" class="minimal-input" disabled onchange="handlePlayerTeamSelection()">
+                    <option value="">Inserisci prima la password...</option>
+                </select>
+                <div id="player-team-help" class="player-team-help">Le squadre già collegate non vengono mostrate.</div>
+            </div>
+
+            <div id="player-wizard-step-3" class="access-wizard-step">
+                <p class="subtitle">Conferma il tuo accesso</p>
+                <div id="player-pin-panel" class="player-pin-panel" style="display:none;">
+                    <div id="player-pin-title" class="player-pin-title">PIN giocatore</div>
+                    <div id="player-pin-help" class="player-pin-help"></div>
+
+                    <input id="player-pin"
+                           class="minimal-input liveasta-secret-input"
+                           type="text"
+                           inputmode="numeric"
+                           pattern="[0-9]*"
+                           maxlength="6"
+                           placeholder="PIN 6 cifre"
+                           autocomplete="off"
+                           autocapitalize="off" autocorrect="off" spellcheck="false"
+                           data-lpignore="true" data-1p-ignore="true" data-bwignore="true" data-form-type="other"
+                           oninput="this.value=this.value.replace(/\\D/g,'').slice(0,6);clearPlayerPinError()">
+
+                    <input id="player-pin-confirm"
+                           class="minimal-input liveasta-secret-input"
+                           type="text"
+                           inputmode="numeric"
+                           pattern="[0-9]*"
+                           maxlength="6"
+                           placeholder="Ripeti PIN 6 cifre"
+                           autocomplete="off"
+                           autocapitalize="off" autocorrect="off" spellcheck="false"
+                           data-lpignore="true" data-1p-ignore="true" data-bwignore="true" data-form-type="other"
+                           style="display:none;"
+                           oninput="this.value=this.value.replace(/\\D/g,'').slice(0,6);clearPlayerPinError()">
+
+                    <div id="player-pin-error" class="form-error"></div>
+                </div>
+            </div>
+
+            <div id="player-room-error" class="form-error access-wizard-error"></div>
+
+            <div class="access-wizard-actions">
+                <button class="btn btn-secondary" id="player-wizard-back" type="button" onclick="playerAccessWizardBack()">Indietro</button>
+                <button class="btn" id="player-wizard-next" type="button" onclick="playerAccessWizardNext()">Avanti</button>
+            </div>
+            <button class="btn" id="player-enter-btn" onclick="joinAsPlayer()" style="display:none;">Entra</button>
         </div>
     </div>
 
@@ -11707,10 +12051,19 @@ html.audio-modal-open{
                     <span id="auction-mode-selected-label"></span>
                 </div>
 
-                <div id="auction-create-box" style="display:none;">
-                    <input type="text" id="auction-new-room-name" placeholder="Nome stanza" maxlength="30" autocomplete="off">
-                    <input type="password" id="auction-new-room-password" placeholder="Password stanza" maxlength="40" autocomplete="off">
+                <div id="auction-access-wizard-head" class="access-wizard-head" style="display:none;">
+                    <div class="access-wizard-progress auction"><i></i><i></i></div>
+                    <div id="auction-wizard-step-label" class="access-wizard-step-label">1 / 1 · ACCESSO</div>
+                </div>
 
+                <div id="auction-create-box" style="display:none;">
+                    <div id="auction-create-step-1" class="auction-access-step active">
+                        <p class="subtitle">Nome e password della stanza</p>
+                    <input type="text" id="auction-new-room-name" placeholder="Nome stanza" maxlength="30" autocomplete="off">
+                    <input type="text" id="auction-new-room-password" class="liveasta-secret-input" placeholder="Password stanza" maxlength="40" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" data-lpignore="true" data-1p-ignore="true" data-bwignore="true" data-form-type="other">
+                    </div>
+
+                    <div id="auction-create-step-2" class="auction-access-step">
                     <div class="room-mode-picker">
                         <div class="room-mode-picker-title">MODALITÀ FANTACALCIO</div>
                         <div class="room-mode-grid">
@@ -11748,13 +12101,14 @@ html.audio-modal-open{
                     </div>
 
                     <div class="setup-note">Crediti e timer si configurano dalla Gestione asta dopo l’ingresso nella stanza.</div>
+                    </div>
                 </div>
 
                 <div id="auction-join-box" style="display:none;">
                     <div id="auction-room-mode-help" class="setup-note" style="margin-bottom:8px;">Scegli la stanza esistente</div>
                     <select id="auction-room-select" class="minimal-input"></select>
                     <input type="text" id="auction-room-name-input" class="minimal-input" placeholder="Nome stanza" maxlength="30" autocomplete="off" style="display:none;">
-                    <input type="password" id="auction-room-password" placeholder="Password stanza" autocomplete="off">
+                    <input type="text" id="auction-room-password" class="liveasta-secret-input" placeholder="Password stanza" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" data-lpignore="true" data-1p-ignore="true" data-bwignore="true" data-form-type="other">
                 </div>
 
                 <div id="auction-room-error" class="form-error"></div>
@@ -11764,10 +12118,14 @@ html.audio-modal-open{
                     <div id="excel-status" class="listone-info-value">Caricamento listone…</div>
                 </div>
 
-                <button class="btn" id="btn-apri-plancia" onclick="joinAsAuctioneer()" disabled>Avvia Sessione</button>
+                <div class="access-wizard-actions auction-wizard-actions">
+                    <button class="btn btn-secondary" id="auction-wizard-back" type="button" onclick="auctionAccessWizardBack()">Indietro</button>
+                    <button class="btn" id="auction-wizard-next" type="button" onclick="auctionAccessWizardNext()">Avanti</button>
+                </div>
+                <button class="btn" id="btn-apri-plancia" onclick="joinAsAuctioneer()" disabled style="display:none;">Avvia Sessione</button>
             </div>
 
-            <button class="btn btn-secondary" onclick="resetAuctioneerRoomMode();showScreen('screen-device-choice')">Indietro</button>
+            <button class="btn btn-secondary auction-setup-root-back" onclick="resetAuctioneerRoomMode();showScreen('screen-device-choice')">Indietro</button>
         </div>
     </div>
 
@@ -11822,7 +12180,7 @@ html.audio-modal-open{
                 </button>
             </div>
 
-            <input type="password" id="admin-pin" placeholder="Password" inputmode="text" maxlength="64" autocomplete="off" autocapitalize="off" spellcheck="false" data-lpignore="true" data-1p-ignore="true" data-bwignore="true">
+            <input type="text" id="admin-pin" class="liveasta-secret-input" placeholder="Password" inputmode="text" maxlength="64" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" data-lpignore="true" data-1p-ignore="true" data-bwignore="true" data-form-type="other">
             <div id="admin-login-error" class="form-error"></div>
             <button class="btn" onclick="adminLogin()">Accedi</button>
             <button class="btn btn-secondary" onclick="showScreen('screen-role')">Indietro</button>
@@ -14066,30 +14424,36 @@ html.audio-modal-open{
             const req=readyRequiredIds();
             updateReadyGateDisplay();
             broadcastReadyState();
-            persistReadyGateState();
 
             // OFFLINE continua a essere obbligatorio.
             // Solo la modalità ASSENTE esplicita toglie una squadra dal READY.
             // La banditura a turni resta comunque obbligatoria nel suo turno.
-            if(req.length===0 || req.every(id=>readyPlayers.has(String(id)))){
-                const allSkipped=req.length>0 && req.every(id=>readySkipPlayers.has(String(id)));
-                readyGateWaiting=false;
-                broadcastReadyState();
-                closeReadyGateDedicated();
+            const allAnswered=req.length===0 || req.every(id=>readyPlayers.has(String(id)));
+            if(!allAnswered){
+                persistReadyGateState();
+                return;
+            }
 
-                // READY e SKIP chiudono entrambi il gate. SKIP però rinuncia
-                // alla partecipazione a questa asta. Se hanno fatto SKIP tutti,
-                // il giocatore viene chiuso subito come INVENDUTO.
-                if(allSkipped){
-                    sealedAuctionModeActive=false;
-                    sealedAuctionToken=null;
-                    sealedEligibleIds=[];
-                    currentWinner='';
-                    currentAuctionValue=0;
-                    showAuctionPanels();
-                    endAuction();
-                    return;
-                }
+            const allSkipped=req.length>0 && req.every(id=>readySkipPlayers.has(String(id)));
+            readyGateWaiting=false;
+            broadcastReadyState();
+            closeReadyGateDedicated();
+
+            // READY e SKIP chiudono entrambi il gate. Se hanno fatto SKIP tutti,
+            // chiusura forzata INVENDUTO: vincitore vuoto, prezzo 0 e nessuna RPC
+            // di assegnazione può essere eseguita.
+            if(allSkipped){
+                sealedAuctionModeActive=false;
+                sealedAuctionToken=null;
+                sealedEligibleIds=[];
+                currentWinner='';
+                currentAuctionValue=0;
+                showAuctionPanels();
+                endAuction(true);
+                return;
+            }
+
+            {
 
                 if(sealedAuctionModeActive){
                     sealedEligibleIds=sealedEligibleIds.filter(id=>!readySkipPlayers.has(String(id)));
@@ -18632,6 +18996,13 @@ html.audio-modal-open{
             }
             if(player) {
                 currentAuctionPlayer = {...player,R:playerRole(player)};
+                // V86: una nuova banditura parte sempre da stato economico neutro,
+                // prima ancora del READY, così non può ereditare vincitore/prezzo precedenti.
+                currentWinner='';
+                currentAuctionValue=0;
+                currentTimer=0;
+                normalBidMaxima=new Map();
+                recentNormalBidIds=new Map();
                 sealedAuctionModeActive=false;
                 sealedListonePickMode=false;
                 updateSealedModeButton();
@@ -19550,7 +19921,7 @@ html.audio-modal-open{
             knob.classList.toggle('available',available);
             knob.setAttribute('aria-disabled',available?'false':'true');
             knob.title=available
-                ? `Tieni premuto 1 secondo · offerta esatta ${range.min}-${range.max}`
+                ? `Tieni premuto 1 secondo · 0 in basso annulla · offerta ${range.min}-${range.max}`
                 : 'Offerta esatta non disponibile';
         }
 
@@ -19577,29 +19948,43 @@ html.audio-modal-open{
             track.style.height=`${Math.round(exactBidTrackHeight)}px`;
 
             if(!range.valid){
+                // Se mentre stai trascinando l'offerta minima supera il tuo massimo,
+                // la corsa torna automaticamente a 0: rilasciare significa NON OFFRIRE.
                 exactBidSelected=0;
-                const y=Math.max(exactBidTopY,Math.min(exactBidOriginY,exactBidPointerY||exactBidOriginY));
+                const y=exactBidOriginY;
                 thumb.style.left=`${Math.round(exactBidOriginX)}px`;
                 thumb.style.top=`${Math.round(y)}px`;
                 fill.style.height='0px';
                 bubble.style.left=`${Math.max(122,Math.round(exactBidOriginX-22))}px`;
                 bubble.style.top=`${Math.max(42,Math.min(window.innerHeight-42,Math.round(y)))}px`;
-                bubble.classList.add('invalid');
-                valueEl.textContent='NON DISP.';
-                rangeEl.textContent='OFFERTA SUPERATA';
+                bubble.classList.remove('invalid');
+                valueEl.textContent='0';
+                rangeEl.textContent='NESSUNA OFFERTA';
                 return;
             }
 
             bubble.classList.remove('invalid');
             const y=Math.max(exactBidTopY,Math.min(exactBidOriginY,exactBidPointerY||exactBidOriginY));
-            const ratio=exactBidTrackHeight>0
-                ? Math.max(0,Math.min(1,(exactBidOriginY-y)/exactBidTrackHeight))
-                : 0;
-            exactBidSelected=range.min+Math.round((range.max-range.min)*ratio);
-            exactBidSelected=Math.max(range.min,Math.min(range.max,exactBidSelected));
+            const lift=Math.max(0,exactBidOriginY-y);
 
-            const selectedRatio=range.max===range.min?0:(exactBidSelected-range.min)/(range.max-range.min);
-            const thumbY=exactBidOriginY-(selectedRatio*exactBidTrackHeight);
+            // V86: la parte più bassa della corsa è una vera zona ANNULLA.
+            // Se torni completamente giù (o negli ultimi pochi pixel) il valore
+            // diventa 0 e, al rilascio, non viene inviata nessuna offerta.
+            const cancelZone=Math.min(30,Math.max(16,Math.round(exactBidTrackHeight*.10)));
+            const bidTravel=Math.max(1,exactBidTrackHeight-cancelZone);
+            let thumbY=exactBidOriginY;
+
+            if(lift<=cancelZone){
+                exactBidSelected=0;
+                thumbY=exactBidOriginY;
+            }else{
+                const ratio=Math.max(0,Math.min(1,(lift-cancelZone)/bidTravel));
+                exactBidSelected=range.min+Math.round((range.max-range.min)*ratio);
+                exactBidSelected=Math.max(range.min,Math.min(range.max,exactBidSelected));
+                const selectedRatio=range.max===range.min?0:(exactBidSelected-range.min)/(range.max-range.min);
+                thumbY=exactBidOriginY-cancelZone-(selectedRatio*bidTravel);
+            }
+
             const fillHeight=Math.max(0,exactBidOriginY-thumbY);
 
             thumb.style.left=`${Math.round(exactBidOriginX)}px`;
@@ -19608,7 +19993,9 @@ html.audio-modal-open{
             bubble.style.left=`${Math.max(122,Math.round(exactBidOriginX-22))}px`;
             bubble.style.top=`${Math.max(42,Math.min(window.innerHeight-42,Math.round(thumbY)))}px`;
             valueEl.textContent=String(exactBidSelected);
-            rangeEl.textContent=`MIN ${range.min} · MAX ${range.max}`;
+            rangeEl.textContent=exactBidSelected===0
+                ? `0 = ANNULLA · MIN ${range.min} · MAX ${range.max}`
+                : `MIN ${range.min} · MAX ${range.max}`;
         }
 
         function exactBidActivate(knob){
@@ -21150,11 +21537,24 @@ html.audio-modal-open{
             hybridNormalBidUpdate();
         }
 
-        async function endAuction() {
+        async function endAuction(forceUnsold=false) {
             clearInterval(timerInterval);
+            timerInterval=null;
+            if(forceUnsold && auctionPrepInterval){clearInterval(auctionPrepInterval);auctionPrepInterval=null;}
             normalBidCooldownUntil=0;
             clearPlayerNormalBidCooldown();
-            const finalBidRanking=normalBidRanking();
+
+            if(forceUnsold){
+                currentWinner='';
+                currentAuctionValue=0;
+                currentTimer=0;
+                normalBidMaxima=new Map();
+                recentNormalBidIds=new Map();
+                const valueEl=document.getElementById('current-value-display');
+                if(valueEl){valueEl.classList.remove('ready-label');valueEl.innerText='0';}
+            }
+
+            const finalBidRanking=forceUnsold?[]:normalBidRanking();
             readyGateWaiting=false;
             readyGateToken=null;
             readyPlayers=new Set();
@@ -21165,12 +21565,19 @@ html.audio-modal-open{
             let winnerEl = document.getElementById('winner-display');
             let timerEl = document.getElementById('countdown-display');
             let assignmentOk = true;
-            if (currentWinner === "") {
+            if (forceUnsold || currentWinner === "") {
+                if(forceUnsold){currentWinner='';currentAuctionValue=0;}
                 titleEl.innerText = "ESITO ASTA";
                 winnerEl.innerText = "INVENDUTO";
                 winnerEl.style.color = "var(--text-muted)";
                 timerEl.style.color = "var(--text-muted)";
                 await markCurrentPlayerAuctioned();
+                if(forceUnsold){
+                    // Protezione finale contro qualunque stato rimasto dall'asta precedente.
+                    currentWinner='';
+                    currentAuctionValue=0;
+                    currentTimer=0;
+                }
             } else {
                 const team=findTeamByName(currentWinner);
                 const {error}=await supabaseClient.rpc('fanta_assign_player',{
@@ -21318,6 +21725,7 @@ html.audio-modal-open{
             readyGateWaiting=false;
             readyGateToken=null;
             readyPlayers=new Set();
+            readySkipPlayers=new Set();
             readyOfflineExcludedIds=new Set();
             if(readyPresenceReconcileTimer){
                 clearTimeout(readyPresenceReconcileTimer);
@@ -21699,6 +22107,12 @@ html.audio-modal-open{
 
             currentAuctionPlayer={...player,R:playerRole(player)};
             player=currentAuctionPlayer;
+            // V86: nessun nuovo giocatore eredita esito/prezzo dell'asta precedente.
+            currentWinner='';
+            currentAuctionValue=0;
+            currentTimer=0;
+            normalBidMaxima=new Map();
+            recentNormalBidIds=new Map();
             sealedEnding=false;
             sealedAuctionModeActive=true;
             sealedRound=1;
@@ -23351,9 +23765,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyBrand(){
-    document.title='LIVEASTA V84';
+    document.title='LIVEASTA V87';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V84';
+      el.textContent='LIVEASTA · VERSIONE V87';
     });
     document.querySelectorAll('.logo-text').forEach(el=>{
       const a=el.querySelector('.rosa');
@@ -23637,6 +24051,286 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
       }
     }catch(e){}
   });
+})();
+</script>
+
+
+
+<script id="liveasta-v85-fit-auction-text">
+(function(){
+  function px(v){
+    const n=parseFloat(v);
+    return Number.isFinite(n)?n:0;
+  }
+
+  function visible(el){
+    if(!el) return false;
+    const cs=getComputedStyle(el);
+    return cs.display!=='none' && cs.visibility!=='hidden' && el.getBoundingClientRect().width>0;
+  }
+
+  function resetFit(el){
+    if(!el) return;
+    el.style.removeProperty('font-size');
+    el.style.removeProperty('transform');
+    el.style.setProperty('white-space','nowrap','important');
+    el.style.setProperty('overflow','visible','important');
+    el.style.setProperty('text-overflow','clip','important');
+  }
+
+  function fitWithin(el, available, minPx, minScale){
+    if(!el || !visible(el) || !Number.isFinite(available) || available<=2) return;
+    resetFit(el);
+
+    let size=px(getComputedStyle(el).fontSize)||20;
+    const floor=Math.min(size, minPx||10);
+    let guard=120;
+    while(el.scrollWidth>available && size>floor && guard--){
+      size=Math.max(floor,size-.5);
+      el.style.setProperty('font-size',size+'px','important');
+    }
+
+    if(el.scrollWidth>available){
+      const ratio=Math.max(minScale||.80, available/Math.max(1,el.scrollWidth));
+      el.style.setProperty('transform-origin','center center','important');
+      el.style.setProperty('transform','scaleX('+ratio+')','important');
+    }
+  }
+
+  function innerWidth(el){
+    if(!el) return 0;
+    const cs=getComputedStyle(el);
+    return Math.max(0, el.clientWidth-px(cs.paddingLeft)-px(cs.paddingRight));
+  }
+
+  function flexAvailable(container, target, fixedEls){
+    if(!container || !target) return 0;
+    const cs=getComputedStyle(container);
+    let available=innerWidth(container);
+    let count=1; // target itself
+    (fixedEls||[]).forEach(el=>{
+      if(visible(el)){
+        available-=el.getBoundingClientRect().width;
+        count++;
+      }
+    });
+    const gap=px(cs.columnGap)||px(cs.gap);
+    if(count>1) available-=gap*(count-1);
+    return Math.max(1,available);
+  }
+
+  function fitPlayerName(){
+    const wrap=document.getElementById('phone-player-name');
+    const text=document.getElementById('phone-player-name-text');
+    const badge=document.getElementById('phone-player-priority-badge');
+    if(!wrap||!text) return;
+    const available=flexAvailable(wrap,text,[badge]);
+    fitWithin(text,available,13,.82);
+  }
+
+  function fitPlayerMeta(){
+    const meta=document.querySelector('#screen-player-buzzer .phone-player-meta');
+    const club=document.getElementById('phone-player-club');
+    const role=document.getElementById('phone-player-role');
+    const dot=meta?.querySelector('.phone-meta-dot');
+    if(!meta||!club) return;
+    const available=flexAvailable(meta,club,[role,dot]);
+    fitWithin(club,available,12,.84);
+  }
+
+  function fitAuctioneerName(){
+    const el=document.getElementById('auction-player-name-top');
+    if(!el) return;
+    fitWithin(el,innerWidth(el),14,.82);
+  }
+
+  function fitAuctioneerMeta(){
+    const meta=document.getElementById('auction-player-meta');
+    const club=document.getElementById('auction-player-club');
+    const role=document.getElementById('auction-player-role');
+    const dot=meta?.querySelector('.meta-dot');
+    if(!meta||!club) return;
+    const available=flexAvailable(meta,club,[role,dot]);
+    fitWithin(club,available,12,.84);
+  }
+
+  let raf=0;
+  function fitAll(){
+    cancelAnimationFrame(raf);
+    raf=requestAnimationFrame(()=>{
+      fitPlayerName();
+      fitPlayerMeta();
+      fitAuctioneerName();
+      fitAuctioneerMeta();
+    });
+  }
+
+  function watch(id){
+    const el=document.getElementById(id);
+    if(!el) return;
+    new MutationObserver(fitAll).observe(el,{childList:true,subtree:true,characterData:true});
+  }
+
+  function applyV85Brand(){
+    document.title='LIVEASTA V87';
+    document.querySelectorAll('.admin-version-badge').forEach(el=>{
+      el.textContent='LIVEASTA · VERSIONE V87';
+    });
+  }
+
+  function boot(){
+    applyV85Brand();
+    ['phone-player-name-text','phone-player-priority-badge','phone-player-role','phone-player-club',
+     'auction-player-name-top','auction-player-role','auction-player-club'].forEach(watch);
+    window.addEventListener('resize',fitAll,{passive:true});
+    window.addEventListener('orientationchange',fitAll,{passive:true});
+    document.addEventListener('visibilitychange',()=>{if(!document.hidden)fitAll();});
+    if(document.fonts?.ready) document.fonts.ready.then(fitAll).catch(()=>{});
+    fitAll();
+    setTimeout(fitAll,80);
+    setTimeout(fitAll,350);
+  }
+
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot,{once:true});
+  else boot();
+
+  window.fitLiveAstaAuctionTypography=fitAll;
+})();
+</script>
+
+<script id="liveasta-v87-access-wizard-script">
+(function(){
+  'use strict';
+  let playerWizardStep=1;
+  let auctionWizardStep=1;
+
+  function markProgress(selector,step,total){
+    const bars=[...document.querySelectorAll(selector+' i')];
+    bars.forEach((bar,i)=>{
+      bar.classList.toggle('done',i+1<step);
+      bar.classList.toggle('active',i+1===step || (step>=total && i+1===total));
+    });
+  }
+
+  function renderPlayerWizard(){
+    for(let i=1;i<=3;i++)document.getElementById('player-wizard-step-'+i)?.classList.toggle('active',i===playerWizardStep);
+    const labels=['STANZA','SQUADRA','PIN'];
+    const label=document.getElementById('player-wizard-step-label');
+    if(label)label.textContent=`${playerWizardStep} / 3 · ${labels[playerWizardStep-1]}`;
+    markProgress('#screen-player-setup .access-wizard-progress',playerWizardStep,3);
+    const back=document.getElementById('player-wizard-back');
+    const next=document.getElementById('player-wizard-next');
+    if(back)back.textContent=playerWizardStep===1?'ESCI':'INDIETRO';
+    if(next)next.textContent=playerWizardStep===3?'ENTRA':'AVANTI';
+    const err=document.getElementById('player-room-error');
+    if(err && playerWizardStep!==3)err.textContent='';
+  }
+
+  async function playerStepOneValid(){
+    const err=document.getElementById('player-room-error');
+    if(err)err.textContent='';
+    const room=await getPlayerSetupRoom();
+    if(!room){if(err)err.textContent=showRoomsToUsers?'Seleziona una stanza.':'Stanza non trovata. Controlla il nome.';return false;}
+    if(room.approved!==true){if(err)err.textContent='Questa stanza non è ancora approvata.';return false;}
+    const password=document.getElementById('player-room-password')?.value||'';
+    if(password!==String(room.password||'')){if(err)err.textContent='Password stanza errata.';return false;}
+    await refreshPlayerTeamChoices();
+    const select=document.getElementById('player-team-select');
+    if(!select || select.disabled){if(err)err.textContent=document.getElementById('player-team-help')?.textContent||'Nessuna squadra disponibile.';return false;}
+    return true;
+  }
+
+  window.playerAccessWizardNext=async function(){
+    const next=document.getElementById('player-wizard-next');
+    if(next)next.disabled=true;
+    try{
+      if(playerWizardStep===1){
+        if(!(await playerStepOneValid()))return;
+        playerWizardStep=2;renderPlayerWizard();return;
+      }
+      if(playerWizardStep===2){
+        const teamId=document.getElementById('player-team-select')?.value||'';
+        const err=document.getElementById('player-room-error');
+        if(!teamId){if(err)err.textContent='Seleziona la tua squadra.';return;}
+        await handlePlayerTeamSelection();
+        playerWizardStep=3;renderPlayerWizard();
+        setTimeout(()=>document.getElementById('player-pin')?.focus({preventScroll:true}),80);
+        return;
+      }
+      await joinAsPlayer();
+    }finally{if(next)next.disabled=false;}
+  };
+
+  window.playerAccessWizardBack=function(){
+    if(playerWizardStep<=1){
+      if(typeof closePlayerSetupChannel==='function')closePlayerSetupChannel();
+      showScreen('screen-role');return;
+    }
+    playerWizardStep--;
+    if(playerWizardStep<3)resetPlayerPinPanel();
+    renderPlayerWizard();
+  };
+
+  function resetPlayerWizard(){playerWizardStep=1;renderPlayerWizard();}
+
+  function renderAuctionWizard(){
+    const screen=document.getElementById('screen-auctioneer-setup');
+    const head=document.getElementById('auction-access-wizard-head');
+    const fields=document.getElementById('auction-mode-fields');
+    const active=!!auctioneerRoomMode && fields?.style.display!=='none';
+    screen?.classList.toggle('wizard-mode-active',active);
+    if(head)head.style.display=active?'flex':'none';
+    const total=auctioneerRoomMode==='create'?2:1;
+    if(auctionWizardStep>total)auctionWizardStep=total;
+    document.getElementById('auction-create-step-1')?.classList.toggle('active',auctioneerRoomMode==='create'&&auctionWizardStep===1);
+    document.getElementById('auction-create-step-2')?.classList.toggle('active',auctioneerRoomMode==='create'&&auctionWizardStep===2);
+    const label=document.getElementById('auction-wizard-step-label');
+    if(label)label.textContent=auctioneerRoomMode==='create'?`${auctionWizardStep} / 2 · ${auctionWizardStep===1?'STANZA':'MODALITÀ'}`:'1 / 1 · ACCESSO';
+    markProgress('#screen-auctioneer-setup .access-wizard-progress.auction',auctionWizardStep,total);
+    const next=document.getElementById('auction-wizard-next');
+    if(next)next.textContent=(auctioneerRoomMode==='create'&&auctionWizardStep===1)?'AVANTI':(auctioneerRoomMode==='create'?'CREA STANZA':'ENTRA');
+  }
+
+  window.auctionAccessWizardBack=function(){
+    if(auctioneerRoomMode==='create'&&auctionWizardStep===2){auctionWizardStep=1;renderAuctionWizard();return;}
+    resetAuctioneerRoomMode();renderAuctionWizard();
+  };
+
+  window.auctionAccessWizardNext=async function(){
+    const err=document.getElementById('auction-room-error');if(err)err.textContent='';
+    if(auctioneerRoomMode==='create'&&auctionWizardStep===1){
+      const name=(document.getElementById('auction-new-room-name')?.value||'').trim();
+      const password=document.getElementById('auction-new-room-password')?.value||'';
+      if(!name){if(err)err.textContent='Inserisci il nome della stanza.';return;}
+      if(!password){if(err)err.textContent='Inserisci la password della stanza.';return;}
+      auctionWizardStep=2;renderAuctionWizard();return;
+    }
+    const listoneGate=document.getElementById('btn-apri-plancia');
+    if(listoneGate?.disabled){if(err)err.textContent='Attendi il caricamento del listone ufficiale.';return;}
+    await joinAsAuctioneer();
+  };
+
+  const oldOpenPlayerLobby=window.openPlayerLobby;
+  if(typeof oldOpenPlayerLobby==='function')window.openPlayerLobby=async function(){const r=await oldOpenPlayerLobby.apply(this,arguments);resetPlayerWizard();return r;};
+  const oldSetAuctioneerRoomMode=window.setAuctioneerRoomMode;
+  if(typeof oldSetAuctioneerRoomMode==='function')window.setAuctioneerRoomMode=async function(mode){auctionWizardStep=1;const r=await oldSetAuctioneerRoomMode.apply(this,arguments);renderAuctionWizard();return r;};
+  const oldResetAuctioneerRoomMode=window.resetAuctioneerRoomMode;
+  if(typeof oldResetAuctioneerRoomMode==='function')window.resetAuctioneerRoomMode=function(){auctionWizardStep=1;const r=oldResetAuctioneerRoomMode.apply(this,arguments);renderAuctionWizard();return r;};
+
+  function hardenInputs(root=document){
+    root.querySelectorAll?.('form').forEach(f=>f.setAttribute('autocomplete','off'));
+    root.querySelectorAll?.('input').forEach((el,i)=>{
+      if(el.type==='password'){el.type='text';el.classList.add('liveasta-secret-input');}
+      el.setAttribute('autocomplete','off');el.setAttribute('data-lpignore','true');el.setAttribute('data-1p-ignore','true');el.setAttribute('data-bwignore','true');el.setAttribute('data-form-type','other');
+      if(!el.name)el.name='liveasta-field-'+i;
+    });
+  }
+
+  function boot(){
+    hardenInputs();resetPlayerWizard();renderAuctionWizard();
+    new MutationObserver(records=>{for(const rec of records)for(const node of rec.addedNodes)if(node?.nodeType===1)hardenInputs(node);}).observe(document.body,{childList:true,subtree:true});
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
 })();
 </script>
 
