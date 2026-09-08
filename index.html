@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>LIVEASTA V75</title>
+    <title>LIVEASTA V78</title>
     <meta name="theme-color" content="#0D1117">
     <meta name="color-scheme" content="dark">
     <meta name="mobile-web-app-capable" content="yes">
@@ -10536,6 +10536,374 @@ html.audio-modal-open{
   }
   #screen-player-buzzer .player-card-side{gap:2px!important}
 }
+
+
+/* ==========================================================
+   LIVEASTA V76 — CORREZIONE ORDINE TESTI BANDITORE
+   Nome sempre SOPRA la miniatura; ruolo/squadra sempre SOTTO.
+   Nessuna modifica alla logica asta/READY.
+   ========================================================== */
+#screen-auctioneer-board #auction-dashboard #view-auction .col-player{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:stretch!important;
+  min-height:0!important;
+  overflow:hidden!important;
+  gap:clamp(3px,.55vh,7px)!important;
+}
+
+#screen-auctioneer-board #auction-dashboard #auction-player-name-top{
+  order:1!important;
+  flex:0 0 auto!important;
+  position:static!important;
+  top:auto!important;
+  right:auto!important;
+  bottom:auto!important;
+  left:auto!important;
+  transform:none!important;
+  width:100%!important;
+  max-width:100%!important;
+  margin:0!important;
+  padding:0 6px!important;
+  box-sizing:border-box!important;
+  align-self:center!important;
+  z-index:2!important;
+}
+
+#screen-auctioneer-board #auction-dashboard #auction-player-card{
+  order:2!important;
+  flex:1 1 0!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:0!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  overflow:hidden!important;
+}
+
+#screen-auctioneer-board #auction-dashboard #auction-player-card #card-image{
+  display:block!important;
+  width:auto!important;
+  height:auto!important;
+  max-width:100%!important;
+  max-height:100%!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  margin:auto!important;
+  transform:none!important;
+}
+
+#screen-auctioneer-board #auction-dashboard #auction-player-meta{
+  order:3!important;
+  flex:0 0 auto!important;
+  position:static!important;
+  top:auto!important;
+  right:auto!important;
+  bottom:auto!important;
+  left:auto!important;
+  transform:none!important;
+  width:100%!important;
+  max-width:100%!important;
+  margin:0!important;
+  padding:0 6px!important;
+  box-sizing:border-box!important;
+  align-self:center!important;
+  z-index:2!important;
+}
+
+/* Se la finestra del banditore è bassa, si riduce la miniatura:
+   le due righe di testo non entrano mai nella sua area. */
+@media(max-height:760px){
+  #screen-auctioneer-board #auction-dashboard #view-auction .col-player{
+    gap:2px!important;
+  }
+  #screen-auctioneer-board #auction-dashboard #auction-player-name-top{
+    font-size:clamp(1.05rem,2.1vw,1.65rem)!important;
+    line-height:1!important;
+  }
+  #screen-auctioneer-board #auction-dashboard #auction-player-meta{
+    font-size:clamp(.78rem,1.15vw,1.05rem)!important;
+    line-height:1!important;
+  }
+}
+
+
+/* ==========================================================
+   LIVEASTA V77 — TELECOMANDO GIOCATORE: NOME SOPRA, META SOTTO
+   Solo layout: nessuna modifica alla logica asta / READY.
+   ========================================================== */
+#screen-player-buzzer .player-card-side{
+  display:grid!important;
+  grid-template-rows:minmax(28px,auto) minmax(0,1fr) minmax(24px,auto)!important;
+  grid-template-columns:minmax(0,1fr)!important;
+  align-items:center!important;
+  justify-items:center!important;
+  align-content:stretch!important;
+  min-height:0!important;
+  overflow:hidden!important;
+  gap:clamp(2px,.45vh,5px)!important;
+}
+#screen-player-buzzer .phone-player-name{
+  grid-row:1!important;
+  grid-column:1!important;
+  position:static!important;
+  transform:none!important;
+  align-self:center!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:1px 4px!important;
+  box-sizing:border-box!important;
+  line-height:1.05!important;
+  z-index:2!important;
+}
+#screen-player-buzzer .phone-card-image{
+  grid-row:2!important;
+  grid-column:1!important;
+  align-self:center!important;
+  justify-self:center!important;
+  width:auto!important;
+  height:auto!important;
+  max-width:100%!important;
+  max-height:100%!important;
+  min-width:0!important;
+  min-height:0!important;
+  margin:0 auto!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  transform:none!important;
+}
+#screen-player-buzzer .phone-player-meta{
+  grid-row:3!important;
+  grid-column:1!important;
+  position:static!important;
+  transform:none!important;
+  align-self:center!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:24px!important;
+  margin:0!important;
+  padding:0 3px!important;
+  box-sizing:border-box!important;
+  z-index:2!important;
+}
+
+/* Su display bassi si sacrifica la miniatura, non la separazione dei testi. */
+@media(max-height:760px){
+  #screen-player-buzzer .player-card-side{
+    grid-template-rows:minmax(24px,auto) minmax(0,1fr) minmax(22px,auto)!important;
+    gap:2px!important;
+  }
+  #screen-player-buzzer .phone-player-name{
+    font-size:clamp(.92rem,3.8vw,1.18rem)!important;
+  }
+  #screen-player-buzzer .phone-player-meta{
+    font-size:clamp(.72rem,2.8vw,.9rem)!important;
+  }
+}
+
+
+/* ==========================================================
+   LIVEASTA V78 — PLAYER: TESTI VICINI ALLA MINIATURA
+   Solo layout: nome sopra, ruolo/squadra sotto; mai sovrapposti.
+   ========================================================== */
+#screen-player-buzzer .player-card-side{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:clamp(2px,.45vh,5px)!important;
+  min-height:0!important;
+  overflow:hidden!important;
+}
+#screen-player-buzzer .phone-player-name{
+  order:1!important;
+  flex:0 0 auto!important;
+  width:100%!important;
+  min-height:24px!important;
+  height:auto!important;
+  margin:0!important;
+  padding:0 4px 1px!important;
+  position:static!important;
+  transform:none!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  box-sizing:border-box!important;
+}
+#screen-player-buzzer .phone-card-image{
+  order:2!important;
+  flex:0 1 auto!important;
+  width:auto!important;
+  height:auto!important;
+  max-width:100%!important;
+  max-height:calc(100% - 56px)!important;
+  min-width:0!important;
+  min-height:0!important;
+  margin:0!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  align-self:center!important;
+  transform:none!important;
+}
+#screen-player-buzzer .phone-player-meta{
+  order:3!important;
+  flex:0 0 auto!important;
+  width:100%!important;
+  min-height:23px!important;
+  height:auto!important;
+  margin:0!important;
+  padding:1px 3px 0!important;
+  position:static!important;
+  transform:none!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  box-sizing:border-box!important;
+}
+@media(max-height:760px){
+  #screen-player-buzzer .player-card-side{gap:2px!important}
+  #screen-player-buzzer .phone-card-image{max-height:calc(100% - 50px)!important}
+  #screen-player-buzzer .phone-player-name{min-height:22px!important}
+  #screen-player-buzzer .phone-player-meta{min-height:21px!important}
+}
+
+
+/* ==========================================================
+   LIVEASTA V79 — JOYSTICK OFFERTA ESATTA
+   Pressione 1s sul pallino centrale + trascinamento verticale.
+   ========================================================== */
+#screen-player-buzzer #normal-bid-controls{
+  position:relative!important;
+}
+#screen-player-buzzer .exact-bid-knob{
+  position:absolute!important;
+  left:50%!important;
+  top:50%!important;
+  width:34px!important;
+  height:34px!important;
+  min-width:34px!important;
+  min-height:34px!important;
+  padding:0!important;
+  margin:0!important;
+  transform:translate(-50%,-50%)!important;
+  border-radius:50%!important;
+  border:3px solid rgba(255,255,255,.90)!important;
+  background:radial-gradient(circle at 35% 30%,#F8FAFC 0 12%,#9CA3AF 14% 34%,#26313D 38% 100%)!important;
+  box-shadow:0 0 0 4px rgba(9,14,21,.88),0 4px 14px rgba(0,0,0,.48)!important;
+  z-index:30!important;
+  cursor:grab!important;
+  touch-action:none!important;
+  -webkit-touch-callout:none!important;
+  -webkit-user-select:none!important;
+  user-select:none!important;
+  -webkit-tap-highlight-color:transparent!important;
+  opacity:.46!important;
+}
+#screen-player-buzzer .exact-bid-knob.available{
+  opacity:1!important;
+  background:radial-gradient(circle at 35% 30%,#FFFFFF 0 12%,#67E8F9 14% 34%,#0EA5E9 38% 100%)!important;
+  box-shadow:0 0 0 4px rgba(9,14,21,.90),0 0 18px rgba(56,189,248,.75)!important;
+}
+#screen-player-buzzer .exact-bid-knob.holding{
+  transform:translate(-50%,-50%) scale(.92)!important;
+}
+#screen-player-buzzer .exact-bid-knob.active{
+  cursor:grabbing!important;
+  box-shadow:0 0 0 5px rgba(9,14,21,.92),0 0 24px rgba(56,189,248,.95)!important;
+}
+#screen-player-buzzer #normal-bid-controls.sealed-active .exact-bid-knob{
+  display:none!important;
+}
+
+#exact-bid-slider-layer{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:12050;
+  pointer-events:none;
+}
+#exact-bid-slider-layer.active{display:block}
+#exact-bid-track{
+  position:fixed;
+  width:10px;
+  border-radius:999px;
+  background:rgba(20,30,42,.96);
+  border:1px solid rgba(255,255,255,.48);
+  box-shadow:0 0 0 3px rgba(6,10,16,.72),0 10px 30px rgba(0,0,0,.32);
+  overflow:hidden;
+}
+#exact-bid-track-fill{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  border-radius:999px;
+  background:linear-gradient(180deg,#67E8F9,#0EA5E9);
+  box-shadow:0 0 18px rgba(56,189,248,.58);
+}
+#exact-bid-thumb{
+  position:fixed;
+  width:32px;
+  height:32px;
+  margin-left:-16px;
+  margin-top:-16px;
+  border-radius:50%;
+  border:3px solid #F8FAFC;
+  background:#0EA5E9;
+  box-shadow:0 0 0 4px rgba(7,13,21,.92),0 0 22px rgba(56,189,248,.88);
+}
+#exact-bid-value-bubble{
+  position:fixed;
+  width:112px;
+  min-height:64px;
+  box-sizing:border-box;
+  padding:8px 9px;
+  transform:translate(-100%,-50%);
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.42);
+  background:rgba(13,20,29,.96);
+  color:#F8FAFC;
+  box-shadow:0 12px 30px rgba(0,0,0,.38);
+  text-align:center;
+  font-family:'Inter',sans-serif;
+}
+#exact-bid-value-bubble strong{
+  display:block;
+  font-size:2rem;
+  line-height:.95;
+  font-weight:950;
+  font-variant-numeric:tabular-nums;
+  letter-spacing:-.04em;
+}
+#exact-bid-value-bubble small{
+  display:block;
+  margin-top:5px;
+  color:#B8C2CF;
+  font-size:.52rem;
+  font-weight:900;
+  line-height:1.15;
+  letter-spacing:.04em;
+  white-space:nowrap;
+}
+#exact-bid-value-bubble.invalid strong{
+  font-size:.9rem;
+  letter-spacing:.02em;
+  color:#FF7587;
+}
+@media(max-width:380px){
+  #screen-player-buzzer .exact-bid-knob{
+    width:30px!important;height:30px!important;min-width:30px!important;min-height:30px!important;
+  }
+  #exact-bid-value-bubble{width:102px;min-height:60px}
+  #exact-bid-value-bubble strong{font-size:1.8rem}
+}
+
 </style>
 
 <script id="liveasta-theme-preload">
@@ -10589,7 +10957,7 @@ html.audio-modal-open{
              aria-label="Apri Impostazioni LIVEASTA"
              onclick="openAdminLogin()"
              onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openAdminLogin();}">
-            LIVEASTA V75
+            LIVEASTA V79
         </div>
         <div class="setup-card">
             <h1 class="logo-text"><span class="rosa">LIVE</span><span class="rush">ASTA</span></h1>
@@ -10768,6 +11136,10 @@ html.audio-modal-open{
                 <button class="buzzer-btn btn-plus-2" onpointerdown="buzz(2)" disabled>+2</button>
                 <button class="buzzer-btn btn-plus-5" onpointerdown="buzz(5)" disabled>+5</button>
                 <button class="buzzer-btn btn-plus-10" onpointerdown="buzz(10)" disabled>+10</button>
+                <button id="exact-bid-knob" class="exact-bid-knob" type="button" aria-label="Tieni premuto per offerta esatta"
+                        onpointerdown="exactBidPointerDown(event)" onpointermove="exactBidPointerMove(event)"
+                        onpointerup="exactBidPointerUp(event)" onpointercancel="exactBidPointerCancel(event)"
+                        oncontextmenu="return false" onclick="return false"></button>
                 <div id="sealed-bid-controls" class="sealed-bid-controls" style="display:none;">
                     <div class="sealed-bid-label">OFFERTA IN BUSTA CHIUSA</div>
                     <div class="sealed-bid-entry">
@@ -10780,6 +11152,12 @@ html.audio-modal-open{
 
 
         </div>
+    </div>
+
+    <div id="exact-bid-slider-layer" aria-hidden="true">
+        <div id="exact-bid-track"><div id="exact-bid-track-fill"></div></div>
+        <div id="exact-bid-thumb"></div>
+        <div id="exact-bid-value-bubble"><strong id="exact-bid-value">0</strong><small id="exact-bid-range">MIN 0 · MAX 0</small></div>
     </div>
 
     <div id="screen-auctioneer-setup" class="screen">
@@ -18361,6 +18739,7 @@ html.audio-modal-open{
                 btn.disabled = !allowed;
                 btn.setAttribute('aria-disabled', allowed ? 'false' : 'true');
             });
+            refreshExactBidControl();
         }
 
         function setPlayerBidButtonsEnabled(enabled) {
@@ -18369,6 +18748,8 @@ html.audio-modal-open{
                     btn.disabled = true;
                     btn.setAttribute('aria-disabled', 'true');
                 });
+                exactBidSliderCancel(false);
+                refreshExactBidControl();
                 return;
             }
             refreshPlayerBidButtons();
@@ -18458,6 +18839,228 @@ html.audio-modal-open{
                 preparePlayerSealedControls(true);
                 if(st){st.textContent='Invio non riuscito. Riprova.';st.className='sealed-bid-status error';}
             });
+        }
+
+
+        // ==========================================================
+        // LIVEASTA V79 — OFFERTA ESATTA CON PRESSIONE + SLIDER
+        // Il valore inviato al banditore è ASSOLUTO (non un incremento),
+        // così un rilancio concorrente non può trasformare 50 in 55.
+        // ==========================================================
+        let exactBidHoldTimer=null;
+        let exactBidStateTimer=null;
+        let exactBidPointerId=null;
+        let exactBidActive=false;
+        let exactBidPointerY=0;
+        let exactBidOriginX=0;
+        let exactBidOriginY=0;
+        let exactBidTopY=0;
+        let exactBidTrackHeight=0;
+        let exactBidSelected=0;
+
+        function exactBidTeam(){
+            return myTeamId
+                ? teamsCache.find(x=>String(x.id)===String(myTeamId))
+                : findTeamByName(myTeamName);
+        }
+
+        function exactBidRange(){
+            const team=exactBidTeam();
+            if(!isAuctionActive || playerSealedMode || !currentAuctionPlayer || !team){
+                return {valid:false,min:0,max:0};
+            }
+            const role=String(currentAuctionPlayer.R||'');
+            const max=Math.max(0,parseInt(maxBidForTeam(team,role))||0);
+            const min=Math.max(1,(parseInt(currentAuctionValue)||0)+1);
+            return {valid:max>=min,min,max};
+        }
+
+        function refreshExactBidControl(){
+            const knob=document.getElementById('exact-bid-knob');
+            if(!knob)return;
+            const range=exactBidRange();
+            const available=!!range.valid;
+            knob.disabled=!available;
+            knob.classList.toggle('available',available);
+            knob.setAttribute('aria-disabled',available?'false':'true');
+            knob.title=available
+                ? `Tieni premuto 1 secondo · offerta esatta ${range.min}-${range.max}`
+                : 'Offerta esatta non disponibile';
+        }
+
+        function exactBidLayer(show){
+            const layer=document.getElementById('exact-bid-slider-layer');
+            if(!layer)return;
+            layer.classList.toggle('active',!!show);
+            layer.setAttribute('aria-hidden',show?'false':'true');
+        }
+
+        function exactBidRefreshActive(){
+            if(!exactBidActive)return;
+            const track=document.getElementById('exact-bid-track');
+            const fill=document.getElementById('exact-bid-track-fill');
+            const thumb=document.getElementById('exact-bid-thumb');
+            const bubble=document.getElementById('exact-bid-value-bubble');
+            const valueEl=document.getElementById('exact-bid-value');
+            const rangeEl=document.getElementById('exact-bid-range');
+            if(!track||!fill||!thumb||!bubble||!valueEl||!rangeEl)return;
+
+            const range=exactBidRange();
+            track.style.left=`${Math.round(exactBidOriginX-5)}px`;
+            track.style.top=`${Math.round(exactBidTopY)}px`;
+            track.style.height=`${Math.round(exactBidTrackHeight)}px`;
+
+            if(!range.valid){
+                exactBidSelected=0;
+                const y=Math.max(exactBidTopY,Math.min(exactBidOriginY,exactBidPointerY||exactBidOriginY));
+                thumb.style.left=`${Math.round(exactBidOriginX)}px`;
+                thumb.style.top=`${Math.round(y)}px`;
+                fill.style.height='0px';
+                bubble.style.left=`${Math.max(122,Math.round(exactBidOriginX-22))}px`;
+                bubble.style.top=`${Math.max(42,Math.min(window.innerHeight-42,Math.round(y)))}px`;
+                bubble.classList.add('invalid');
+                valueEl.textContent='NON DISP.';
+                rangeEl.textContent='OFFERTA SUPERATA';
+                return;
+            }
+
+            bubble.classList.remove('invalid');
+            const y=Math.max(exactBidTopY,Math.min(exactBidOriginY,exactBidPointerY||exactBidOriginY));
+            const ratio=exactBidTrackHeight>0
+                ? Math.max(0,Math.min(1,(exactBidOriginY-y)/exactBidTrackHeight))
+                : 0;
+            exactBidSelected=range.min+Math.round((range.max-range.min)*ratio);
+            exactBidSelected=Math.max(range.min,Math.min(range.max,exactBidSelected));
+
+            const selectedRatio=range.max===range.min?0:(exactBidSelected-range.min)/(range.max-range.min);
+            const thumbY=exactBidOriginY-(selectedRatio*exactBidTrackHeight);
+            const fillHeight=Math.max(0,exactBidOriginY-thumbY);
+
+            thumb.style.left=`${Math.round(exactBidOriginX)}px`;
+            thumb.style.top=`${Math.round(thumbY)}px`;
+            fill.style.height=`${Math.round(fillHeight)}px`;
+            bubble.style.left=`${Math.max(122,Math.round(exactBidOriginX-22))}px`;
+            bubble.style.top=`${Math.max(42,Math.min(window.innerHeight-42,Math.round(thumbY)))}px`;
+            valueEl.textContent=String(exactBidSelected);
+            rangeEl.textContent=`MIN ${range.min} · MAX ${range.max}`;
+        }
+
+        function exactBidActivate(knob){
+            exactBidHoldTimer=null;
+
+            // Se il rilancio precedente è ancora nel lock da 1,5 s, mantieni
+            // la pressione e apri lo slider appena il lock termina.
+            const cooldownLeft=Math.max(0,playerNormalBidCooldownUntil-Date.now());
+            if(cooldownLeft>0 && exactBidPointerId!==null){
+                exactBidHoldTimer=setTimeout(()=>{
+                    if(exactBidPointerId!==null)exactBidActivate(knob);
+                },cooldownLeft+25);
+                return;
+            }
+
+            const range=exactBidRange();
+            if(!range.valid){
+                exactBidSliderCancel(false);
+                return;
+            }
+
+            const rect=knob.getBoundingClientRect();
+            exactBidOriginX=rect.left+rect.width/2;
+            exactBidOriginY=rect.top+rect.height/2;
+            const desiredTop=Math.round(window.innerHeight*.48);
+            exactBidTopY=Math.max(52,Math.min(exactBidOriginY-120,desiredTop));
+            if(exactBidTopY>=exactBidOriginY-80){
+                exactBidTopY=Math.max(42,exactBidOriginY-160);
+            }
+            exactBidTrackHeight=Math.max(80,exactBidOriginY-exactBidTopY);
+            exactBidPointerY=exactBidOriginY;
+            exactBidActive=true;
+            knob.classList.remove('holding');
+            knob.classList.add('active');
+            exactBidLayer(true);
+            exactBidRefreshActive();
+            if(navigator.vibrate)navigator.vibrate([28,24,28]);
+            exactBidStateTimer=setInterval(exactBidRefreshActive,80);
+        }
+
+        function exactBidPointerDown(event){
+            if(event.pointerId===undefined || exactBidPointerId!==null)return;
+            const range=exactBidRange();
+            if(!range.valid)return;
+            event.preventDefault();
+            exactBidPointerId=event.pointerId;
+            exactBidPointerY=event.clientY;
+            const knob=event.currentTarget;
+            try{knob.setPointerCapture(event.pointerId);}catch(e){}
+            knob.classList.add('holding');
+            exactBidHoldTimer=setTimeout(()=>{
+                if(exactBidPointerId===event.pointerId)exactBidActivate(knob);
+            },1000);
+        }
+
+        function exactBidPointerMove(event){
+            if(exactBidPointerId!==event.pointerId)return;
+            event.preventDefault();
+            exactBidPointerY=event.clientY;
+            if(exactBidActive)exactBidRefreshActive();
+        }
+
+        function exactBidPointerUp(event){
+            if(exactBidPointerId!==event.pointerId)return;
+            event.preventDefault();
+            exactBidPointerY=event.clientY;
+            const knob=event.currentTarget;
+            const wasActive=exactBidActive;
+            if(wasActive)exactBidRefreshActive();
+            const target=exactBidSelected;
+            exactBidSliderCancel(false);
+            try{knob.releasePointerCapture(event.pointerId);}catch(e){}
+            if(wasActive && target>0)submitExactBid(target);
+        }
+
+        function exactBidPointerCancel(event){
+            if(exactBidPointerId!==null && event?.pointerId!==undefined && exactBidPointerId!==event.pointerId)return;
+            exactBidSliderCancel(false);
+        }
+
+        function exactBidSliderCancel(refresh=true){
+            if(exactBidHoldTimer){clearTimeout(exactBidHoldTimer);exactBidHoldTimer=null;}
+            if(exactBidStateTimer){clearInterval(exactBidStateTimer);exactBidStateTimer=null;}
+            const knob=document.getElementById('exact-bid-knob');
+            if(knob)knob.classList.remove('holding','active');
+            exactBidLayer(false);
+            exactBidPointerId=null;
+            exactBidActive=false;
+            exactBidSelected=0;
+            if(refresh)refreshExactBidControl();
+        }
+
+        function submitExactBid(target){
+            const range=exactBidRange();
+            const exact=Math.max(1,parseInt(target)||0);
+            if(!range.valid || exact<range.min || exact>range.max)return;
+            if(Date.now()<playerNormalBidCooldownUntil)return;
+
+            if(navigator.vibrate)navigator.vibrate(40);
+            const bidId=`exact_${String(myTeamId||'team')}_${Date.now()}_${Math.random().toString(36).slice(2,9)}`;
+
+            if(isAuctioneerPlayerIdentity()){
+                handleExactBidReceived(myTeamName,exact,myTeamId,bidId);
+                return;
+            }
+
+            if(channel){
+                channel.send({
+                    type:'broadcast',
+                    event:'exact_bid',
+                    payload:{
+                        team:myTeamName,
+                        team_id:myTeamId,
+                        target:exact,
+                        bid_id:bidId
+                    }
+                }).catch(()=>console.log('Errore di rete invio offerta esatta.'));
+            }
         }
 
         function buzz(amount) {
@@ -18937,6 +19540,10 @@ html.audio-modal-open{
                 .on('broadcast', { event: 'buzz' }, (payload) => {
                     const data = payload.payload;
                     if(data && data.team) handleBuzzReceived(data.team, data.amount, data.team_id, data.bid_id);
+                })
+                .on('broadcast', { event: 'exact_bid' }, (payload) => {
+                    const data=payload.payload||{};
+                    if(data && data.team) handleExactBidReceived(data.team,data.target,data.team_id,data.bid_id);
                 })
                 .on('broadcast',{event:'sealed_bid_submit'},(payload)=>{
                     receiveSealedBid(payload.payload||{});
@@ -19765,6 +20372,98 @@ html.audio-modal-open{
 
             if(isAuctioneerPlayerIdentity()){
                 applyPlayerNormalBidCooldownMs(NORMAL_BID_COOLDOWN_MS);
+            }
+            hybridNormalBidUpdate();
+        }
+
+
+        function handleExactBidReceived(teamName,targetValue,teamId=null,bidId=null){
+            if(!isAuctionActive || !currentAuctionPlayer)return;
+
+            const receivedAt=Date.now();
+            if(bidId){
+                const id=String(bidId);
+                if(recentNormalBidIds.has(id))return;
+                recentNormalBidIds.set(id,receivedAt);
+                for(const [oldId,ts] of recentNormalBidIds.entries()){
+                    if(receivedAt-ts>10000)recentNormalBidIds.delete(oldId);
+                }
+            }
+
+            if(receivedAt<normalBidCooldownUntil)return;
+
+            const team=teamId
+                ? teamsCache.find(t=>String(t.id)===String(teamId))
+                : findTeamByName(teamName);
+            if(!team)return;
+
+            const proposed=Math.max(1,parseInt(targetValue)||0);
+            const maxBid=maxBidForTeam(team,currentAuctionPlayer.R);
+
+            // Il target è assoluto. Se nel frattempo qualcun altro ha superato
+            // la cifra scelta, non la trasformiamo in un incremento: la rifiutiamo.
+            if(proposed<=currentAuctionValue){
+                if(channel)channel.send({
+                    type:'broadcast',event:'bid_rejected',
+                    payload:{team_id:team.id,reason:`OFFERTA SUPERATA · MIN ${currentAuctionValue+1}`,max_bid:maxBid}
+                }).catch(()=>{});
+                return;
+            }
+
+            if(proposed>maxBid){
+                const counts=teamCounts(team.id),limits=roomLimits();
+                const roleKey=String(currentAuctionPlayer.R||'').toUpperCase();
+                const reason=isMantraRoom()
+                    ? (counts.total>=mantraRosterMax()
+                        ? 'ROSA MANTRA COMPLETA'
+                        : (maxBid<=0?'VINCOLI ROSA MANTRA / PORTIERI':'MAX OFFERTA '+maxBid))
+                    : (counts[roleKey]>=(limits[roleKey]||0)
+                        ? `REPARTO ${roleKey} COMPLETO`
+                        : `MAX OFFERTA ${maxBid}`);
+                if(channel)channel.send({
+                    type:'broadcast',event:'bid_rejected',
+                    payload:{team_id:team.id,reason,max_bid:maxBid}
+                }).catch(()=>{});
+                return;
+            }
+
+            normalBidCooldownUntil=Date.now()+NORMAL_BID_COOLDOWN_MS;
+            currentWinner=team.name;
+            currentAuctionValue=proposed;
+            currentTimer=normalAuctionConfiguredSeconds();
+
+            recordNormalBid(team,currentAuctionValue);
+            const currentBidRanking=normalBidRanking();
+
+            saveLiveAuctionState({
+                phase:'active',
+                player:livePlayerSnapshot(),
+                winner:currentWinner,
+                value:currentAuctionValue,
+                normal_bid_ranking:currentBidRanking,
+                seconds:currentTimer,
+                deadline_at:Date.now()+currentTimer*1000
+            });
+
+            document.getElementById('winner-display').innerText=currentWinner;
+            document.getElementById('winner-display').style.color='var(--accent-blue)';
+            const liveValueDisplay=document.getElementById('current-value-display');
+            liveValueDisplay.classList.remove('ready-label');
+            liveValueDisplay.innerText=currentAuctionValue;
+            document.getElementById('countdown-display').innerText=currentTimer;
+            document.getElementById('countdown-display').style.color='var(--accent-green)';
+
+            if(channel)channel.send({type:'broadcast',event:'timer_tick',payload:{seconds:currentTimer}}).catch(()=>{});
+            playSound('audio-buzz');
+            speakBidValue(currentAuctionValue);
+            if(channel)channel.send({
+                type:'broadcast',event:'auction_update',
+                payload:{winner:currentWinner,value:currentAuctionValue,cooldown_ms:NORMAL_BID_COOLDOWN_MS}
+            }).catch(()=>{});
+
+            if(isAuctioneerPlayerIdentity()){
+                applyPlayerNormalBidCooldownMs(NORMAL_BID_COOLDOWN_MS);
+                updatePlayerTeamStatus();
             }
             hybridNormalBidUpdate();
         }
@@ -21966,9 +22665,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyBrand(){
-    document.title='LIVEASTA V75';
+    document.title='LIVEASTA V79';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V75';
+      el.textContent='LIVEASTA · VERSIONE V79';
     });
     document.querySelectorAll('.logo-text').forEach(el=>{
       const a=el.querySelector('.rosa');
