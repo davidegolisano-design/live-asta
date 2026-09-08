@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>LIVEASTA V91</title>
+    <title>LIVEASTA V92</title>
     <meta name="theme-color" content="#0D1117">
     <meta name="color-scheme" content="dark">
     <meta name="mobile-web-app-capable" content="yes">
@@ -11787,7 +11787,7 @@ html.audio-modal-open{
 
 <style id="liveasta-v91-auctioneer-pc-ready">
 /* ==========================================================
-   LIVEASTA V91 — SOLO PLANCIA BANDITORE PC
+   LIVEASTA V92 — SOLO PLANCIA BANDITORE PC
    - barra superiore con pulsanti uniformi
    - READY desktop a 3 colonne: giocatore / FVM / attesa + lista
    Smartphone banditore invariato.
@@ -12052,6 +12052,230 @@ html.audio-modal-open{
 #auctioneer-ready-desktop{display:none}
 </style>
 
+
+<style id="liveasta-v92-auctioneer-pc-unified-auction-ready">
+/* ==========================================================
+   LIVEASTA V92 — BANDITORE PC: BANDITURA / READY COERENTI
+   Solo grafica. La logica READY/SKIP/asta resta invariata.
+   I tre quadranti READY hanno stessa griglia, bordi, colori e
+   dimensioni della banditura. Il quadrante giocatore non cambia
+   aspetto passando da READY ad asta.
+   ========================================================== */
+@media (min-width:761px){
+  /* Stessa identica griglia della banditura PC. */
+  #auction-dashboard.mode-pc #auctioneer-ready-desktop{
+    grid-template-columns:1.04fr 1fr 1.12fr!important;
+    grid-template-rows:minmax(0,1fr)!important;
+    gap:6px!important;
+    width:100%!important;
+    height:100%!important;
+    min-width:0!important;
+    min-height:0!important;
+    margin:0!important;
+    padding:0!important;
+    align-items:stretch!important;
+  }
+
+  /* Contenitori READY = contenitori della banditura. */
+  #auction-dashboard.mode-pc #auctioneer-ready-desktop .ard-col{
+    width:100%!important;
+    height:100%!important;
+    min-width:0!important;
+    min-height:0!important;
+    margin:0!important;
+    padding:14px 16px!important;
+    border-radius:18px!important;
+    border:1px solid #334155!important;
+    box-sizing:border-box!important;
+    overflow:hidden!important;
+    box-shadow:0 14px 34px rgba(0,0,0,.22)!important;
+  }
+
+  /* Sinistra: stessi colori sociali della banditura. */
+  #auction-dashboard.mode-pc #auctioneer-ready-desktop .ard-player,
+  #auction-dashboard.mode-pc #view-auction .auction-col.col-player{
+    background:var(--team-card-bg,linear-gradient(180deg,#171E28,#111821))!important;
+    background-image:var(--team-card-bg,linear-gradient(180deg,#171E28,#111821))!important;
+    background-color:#171E28!important;
+    background-size:100% 100%!important;
+    background-position:center!important;
+    background-repeat:no-repeat!important;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.055),0 14px 34px rgba(0,0,0,.22)!important;
+  }
+
+  /* Centro e destra: stesso fondo della banditura. */
+  #auction-dashboard.mode-pc #auctioneer-ready-desktop .ard-fvm,
+  #auction-dashboard.mode-pc #auctioneer-ready-desktop .ard-wait,
+  #auction-dashboard.mode-pc #view-auction .col-timer,
+  #auction-dashboard.mode-pc #view-auction .col-info{
+    background:#151D27!important;
+    border-color:#334155!important;
+  }
+
+  /* -------------------------------------------------------
+     QUADRANTE SINISTRO CONDIVISO
+     Mantiene esattamente la distribuzione apprezzata nel READY:
+     nome / miniatura / ruolo-squadra, centrati e separati.
+     ------------------------------------------------------- */
+  #auction-dashboard.mode-pc #auctioneer-ready-desktop .ard-player,
+  #auction-dashboard.mode-pc #view-auction .col-player{
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:16px!important;
+  }
+
+  #auction-dashboard.mode-pc #auctioneer-ready-desktop .ard-player-name,
+  #auction-dashboard.mode-pc #view-auction #auction-player-name-top{
+    position:static!important;
+    order:1!important;
+    flex:0 0 auto!important;
+    width:96%!important;
+    max-width:96%!important;
+    min-width:0!important;
+    min-height:0!important;
+    height:auto!important;
+    margin:0!important;
+    padding:0!important;
+    align-self:center!important;
+    color:#fff!important;
+    font-size:clamp(2rem,3vw,4rem)!important;
+    font-weight:1000!important;
+    line-height:1!important;
+    letter-spacing:.02em!important;
+    text-transform:uppercase!important;
+    text-align:center!important;
+    white-space:nowrap!important;
+    overflow:visible!important;
+    text-overflow:clip!important;
+    transform:none!important;
+    -webkit-text-stroke:.8px rgba(0,0,0,.88)!important;
+    paint-order:stroke fill!important;
+    text-shadow:0 2px 3px rgba(0,0,0,.95),0 0 5px rgba(0,0,0,.88)!important;
+  }
+
+  #auction-dashboard.mode-pc #auctioneer-ready-desktop .ard-player-stage,
+  #auction-dashboard.mode-pc #view-auction #auction-player-card{
+    position:static!important;
+    order:2!important;
+    flex:0 1 auto!important;
+    width:100%!important;
+    height:auto!important;
+    min-height:0!important;
+    margin:0!important;
+    padding:0!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    overflow:hidden!important;
+  }
+
+  #auction-dashboard.mode-pc #auctioneer-ready-desktop .ard-player-stage img,
+  #auction-dashboard.mode-pc #view-auction #auction-player-card #card-image{
+    display:block!important;
+    width:min(92%,520px)!important;
+    height:auto!important;
+    max-width:100%!important;
+    max-height:62vh!important;
+    margin:0 auto!important;
+    object-fit:contain!important;
+    object-position:center!important;
+    transform:none!important;
+    filter:drop-shadow(0 12px 24px rgba(0,0,0,.48))!important;
+  }
+
+  #auction-dashboard.mode-pc #auctioneer-ready-desktop .ard-player-meta,
+  #auction-dashboard.mode-pc #view-auction #auction-player-meta{
+    position:static!important;
+    order:3!important;
+    flex:0 0 auto!important;
+    width:96%!important;
+    max-width:96%!important;
+    min-width:0!important;
+    min-height:0!important;
+    height:auto!important;
+    margin:0!important;
+    padding:0!important;
+    align-self:center!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:10px!important;
+    color:#fff!important;
+    font-size:clamp(1.15rem,1.45vw,1.7rem)!important;
+    font-weight:900!important;
+    line-height:1!important;
+    white-space:nowrap!important;
+    overflow:visible!important;
+    text-overflow:clip!important;
+    transform:none!important;
+    -webkit-text-stroke:.55px rgba(0,0,0,.82)!important;
+    paint-order:stroke fill!important;
+    text-shadow:0 2px 3px rgba(0,0,0,.9),0 0 4px rgba(0,0,0,.76)!important;
+  }
+
+  #auction-dashboard.mode-pc #auctioneer-ready-desktop .ard-role,
+  #auction-dashboard.mode-pc #view-auction #auction-player-role{
+    flex:0 0 auto!important;
+    display:inline-grid!important;
+    place-items:center!important;
+    width:38px!important;
+    height:38px!important;
+    min-width:38px!important;
+    min-height:38px!important;
+    border-radius:50%!important;
+    font-size:1rem!important;
+    font-weight:1000!important;
+    line-height:1!important;
+    -webkit-text-stroke:0!important;
+    text-shadow:none!important;
+  }
+  #auction-dashboard.mode-pc #auctioneer-ready-desktop .ard-role.role-P,
+  #auction-dashboard.mode-pc #view-auction #auction-player-role.role-P{background:#FF405E!important;color:#fff!important}
+  #auction-dashboard.mode-pc #auctioneer-ready-desktop .ard-role.role-D,
+  #auction-dashboard.mode-pc #view-auction #auction-player-role.role-D{background:#22C55E!important;color:#07140C!important}
+  #auction-dashboard.mode-pc #auctioneer-ready-desktop .ard-role.role-C,
+  #auction-dashboard.mode-pc #view-auction #auction-player-role.role-C{background:#4DB7FF!important;color:#06101A!important}
+  #auction-dashboard.mode-pc #auctioneer-ready-desktop .ard-role.role-A,
+  #auction-dashboard.mode-pc #view-auction #auction-player-role.role-A{background:#F5B942!important;color:#160F04!important}
+
+  #auction-dashboard.mode-pc #auctioneer-ready-desktop .ard-club,
+  #auction-dashboard.mode-pc #view-auction #auction-player-club{
+    flex:0 1 auto!important;
+    min-width:0!important;
+    max-width:none!important;
+    white-space:nowrap!important;
+    overflow:visible!important;
+    text-overflow:clip!important;
+    transform-origin:left center!important;
+  }
+
+  /* Il contenuto cambia, il quadrante no: FVM e attesa restano
+     semplicemente centrati/scorrevoli dentro le stesse card. */
+  #auction-dashboard.mode-pc #auctioneer-ready-desktop .ard-fvm{
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:center!important;
+    justify-content:center!important;
+    text-align:center!important;
+  }
+  #auction-dashboard.mode-pc #auctioneer-ready-desktop .ard-wait{
+    display:grid!important;
+    grid-template-rows:auto auto minmax(0,1fr)!important;
+    align-content:stretch!important;
+    gap:10px!important;
+  }
+  #auction-dashboard.mode-pc #auctioneer-ready-desktop .ard-team-list{
+    min-height:0!important;
+    height:100%!important;
+    overflow-y:auto!important;
+    overscroll-behavior:contain!important;
+    scrollbar-gutter:stable!important;
+  }
+}
+</style>
+
 </head>
 <body>
 
@@ -12062,7 +12286,7 @@ html.audio-modal-open{
              aria-label="Apri Impostazioni LIVEASTA"
              onclick="openAdminLogin()"
              onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openAdminLogin();}">
-            LIVEASTA V91
+            LIVEASTA V92
         </div>
         <div class="setup-card">
             <h1 class="logo-text"><span class="rosa">LIVE</span><span class="rush">ASTA</span></h1>
@@ -12465,7 +12689,7 @@ html.audio-modal-open{
 
     <div id="screen-admin" class="screen">
         <div class="setup-card" style="max-width:1100px; width:96%; padding:24px;">
-            <div class="admin-version-badge">LIVEASTA · VERSIONE V91</div>
+            <div class="admin-version-badge">LIVEASTA · VERSIONE V92</div>
             <h1>Gestione stanze</h1>
             <p class="subtitle">Nome, password, modifica ed eliminazione</p>
 
@@ -15765,6 +15989,11 @@ html.audio-modal-open{
                     if(['P','D','C','A'].includes(classicRole))role.classList.add(`role-${classicRole}`);
                 }
                 if(club)club.textContent=currentAuctionPlayer.Squadra||'-';
+                const readyPlayerCard=panel?.querySelector('.ard-player');
+                if(readyPlayerCard){
+                    const bg=window.liveastaTeamBackgroundForClub?.(currentAuctionPlayer.Squadra||'');
+                    if(bg)readyPlayerCard.style.setProperty('--team-card-bg',bg);
+                }
                 if(fvm)fvm.textContent=String(playerListoneNumericValue(currentAuctionPlayer));
                 if(count)count.textContent=`${ready.length} / ${req.length}`;
 
@@ -24152,7 +24381,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   function applyBrand(){
     document.title='LIVEASTA V89';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V91';
+      el.textContent='LIVEASTA · VERSIONE V92';
     });
     document.querySelectorAll('.logo-text').forEach(el=>{
       const a=el.querySelector('.rosa');
@@ -24559,7 +24788,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   function applyV85Brand(){
     document.title='LIVEASTA V89';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V91';
+      el.textContent='LIVEASTA · VERSIONE V92';
     });
   }
 
