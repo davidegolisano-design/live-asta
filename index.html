@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>LIVEASTA V78</title>
+    <title>LIVEASTA V81</title>
     <meta name="theme-color" content="#0D1117">
     <meta name="color-scheme" content="dark">
     <meta name="mobile-web-app-capable" content="yes">
@@ -10905,7 +10905,7 @@ html.audio-modal-open{
 }
 
 /* ==========================================================
-   LIVEASTA V80 — SPAZI PLAYER + AZIONI RAPIDE BANDITORE
+   LIVEASTA V81 — SPAZI PLAYER + AZIONI RAPIDE BANDITORE
    Solo UI: nessuna modifica a READY, timer o logica offerte.
    ========================================================== */
 
@@ -11031,6 +11031,152 @@ html.audio-modal-open{
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="msapplication-navbutton-color" content="#0D1117">
 
+
+<style id="liveasta-v81-spacing">
+/* ==========================================================
+   LIVEASTA V81 — SPAZIATURA TESTI SENZA RIDURRE LE MINIATURE
+   Solo layout player/banditore. Nessuna logica asta/READY.
+   ========================================================== */
+
+/* PLAYER: nome e ruolo/squadra restano vicini alla miniatura ma con
+   più respiro. Lo spazio extra viene ottenuto dalla zona carta, non
+   riducendo l'immagine. */
+#screen-player-buzzer .phone-top-area{
+  height:min(46dvh,360px)!important;
+  min-height:300px!important;
+  max-height:360px!important;
+}
+#screen-player-buzzer .player-card-side{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:clamp(13px,1.45vh,17px)!important;
+  min-width:0!important;
+  min-height:0!important;
+  overflow:hidden!important;
+}
+#screen-player-buzzer .phone-player-name{
+  order:1!important;
+  flex:0 0 auto!important;
+  margin:0!important;
+  padding:0 4px!important;
+}
+#screen-player-buzzer .phone-card-image{
+  order:2!important;
+  flex:0 0 auto!important;
+  width:auto!important;
+  height:auto!important;
+  max-width:100%!important;
+  max-height:260px!important;
+  margin:0 auto!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  transform:none!important;
+}
+#screen-player-buzzer .phone-player-meta{
+  order:3!important;
+  flex:0 0 auto!important;
+  margin:0!important;
+  padding:0 3px!important;
+}
+
+/* Telefoni più bassi: si compatta solo il margine, non la miniatura. */
+@media(max-height:740px){
+  #screen-player-buzzer .phone-top-area{
+    height:min(45dvh,335px)!important;
+    min-height:285px!important;
+    max-height:335px!important;
+  }
+  #screen-player-buzzer .player-card-side{
+    gap:11px!important;
+  }
+  #screen-player-buzzer .phone-card-image{
+    max-height:260px!important;
+  }
+}
+@media(max-height:690px){
+  #screen-player-buzzer .player-card-side{
+    gap:9px!important;
+  }
+}
+
+/* BANDITORE: nome, miniatura e ruolo/squadra diventano un unico gruppo
+   centrato verticalmente. Niente più testi agli estremi della colonna. */
+#screen-auctioneer-board #auction-dashboard #view-auction .col-player{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:clamp(13px,1.35vh,18px)!important;
+  min-height:0!important;
+  overflow:hidden!important;
+}
+#screen-auctioneer-board #auction-dashboard #auction-player-name-top{
+  order:1!important;
+  flex:0 0 auto!important;
+  margin:0!important;
+  padding:0 6px!important;
+  position:static!important;
+  transform:none!important;
+}
+#screen-auctioneer-board #auction-dashboard #auction-player-card{
+  order:2!important;
+  flex:0 0 auto!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:0!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  overflow:hidden!important;
+}
+#screen-auctioneer-board #auction-dashboard #auction-player-card #card-image{
+  display:block!important;
+  flex:0 0 auto!important;
+  width:auto!important;
+  height:auto!important;
+  max-width:100%!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  margin:0 auto!important;
+  transform:none!important;
+}
+#screen-auctioneer-board #auction-dashboard #auction-player-meta{
+  order:3!important;
+  flex:0 0 auto!important;
+  margin:0!important;
+  padding:0 6px!important;
+  position:static!important;
+  transform:none!important;
+}
+
+/* Mantieni le dimensioni già usate dalla plancia: la nuova spaziatura
+   non sottrae altezza all'immagine. */
+#screen-auctioneer-board #auction-dashboard.mode-pc #auction-player-card #card-image{
+  max-width:min(78%,360px)!important;
+  max-height:58vh!important;
+}
+#screen-auctioneer-board #auction-dashboard.mode-mobile #auction-player-card #card-image{
+  max-width:72vw!important;
+  max-height:34vh!important;
+}
+
+@media(max-height:760px){
+  #screen-auctioneer-board #auction-dashboard #view-auction .col-player{
+    gap:10px!important;
+  }
+  #screen-auctioneer-board #auction-dashboard.mode-pc #auction-player-card #card-image{
+    max-height:58vh!important;
+  }
+  #screen-auctioneer-board #auction-dashboard.mode-mobile #auction-player-card #card-image{
+    max-height:34vh!important;
+  }
+}
+</style>
+
 </head>
 <body>
 
@@ -11041,7 +11187,7 @@ html.audio-modal-open{
              aria-label="Apri Impostazioni LIVEASTA"
              onclick="openAdminLogin()"
              onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openAdminLogin();}">
-            LIVEASTA V80
+            LIVEASTA V81
         </div>
         <div class="setup-card">
             <h1 class="logo-text"><span class="rosa">LIVE</span><span class="rush">ASTA</span></h1>
@@ -22753,9 +22899,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyBrand(){
-    document.title='LIVEASTA V80';
+    document.title='LIVEASTA V81';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V80';
+      el.textContent='LIVEASTA · VERSIONE V81';
     });
     document.querySelectorAll('.logo-text').forEach(el=>{
       const a=el.querySelector('.rosa');
