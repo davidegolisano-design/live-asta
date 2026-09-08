@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>LIVEASTA V74</title>
+    <title>LIVEASTA V75</title>
     <meta name="theme-color" content="#0D1117">
     <meta name="color-scheme" content="dark">
     <meta name="mobile-web-app-capable" content="yes">
@@ -10370,6 +10370,172 @@ html.audio-modal-open{
     font-size:clamp(.8rem,3.2vw,1rem);
   }
 }
+
+/* ==========================================================
+   LIVEASTA V75 — TESTI SEMPRE FUORI DALLA MINIATURA
+   Base: V74 stabile. Nessuna modifica al motore READY.
+   ========================================================== */
+
+/* Preview dalle rose: il ruolo usa lo stesso badge circolare/colorato
+   della plancia di banditura. */
+#room-roster-player-preview-role{
+  flex:0 0 auto!important;
+  min-width:32px!important;
+  height:32px!important;
+  padding:0 7px!important;
+  box-sizing:border-box!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  border-radius:999px!important;
+  color:#fff!important;
+  font-size:.78em!important;
+  font-weight:950!important;
+  line-height:1!important;
+  text-shadow:none!important;
+  box-shadow:0 3px 12px rgba(0,0,0,.28)!important;
+  background:#FF405E;
+}
+#room-roster-player-preview-role.role-P{background:#FF405E!important;color:#fff!important}
+#room-roster-player-preview-role.role-D{background:#22C55E!important;color:#07140C!important}
+#room-roster-player-preview-role.role-C{background:#4DB7FF!important;color:#06101A!important}
+#room-roster-player-preview-role.role-A{background:#F5B942!important;color:#160F04!important}
+
+/* PLANCIA BANDITORE: tre zone fisiche separate.
+   Nome e metadati partecipano al layout: non possono invadere la foto
+   neppure ridimensionando la finestra o uscendo dal fullscreen. */
+#screen-auctioneer-board #auction-dashboard #view-auction .col-player{
+  display:grid!important;
+  grid-template-rows:minmax(34px,auto) minmax(0,1fr) minmax(32px,auto)!important;
+  align-items:stretch!important;
+  justify-items:center!important;
+  align-content:stretch!important;
+  min-height:0!important;
+  overflow:hidden!important;
+  gap:clamp(3px,.65vh,8px)!important;
+}
+#screen-auctioneer-board #auction-dashboard #auction-player-name-top{
+  grid-row:1!important;
+  position:static!important;
+  top:auto!important;
+  left:auto!important;
+  right:auto!important;
+  bottom:auto!important;
+  align-self:center!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:0 6px!important;
+  box-sizing:border-box!important;
+  z-index:2!important;
+}
+#screen-auctioneer-board #auction-dashboard .player-card{
+  grid-row:2!important;
+  width:100%!important;
+  height:100%!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:0!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  overflow:hidden!important;
+}
+#screen-auctioneer-board #auction-dashboard .player-card img{
+  display:block!important;
+  width:auto!important;
+  height:auto!important;
+  max-width:100%!important;
+  max-height:100%!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  margin:auto!important;
+}
+#screen-auctioneer-board #auction-dashboard .auction-player-meta{
+  grid-row:3!important;
+  position:static!important;
+  top:auto!important;
+  left:auto!important;
+  right:auto!important;
+  bottom:auto!important;
+  transform:none!important;
+  align-self:center!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:0 6px!important;
+  box-sizing:border-box!important;
+  z-index:2!important;
+}
+
+/* TELECOMANDO GIOCATORE: stessa regola.
+   Le vecchie traslazioni V21/V22 avvicinavano i testi entrando nella foto.
+   Ora immagine, nome e ruolo/squadra hanno righe indipendenti. */
+#screen-player-buzzer .player-card-side{
+  display:grid!important;
+  grid-template-rows:minmax(0,1fr) auto auto!important;
+  align-items:center!important;
+  justify-items:center!important;
+  align-content:stretch!important;
+  min-height:0!important;
+  overflow:hidden!important;
+  gap:clamp(2px,.45vh,5px)!important;
+}
+#screen-player-buzzer .phone-card-image{
+  grid-row:1!important;
+  align-self:center!important;
+  width:auto!important;
+  height:auto!important;
+  max-width:100%!important;
+  max-height:100%!important;
+  min-height:0!important;
+  margin:0 auto!important;
+  object-fit:contain!important;
+  object-position:center!important;
+}
+#screen-player-buzzer .phone-player-name{
+  grid-row:2!important;
+  position:static!important;
+  transform:none!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:1px 2px!important;
+  box-sizing:border-box!important;
+  line-height:1.05!important;
+  z-index:2!important;
+}
+#screen-player-buzzer .phone-player-meta{
+  grid-row:3!important;
+  position:static!important;
+  transform:none!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:22px!important;
+  margin:0!important;
+  padding:0 2px!important;
+  box-sizing:border-box!important;
+  z-index:2!important;
+}
+
+/* Finestra PC bassa/non fullscreen: si riduce prima la foto, mai i margini
+   che tengono separati nome e ruolo/squadra. */
+@media(max-height:760px){
+  #screen-auctioneer-board #auction-dashboard #view-auction .col-player{
+    grid-template-rows:minmax(30px,auto) minmax(0,1fr) minmax(28px,auto)!important;
+    gap:2px!important;
+  }
+  #screen-auctioneer-board #auction-dashboard.mode-pc #auction-player-name-top{
+    font-size:clamp(1.15rem,2.2vw,1.8rem)!important;
+  }
+  #screen-auctioneer-board #auction-dashboard.mode-pc .auction-player-meta{
+    font-size:clamp(.88rem,1.2vw,1.15rem)!important;
+  }
+  #screen-player-buzzer .player-card-side{gap:2px!important}
+}
 </style>
 
 <script id="liveasta-theme-preload">
@@ -10423,7 +10589,7 @@ html.audio-modal-open{
              aria-label="Apri Impostazioni LIVEASTA"
              onclick="openAdminLogin()"
              onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openAdminLogin();}">
-            LIVEASTA V74
+            LIVEASTA V75
         </div>
         <div class="setup-card">
             <h1 class="logo-text"><span class="rosa">LIVE</span><span class="rush">ASTA</span></h1>
@@ -15228,7 +15394,12 @@ html.audio-modal-open{
             const clubEl=document.getElementById('room-roster-player-preview-club');
 
             if(nameEl)nameEl.textContent=name;
-            if(roleEl)roleEl.textContent=role;
+            if(roleEl){
+                roleEl.textContent=role;
+                roleEl.classList.remove('role-P','role-D','role-C','role-A');
+                const classicRole=String(role||'').trim().toUpperCase();
+                if(['P','D','C','A'].includes(classicRole)) roleEl.classList.add('role-'+classicRole);
+            }
             if(clubEl)clubEl.textContent=club;
             if(image)setPlayerImage(image,playerId,role);
 
@@ -21795,9 +21966,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyBrand(){
-    document.title='LIVEASTA V74';
+    document.title='LIVEASTA V75';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V74';
+      el.textContent='LIVEASTA · VERSIONE V75';
     });
     document.querySelectorAll('.logo-text').forEach(el=>{
       const a=el.querySelector('.rosa');
