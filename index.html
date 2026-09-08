@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>LIVEASTA V78</title>
+    <title>LIVEASTA V79</title>
     <meta name="theme-color" content="#0D1117">
     <meta name="color-scheme" content="dark">
     <meta name="mobile-web-app-capable" content="yes">
@@ -11028,7 +11028,7 @@ html.audio-modal-open{
 
 <style id="liveasta-v78-board-actions-style">
 /* ==========================================================
-   LIVEASTA V78 — AZIONI SEMPRE DISPONIBILI + STATO ACCESSO
+   LIVEASTA V79 — READY TRANSIZIONE ATOMICA + RESET IN GESTIONE
    ========================================================== */
 
 /* Messaggi di accesso bloccato: countdown su righe separate e leggibili. */
@@ -11137,7 +11137,7 @@ html.audio-modal-open{
              aria-label="Apri Impostazioni LIVEASTA"
              onclick="openAdminLogin()"
              onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openAdminLogin();}">
-            LIVEASTA V78
+            LIVEASTA V79
         </div>
         <div class="setup-card">
             <h1 class="logo-text"><span class="rosa">LIVE</span><span class="rush">ASTA</span></h1>
@@ -11989,6 +11989,7 @@ html.audio-modal-open{
                     <button class="btn btn-secondary btn-compact audio-toolbar-btn control-action-audio" onclick="openAudioMixer()">🔊 Audio</button>
                     <button class="btn btn-green btn-compact control-action-csv" onclick="exportRoseCSV()">CSV</button>
                     <button class="btn btn-secondary btn-compact control-action-import-csv" onclick="openCsvRosterImport()">↑ Importa CSV</button>
+                    <button class="btn btn-danger btn-compact control-action-reset" type="button" onclick="resetRoomRuntimeState()" title="Reset stato asta">RESET ASTA</button>
                     <button class="btn btn-secondary btn-compact control-action-back" onclick="closeRoomControl()">← Torna all'asta</button>
                 </div>
             </div>
@@ -12698,6 +12699,10 @@ html.audio-modal-open{
         let readyPresenceReconcileTimer=null;
         let readyAckPollTimer=null;
         let readyAckPollBusy=false;
+        // V79: serializza i salvataggi READY per evitare che uno stato READY
+        // "vecchio" finisca nel DB dopo l'avvio del countdown.
+        let readyGatePersistQueue=Promise.resolve();
+        let readyGateCompleting=false;
         let playerReadyToken=null;
         let playerReadySent=false;
         let playerReadySubmitting=false;
@@ -13603,7 +13608,6 @@ html.audio-modal-open{
 
             readyOfflineExcludedIds.add(id);
             evaluateReadyGate();
-            saveReadyGateDedicated(readyGateWaiting);
         }
 
         function readyMarkTeamOnline(teamId){
@@ -13612,7 +13616,6 @@ html.audio-modal-open{
 
             if(readyOfflineExcludedIds.delete(id)){
                 evaluateReadyGate();
-                saveReadyGateDedicated(readyGateWaiting);
             }
         }
 
@@ -13674,7 +13677,6 @@ html.audio-modal-open{
                 });
 
                 evaluateReadyGate();
-                saveReadyGateDedicated(readyGateWaiting);
             },900);
         }
 
@@ -13692,7 +13694,7 @@ html.audio-modal-open{
             return teamsCache.find(t=>String(t.id)===String(id))?.name||'Squadra';
         }
 
-        /* V78 READY robusto: broadcast + ACK persistente.
+        /* V79 READY robusto: broadcast + ACK persistente + transizione serializzata.
            Se un pacchetto Realtime si perde, il banditore recupera comunque il READY. */
         function readyAckKey(token,teamId){
             if(!currentRoomId||!token||!teamId)return '';
@@ -13763,23 +13765,26 @@ html.audio-modal-open{
 
         function beginReadyGate(){
             stopReadyAckPolling();
+            readyGateCompleting=false;
+            readyGatePersistQueue=Promise.resolve();
             readyGateWaiting=true;
             readyPlayers=new Set();
             readyOfflineExcludedIds=new Set();
             readyGateToken=`${currentRoomId}_${currentAuctionPlayer?.Id}_${Date.now()}_${Math.random().toString(36).slice(2,7)}`;
             persistReadyGateState();
-            saveReadyGateDedicated(true);
             startReadyAckPolling();
         }
 
 
         function persistReadyGateState(){
-            if(!readyGateWaiting)return;
+            if(!readyGateWaiting || readyGateCompleting)return readyGatePersistQueue;
+
+            const tokenAtQueue=String(readyGateToken||'');
             const req=readyRequiredIds();
             const snapshot={
                 phase:'ready',
                 player:livePlayerSnapshot(),
-                ready_token:readyGateToken,
+                ready_token:tokenAtQueue,
                 ready_required_ids:req,
                 ready_ids:[...readyPlayers],
                 offline_excluded_ids:[...readyOfflineExcludedIds],
@@ -13793,9 +13798,32 @@ html.audio-modal-open{
                 sealed_round:sealedAuctionModeActive?sealedRound:1,
                 sealed_eligible_ids:sealedAuctionModeActive?sealedEligibleIds:[]
             };
-            liveAuctionState={...(liveAuctionState||{}),...snapshot,updated_at:new Date().toISOString()};
-            saveLiveAuctionState(snapshot);
-            saveReadyGateDedicated(true);
+
+            // Tutti i salvataggi READY passano da una sola coda. Quando il READY
+            // è completato, completeReadyGate() aspetta la coda e poi scrive
+            // definitivamente gate=chiuso + fase successiva. In questo modo
+            // un upsert lento non può riaprire il READY dopo il countdown.
+            readyGatePersistQueue=readyGatePersistQueue
+                .catch(()=>{})
+                .then(async()=>{
+                    if(
+                        !readyGateWaiting ||
+                        readyGateCompleting ||
+                        String(readyGateToken||'')!==tokenAtQueue
+                    )return;
+
+                    await saveLiveAuctionState(snapshot);
+
+                    if(
+                        !readyGateWaiting ||
+                        readyGateCompleting ||
+                        String(readyGateToken||'')!==tokenAtQueue
+                    )return;
+
+                    await saveReadyGateDedicated(true);
+                });
+
+            return readyGatePersistQueue;
         }
 
         function broadcastReadyState(){
@@ -13818,28 +13846,55 @@ html.audio-modal-open{
             showAuctioneerReadyStage();
         }
 
+        async function completeReadyGate(requiredIds=[]){
+            if(!readyGateWaiting || readyGateCompleting)return;
+
+            readyGateCompleting=true;
+            const completedToken=String(readyGateToken||'');
+            const completedIds=[...requiredIds].map(String);
+
+            // Da questo istante nessun nuovo salvataggio può essere accodato come READY attivo.
+            readyGateWaiting=false;
+            stopReadyAckPolling();
+            broadcastReadyState();
+
+            try{
+                // Aspetta ogni eventuale write READY già partita prima di chiudere il gate.
+                await readyGatePersistQueue.catch(()=>{});
+                await closeReadyGateDedicated();
+            }catch(e){
+                console.warn('Chiusura READY non riuscita completamente',e);
+            }
+
+            // Pulisci il token soltanto dopo aver notificato waiting=false.
+            readyGateToken=null;
+
+            try{
+                if(sealedAuctionModeActive)startSealedAuctionTimer();
+                else startCountdown();
+
+                // La pulizia degli ACK non deve mai ritardare l'avvio del countdown.
+                clearReadyAckRows(completedToken,completedIds).catch(()=>{});
+            }finally{
+                readyGateCompleting=false;
+            }
+        }
+
         function evaluateReadyGate(){
-            if(!readyGateWaiting)return;
+            if(!readyGateWaiting || readyGateCompleting)return;
 
             const req=readyRequiredIds();
             updateReadyGateDisplay();
             broadcastReadyState();
-            persistReadyGateState();
 
-            // OFFLINE continua a essere obbligatorio.
-            // Solo la modalità ASSENTE esplicita toglie una squadra dal READY.
-            // La banditura a turni resta comunque obbligatoria nel suo turno.
+            // Se tutti sono pronti, NON persistere di nuovo la fase READY:
+            // passa direttamente alla chiusura serializzata.
             if(req.length===0 || req.every(id=>readyPlayers.has(String(id)))){
-                const completedToken=String(readyGateToken||'');
-                const completedIds=[...req];
-                readyGateWaiting=false;
-                stopReadyAckPolling();
-                broadcastReadyState();
-                closeReadyGateDedicated();
-                clearReadyAckRows(completedToken,completedIds);
-                if(sealedAuctionModeActive)startSealedAuctionTimer();
-                else startCountdown();
+                void completeReadyGate(req);
+                return;
             }
+
+            persistReadyGateState();
         }
 
         function playerReadyFvmValue(data={}){
@@ -14031,11 +14086,22 @@ html.audio-modal-open{
             if(progress)progress.textContent='Registrazione READY…';
 
             let delivered=false;
-            if(isAuctioneerPlayerIdentity()){
+            const localAuctioneerTeam=!!(
+                auctioneerLockKey &&
+                auctioneerPlayerMode &&
+                auctioneerPlayerTeamId &&
+                String(auctioneerPlayerTeamId)===teamId &&
+                readyGateWaiting &&
+                token===String(readyGateToken)
+            );
+
+            // Sul dispositivo BANDITORE + GIOCATORE il broadcast non torna al mittente.
+            // Registra quindi il READY direttamente nello stato del banditore, senza
+            // dipendere dal realtime self-delivery o dal solo polling DB.
+            if(isAuctioneerPlayerIdentity() || localAuctioneerTeam){
                 if(readyGateWaiting && token===String(readyGateToken)){
                     readyPlayers.add(teamId);
                     await savePlayerReadyAck(token,teamId,myTeamName);
-                    persistReadyGateState();
                     evaluateReadyGate();
                     delivered=true;
                 }
@@ -14070,6 +14136,20 @@ html.audio-modal-open{
             const oldProgress=document.getElementById('ready-progress');
             if(oldProgress)oldProgress.textContent='In attesa degli altri giocatori…';
             renderPlayerReadyEligibleList({required_ids:ctx.required_ids||[],ready_ids:ctx.ready_ids||[]});
+
+            // V79: ritrasmissione idempotente di sicurezza. Se il primo broadcast
+            // viene perso, il banditore riceve comunque il READY; se l'asta è già
+            // partita playerReadyToken viene azzerato e questi retry non fanno nulla.
+            [700,1600,3000].forEach(delay=>{
+                setTimeout(()=>{
+                    if(!playerReadySent || String(playerReadyToken||'')!==token)return;
+                    savePlayerReadyAck(token,teamId,myTeamName).catch(()=>{});
+                    if(channel){
+                        channel.send({type:'broadcast',event:'player_ready',payload:{token,team_id:teamId,team_name:myTeamName}}).catch(()=>{});
+                        channel.send({type:'broadcast',event:'live_state_request',payload:{team_id:teamId,reason:'ready_retry'}}).catch(()=>{});
+                    }
+                },delay);
+            });
         }
 
         function updatePlayerReadyProgress(data){
@@ -17283,7 +17363,6 @@ html.audio-modal-open{
                 renderOnlinePlayers();
                 if(readyGateWaiting){
                     evaluateReadyGate();
-                    saveReadyGateDedicated(true);
                 }
             }
         }
@@ -20000,8 +20079,7 @@ html.audio-modal-open{
                 })
                 .on('broadcast',{event:'live_state_request'},async()=>{
                     if(readyGateWaiting){
-                        persistReadyGateState();
-                        await saveReadyGateDedicated(true);
+                        await persistReadyGateState();
                     }
                     const gate=await loadReadyGateState();
                     if(gate?.active){
@@ -20020,7 +20098,6 @@ html.audio-modal-open{
                     if(!required.includes(String(d.team_id)))return;
 
                     readyPlayers.add(String(d.team_id));
-                    persistReadyGateState();
                     evaluateReadyGate();
                 })
                 .on('broadcast',{event:'player_availability'},async(payload)=>{
@@ -20038,7 +20115,6 @@ html.audio-modal-open{
                     // anche se la banditura a turni è attiva.
                     if(readyGateWaiting){
                         evaluateReadyGate();
-                        await saveReadyGateDedicated(readyGateWaiting);
                     }
                 })
                 .on('broadcast',{event:'nominate_player'},async(payload)=>{
@@ -20337,7 +20413,7 @@ html.audio-modal-open{
             // soltanto le squadre rimaste in parità.
             if(readyModeEnabled){
                 beginReadyGate();
-                await saveReadyGateDedicated(true);
+                await persistReadyGateState();
 
                 const required=readyRequiredIds();
                 const readyPayload={
@@ -22990,9 +23066,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyBrand(){
-    document.title='LIVEASTA V78';
+    document.title='LIVEASTA V79';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V78';
+      el.textContent='LIVEASTA · VERSIONE V79';
     });
     document.querySelectorAll('.logo-text').forEach(el=>{
       const a=el.querySelector('.rosa');
