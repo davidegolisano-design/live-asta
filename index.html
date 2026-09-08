@@ -10145,178 +10145,188 @@ html.audio-modal-open{
 }
 
 /* ==========================================================
-   LIVEASTA V73 — ROSE STANZA / MINIATURA FULLSCREEN
+   LIVEASTA V73 — PREVIEW MINIATURA FULLSCREEN DALLE ROSE
+   I colori sociali sono volutamente PIENI e visibili:
+   nessun pannello scuro copre lo sfondo del club.
    ========================================================== */
 
-.player-room-roster-line-clickable{
+.player-room-roster-line{
   width:100%!important;
-  appearance:none!important;
-  -webkit-appearance:none!important;
   font-family:inherit!important;
   color:var(--theme-text)!important;
   text-align:left!important;
   cursor:pointer!important;
+  appearance:none!important;
+  -webkit-appearance:none!important;
 }
-
-.player-room-roster-line-clickable:active{
+.player-room-roster-line:active{
   transform:scale(.992)!important;
 }
 
-.player-room-player-card-overlay{
+.room-roster-player-preview-overlay{
   display:none;
   position:fixed;
   inset:0;
-  z-index:10420;
-  background:#0D1117;
-}
-
-.player-room-player-card-overlay.open{
-  display:block;
-}
-
-.player-room-player-card-bg{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
+  z-index:10450;
   box-sizing:border-box;
+  align-items:center;
+  justify-content:center;
+  background:#070B11;
+}
+.room-roster-player-preview-overlay.open{
+  display:flex;
+}
+
+.room-roster-player-preview-card{
+  --roster-preview-team-bg:linear-gradient(180deg,#171E28,#111821);
+  position:relative;
+  width:min(720px,100vw);
+  height:min(920px,100dvh);
+  min-height:0;
   overflow:hidden;
   display:grid;
   grid-template-rows:auto minmax(0,1fr) auto;
-  align-items:center;
-  justify-items:center;
-  padding:
-    max(18px,env(safe-area-inset-top))
-    16px
-    max(18px,env(safe-area-inset-bottom));
-  isolation:isolate;
+  align-items:stretch;
+  box-sizing:border-box;
+  padding:max(18px,env(safe-area-inset-top)) 18px max(20px,env(safe-area-inset-bottom));
+  background-image:var(--roster-preview-team-bg);
+  background-size:100% 100%;
+  background-position:center;
+  background-repeat:no-repeat;
+  border:0;
 }
 
-/* Leggerissima ombra solo per garantire leggibilità su colori chiari. */
-.player-room-player-card-bg::after{
+/* I colori sociali DEVONO rimanere visibili dietro alla miniatura. */
+.room-roster-player-preview-card::before{
   content:'';
   position:absolute;
   inset:0;
-  z-index:-1;
+  z-index:0;
+  background:var(--roster-preview-team-bg);
+  background-size:100% 100%;
+  background-position:center;
+  opacity:1;
+  pointer-events:none;
+}
+
+/* Leggerissima vignettatura solo ai bordi; centro quasi trasparente. */
+.room-roster-player-preview-card::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  z-index:1;
   pointer-events:none;
   background:
-    linear-gradient(
-      180deg,
-      rgba(0,0,0,.20) 0%,
-      rgba(0,0,0,.02) 28%,
-      rgba(0,0,0,.02) 72%,
-      rgba(0,0,0,.22) 100%
-    );
+    linear-gradient(180deg,rgba(0,0,0,.18) 0%,rgba(0,0,0,0) 20%,rgba(0,0,0,0) 76%,rgba(0,0,0,.22) 100%);
 }
 
-.player-room-player-card-close{
-  position:absolute;
-  top:max(14px,env(safe-area-inset-top));
-  right:14px;
-  z-index:4;
-  min-width:84px;
-  min-height:42px;
-  padding:0 12px;
-  border:1px solid rgba(255,255,255,.32);
-  border-radius:13px;
-  background:rgba(13,17,23,.76);
-  color:#fff;
-  font-family:inherit;
-  font-size:.67rem;
-  font-weight:900;
-  letter-spacing:.06em;
-  text-transform:uppercase;
-  backdrop-filter:blur(7px);
-  cursor:pointer;
+.room-roster-player-preview-name,
+.room-roster-player-preview-stage,
+.room-roster-player-preview-meta,
+.room-roster-player-preview-close{
+  position:relative;
+  z-index:2;
 }
 
-.player-room-player-card-name{
-  width:min(760px,82vw);
-  margin-top:44px;
-  padding:0 6px;
+.room-roster-player-preview-name{
+  width:100%;
+  padding:8px 78px 10px 10px;
   box-sizing:border-box;
   color:#fff;
-  font-size:clamp(1.55rem,6vw,3.6rem);
+  font-size:clamp(1.7rem,6vw,3rem);
   line-height:1;
   font-weight:950;
-  letter-spacing:.02em;
+  letter-spacing:.025em;
   text-transform:uppercase;
   text-align:center;
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
-  text-shadow:0 3px 12px rgba(0,0,0,.82);
+  text-shadow:0 3px 10px rgba(0,0,0,.72);
 }
 
-.player-room-player-card-image-wrap{
-  width:min(760px,92vw);
-  height:100%;
+.room-roster-player-preview-stage{
   min-height:0;
   display:flex;
   align-items:center;
   justify-content:center;
   overflow:hidden;
+  background:transparent!important;
 }
 
-#player-room-player-card-image{
-  display:block;
+.room-roster-player-preview-image{
   width:100%;
   height:100%;
-  max-width:760px;
+  max-width:620px;
   max-height:100%;
   object-fit:contain;
-  object-position:center;
-  filter:drop-shadow(0 16px 22px rgba(0,0,0,.42));
+  object-position:center bottom;
+  filter:drop-shadow(0 14px 18px rgba(0,0,0,.42));
 }
 
-.player-room-player-card-meta{
-  width:min(760px,90vw);
-  min-height:54px;
+.room-roster-player-preview-meta{
+  min-height:52px;
   display:flex;
   align-items:center;
   justify-content:center;
   gap:10px;
+  padding:7px 8px 1px;
+  box-sizing:border-box;
   color:#fff;
-  font-size:clamp(1rem,3.8vw,1.55rem);
+  font-size:clamp(.95rem,3.7vw,1.35rem);
   line-height:1;
   font-weight:900;
-  text-align:center;
-  text-shadow:0 2px 9px rgba(0,0,0,.85);
+  text-transform:uppercase;
+  text-shadow:0 2px 8px rgba(0,0,0,.8);
+}
+.room-roster-player-preview-dot{
+  opacity:.75;
 }
 
-.player-room-player-card-dot{
-  opacity:.92;
+.room-roster-player-preview-close{
+  position:absolute;
+  top:max(12px,env(safe-area-inset-top));
+  right:12px;
+  min-width:68px;
+  height:38px;
+  padding:0 10px;
+  border:1px solid rgba(255,255,255,.55);
+  border-radius:11px;
+  background:rgba(10,14,20,.72);
+  color:#fff;
+  font-family:inherit;
+  font-size:.64rem;
+  font-weight:900;
+  text-transform:uppercase;
+  cursor:pointer;
+  backdrop-filter:blur(5px);
 }
 
-@media(max-width:600px){
-  .player-room-player-card-bg{
-    padding:
-      max(12px,env(safe-area-inset-top))
-      9px
-      max(14px,env(safe-area-inset-bottom));
+@media(min-width:721px){
+  .room-roster-player-preview-card{
+    height:min(88dvh,860px);
+    border-radius:22px;
+    box-shadow:0 24px 80px rgba(0,0,0,.55);
+  }
+}
+
+@media(max-width:720px){
+  .room-roster-player-preview-card{
+    width:100vw;
+    height:100dvh;
+    border-radius:0;
+    padding-left:10px;
+    padding-right:10px;
   }
 
-  .player-room-player-card-name{
-    width:76vw;
-    margin-top:48px;
-    font-size:clamp(1.45rem,7.1vw,2.3rem);
+  .room-roster-player-preview-name{
+    padding-left:72px;
+    padding-right:72px;
+    font-size:clamp(1.45rem,7vw,2.25rem);
   }
 
-  .player-room-player-card-image-wrap{
-    width:98vw;
-  }
-
-  .player-room-player-card-meta{
-    min-height:46px;
-    font-size:clamp(.95rem,4.8vw,1.3rem);
-  }
-
-  .player-room-player-card-close{
-    right:10px;
-    min-width:76px;
-    min-height:38px;
-    padding:0 9px;
-    font-size:.61rem;
+  .room-roster-player-preview-image{
+    max-width:100%;
   }
 }
 </style>
@@ -10964,26 +10974,28 @@ html.audio-modal-open{
     </div>
 
 
-    <div id="player-room-player-card-overlay"
-         class="player-room-player-card-overlay">
-        <div id="player-room-player-card-bg" class="player-room-player-card-bg">
+    <div id="room-roster-player-preview-overlay"
+         class="room-roster-player-preview-overlay"
+         onclick="if(event.target===this)closeRoomRosterPlayerPreview()">
+        <div id="room-roster-player-preview-card" class="room-roster-player-preview-card">
             <button type="button"
-                    class="player-room-player-card-close"
-                    onclick="closePlayerRoomPlayerCard()">Chiudi</button>
+                    class="room-roster-player-preview-close"
+                    onclick="closeRoomRosterPlayerPreview()">Chiudi</button>
 
-            <div class="player-room-player-card-name" id="player-room-player-card-name">--</div>
+            <div id="room-roster-player-preview-name" class="room-roster-player-preview-name">--</div>
 
-            <div class="player-room-player-card-image-wrap">
-                <img id="player-room-player-card-image"
+            <div class="room-roster-player-preview-stage">
+                <img id="room-roster-player-preview-image"
+                     class="room-roster-player-preview-image"
                      src=""
                      alt="Miniatura giocatore"
                      onerror="playerImageFallback(this)">
             </div>
 
-            <div class="player-room-player-card-meta">
-                <span id="player-room-player-card-role">-</span>
-                <span class="player-room-player-card-dot">•</span>
-                <span id="player-room-player-card-club">-</span>
+            <div class="room-roster-player-preview-meta">
+                <span id="room-roster-player-preview-role">-</span>
+                <span class="room-roster-player-preview-dot">•</span>
+                <span id="room-roster-player-preview-club">-</span>
             </div>
         </div>
     </div>
@@ -11165,7 +11177,7 @@ html.audio-modal-open{
                     <button class="btn btn-secondary btn-compact control-action-refresh" onclick="refreshRoomControl()">↻ Aggiorna</button>
                     <button class="btn btn-secondary btn-compact audio-toolbar-btn control-action-audio" onclick="openAudioMixer()">🔊 Audio</button>
                     <button class="btn btn-danger btn-compact control-action-reset" onclick="resetRoomRuntimeState()">⟳ Reset</button>
-                    <button class="btn btn-green btn-compact control-action-csv" onclick="exportRoseCSV()">↓ Esporta CSV</button>
+                    <button class="btn btn-green btn-compact control-action-csv" onclick="exportRoseCSV()">CSV</button>
                     <button class="btn btn-secondary btn-compact control-action-import-csv" onclick="openCsvRosterImport()">↑ Importa CSV</button>
                     <button class="btn btn-secondary btn-compact control-action-back" onclick="closeRoomControl()">← Torna all'asta</button>
                 </div>
@@ -15130,8 +15142,8 @@ html.audio-modal-open{
             if(list){
                 list.innerHTML=purchases.length?purchases.map(p=>`
                     <button type="button"
-                            class="player-room-roster-line player-room-roster-line-clickable"
-                            onclick="openPlayerRoomPlayerCard('${escapeHtml(String(p.id))}')">
+                            class="player-room-roster-line"
+                            onclick="openRoomRosterPlayerPreview('${escapeHtml(String(p.id))}')">
                         <span class="role-badge role-${escapeHtml(p.role||'')}">${escapeHtml(p.role||'-')}</span>
                         <span class="player-room-roster-main">
                             <b>${escapeHtml(p.player_name||'')}</b>
@@ -15152,7 +15164,7 @@ html.audio-modal-open{
             document.getElementById('player-room-overview-overlay')?.classList.add('open');
         }
 
-        function openPlayerRoomPlayerCard(purchaseId){
+        function openRoomRosterPlayerPreview(purchaseId){
             const purchase=(purchasesCache||[]).find(
                 p=>String(p.id)===String(purchaseId)
             );
@@ -15162,61 +15174,38 @@ html.audio-modal-open{
                 p=>String(p.Id)===String(purchase.player_id)
             );
 
-            const name=String(
-                purchase.player_name ||
-                player?.Nome ||
-                'Giocatore'
-            );
+            const playerId=String(purchase.player_id||player?.Id||'');
+            const name=String(purchase.player_name||player?.Nome||'--');
+            const role=String(purchase.role||playerRole(player)||'-');
+            const club=String(purchase.club||player?.Squadra||'-');
 
-            const role=String(
-                purchase.role ||
-                (player?playerRole(player):'') ||
-                '-'
-            );
-
-            const club=String(
-                purchase.club ||
-                player?.Squadra ||
-                '-'
-            );
-
-            const nameEl=document.getElementById('player-room-player-card-name');
-            const roleEl=document.getElementById('player-room-player-card-role');
-            const clubEl=document.getElementById('player-room-player-card-club');
-            const img=document.getElementById('player-room-player-card-image');
-            const bg=document.getElementById('player-room-player-card-bg');
+            const card=document.getElementById('room-roster-player-preview-card');
+            const image=document.getElementById('room-roster-player-preview-image');
+            const nameEl=document.getElementById('room-roster-player-preview-name');
+            const roleEl=document.getElementById('room-roster-player-preview-role');
+            const clubEl=document.getElementById('room-roster-player-preview-club');
 
             if(nameEl)nameEl.textContent=name;
             if(roleEl)roleEl.textContent=role;
             if(clubEl)clubEl.textContent=club;
+            if(image)setPlayerImage(image,playerId,role);
 
-            if(img){
-                setPlayerImage(
-                    img,
-                    purchase.player_id || player?.Id || '',
-                    role
-                );
+            // Colori sociali del CLUB reale. La funzione viene esposta
+            // dal runtime dei colori usato anche nelle schermate asta.
+            const bg=typeof window.liveastaTeamBackgroundForClub==='function'
+                ?window.liveastaTeamBackgroundForClub(club)
+                :'linear-gradient(180deg,#171E28 0%,#111821 100%)';
+
+            if(card){
+                card.style.setProperty('--roster-preview-team-bg',bg);
+                card.style.backgroundImage=bg;
             }
 
-            if(bg){
-                const colors=typeof colorsFor==='function'
-                    ?colorsFor(club)
-                    :null;
-
-                const background=typeof teamBackground==='function'
-                    ?teamBackground(colors)
-                    :'linear-gradient(180deg,#171E28,#111821)';
-
-                bg.style.background=background;
-            }
-
-            document.getElementById('player-room-team-roster-overlay')?.classList.remove('open');
-            document.getElementById('player-room-player-card-overlay')?.classList.add('open');
+            document.getElementById('room-roster-player-preview-overlay')?.classList.add('open');
         }
 
-        function closePlayerRoomPlayerCard(){
-            document.getElementById('player-room-player-card-overlay')?.classList.remove('open');
-            document.getElementById('player-room-team-roster-overlay')?.classList.add('open');
+        function closeRoomRosterPlayerPreview(){
+            document.getElementById('room-roster-player-preview-overlay')?.classList.remove('open');
         }
 
 
@@ -21632,6 +21621,11 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
       ${colors[1]} 33.333%,${colors[1]} 66.666%,
       ${colors[2]} 66.666%,${colors[2]} 100%)`;
   }
+
+  // V73: disponibile anche alla preview fullscreen aperta dalle rose.
+  window.liveastaTeamBackgroundForClub=function(club){
+    return teamBackground(colorsFor(club));
+  };
 
   function applyTeamCards(){
     const mobileClub=document.getElementById('phone-player-club');
