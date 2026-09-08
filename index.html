@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>LIVEASTA V73</title>
+    <title>LIVEASTA V74</title>
     <meta name="theme-color" content="#0D1117">
     <meta name="color-scheme" content="dark">
     <meta name="mobile-web-app-capable" content="yes">
@@ -10145,9 +10145,9 @@ html.audio-modal-open{
 }
 
 /* ==========================================================
-   LIVEASTA V73 — PREVIEW MINIATURA FULLSCREEN DALLE ROSE
-   I colori sociali sono volutamente PIENI e visibili:
-   nessun pannello scuro copre lo sfondo del club.
+   LIVEASTA V74 — PREVIEW MINIATURA FULLSCREEN DALLE ROSE
+   Miniatura centrata come blocco con nome e ruolo/club vicini,
+   sempre fuori dall'area dell'immagine. Chiusura touch robusta.
    ========================================================== */
 
 .player-room-roster-line{
@@ -10184,11 +10184,15 @@ html.audio-modal-open{
   height:min(920px,100dvh);
   min-height:0;
   overflow:hidden;
-  display:grid;
-  grid-template-rows:auto minmax(0,1fr) auto;
-  align-items:stretch;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:clamp(3px,.7dvh,8px);
   box-sizing:border-box;
-  padding:max(18px,env(safe-area-inset-top)) 18px max(20px,env(safe-area-inset-bottom));
+  /* Spazio simmetrico per il tasto Chiudi: il gruppo resta centrato davvero. */
+  padding:max(58px,calc(env(safe-area-inset-top) + 48px)) 14px
+          max(58px,calc(env(safe-area-inset-bottom) + 48px));
   background-image:var(--roster-preview-team-bg);
   background-size:100% 100%;
   background-position:center;
@@ -10229,8 +10233,10 @@ html.audio-modal-open{
 }
 
 .room-roster-player-preview-name{
+  flex:0 0 auto;
   width:100%;
-  padding:8px 78px 10px 10px;
+  max-width:680px;
+  padding:0 8px 3px;
   box-sizing:border-box;
   color:#fff;
   font-size:clamp(1.7rem,6vw,3rem);
@@ -10243,34 +10249,39 @@ html.audio-modal-open{
   overflow:hidden;
   text-overflow:ellipsis;
   text-shadow:0 3px 10px rgba(0,0,0,.72);
+  pointer-events:none;
 }
 
 .room-roster-player-preview-stage{
+  flex:0 1 auto;
+  width:100%;
   min-height:0;
   display:flex;
   align-items:center;
   justify-content:center;
-  overflow:hidden;
+  overflow:visible;
   background:transparent!important;
 }
 
 .room-roster-player-preview-image{
-  width:100%;
-  height:100%;
-  max-width:620px;
-  max-height:100%;
+  display:block;
+  width:auto;
+  height:auto;
+  max-width:min(94vw,620px);
+  max-height:min(68dvh,680px);
   object-fit:contain;
-  object-position:center bottom;
+  object-position:center;
   filter:drop-shadow(0 14px 18px rgba(0,0,0,.42));
 }
 
 .room-roster-player-preview-meta{
-  min-height:52px;
+  flex:0 0 auto;
+  min-height:0;
   display:flex;
   align-items:center;
   justify-content:center;
   gap:10px;
-  padding:7px 8px 1px;
+  padding:4px 8px 0;
   box-sizing:border-box;
   color:#fff;
   font-size:clamp(.95rem,3.7vw,1.35rem);
@@ -10278,6 +10289,7 @@ html.audio-modal-open{
   font-weight:900;
   text-transform:uppercase;
   text-shadow:0 2px 8px rgba(0,0,0,.8);
+  pointer-events:none;
 }
 .room-roster-player-preview-dot{
   opacity:.75;
@@ -10287,19 +10299,29 @@ html.audio-modal-open{
   position:absolute;
   top:max(12px,env(safe-area-inset-top));
   right:12px;
-  min-width:68px;
-  height:38px;
-  padding:0 10px;
-  border:1px solid rgba(255,255,255,.55);
-  border-radius:11px;
-  background:rgba(10,14,20,.72);
+  z-index:10;
+  min-width:86px;
+  min-height:44px;
+  height:44px;
+  padding:0 14px;
+  border:1px solid rgba(255,255,255,.62);
+  border-radius:12px;
+  background:rgba(10,14,20,.78);
   color:#fff;
   font-family:inherit;
   font-size:.64rem;
   font-weight:900;
   text-transform:uppercase;
   cursor:pointer;
+  pointer-events:auto;
+  touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent;
+  user-select:none;
+  -webkit-user-select:none;
   backdrop-filter:blur(5px);
+}
+.room-roster-player-preview-close:active{
+  transform:scale(.97);
 }
 
 @media(min-width:721px){
@@ -10315,18 +10337,37 @@ html.audio-modal-open{
     width:100vw;
     height:100dvh;
     border-radius:0;
-    padding-left:10px;
-    padding-right:10px;
+    padding-left:8px;
+    padding-right:8px;
   }
 
   .room-roster-player-preview-name{
-    padding-left:72px;
-    padding-right:72px;
+    padding-left:8px;
+    padding-right:8px;
     font-size:clamp(1.45rem,7vw,2.25rem);
   }
 
   .room-roster-player-preview-image{
-    max-width:100%;
+    max-width:calc(100vw - 16px);
+    max-height:min(68dvh,680px);
+  }
+}
+
+/* Telefoni bassi / landscape: i tre elementi restano separati e visibili. */
+@media(max-height:700px){
+  .room-roster-player-preview-card{
+    padding-top:max(52px,calc(env(safe-area-inset-top) + 44px));
+    padding-bottom:max(18px,env(safe-area-inset-bottom));
+    gap:2px;
+  }
+  .room-roster-player-preview-image{
+    max-height:calc(100dvh - 160px);
+  }
+  .room-roster-player-preview-name{
+    font-size:clamp(1.15rem,5.5vw,1.8rem);
+  }
+  .room-roster-player-preview-meta{
+    font-size:clamp(.8rem,3.2vw,1rem);
   }
 }
 </style>
@@ -10382,7 +10423,7 @@ html.audio-modal-open{
              aria-label="Apri Impostazioni LIVEASTA"
              onclick="openAdminLogin()"
              onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openAdminLogin();}">
-            LIVEASTA V73
+            LIVEASTA V74
         </div>
         <div class="setup-card">
             <h1 class="logo-text"><span class="rosa">LIVE</span><span class="rush">ASTA</span></h1>
@@ -10980,7 +11021,8 @@ html.audio-modal-open{
         <div id="room-roster-player-preview-card" class="room-roster-player-preview-card">
             <button type="button"
                     class="room-roster-player-preview-close"
-                    onclick="closeRoomRosterPlayerPreview()">Chiudi</button>
+                    aria-label="Chiudi anteprima giocatore"
+                    onclick="event.preventDefault();event.stopPropagation();closeRoomRosterPlayerPreview(event)">Chiudi</button>
 
             <div id="room-roster-player-preview-name" class="room-roster-player-preview-name">--</div>
 
@@ -15204,7 +15246,11 @@ html.audio-modal-open{
             document.getElementById('room-roster-player-preview-overlay')?.classList.add('open');
         }
 
-        function closeRoomRosterPlayerPreview(){
+        function closeRoomRosterPlayerPreview(event){
+            if(event){
+                event.preventDefault?.();
+                event.stopPropagation?.();
+            }
             document.getElementById('room-roster-player-preview-overlay')?.classList.remove('open');
         }
 
@@ -21749,9 +21795,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyBrand(){
-    document.title='LIVEASTA V73';
+    document.title='LIVEASTA V74';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V73';
+      el.textContent='LIVEASTA · VERSIONE V74';
     });
     document.querySelectorAll('.logo-text').forEach(el=>{
       const a=el.querySelector('.rosa');
