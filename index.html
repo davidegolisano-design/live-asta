@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>LIVEASTA V93</title>
+    <title>LIVEASTA V94</title>
     <meta name="theme-color" content="#0D1117">
     <meta name="color-scheme" content="dark">
     <meta name="mobile-web-app-capable" content="yes">
@@ -9343,7 +9343,7 @@ html.audio-modal-open{
 }
 
 /* ==========================================================
-   LIVEASTA V73 — FEEDBACK BLOCCO RILANCI 1,5s
+   LIVEASTA V73 — FEEDBACK BLOCCO RILANCI intervallo configurato
    Il comportamento è gestito dal banditore; qui manteniamo
    semplicemente evidente lo stato disabled già previsto.
    ========================================================== */
@@ -9390,7 +9390,7 @@ html.audio-modal-open{
   grid-row:2!important;
 }
 
-/* Il lock dei 1500 ms NON cambia aspetto ai tasti.
+/* Il lock dei blocco configurato NON cambia aspetto ai tasti.
    Restano colorati; vengono ignorati logicamente da buzz()/banditore. */
 #screen-player-buzzer .buzzer-btn{
   -webkit-tap-highlight-color:transparent!important;
@@ -12279,7 +12279,7 @@ html.audio-modal-open{
 
 <style id="liveasta-v93-auctioneer-pc-turn-unification">
 /* ==========================================================
-   LIVEASTA V93 — SOLO BANDITORE PC
+   LIVEASTA V94 — SOLO BANDITORE PC
    - Nome in asta grande quanto nel READY
    - FVM più grande
    - Banditura a turni dentro gli stessi 3 quadranti dell'asta
@@ -12422,6 +12422,103 @@ html.audio-modal-open{
 }
 </style>
 
+
+<style id="liveasta-v94-layout-settings">
+/* ==========================================================
+   LIVEASTA V94 — CENTRATURA PLAYER WIDE + LISTE COERENTI
+   ========================================================== */
+
+/* PC/tablet giocatore: il riquadro centrale deve stare realmente al centro
+   come header, budget e tasti. Smartphone invariato. */
+@media (min-width:701px){
+  #screen-player-buzzer > .phone-top-area{
+    align-self:center!important;
+    margin-left:auto!important;
+    margin-right:auto!important;
+  }
+}
+
+/* Classifica offerte banditore coerente con la lista READY. */
+#screen-auctioneer-board .sealed-ranking-auctioneer .sealed-ranking-title{
+  margin:0 0 10px!important;
+  color:#B8C2CF!important;
+  font-size:clamp(.82rem,1.05vw,1.05rem)!important;
+  font-weight:950!important;
+  letter-spacing:.11em!important;
+  text-align:center!important;
+}
+#screen-auctioneer-board .sealed-ranking-auctioneer .sealed-ranking-list{
+  gap:8px!important;
+  scrollbar-width:thin!important;
+  overscroll-behavior:contain!important;
+}
+#screen-auctioneer-board .sealed-ranking-auctioneer .sealed-ranking-row{
+  min-height:56px!important;
+  grid-template-columns:32px minmax(0,1fr) auto!important;
+  gap:10px!important;
+  padding:9px 12px!important;
+  border-radius:14px!important;
+  border:1px solid rgba(255,255,255,.13)!important;
+  background:rgba(17,24,33,.54)!important;
+  box-shadow:none!important;
+}
+#screen-auctioneer-board .sealed-ranking-auctioneer .sealed-ranking-row.winner{
+  border-color:rgba(61,220,151,.78)!important;
+  background:linear-gradient(90deg,rgba(61,220,151,.15),rgba(17,24,33,.58))!important;
+  box-shadow:inset 3px 0 0 #3DDC97!important;
+}
+#screen-auctioneer-board .sealed-ranking-auctioneer .sealed-ranking-pos{
+  width:30px!important;height:30px!important;
+  background:#202938!important;
+  color:#fff!important;
+  font-size:.78rem!important;
+  font-weight:950!important;
+}
+#screen-auctioneer-board .sealed-ranking-auctioneer .sealed-ranking-row.winner .sealed-ranking-pos{
+  background:#3DDC97!important;color:#07140C!important;
+}
+#screen-auctioneer-board .sealed-ranking-auctioneer .sealed-ranking-team{
+  color:#fff!important;
+  font-size:clamp(.96rem,1.15vw,1.25rem)!important;
+  font-weight:950!important;
+  line-height:1.05!important;
+  white-space:normal!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
+  overflow-wrap:anywhere!important;
+}
+#screen-auctioneer-board .sealed-ranking-auctioneer .sealed-ranking-value{
+  color:#fff!important;
+  font-size:clamp(1rem,1.18vw,1.28rem)!important;
+  font-weight:1000!important;
+}
+#screen-auctioneer-board .sealed-ranking-auctioneer .sealed-ranking-row.winner .sealed-ranking-value{
+  color:#52E0A5!important;
+}
+
+/* Opzione nel riquadro Banditura a turni. */
+.nomination-auto-bid-one-option{
+  margin:10px 0 2px;
+  padding:10px 12px;
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:12px;
+  background:rgba(17,24,33,.46);
+  cursor:pointer;
+}
+.nomination-auto-bid-one-option input{
+  flex:0 0 auto;
+  width:19px!important;height:19px!important;
+  margin:1px 0 0!important;
+  accent-color:#3DDC97;
+}
+.nomination-auto-bid-one-copy{min-width:0;display:flex;flex-direction:column;gap:3px}
+.nomination-auto-bid-one-copy b{color:#fff;font-size:.86rem}
+.nomination-auto-bid-one-copy small{color:#AEB8C4;font-size:.68rem;line-height:1.25}
+</style>
+
 </head>
 <body>
 
@@ -12432,7 +12529,7 @@ html.audio-modal-open{
              aria-label="Apri Impostazioni LIVEASTA"
              onclick="openAdminLogin()"
              onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openAdminLogin();}">
-            LIVEASTA V93
+            LIVEASTA V94
         </div>
         <div class="setup-card">
             <h1 class="logo-text"><span class="rosa">LIVE</span><span class="rush">ASTA</span></h1>
@@ -12835,7 +12932,7 @@ html.audio-modal-open{
 
     <div id="screen-admin" class="screen">
         <div class="setup-card" style="max-width:1100px; width:96%; padding:24px;">
-            <div class="admin-version-badge">LIVEASTA · VERSIONE V93</div>
+            <div class="admin-version-badge">LIVEASTA · VERSIONE V94</div>
             <h1>Gestione stanze</h1>
             <p class="subtitle">Nome, password, modifica ed eliminazione</p>
 
@@ -13340,6 +13437,7 @@ html.audio-modal-open{
                     <div><span class="field-label">Password</span><input id="control-room-password" class="minimal-input"></div>
                     
                     <div><span class="field-label">Timer asta</span><input id="control-room-timer" type="number" class="minimal-input" min="1" max="60"></div>
+                    <div><span class="field-label">Blocco rilanci (sec.)</span><input id="control-bid-cooldown" type="number" class="minimal-input" min="0.1" max="5" step="0.1" inputmode="decimal" value="0.5"></div>
                     <div><span class="field-label">Countdown pre-asta</span><input id="control-room-prep" type="number" class="minimal-input" min="1" max="15"></div>
                     <div><span class="field-label">Timer busta chiusa</span><input id="control-sealed-timer" type="number" class="minimal-input" min="5" max="180" value="30"></div>
                     <div><span class="field-label">Timer apertura buste</span><input id="control-sealed-reveal-timer" type="number" class="minimal-input" min="1" max="30" value="5"></div>
@@ -13427,6 +13525,14 @@ html.audio-modal-open{
             <div class="control-card nomination-control-card">
                 <div class="control-title"><div><h3 style="margin:0;">Banditura giocatori a turni</h3><div id="nomination-control-note" class="nomination-control-note">Si completa un ruolo alla volta. Chi ha completato il reparto viene saltato automaticamente.</div></div><span id="nomination-control-badge" class="badge-ok">DISATTIVA</span></div>
                 <div id="nomination-control-status" class="nomination-control-status">Modalità disattivata</div>
+
+                <label class="nomination-auto-bid-one-option">
+                    <input id="nomination-auto-bid-one" type="checkbox" onchange="setNominationAutoBidOne(this.checked)">
+                    <span class="nomination-auto-bid-one-copy">
+                        <b>Offerta 1 banditore</b>
+                        <small>Se attiva, nell'asta normale il giocatore bandito parte da 1 credito assegnato alla squadra che ha bandito.</small>
+                    </span>
+                </label>
 
                 <div class="nomination-turn-nav">
                     <button class="btn btn-secondary btn-compact" onclick="moveNominationTurn(-1)">← Turno precedente</button>
@@ -13811,10 +13917,10 @@ html.audio-modal-open{
         let currentWinner = "";
         let currentAuctionValue = 0;
 
-        // V65: anti-doppio rilancio.
-        // Il banditore accetta la prima offerta valida e ignora tutte le altre
-        // per 1,5 secondi. Il blocco è autoritativo sul dispositivo banditore.
-        const NORMAL_BID_COOLDOWN_MS = 1500;
+        // V94: anti-doppio rilancio configurabile.
+        // Default 0,5 secondi; il banditore resta l'autorità definitiva.
+        const DEFAULT_NORMAL_BID_COOLDOWN_MS = 500;
+        let normalBidCooldownMs = DEFAULT_NORMAL_BID_COOLDOWN_MS;
         let normalBidCooldownUntil = 0;
         let playerNormalBidCooldownUntil = 0;
         let playerNormalBidCooldownTimer = null;
@@ -13846,6 +13952,7 @@ html.audio-modal-open{
         let hybridReturnTimer=null;
         let roomControlReturnScreen = 'screen-auctioneer-board';
         let nominationState={enabled:false,role:null,turn_team_id:null,order_team_ids:[]};
+        let nominationAutoBidOneEnabled=false;
         let nominationReady=false;
         let nominationRequestPending=false;
 
@@ -14323,9 +14430,9 @@ html.audio-modal-open{
             closePlayerReadyBanner();
 
             isAuctionActive=true;
-            currentAuctionValue=0;
-            currentWinner='';
-            playerHasBidThisAuction=false;
+            currentAuctionValue=Math.max(0,parseInt(currentAuctionValue)||0);
+            currentWinner=String(currentWinner||'');
+            playerHasBidThisAuction=!!currentWinner && currentWinner===myTeamName;
 
             const timer=document.getElementById('player-countdown');
             timer.textContent=String(seconds);
@@ -14333,11 +14440,11 @@ html.audio-modal-open{
 
             document.getElementById('player-auction-title').textContent='MIGLIOR OFFERTA';
             const winner=document.getElementById('player-current-winner');
-            winner.textContent='Nessuno';
-            winner.style.color='var(--text-muted)';
-            document.getElementById('player-current-value').textContent='0';
+            winner.textContent=currentWinner||'Nessuno';
+            winner.style.color=currentWinner?(playerHasBidThisAuction?'var(--accent-green)':'var(--accent-red)'):'var(--text-muted)';
+            document.getElementById('player-current-value').textContent=String(currentAuctionValue||0);
 
-            setPlayerAuctionVisualState('neutral');
+            setPlayerAuctionVisualState(playerHasBidThisAuction?'winning':'neutral');
             setPlayerBidButtonsEnabled(true);
             updatePlayerTeamStatus();
         }
@@ -14623,6 +14730,65 @@ html.audio-modal-open{
         async function saveSealedRevealSeconds(seconds){
             sealedRevealSeconds=Math.max(1,Math.min(30,parseInt(seconds)||5));
             return sealedRevealSeconds;
+        }
+
+        function roomAuctionExtraSettingsKey(){
+            return currentRoomId ? `auction_extra_settings_${currentRoomId}` : '';
+        }
+
+        async function loadRoomAuctionExtraSettings(){
+            normalBidCooldownMs=DEFAULT_NORMAL_BID_COOLDOWN_MS;
+            nominationAutoBidOneEnabled=false;
+            const key=roomAuctionExtraSettingsKey();
+            if(!key)return;
+            try{
+                const {data,error}=await supabaseClient.from('fanta_app_data')
+                    .select('data').eq('key',key).maybeSingle();
+                if(error)throw error;
+                const cfg=data?.data||{};
+                const ms=parseInt(cfg.normal_bid_cooldown_ms);
+                if(Number.isFinite(ms))normalBidCooldownMs=Math.max(100,Math.min(5000,ms));
+                nominationAutoBidOneEnabled=!!cfg.nomination_auto_bid_one;
+            }catch(e){
+                console.warn('Caricamento impostazioni extra asta non riuscito',e);
+            }
+        }
+
+        async function saveRoomAuctionExtraSettings(){
+            const key=roomAuctionExtraSettingsKey();
+            if(!key)return false;
+            normalBidCooldownMs=Math.max(100,Math.min(5000,parseInt(normalBidCooldownMs)||DEFAULT_NORMAL_BID_COOLDOWN_MS));
+            try{
+                const {error}=await supabaseClient.from('fanta_app_data').upsert({
+                    key,
+                    data:{
+                        normal_bid_cooldown_ms:normalBidCooldownMs,
+                        nomination_auto_bid_one:!!nominationAutoBidOneEnabled
+                    },
+                    file_name:'impostazioni-extra-asta',
+                    updated_at:new Date().toISOString()
+                },{onConflict:'key'});
+                if(error)throw error;
+                return true;
+            }catch(e){
+                console.warn('Salvataggio impostazioni extra asta non riuscito',e);
+                return false;
+            }
+        }
+
+        async function setNominationAutoBidOne(enabled){
+            nominationAutoBidOneEnabled=!!enabled;
+            const input=document.getElementById('nomination-auto-bid-one');
+            if(input)input.checked=nominationAutoBidOneEnabled;
+            await saveRoomAuctionExtraSettings();
+        }
+
+        function nominationAutoBidTeam(){
+            if(!nominationState.enabled || !nominationAutoBidOneEnabled || sealedAuctionModeActive || !currentAuctionPlayer)return null;
+            const team=currentNominationTeam();
+            if(!team)return null;
+            const max=maxBidForTeam(team,currentAuctionPlayer.R);
+            return max>=1?team:null;
         }
 
         function sealedBidsStateKey(token=sealedAuctionToken){
@@ -16091,7 +16257,7 @@ html.audio-modal-open{
             const lv=document.getElementById('view-list');
             const av=document.getElementById('view-auction');
 
-            /* V93 — BANDITORE PC: niente più pagina full-screen per il turno.
+            /* V94 — BANDITORE PC: niente più pagina full-screen per il turno.
                Manteniamo i tre quadranti della banditura:
                sinistra = ultimo giocatore bandito, centro = turno,
                destra = classifica dell'ultima asta. */
@@ -20328,14 +20494,16 @@ html.audio-modal-open{
                     }
                     isAuctionActive = true;
                     clearPlayerNormalBidCooldown();
-                    currentAuctionValue = 0;
-                    currentWinner = '';
+                    currentAuctionValue = Math.max(0,parseInt(payload.payload?.value)||0);
+                    currentWinner = String(payload.payload?.winner||'');
+                    playerHasBidThisAuction=!!currentWinner && currentWinner===myTeamName;
                     const prepTimerEl=document.getElementById('player-countdown');
                     if(prepTimerEl)prepTimerEl.classList.remove('prep-countdown','danger','liveasta-last3');
-                    setPlayerAuctionVisualState('neutral');
+                    setPlayerAuctionVisualState(playerHasBidThisAuction?'winning':'neutral');
                     document.getElementById('player-auction-title').innerText = 'MIGLIOR OFFERTA';
-                    document.getElementById('player-current-winner').innerText = 'Nessuno';
-                    document.getElementById('player-current-winner').style.color = 'var(--text-muted)';
+                    document.getElementById('player-current-winner').innerText = currentWinner||'Nessuno';
+                    document.getElementById('player-current-winner').style.color = currentWinner?(playerHasBidThisAuction?'var(--accent-green)':'var(--accent-red)'):'var(--text-muted)';
+                    document.getElementById('player-current-value').innerText=String(currentAuctionValue||0);
                     setPlayerBidButtonsEnabled(true);
                     const t = clampNormalAuctionSeconds(payload.payload?.seconds ?? currentRoom?.timer_seconds ?? 5) || normalAuctionConfiguredSeconds();
                     document.getElementById('player-countdown').innerText = t;
@@ -20345,7 +20513,7 @@ html.audio-modal-open{
                     const t = clampNormalAuctionSeconds(payload.payload?.seconds);
 
                     // Fallback V66: se il browser ha sospeso il timeout,
-                    // il tick del banditore riattiva i pulsanti appena i 1,5s sono trascorsi.
+                    // il tick del banditore riattiva i pulsanti appena i intervallo configurato sono trascorsi.
                     if(
                         isAuctionActive &&
                         !playerSealedMode &&
@@ -20550,15 +20718,15 @@ html.audio-modal-open{
             }
         }
 
-        function applyPlayerNormalBidCooldownMs(durationMs=NORMAL_BID_COOLDOWN_MS){
+        function applyPlayerNormalBidCooldownMs(durationMs=normalBidCooldownMs){
             clearPlayerNormalBidCooldown();
 
-            const duration=Math.max(0,parseInt(durationMs)||NORMAL_BID_COOLDOWN_MS);
+            const duration=Math.max(0,parseInt(durationMs)||normalBidCooldownMs);
             playerNormalBidCooldownUntil=Date.now()+duration;
 
             // V67: i pulsanti restano colorati e cliccabili visivamente.
             // buzz() ignora localmente i tap nel cooldown e il banditore rimane
-            // comunque l'autorità definitiva sul blocco dei 1500 ms.
+            // comunque l'autorità definitiva sul blocco configurato.
             playerNormalBidCooldownTimer=setTimeout(()=>{
                 playerNormalBidCooldownTimer=null;
                 playerNormalBidCooldownUntil=0;
@@ -20844,7 +21012,7 @@ html.audio-modal-open{
         function exactBidActivate(knob){
             exactBidHoldTimer=null;
 
-            // Se il rilancio precedente è ancora nel lock da 1,5 s, mantieni
+            // Se il rilancio precedente è ancora nel lock da intervallo configurato, mantieni
             // la pressione e apri lo slider appena il lock termina.
             const cooldownLeft=Math.max(0,playerNormalBidCooldownUntil-Date.now());
             if(cooldownLeft>0 && exactBidPointerId!==null){
@@ -21347,6 +21515,7 @@ html.audio-modal-open{
 
             await loadNominationState();
             await loadAuctionPrepSeconds();
+            await loadRoomAuctionExtraSettings();
             await loadReadyMode();
             roomControlReturnScreen = 'screen-auctioneer-board';
             const listView=document.getElementById('view-list');
@@ -22151,6 +22320,20 @@ html.audio-modal-open{
             recentNormalBidIds=new Map();
             normalBidCooldownUntil=0;
             clearPlayerNormalBidCooldown();
+
+            // V94: opzionale offerta iniziale di 1 credito della squadra che ha bandito.
+            // Non apre il cooldown: è il valore di partenza dell'asta, non un tap concorrente.
+            const autoBidTeam=nominationAutoBidTeam();
+            if(autoBidTeam){
+                currentWinner=String(autoBidTeam.name||'');
+                currentAuctionValue=1;
+                recordNormalBid(autoBidTeam,1);
+            }else{
+                currentWinner='';
+                currentAuctionValue=0;
+            }
+            const initialBidRanking=normalBidRanking();
+
             showAuctionPanels();
             isAuctionActive = true;
             currentTimer = normalAuctionConfiguredSeconds();
@@ -22159,7 +22342,7 @@ html.audio-modal-open{
                 player:livePlayerSnapshot(),
                 winner:currentWinner||'',
                 value:currentAuctionValue||0,
-                normal_bid_ranking:[],
+                normal_bid_ranking:initialBidRanking,
                 seconds:currentTimer,
                 deadline_at:Date.now()+currentTimer*1000,
                 ready_token:null,ready_required_ids:[],ready_ids:[],
@@ -22167,14 +22350,24 @@ html.audio-modal-open{
             });
             
             document.getElementById('auction-title-display').innerText = "MIGLIOR OFFERENTE";
-            document.getElementById('winner-display').innerText = "NESSUNO";
+            const winnerDisplay=document.getElementById('winner-display');
+            winnerDisplay.innerText=currentWinner||"NESSUNO";
+            winnerDisplay.style.color=currentWinner?"var(--accent-blue)":"var(--text-muted)";
+            const startValueDisplay=document.getElementById('current-value-display');
+            startValueDisplay.classList.remove('ready-label');
+            startValueDisplay.innerText=String(currentAuctionValue||0);
             const activeCountdownEl=document.getElementById('countdown-display');
             activeCountdownEl.classList.remove('prep-countdown','danger','liveasta-last3');
             activeCountdownEl.innerText = currentTimer;
             activeCountdownEl.style.color = "var(--accent-green)";
             
             playSound('audio-start');
-            if(channel) channel.send({type:'broadcast',event:'auction_started',payload:{player_id:currentAuctionPlayer?.Id,seconds:currentTimer}}).catch(()=>{});
+            if(channel) channel.send({type:'broadcast',event:'auction_started',payload:{
+                player_id:currentAuctionPlayer?.Id,
+                seconds:currentTimer,
+                winner:currentWinner||'',
+                value:currentAuctionValue||0
+            }}).catch(()=>{});
             hybridStartNormalAuction(currentTimer);
             if(currentTimer>0 && currentTimer<=3)playAuctionFinalCountdown(currentTimer);
             
@@ -22216,8 +22409,8 @@ html.audio-modal-open{
                 }
             }
 
-            // Il primo rilancio valido vince la finestra; gli altri 1500 ms
-            // vengono ignorati senza cambiare graficamente i pulsanti.
+            // Il primo rilancio valido vince la finestra; le offerte arrivate durante
+            // il blocco configurato vengono ignorate senza cambiare graficamente i pulsanti.
             if(receivedAt<normalBidCooldownUntil)return;
 
             const team = teamId ? teamsCache.find(t => String(t.id) === String(teamId)) : findTeamByName(teamName);
@@ -22239,8 +22432,8 @@ html.audio-modal-open{
                 return;
             }
 
-            // Solo una OFFERTA VALIDA apre il blocco globale di 1,5 secondi.
-            normalBidCooldownUntil=Date.now()+NORMAL_BID_COOLDOWN_MS;
+            // Solo una OFFERTA VALIDA apre il blocco globale per l’intervallo configurato.
+            normalBidCooldownUntil=Date.now()+normalBidCooldownMs;
 
             currentWinner = team.name;
             currentAuctionValue = proposed;
@@ -22275,12 +22468,12 @@ html.audio-modal-open{
                 payload:{
                     winner:currentWinner,
                     value:currentAuctionValue,
-                    cooldown_ms:NORMAL_BID_COOLDOWN_MS
+                    cooldown_ms:normalBidCooldownMs
                 }
             }).catch(()=>{});
 
             if(isAuctioneerPlayerIdentity()){
-                applyPlayerNormalBidCooldownMs(NORMAL_BID_COOLDOWN_MS);
+                applyPlayerNormalBidCooldownMs(normalBidCooldownMs);
             }
             hybridNormalBidUpdate();
         }
@@ -22336,7 +22529,7 @@ html.audio-modal-open{
                 return;
             }
 
-            normalBidCooldownUntil=Date.now()+NORMAL_BID_COOLDOWN_MS;
+            normalBidCooldownUntil=Date.now()+normalBidCooldownMs;
             currentWinner=team.name;
             currentAuctionValue=proposed;
             currentTimer=normalAuctionConfiguredSeconds();
@@ -22367,11 +22560,11 @@ html.audio-modal-open{
             speakBidValue(currentAuctionValue);
             if(channel)channel.send({
                 type:'broadcast',event:'auction_update',
-                payload:{winner:currentWinner,value:currentAuctionValue,cooldown_ms:NORMAL_BID_COOLDOWN_MS}
+                payload:{winner:currentWinner,value:currentAuctionValue,cooldown_ms:normalBidCooldownMs}
             }).catch(()=>{});
 
             if(isAuctioneerPlayerIdentity()){
-                applyPlayerNormalBidCooldownMs(NORMAL_BID_COOLDOWN_MS);
+                applyPlayerNormalBidCooldownMs(normalBidCooldownMs);
                 updatePlayerTeamStatus();
             }
             hybridNormalBidUpdate();
@@ -22654,6 +22847,7 @@ html.audio-modal-open{
             await loadRoomState();
             await loadNominationState();
             await loadAuctionPrepSeconds();
+            await loadRoomAuctionExtraSettings();
             await loadReadyMode();
             await loadSealedTimerSeconds();
             await loadSealedRevealSeconds();
@@ -22706,7 +22900,7 @@ html.audio-modal-open{
 
             showScreen(roomControlReturnScreen || 'screen-auctioneer-board');
         }
-        async function refreshRoomControl() { await loadRoomState(); await loadAuctionPrepSeconds(); await loadSealedTimerSeconds(); await loadSealedRevealSeconds(); renderRoomControl(); }
+        async function refreshRoomControl() { await loadRoomState(); await loadAuctionPrepSeconds(); await loadRoomAuctionExtraSettings(); await loadSealedTimerSeconds(); await loadSealedRevealSeconds(); renderRoomControl(); }
 
         function renderRoomControl() {
             if (!currentRoom) return;
@@ -22737,6 +22931,10 @@ html.audio-modal-open{
             document.getElementById('control-room-name').value=currentRoom.name||'';
             document.getElementById('control-room-password').value=currentRoom.password||'';
             document.getElementById('control-room-timer').value=currentRoom.timer_seconds||auctionTimeLimit||5;
+            const cooldownInput=document.getElementById('control-bid-cooldown');
+            if(cooldownInput)cooldownInput.value=(normalBidCooldownMs/1000).toFixed(1).replace(/\.0$/,'');
+            const autoBidOneInput=document.getElementById('nomination-auto-bid-one');
+            if(autoBidOneInput)autoBidOneInput.checked=!!nominationAutoBidOneEnabled;
             const prepInput=document.getElementById('control-room-prep'); if(prepInput) prepInput.value=auctionPrepSeconds||5;
             const sealedInput=document.getElementById('control-sealed-timer'); if(sealedInput) sealedInput.value=sealedTimerSeconds||30;
             const revealInput=document.getElementById('control-sealed-reveal-timer'); if(revealInput) revealInput.value=sealedRevealSeconds||5;
@@ -22767,6 +22965,10 @@ html.audio-modal-open{
         }
 
         async function saveRoomConfig() {
+            const rawCooldown=parseFloat(String(document.getElementById('control-bid-cooldown')?.value||'0.5').replace(',','.'));
+            const cooldownSeconds=Number.isFinite(rawCooldown)?Math.max(.1,Math.min(5,rawCooldown)):.5;
+            normalBidCooldownMs=Math.round(cooldownSeconds*1000);
+            nominationAutoBidOneEnabled=!!document.getElementById('nomination-auto-bid-one')?.checked;
             const prepSeconds=Math.max(1,Math.min(15,parseInt(document.getElementById('control-room-prep')?.value)||5));
             const sealedSeconds=Math.max(5,Math.min(180,parseInt(document.getElementById('control-sealed-timer')?.value)||30));
             const revealSeconds=Math.max(1,Math.min(30,parseInt(document.getElementById('control-sealed-reveal-timer')?.value)||5));
@@ -22801,6 +23003,8 @@ html.audio-modal-open{
             auctionPrepSeconds=payload.prep_seconds;
             sealedTimerSeconds=payload.sealed_timer_seconds;
             sealedRevealSeconds=payload.sealed_reveal_seconds;
+            const extraSaved=await saveRoomAuctionExtraSettings();
+            if(!extraSaved)console.warn('Impostazioni extra non salvate: verranno mantenuti i valori correnti su questo dispositivo.');
             await loadRoomState();
             await loadRooms();
             renderRoomControl();
@@ -24605,9 +24809,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyBrand(){
-    document.title='LIVEASTA V93';
+    document.title='LIVEASTA V94';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V93';
+      el.textContent='LIVEASTA · VERSIONE V94';
     });
     document.querySelectorAll('.logo-text').forEach(el=>{
       const a=el.querySelector('.rosa');
@@ -24981,7 +25185,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   function fitAuctioneerName(){
     const el=document.getElementById('auction-player-name-top');
     if(!el) return;
-    // V93: stessa presenza visiva del nome usato nel READY.
+    // V94: stessa presenza visiva del nome usato nel READY.
     // Parte grande (64px) e si riduce solo se il nome non entra.
     if(typeof fitTextToBox==='function'){
       fitTextToBox(el,64,18,true);
@@ -25018,9 +25222,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyV85Brand(){
-    document.title='LIVEASTA V93';
+    document.title='LIVEASTA V94';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V93';
+      el.textContent='LIVEASTA · VERSIONE V94';
     });
   }
 
