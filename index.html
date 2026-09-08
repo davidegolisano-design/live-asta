@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>LIVEASTA V87</title>
+    <title>LIVEASTA V88</title>
     <meta name="theme-color" content="#0D1117">
     <meta name="color-scheme" content="dark">
     <meta name="mobile-web-app-capable" content="yes">
@@ -11236,7 +11236,8 @@ html.audio-modal-open{
 /* ==========================================================
    LIVEASTA V84 — READY/SKIP INTEGRATO + FVM/LISTA + COLORI
    Mantiene il gate READY esistente: READY e SKIP contano entrambi
-   come conferma; SKIP rinuncia soltanto al diritto di offrire.
+   come risposta. Se almeno uno sceglie READY, tutti gli abilitati partecipano;
+   solo con SKIP unanime il giocatore viene dichiarato invenduto.
    ========================================================== */
 
 /* Un po' più di respiro tra nome / miniatura / ruolo-squadra,
@@ -12189,7 +12190,7 @@ html.audio-modal-open{
 
     <div id="screen-admin" class="screen">
         <div class="setup-card" style="max-width:1100px; width:96%; padding:24px;">
-            <div class="admin-version-badge">LIVEASTA · VERSIONE V47</div>
+            <div class="admin-version-badge">LIVEASTA · VERSIONE V88</div>
             <h1>Gestione stanze</h1>
             <p class="subtitle">Nome, password, modifica ed eliminazione</p>
 
@@ -12734,7 +12735,7 @@ html.audio-modal-open{
                 <div class="control-title">
                     <div>
                         <h3 style="margin:0;">Ready prima dell'asta</h3>
-                        <div class="ready-control-note">Se attivo, tutte le squadre abilitate devono scegliere READY o SKIP. READY consente di offrire; SKIP rinuncia a quell'asta. Gli offline restano obbligatori.</div>
+                        <div class="ready-control-note">Se attivo, tutte le squadre abilitate devono scegliere READY o SKIP. Se almeno una squadra sceglie READY, l'asta parte per tutti gli abilitati; solo se tutti scelgono SKIP il giocatore va subito invenduto. Gli offline restano obbligatori.</div>
                     </div>
                     <span id="ready-control-badge" class="badge-ok">DISATTIVO</span>
                 </div>
@@ -14074,7 +14075,7 @@ html.audio-modal-open{
             const st=document.getElementById('ready-control-status');
             if(badge){badge.textContent=readyModeEnabled?'ATTIVO':'DISATTIVO';badge.classList.toggle('active',readyModeEnabled);}
             if(btn)btn.textContent=readyModeEnabled?'Disattiva READY':'Attiva READY';
-            if(st)st.textContent=readyModeEnabled?'Il countdown parte quando tutte le squadre abilitate hanno risposto READY o SKIP. Se fanno tutti SKIP il giocatore è subito invenduto.':'Il countdown parte subito dopo la scelta del calciatore.';
+            if(st)st.textContent=readyModeEnabled?'Il countdown parte quando tutte le squadre abilitate hanno risposto. Se almeno uno sceglie READY, partecipano tutti; se fanno tutti SKIP il giocatore è subito invenduto.':'Il countdown parte subito dopo la scelta del calciatore.';
         }
 
 
@@ -14439,36 +14440,32 @@ html.audio-modal-open{
             broadcastReadyState();
             closeReadyGateDedicated();
 
-            // READY e SKIP chiudono entrambi il gate. Se hanno fatto SKIP tutti,
-            // chiusura forzata INVENDUTO: vincitore vuoto, prezzo 0 e nessuna RPC
-            // di assegnazione può essere eseguita.
+            // V88 — nuova semantica READY/SKIP:
+            // - se TUTTI scelgono SKIP => invenduto immediato a 0;
+            // - se anche UNA sola squadra sceglie READY => l'asta parte e TUTTE
+            //   le squadre abilitate possono partecipare, comprese quelle che avevano SKIP.
             if(allSkipped){
                 sealedAuctionModeActive=false;
                 sealedAuctionToken=null;
                 sealedEligibleIds=[];
                 currentWinner='';
                 currentAuctionValue=0;
+                playerSkippedCurrentAuction=false;
                 showAuctionPanels();
                 endAuction(true);
                 return;
             }
 
-            {
+            // Da questo momento SKIP non è più un vincolo individuale: serviva solo
+            // a capire se la risposta era unanime. Ripuliamo lo stato prima dell'asta
+            // così reconnect, busta chiusa e offerte normali vedono tutti come abilitati.
+            readySkipPlayers=new Set();
+            playerSkippedCurrentAuction=false;
 
-                if(sealedAuctionModeActive){
-                    sealedEligibleIds=sealedEligibleIds.filter(id=>!readySkipPlayers.has(String(id)));
-                    if(sealedEligibleIds.length===0){
-                        sealedAuctionModeActive=false;
-                        currentWinner='';
-                        currentAuctionValue=0;
-                        showAuctionPanels();
-                        endAuction();
-                    }else{
-                        startSealedAuctionTimer();
-                    }
-                }else{
-                    startCountdown();
-                }
+            if(sealedAuctionModeActive){
+                startSealedAuctionTimer();
+            }else{
+                startCountdown();
             }
         }
 
@@ -14680,6 +14677,7 @@ html.audio-modal-open{
             if(!playerReadyToken||String(data?.token)!==String(playerReadyToken))return;
 
             if(data?.waiting===false){
+                playerSkippedCurrentAuction=false;
                 closePlayerReadyBanner();
                 return;
             }
@@ -19319,6 +19317,7 @@ html.audio-modal-open{
                     }
                 });
                 channel.on('broadcast',{event:'sealed_bid_start'},(payload)=>{
+                    playerSkippedCurrentAuction=false;
                     playSound('audio-start');
                     const d=payload.payload||{};
                     const token=String(d.token||'');
@@ -19448,6 +19447,7 @@ html.audio-modal-open{
                 });
 
                 channel.on('broadcast', { event: 'prep_started' }, (payload) => {
+                    playerSkippedCurrentAuction=false;
                     playSound('audio-prep');
                     closePlayerReadyBanner();
                     isAuctionActive = false;
@@ -19471,6 +19471,7 @@ html.audio-modal-open{
                     el.classList.add('prep-countdown');
                 });
                 channel.on('broadcast', { event: 'auction_started' }, (payload) => {
+                    playerSkippedCurrentAuction=false;
                     playSound('audio-start');
                     stopPlayerSealedCountdown();
                     playerSealedRevealLocalEndAt=0;
@@ -19760,7 +19761,6 @@ html.audio-modal-open{
             const maxBid = team && currentAuctionPlayer ? maxBidForTeam(team, role) : 0;
             const baseAllowed = Boolean(
                 isAuctionActive &&
-                !playerSkippedCurrentAuction &&
                 currentAuctionPlayer &&
                 team &&
                 totalFree > 0 &&
@@ -19808,7 +19808,7 @@ html.audio-modal-open{
                 sealed.style.display=playerSealedMode?'block':'none';
             }
 
-            enabled=!!enabled && !playerSkippedCurrentAuction;
+            enabled=!!enabled;
 
             if(input){
                 input.disabled=!enabled || playerSealedSubmitted;
@@ -19903,7 +19903,7 @@ html.audio-modal-open{
 
         function exactBidRange(){
             const team=exactBidTeam();
-            if(!isAuctionActive || playerSkippedCurrentAuction || playerSealedMode || !currentAuctionPlayer || !team){
+            if(!isAuctionActive || playerSealedMode || !currentAuctionPlayer || !team){
                 return {valid:false,min:0,max:0};
             }
             const role=String(currentAuctionPlayer.R||'');
@@ -20821,7 +20821,6 @@ html.audio-modal-open{
             // nessuna offerta tardiva viene accettata.
             if(sealedDeadlineAt && Date.now()>sealedDeadlineAt+250)return;
             const teamId=String(data?.team_id||'');
-            if(readySkipPlayers.has(teamId))return;
             if(!sealedEligibleIds.includes(teamId))return;
             if(sealedBids.has(teamId))return;
 
@@ -21262,7 +21261,7 @@ html.audio-modal-open{
                 phase:'prep',player:livePlayerSnapshot(),winner:'',value:0,
                 seconds:prepTime,deadline_at:prepDeadline,
                 ready_token:null,ready_required_ids:[],ready_ids:[],
-                skip_ids:[...readySkipPlayers]
+                skip_ids:[]
             });
             playSound('audio-prep');
             if(channel) channel.send({type:'broadcast',event:'prep_started',payload:{seconds:prepTime,player_id:currentAuctionPlayer?.Id}}).catch(()=>{});
@@ -21315,7 +21314,7 @@ html.audio-modal-open{
                 seconds:currentTimer,
                 deadline_at:Date.now()+currentTimer*1000,
                 ready_token:null,ready_required_ids:[],ready_ids:[],
-                skip_ids:[...readySkipPlayers]
+                skip_ids:[]
             });
             
             document.getElementById('auction-title-display').innerText = "MIGLIOR OFFERENTE";
@@ -21374,10 +21373,6 @@ html.audio-modal-open{
 
             const team = teamId ? teamsCache.find(t => String(t.id) === String(teamId)) : findTeamByName(teamName);
             if (!team) return;
-            if(readySkipPlayers.has(String(team.id))){
-                if(channel)channel.send({type:'broadcast',event:'bid_rejected',payload:{team_id:team.id,reason:'HAI SCELTO SKIP'}}).catch(()=>{});
-                return;
-            }
             const raise = Math.max(1, parseInt(amount) || 1);
             const proposed = currentAuctionValue + raise;
             const maxBid = maxBidForTeam(team, currentAuctionPlayer.R);
@@ -21461,10 +21456,6 @@ html.audio-modal-open{
                 ? teamsCache.find(t=>String(t.id)===String(teamId))
                 : findTeamByName(teamName);
             if(!team)return;
-            if(readySkipPlayers.has(String(team.id))){
-                if(channel)channel.send({type:'broadcast',event:'bid_rejected',payload:{team_id:team.id,reason:'HAI SCELTO SKIP'}}).catch(()=>{});
-                return;
-            }
 
             const proposed=Math.max(1,parseInt(targetValue)||0);
             const maxBid=maxBidForTeam(team,currentAuctionPlayer.R);
@@ -23765,9 +23756,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyBrand(){
-    document.title='LIVEASTA V87';
+    document.title='LIVEASTA V88';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V87';
+      el.textContent='LIVEASTA · VERSIONE V88';
     });
     document.querySelectorAll('.logo-text').forEach(el=>{
       const a=el.querySelector('.rosa');
@@ -24172,9 +24163,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyV85Brand(){
-    document.title='LIVEASTA V87';
+    document.title='LIVEASTA V88';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V87';
+      el.textContent='LIVEASTA · VERSIONE V88';
     });
   }
 
