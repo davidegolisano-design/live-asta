@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>LIVEASTA V95</title>
+    <title>LIVEASTA V96</title>
     <meta name="theme-color" content="#0D1117">
     <meta name="color-scheme" content="dark">
     <meta name="mobile-web-app-capable" content="yes">
@@ -12606,6 +12606,147 @@ html.audio-modal-open{
 }
 </style>
 
+
+
+<style id="liveasta-v96-final-ui-fixes">
+/* ==========================================================
+   LIVEASTA V96 — palette ruoli unica in tutta l'app
+   P = giallo · D = verde · C = blu · A = rosso
+   ========================================================== */
+html body .role-P,
+html body #room-roster-player-preview-role.role-P,
+html body #auction-dashboard.mode-pc .ard-role.role-P,
+html body #auction-dashboard.mode-pc #auctioneer-ready-desktop .ard-role.role-P,
+html body #auction-dashboard.mode-pc #view-auction #auction-player-role.role-P,
+html body .player-role-filter.role-P,
+html body .budget-role.role-P{
+  background:#FFD43B!important;color:#17120A!important;
+}
+html body .role-D,
+html body #room-roster-player-preview-role.role-D,
+html body #auction-dashboard.mode-pc .ard-role.role-D,
+html body #auction-dashboard.mode-pc #auctioneer-ready-desktop .ard-role.role-D,
+html body #auction-dashboard.mode-pc #view-auction #auction-player-role.role-D,
+html body .player-role-filter.role-D,
+html body .budget-role.role-D{
+  background:#22C55E!important;color:#06140B!important;
+}
+html body .role-C,
+html body #room-roster-player-preview-role.role-C,
+html body #auction-dashboard.mode-pc .ard-role.role-C,
+html body #auction-dashboard.mode-pc #auctioneer-ready-desktop .ard-role.role-C,
+html body #auction-dashboard.mode-pc #view-auction #auction-player-role.role-C,
+html body .player-role-filter.role-C,
+html body .budget-role.role-C{
+  background:#3B82F6!important;color:#fff!important;
+}
+html body .role-A,
+html body #room-roster-player-preview-role.role-A,
+html body #auction-dashboard.mode-pc .ard-role.role-A,
+html body #auction-dashboard.mode-pc #auctioneer-ready-desktop .ard-role.role-A,
+html body #auction-dashboard.mode-pc #view-auction #auction-player-role.role-A,
+html body .player-role-filter.role-A,
+html body .budget-role.role-A{
+  background:#EF4444!important;color:#fff!important;
+}
+/* Macro-ruoli MANTRA, quando sono mostrati come badge. */
+html body .role-POR,html body .role-Por{background:#FFD43B!important;color:#17120A!important}
+html body .role-DD,html body .role-DS,html body .role-DC,
+html body .role-Dd,html body .role-Ds,html body .role-Dc{background:#22C55E!important;color:#06140B!important}
+html body .role-E,html body .role-M,html body .role-W,html body .role-T{background:#3B82F6!important;color:#fff!important}
+html body .role-PC,html body .role-Pc{background:#EF4444!important;color:#fff!important}
+
+/* Selettore random manuale coerente con la palette. */
+html body .random-role-btn.p{background:linear-gradient(180deg,#FFE66A,#DDB51B)!important;color:#17120A!important}
+html body .random-role-btn.d{background:linear-gradient(180deg,#39D87A,#15984A)!important;color:#06140B!important}
+html body .random-role-btn.c{background:linear-gradient(180deg,#5AA2FF,#2563C9)!important;color:#fff!important}
+html body .random-role-btn.a{background:linear-gradient(180deg,#F76565,#C93434)!important;color:#fff!important}
+
+/* AUTO RANDOM: un ruolo spento deve sembrare davvero spento, non solo senza cornice. */
+html body .auto-random-role:not(:has(input:checked)){
+  opacity:.24!important;
+  filter:saturate(.08) brightness(.72)!important;
+  background:#080C12!important;
+  border-color:#1D2632!important;
+  box-shadow:none!important;
+}
+html body .auto-random-role:not(:has(input:checked)) span{color:#8290A0!important}
+html body .auto-random-role.role-P:has(input:checked){color:#FFD43B!important;background:rgba(255,212,59,.18)!important;opacity:1!important;filter:none!important}
+html body .auto-random-role.role-D:has(input:checked){color:#22C55E!important;background:rgba(34,197,94,.16)!important;opacity:1!important;filter:none!important}
+html body .auto-random-role.role-C:has(input:checked){color:#3B82F6!important;background:rgba(59,130,246,.18)!important;opacity:1!important;filter:none!important}
+html body .auto-random-role.role-A:has(input:checked){color:#EF4444!important;background:rgba(239,68,68,.17)!important;opacity:1!important;filter:none!important}
+html body .auto-random-role:has(input:checked) span{color:#fff!important}
+
+/* ROSE BANDITORE: colonne indipendenti, nessuna sovrapposizione anche con 20 squadre. */
+#screen-all-rosters .all-rosters-grid{
+  display:grid!important;
+  grid-template-columns:repeat(var(--roster-columns,3),minmax(0,1fr))!important;
+  grid-auto-rows:auto!important;
+  grid-auto-flow:row!important;
+  align-items:start!important;
+  align-content:start!important;
+  gap:12px!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  position:relative!important;
+}
+#screen-all-rosters .roster-stack-column{
+  min-width:0!important;
+  display:flex!important;
+  flex-direction:column!important;
+  gap:12px!important;
+  align-items:stretch!important;
+  position:relative!important;
+}
+#screen-all-rosters .roster-team-card{
+  width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+  margin:0!important;
+  position:relative!important;
+  inset:auto!important;
+  transform:none!important;
+  flex:0 0 auto!important;
+  box-sizing:border-box!important;
+  overflow:hidden!important;
+}
+@media(max-width:680px){
+  #screen-all-rosters .all-rosters-grid{grid-template-columns:1fr!important}
+}
+
+/* Asta completata: vero stato terminale a pieno schermo della plancia banditore. */
+#screen-auctioneer-board .nomination-stage.auction-completed-fullscreen{
+  inset:0!important;
+  top:0!important;
+  z-index:5000!important;
+  padding:20px!important;
+  background:
+    radial-gradient(circle at 50% 45%,rgba(70,197,255,.16),transparent 36%),
+    linear-gradient(145deg,#071521 0%,#101B27 55%,#071019 100%)!important;
+}
+#screen-auctioneer-board .nomination-stage.auction-completed-fullscreen .nomination-stage-inner{
+  width:100%!important;max-width:none!important;min-height:100%!important;
+  justify-content:center!important;gap:0!important;
+}
+#screen-auctioneer-board .nomination-stage.auction-completed-fullscreen .nomination-stage-kicker,
+#screen-auctioneer-board .nomination-stage.auction-completed-fullscreen .nomination-stage-team,
+#screen-auctioneer-board .nomination-stage.auction-completed-fullscreen .nomination-stage-role,
+#screen-auctioneer-board .nomination-stage.auction-completed-fullscreen .nomination-stage-player,
+#screen-auctioneer-board .nomination-stage.auction-completed-fullscreen .nomination-stage-ready{
+  display:none!important;
+}
+#screen-auctioneer-board .nomination-stage.auction-completed-fullscreen .nomination-stage-title{
+  display:block!important;
+  width:100%!important;
+  font-size:clamp(4rem,10vw,11rem)!important;
+  line-height:.92!important;
+  letter-spacing:.035em!important;
+  color:#fff!important;
+  text-align:center!important;
+  text-shadow:0 8px 40px rgba(0,0,0,.45),0 0 34px rgba(70,197,255,.14)!important;
+}
+</style>
+
 </head>
 <body>
 
@@ -12616,7 +12757,7 @@ html.audio-modal-open{
              aria-label="Apri Impostazioni LIVEASTA"
              onclick="openAdminLogin()"
              onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openAdminLogin();}">
-            LIVEASTA V95
+            LIVEASTA V96
         </div>
         <div class="setup-card">
             <h1 class="logo-text"><span class="rosa">LIVE</span><span class="rush">ASTA</span></h1>
@@ -13019,7 +13160,7 @@ html.audio-modal-open{
 
     <div id="screen-admin" class="screen">
         <div class="setup-card" style="max-width:1100px; width:96%; padding:24px;">
-            <div class="admin-version-badge">LIVEASTA · VERSIONE V95</div>
+            <div class="admin-version-badge">LIVEASTA · VERSIONE V96</div>
             <h1>Gestione stanze</h1>
             <p class="subtitle">Nome, password, modifica ed eliminazione</p>
 
@@ -16423,7 +16564,9 @@ html.audio-modal-open{
         }
 
         function hideNominationStage(){
-            document.getElementById('nomination-stage')?.classList.remove('open');
+            const nominationStage=document.getElementById('nomination-stage');
+            nominationStage?.classList.remove('open');
+            nominationStage?.classList.remove('auction-completed-fullscreen');
             const readyDesktop=document.getElementById('auctioneer-ready-desktop');
             if(readyDesktop){
                 readyDesktop.classList.remove('open');
@@ -16439,6 +16582,38 @@ html.audio-modal-open{
             const desktopTurn=!!dashboard?.classList.contains('mode-pc');
             const lv=document.getElementById('view-list');
             const av=document.getElementById('view-auction');
+            const stage=document.getElementById('nomination-stage');
+
+            /* V96 — fine asta: quando non esiste più alcun ruolo/turno disponibile,
+               la plancia banditore diventa una schermata terminale a pieno schermo. */
+            if(!role){
+                const readyDesktop=document.getElementById('auctioneer-ready-desktop');
+                if(readyDesktop){
+                    readyDesktop.classList.remove('open');
+                    readyDesktop.setAttribute('aria-hidden','true');
+                }
+                if(lv)lv.style.display='none';
+                if(av){
+                    av.classList.add('auction-view-hidden');
+                    av.classList.remove('nomination-turn-desktop');
+                    av.style.display='none';
+                }
+                const kicker=document.getElementById('nomination-stage-kicker');
+                const title=document.getElementById('nomination-stage-title');
+                const teamNode=document.getElementById('nomination-stage-team');
+                const roleNode=document.getElementById('nomination-stage-role');
+                const playerBox=document.getElementById('nomination-stage-player');
+                const readyBox=document.getElementById('nomination-stage-ready');
+                if(kicker)kicker.textContent='';
+                if(title)title.textContent='ASTA COMPLETATA';
+                if(teamNode)teamNode.textContent='';
+                if(roleNode)roleNode.textContent='';
+                if(playerBox)playerBox.style.display='none';
+                if(readyBox)readyBox.style.display='none';
+                stage?.classList.add('auction-completed-fullscreen','open');
+                return;
+            }
+            stage?.classList.remove('auction-completed-fullscreen');
 
             /* V94 — BANDITORE PC: niente più pagina full-screen per il turno.
                Manteniamo i tre quadranti della banditura:
@@ -16679,6 +16854,13 @@ html.audio-modal-open{
             const nextBtn=document.getElementById('btn-next');
             if(nextBtn)nextBtn.style.display='none';
 
+            // V96: a rose complete la schermata finale ha precedenza anche in modalità banditore+giocatore.
+            if(!nominationState.role){
+                showScreen('screen-auctioneer-board');
+                showNominationTurnStage();
+                return;
+            }
+
             // BANDITORE + GIOCATORE:
             // - se è il suo turno -> telecomando + listone per bandire;
             // - se tocca a un altro -> normale plancia/listone banditore,
@@ -16778,7 +16960,7 @@ html.audio-modal-open{
                 const priority=shortlistPriority(p.Id);
                 return `<button class="nomination-player-row${priority?` priority-${priority}`:''}" onclick="submitNomination('${p.Id}')">
                     <span class="nomination-priority-slot">${priorityBadgeHtml(priority)}</span>
-                    <span class="role-badge">${escapeHtml(r)}</span>
+                    <span class="role-badge role-${escapeHtml(String(r||'').toUpperCase())}">${escapeHtml(r)}</span>
                     <span class="nomination-player-main"><b>${escapeHtml(p.Nome)}</b><small>${escapeHtml(p.Squadra)}</small></span>
                     <span class="nomination-player-fvm">${escapeHtml(String(nominationPlayerValue(p)||''))}</span>
                 </button>`;
@@ -18443,7 +18625,7 @@ html.audio-modal-open{
                                ${auctioned?'disabled':''}
                                onclick="cyclePlayerShortlistPriority('${escapeHtml(id)}')">
                     <span class="player-listone-priority">${priorityBadgeHtml(priority)}</span>
-                    <span class="role-badge">${escapeHtml(role)}</span>
+                    <span class="role-badge role-${escapeHtml(String(role||'').toUpperCase())}">${escapeHtml(role)}</span>
                     <span class="player-listone-main">
                         <b>${escapeHtml(p.Nome||'')}</b>
                         <small>${escapeHtml(p.Squadra||'')}${escapeHtml(statusLabel)}</small>
@@ -19478,7 +19660,7 @@ html.audio-modal-open{
             }
             box.innerHTML = list.map(p => `
                 <div class="auctioned-row">
-                    <span class="role-badge">${escapeHtml(playerRole(p) || '-')}</span>
+                    <span class="role-badge role-${escapeHtml(String(playerRole(p)||'').toUpperCase())}">${escapeHtml(playerRole(p) || '-')}</span>
                     <div><div class="auctioned-name">${escapeHtml(p.Nome)}</div><div class="auctioned-meta">${escapeHtml(p.Squadra || '')}</div></div>
                     <button class="restore-btn" onclick="restoreAuctionedPlayer('${String(p.Id).replace(/'/g, "\\'")}')">Ripristina</button>
                 </div>
@@ -22894,11 +23076,12 @@ html.audio-modal-open{
             document.getElementById('rosters-purchase-count').innerText = `${purchasesCache.length} acquisti`;
 
             if (!teamsCache.length) {
+                grid.style.removeProperty('--roster-columns');
                 grid.innerHTML = '<div class="roster-empty">Nessuna squadra presente nella stanza.</div>';
                 return;
             }
 
-            grid.innerHTML = teamsCache.map(team => {
+            const cards = teamsCache.map(team => {
                 const bought = sortRosterPurchases(teamPurchases(team.id));
                 const counts = teamCounts(team.id);
                 const free = Math.max(0, totalSlots - counts.total);
@@ -22910,7 +23093,7 @@ html.audio-modal-open{
                     }).join('');
                 const players = bought.length ? bought.map(p => `
                     <div class="roster-player-line">
-                        <span class="role-badge role-${escapeHtml(p.role || '')}">${escapeHtml(p.role || '-')}</span>
+                        <span class="role-badge role-${escapeHtml(String(p.role || '').toUpperCase())}">${escapeHtml(p.role || '-')}</span>
                         <div class="roster-player-main">
                             <b>${escapeHtml(p.player_name || '')}</b>
                             <small>${escapeHtml(p.club || '')}</small>
@@ -22918,18 +23101,44 @@ html.audio-modal-open{
                         <span class="roster-player-price">${parseInt(p.price) || 0}</span>
                     </div>`).join('') : '<div class="roster-empty">Nessun giocatore acquistato.</div>';
 
-                return `<section class="roster-team-card">
-                    <div class="roster-team-head">
-                        <div class="roster-team-name">${escapeHtml(team.name || 'Squadra')}</div>
-                        <div class="roster-team-credit">${parseInt(team.credits_remaining) || 0} crediti</div>
-                    </div>
-                    <div class="roster-slots">
-                        <span>Slot liberi <b>${free}</b></span>${slotText}
-                    </div>
-                    <div class="roster-player-list">${players}</div>
-                </section>`;
-            }).join('');
+                return {
+                    weight: Math.max(4, bought.length + 3),
+                    html: `<section class="roster-team-card">
+                        <div class="roster-team-head">
+                            <div class="roster-team-name">${escapeHtml(team.name || 'Squadra')}</div>
+                            <div class="roster-team-credit">${parseInt(team.credits_remaining) || 0} crediti</div>
+                        </div>
+                        <div class="roster-slots">
+                            <span>Slot liberi <b>${free}</b></span>${slotText}
+                        </div>
+                        <div class="roster-player-list">${players}</div>
+                    </section>`
+                };
+            });
+
+            // Colonne indipendenti: ogni squadra è nel normale flusso verticale della propria colonna.
+            // In questo modo 3, 8 o 20 rose non possono mai sovrapporsi tra loro.
+            const viewport = window.innerWidth || document.documentElement.clientWidth || 1200;
+            const wantedColumns = viewport <= 680 ? 1 : (viewport <= 1050 ? 2 : 3);
+            const columnCount = Math.max(1, Math.min(wantedColumns, cards.length));
+            const columns = Array.from({length:columnCount},()=>({weight:0,cards:[]}));
+            cards.forEach(card=>{
+                let target=columns[0];
+                for(const col of columns){ if(col.weight < target.weight) target=col; }
+                target.cards.push(card.html);
+                target.weight += card.weight;
+            });
+
+            grid.style.setProperty('--roster-columns', String(columnCount));
+            grid.innerHTML = columns.map(col=>`<div class="roster-stack-column">${col.cards.join('')}</div>`).join('');
         }
+
+        let allRostersResizeTimer=null;
+        window.addEventListener('resize',()=>{
+            if(!document.getElementById('screen-all-rosters')?.classList.contains('active'))return;
+            clearTimeout(allRostersResizeTimer);
+            allRostersResizeTimer=setTimeout(()=>renderAllRosters(),120);
+        });
 
         async function resetRoomRuntimeState(){
             cancelAutoRandomLaunch();
@@ -25003,9 +25212,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyBrand(){
-    document.title='LIVEASTA V95';
+    document.title='LIVEASTA V96';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V95';
+      el.textContent='LIVEASTA · VERSIONE V96';
     });
     document.querySelectorAll('.logo-text').forEach(el=>{
       const a=el.querySelector('.rosa');
@@ -25416,9 +25625,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyV85Brand(){
-    document.title='LIVEASTA V95';
+    document.title='LIVEASTA V96';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V95';
+      el.textContent='LIVEASTA · VERSIONE V96';
     });
   }
 
