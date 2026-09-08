@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>LIVEASTA V89</title>
+    <title>LIVEASTA V90</title>
     <meta name="theme-color" content="#0D1117">
     <meta name="color-scheme" content="dark">
     <meta name="mobile-web-app-capable" content="yes">
@@ -8207,6 +8207,13 @@ html.audio-modal-open{
 #screen-player-buzzer .budget-slot-trigger{
   cursor:pointer!important;
   user-select:none!important;
+  -webkit-tap-highlight-color:transparent!important;
+  outline:none!important;
+}
+#screen-player-buzzer .budget-slot-trigger:focus,
+#screen-player-buzzer .budget-slot-trigger:focus-visible{
+  outline:none!important;
+  box-shadow:none!important;
 }
 #screen-player-buzzer .budget-slot-trigger:active{
   transform:scale(.99)!important;
@@ -11787,7 +11794,7 @@ html.audio-modal-open{
              aria-label="Apri Impostazioni LIVEASTA"
              onclick="openAdminLogin()"
              onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openAdminLogin();}">
-            LIVEASTA V87
+            LIVEASTA V90
         </div>
         <div class="setup-card">
             <h1 class="logo-text"><span class="rosa">LIVE</span><span class="rush">ASTA</span></h1>
@@ -11939,8 +11946,8 @@ html.audio-modal-open{
             <div class="mini-stat"><small>Crediti</small><strong id="player-credits">--</strong></div>
             <div class="mini-stat slots budget-slot-trigger" role="button" tabindex="0"
                  title="Apri gestione budget"
-                 onclick="openPlayerBudgetManager()"
-                 onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openPlayerBudgetManager();}">
+                 onclick="this.blur();openPlayerBudgetManager()"
+                 onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.blur();openPlayerBudgetManager();}">
                 <small>Slot · Budget</small><strong id="player-slots">--</strong>
             </div>
         </div>
@@ -12190,7 +12197,7 @@ html.audio-modal-open{
 
     <div id="screen-admin" class="screen">
         <div class="setup-card" style="max-width:1100px; width:96%; padding:24px;">
-            <div class="admin-version-badge">LIVEASTA · VERSIONE V89</div>
+            <div class="admin-version-badge">LIVEASTA · VERSIONE V90</div>
             <h1>Gestione stanze</h1>
             <p class="subtitle">Nome, password, modifica ed eliminazione</p>
 
@@ -16529,9 +16536,20 @@ html.audio-modal-open{
                 return;
             }
 
-            await loadPlayerBudgetPlan();
+            // Elimina subito focus/tap-highlight del riquadro Slot · Budget prima
+            // che l'overlay venga disegnato: evita il lampo blu visibile dietro al modal.
+            try{ document.activeElement?.blur?.(); }catch(_e){}
+            const overlay=document.getElementById('player-budget-overlay');
+            overlay?.classList.add('open');
+
+            // Disegna immediatamente lo stato già disponibile, poi aggiorna dai dati salvati.
             renderPlayerBudgetManager();
-            document.getElementById('player-budget-overlay')?.classList.add('open');
+            try{
+                await loadPlayerBudgetPlan();
+                renderPlayerBudgetManager();
+            }catch(err){
+                console.warn('Budget plan load failed',err);
+            }
         }
 
         function closePlayerBudgetManager(){
@@ -23771,7 +23789,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   function applyBrand(){
     document.title='LIVEASTA V89';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V89';
+      el.textContent='LIVEASTA · VERSIONE V90';
     });
     document.querySelectorAll('.logo-text').forEach(el=>{
       const a=el.querySelector('.rosa');
@@ -24178,7 +24196,7 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   function applyV85Brand(){
     document.title='LIVEASTA V89';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V89';
+      el.textContent='LIVEASTA · VERSIONE V90';
     });
   }
 
