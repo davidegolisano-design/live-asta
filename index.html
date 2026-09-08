@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>LIVEASTA V75</title>
+    <title>LIVEASTA V76</title>
     <meta name="theme-color" content="#0D1117">
     <meta name="color-scheme" content="dark">
     <meta name="mobile-web-app-capable" content="yes">
@@ -10416,7 +10416,7 @@ html.audio-modal-open{
 
 <style id="liveasta-v75-ready-inline-style">
 /* ==========================================================
-   LIVEASTA V75 — READY INLINE + FVM + SQUADRE ABILITATE
+   LIVEASTA V76 — READY INLINE + FVM + SQUADRE ABILITATE
    ========================================================== */
 
 /* Preview rosa: ruolo nello stesso pallino colorato della banditura. */
@@ -10447,26 +10447,29 @@ html.audio-modal-open{
   display:none!important;
 }
 #screen-player-buzzer #normal-bid-controls.ready-active{
-  grid-template-columns:1fr!important;
-  grid-template-rows:1fr!important;
+  /* V76: il READY occupa esattamente l'impronta dei 4 tasti offerta (2x2),
+     così il pannello centrale non cambia altezza passando da READY ad asta. */
+  --live-bid-row-h:clamp(88px,11.3dvh,106px);
+  grid-template-columns:1fr 1fr!important;
+  grid-template-rows:var(--live-bid-row-h) var(--live-bid-row-h)!important;
+  gap:8px!important;
 }
 #screen-player-buzzer .player-inline-ready-controls{
   grid-column:1/-1!important;
+  grid-row:1/-1!important;
+  position:relative!important;
   width:100%!important;
+  height:calc(var(--live-bid-row-h) + var(--live-bid-row-h) + 8px)!important;
   min-height:0!important;
-  display:flex;
-  flex-direction:column;
-  align-items:stretch;
-  justify-content:center;
-  gap:6px;
+  display:block;
 }
 #screen-player-buzzer #normal-bid-controls.ready-active .player-inline-ready-controls{
-  display:flex!important;
+  display:block!important;
 }
 #screen-player-buzzer .player-inline-ready-btn{
   width:100%!important;
-  min-height:clamp(76px,10.4dvh,94px)!important;
-  height:clamp(76px,10.4dvh,94px)!important;
+  min-height:0!important;
+  height:100%!important;
   margin:0!important;
   border:2px solid #78F2BE!important;
   border-radius:19px!important;
@@ -10494,14 +10497,27 @@ html.audio-modal-open{
   cursor:not-allowed!important;
 }
 #screen-player-buzzer .player-inline-ready-progress{
+  position:absolute!important;
+  left:14px!important;
+  right:14px!important;
+  bottom:10px!important;
+  z-index:2!important;
   min-height:15px;
   padding:0 4px;
-  color:var(--theme-muted,#B8C2CF);
+  color:rgba(255,255,255,.94)!important;
+  text-shadow:0 1px 3px rgba(0,0,0,.55)!important;
   font-size:.57rem;
   line-height:1.2;
-  font-weight:850;
+  font-weight:900;
   text-align:center;
   white-space:normal;
+  pointer-events:none!important;
+}
+
+@media(max-height:760px){
+  #screen-player-buzzer #normal-bid-controls.ready-active{
+    --live-bid-row-h:78px;
+  }
 }
 
 /* In READY la colonna destra non mostra timer/offerta: mostra FVM + squadre abilitate. */
@@ -10694,7 +10710,7 @@ html.audio-modal-open{
              aria-label="Apri Impostazioni LIVEASTA"
              onclick="openAdminLogin()"
              onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openAdminLogin();}">
-            LIVEASTA V75
+            LIVEASTA V76
         </div>
         <div class="setup-card">
             <h1 class="logo-text"><span class="rosa">LIVE</span><span class="rush">ASTA</span></h1>
@@ -22198,9 +22214,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyBrand(){
-    document.title='LIVEASTA V75';
+    document.title='LIVEASTA V76';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V75';
+      el.textContent='LIVEASTA · VERSIONE V76';
     });
     document.querySelectorAll('.logo-text').forEach(el=>{
       const a=el.querySelector('.rosa');
