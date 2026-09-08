@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>LIVEASTA V74</title>
+    <title>LIVEASTA V75</title>
     <meta name="theme-color" content="#0D1117">
     <meta name="color-scheme" content="dark">
     <meta name="mobile-web-app-capable" content="yes">
@@ -10413,6 +10413,277 @@ html.audio-modal-open{
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="msapplication-navbutton-color" content="#0D1117">
 
+
+<style id="liveasta-v75-ready-inline-style">
+/* ==========================================================
+   LIVEASTA V75 — READY INLINE + FVM + SQUADRE ABILITATE
+   ========================================================== */
+
+/* Preview rosa: ruolo nello stesso pallino colorato della banditura. */
+#room-roster-player-preview-role{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  min-width:30px!important;
+  width:30px!important;
+  height:30px!important;
+  padding:0!important;
+  border-radius:50%!important;
+  font-size:.78rem!important;
+  line-height:1!important;
+  font-weight:950!important;
+  flex:0 0 30px!important;
+  background:#5D6672;
+  color:#fff;
+}
+#room-roster-player-preview-role.role-P{background:#FF405E!important;color:#fff!important}
+#room-roster-player-preview-role.role-D{background:#22C55E!important;color:#07140C!important}
+#room-roster-player-preview-role.role-C{background:#4DB7FF!important;color:#06101A!important}
+#room-roster-player-preview-role.role-A{background:#F5B942!important;color:#160F04!important}
+
+/* Durante READY i 4 rilanci spariscono e vengono sostituiti da una CTA unica. */
+#screen-player-buzzer #normal-bid-controls.ready-active > .buzzer-btn,
+#screen-player-buzzer #normal-bid-controls.ready-active > #sealed-bid-controls{
+  display:none!important;
+}
+#screen-player-buzzer #normal-bid-controls.ready-active{
+  grid-template-columns:1fr!important;
+  grid-template-rows:1fr!important;
+}
+#screen-player-buzzer .player-inline-ready-controls{
+  grid-column:1/-1!important;
+  width:100%!important;
+  min-height:0!important;
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  justify-content:center;
+  gap:6px;
+}
+#screen-player-buzzer #normal-bid-controls.ready-active .player-inline-ready-controls{
+  display:flex!important;
+}
+#screen-player-buzzer .player-inline-ready-btn{
+  width:100%!important;
+  min-height:clamp(76px,10.4dvh,94px)!important;
+  height:clamp(76px,10.4dvh,94px)!important;
+  margin:0!important;
+  border:2px solid #78F2BE!important;
+  border-radius:19px!important;
+  background:linear-gradient(180deg,#4BE2A3,#2FCB83)!important;
+  color:#07150F!important;
+  box-shadow:0 10px 24px rgba(47,203,131,.25)!important;
+  font-family:inherit!important;
+  font-size:clamp(1.9rem,8.4vw,2.65rem)!important;
+  line-height:1!important;
+  font-weight:1000!important;
+  letter-spacing:.025em!important;
+  cursor:pointer!important;
+  touch-action:manipulation!important;
+}
+#screen-player-buzzer .player-inline-ready-btn.done{
+  background:linear-gradient(180deg,#2F9C79,#25745F)!important;
+  border-color:#54B995!important;
+  color:#fff!important;
+}
+#screen-player-buzzer .player-inline-ready-btn:disabled:not(.done){
+  background:linear-gradient(180deg,#59616C,#414852)!important;
+  border-color:#69727E!important;
+  color:#C1C7CF!important;
+  box-shadow:none!important;
+  cursor:not-allowed!important;
+}
+#screen-player-buzzer .player-inline-ready-progress{
+  min-height:15px;
+  padding:0 4px;
+  color:var(--theme-muted,#B8C2CF);
+  font-size:.57rem;
+  line-height:1.2;
+  font-weight:850;
+  text-align:center;
+  white-space:normal;
+}
+
+/* In READY la colonna destra non mostra timer/offerta: mostra FVM + squadre abilitate. */
+#screen-player-buzzer .player-live-side.ready-active{
+  grid-template-rows:minmax(0,1fr)!important;
+}
+#screen-player-buzzer .player-live-side.ready-active > .player-timer-box,
+#screen-player-buzzer .player-live-side.ready-active > .player-auction-info{
+  display:none!important;
+}
+#screen-player-buzzer .player-ready-side-panel{
+  min-width:0!important;
+  min-height:0!important;
+  width:100%!important;
+  height:100%!important;
+  padding:4px 3px 3px 7px!important;
+  box-sizing:border-box!important;
+  flex-direction:column!important;
+  gap:7px!important;
+  overflow:hidden!important;
+}
+#screen-player-buzzer .player-live-side.ready-active .player-ready-side-panel{
+  display:flex!important;
+}
+#screen-player-buzzer .player-ready-fvm-card{
+  flex:0 0 auto;
+  min-height:74px;
+  padding:7px 4px 8px;
+  box-sizing:border-box;
+  border-bottom:1px solid rgba(255,255,255,.12);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+#screen-player-buzzer .player-ready-fvm-card span,
+#screen-player-buzzer .player-ready-eligible-title{
+  color:#B8C2CF;
+  font-size:clamp(.52rem,2.35vw,.68rem);
+  line-height:1;
+  letter-spacing:.10em;
+  font-weight:900;
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+#screen-player-buzzer #player-ready-fvm-value{
+  margin:3px 0 2px;
+  color:#fff;
+  font-size:clamp(2.6rem,12vw,4.2rem);
+  line-height:.88;
+  font-weight:1000;
+  font-variant-numeric:tabular-nums;
+}
+#screen-player-buzzer .player-ready-fvm-card small{
+  color:#8F9BA8;
+  font-size:.43rem;
+  line-height:1;
+  letter-spacing:.09em;
+  font-weight:850;
+}
+#screen-player-buzzer .player-ready-eligible-card{
+  min-height:0;
+  flex:1 1 auto;
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+  overflow:hidden;
+}
+#screen-player-buzzer .player-ready-eligible-title{
+  flex:0 0 auto;
+  padding:0 2px;
+  text-align:center;
+}
+#screen-player-buzzer .player-ready-eligible-list{
+  min-height:0;
+  flex:1 1 auto;
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  scrollbar-width:thin;
+  padding:1px 1px 2px;
+}
+#screen-player-buzzer .player-ready-eligible-row{
+  min-width:0;
+  flex:0 0 auto;
+  min-height:30px;
+  padding:5px 6px;
+  box-sizing:border-box;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 9px;
+  gap:5px;
+  align-items:center;
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:8px;
+  background:rgba(255,255,255,.035);
+}
+#screen-player-buzzer .player-ready-eligible-row.nominator{
+  border-color:rgba(245,185,66,.88)!important;
+  background:rgba(245,185,66,.13)!important;
+  box-shadow:inset 3px 0 0 #F5B942;
+  order:-1;
+}
+#screen-player-buzzer .player-ready-eligible-row.mine:not(.nominator){
+  border-color:rgba(77,183,255,.50);
+  background:rgba(77,183,255,.08);
+}
+#screen-player-buzzer .player-ready-eligible-main{
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  gap:1px;
+  text-align:left;
+}
+#screen-player-buzzer .player-ready-eligible-main b{
+  min-width:0;
+  color:#fff;
+  font-size:clamp(.61rem,2.7vw,.80rem);
+  line-height:1.03;
+  font-weight:950;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+#screen-player-buzzer .player-ready-eligible-main small{
+  color:#8996A4;
+  font-size:.39rem;
+  line-height:1;
+  font-weight:900;
+  letter-spacing:.07em;
+  white-space:nowrap;
+}
+#screen-player-buzzer .player-ready-eligible-row.nominator .player-ready-eligible-main small{
+  color:#F5B942;
+}
+#screen-player-buzzer .player-ready-status-dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  justify-self:end;
+  background:#7D8792;
+  box-shadow:0 0 0 2px rgba(125,135,146,.12);
+}
+#screen-player-buzzer .player-ready-status-dot.ready{
+  background:#3DDC97;
+  box-shadow:0 0 0 2px rgba(61,220,151,.16),0 0 8px rgba(61,220,151,.36);
+}
+#screen-player-buzzer .player-ready-eligible-empty{
+  padding:8px 4px;
+  color:#8F9BA8;
+  font-size:.58rem;
+  text-align:center;
+}
+
+/* Vecchio overlay READY e relativo pulsante riapri dismessi in V75. */
+#player-ready-overlay,
+#player-ready-reopen-btn{
+  display:none!important;
+}
+
+@media(max-height:760px){
+  #screen-player-buzzer .player-inline-ready-btn{
+    min-height:70px!important;
+    height:70px!important;
+    font-size:2rem!important;
+  }
+  #screen-player-buzzer .player-ready-fvm-card{
+    min-height:62px;
+    padding:5px 3px 6px;
+  }
+  #screen-player-buzzer #player-ready-fvm-value{
+    font-size:clamp(2.25rem,10vw,3.25rem);
+  }
+  #screen-player-buzzer .player-ready-eligible-row{
+    min-height:27px;
+    padding:4px 5px;
+  }
+}
+</style>
+
 </head>
 <body>
 
@@ -10423,7 +10694,7 @@ html.audio-modal-open{
              aria-label="Apri Impostazioni LIVEASTA"
              onclick="openAdminLogin()"
              onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openAdminLogin();}">
-            LIVEASTA V74
+            LIVEASTA V75
         </div>
         <div class="setup-card">
             <h1 class="logo-text"><span class="rosa">LIVE</span><span class="rush">ASTA</span></h1>
@@ -10593,6 +10864,17 @@ html.audio-modal-open{
                     <div id="player-current-winner">Nessuno</div>
                     <div id="player-current-value">0</div>
                 </div>
+                <div id="player-ready-side-panel" class="player-ready-side-panel" style="display:none;">
+                    <div class="player-ready-fvm-card">
+                        <span>FVM</span>
+                        <strong id="player-ready-fvm-value">--</strong>
+                        <small>VALORE LISTONE</small>
+                    </div>
+                    <div class="player-ready-eligible-card">
+                        <div class="player-ready-eligible-title">POSSONO OFFRIRE</div>
+                        <div id="player-ready-eligible-list" class="player-ready-eligible-list"></div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -10602,6 +10884,10 @@ html.audio-modal-open{
                 <button class="buzzer-btn btn-plus-2" onpointerdown="buzz(2)" disabled>+2</button>
                 <button class="buzzer-btn btn-plus-5" onpointerdown="buzz(5)" disabled>+5</button>
                 <button class="buzzer-btn btn-plus-10" onpointerdown="buzz(10)" disabled>+10</button>
+                <div id="player-inline-ready-controls" class="player-inline-ready-controls" style="display:none;">
+                    <button id="player-inline-ready-btn" class="player-inline-ready-btn" type="button" onclick="confirmPlayerReady()">READY</button>
+                    <div id="player-inline-ready-progress" class="player-inline-ready-progress">Premi READY quando sei pronto.</div>
+                </div>
                 <div id="sealed-bid-controls" class="sealed-bid-controls" style="display:none;">
                     <div class="sealed-bid-label">OFFERTA IN BUSTA CHIUSA</div>
                     <div class="sealed-bid-entry">
@@ -12706,11 +12992,6 @@ html.audio-modal-open{
             const required=Array.isArray(gate.required_ids)?gate.required_ids.map(String):[];
             const already=Array.isArray(gate.ready_ids)?gate.ready_ids.map(String):[];
 
-            if(!required.includes(String(myTeamId))){
-                closePlayerReadyBanner();
-                return false;
-            }
-
             const p=gate.player||{};
             playerSealedMode=gate.mode==='sealed';
             playerSealedToken=playerSealedMode?String(gate.sealed_token||''):null;
@@ -12748,7 +13029,10 @@ html.audio-modal-open{
                 ready_ids:already,
                 nome:p.nome,
                 role:p.role,
-                club:p.club
+                club:p.club,
+                fvm:p.fvm,
+                nominator_team_id:p.nominator_team_id,
+                nominator_team_name:p.nominator_team_name
             });
 
             return true;
@@ -12790,12 +13074,7 @@ html.audio-modal-open{
             }else{
                 const classicRole=role.toUpperCase();
                 if(!classicRole || limits[classicRole]===undefined) return [];
-                eligible=teamsCache.filter(team=>{
-                    const counts=teamCounts(team.id);
-                    const totalComplete=counts.total>=totalRoomSlots();
-                    const roleComplete=(counts[classicRole]||0)>=(limits[classicRole]||0);
-                    return !totalComplete && !roleComplete;
-                });
+                eligible=teamsCache.filter(team=>maxBidForTeam(team,classicRole)>=1);
             }
 
             // Modalità ASSENTE:
@@ -12893,8 +13172,7 @@ html.audio-modal-open{
                     if(isMantraRoom()){
                         eligible=!!role && maxBidForTeam(team,role)>=1;
                     }else if(role && limits[role]!==undefined){
-                        const counts=teamCounts(team.id);
-                        eligible=counts.total<totalRoomSlots() && (counts[role]||0)<(limits[role]||0);
+                        eligible=maxBidForTeam(team,role)>=1;
                     }
 
                     if(eligible && !present.has(id)){
@@ -12996,24 +13274,97 @@ html.audio-modal-open{
             }
         }
 
+        function playerReadyFvmValue(data={}){
+            const direct=parseFloat(String(data?.fvm??'').replace(',','.'));
+            if(Number.isFinite(direct))return direct;
+
+            const playerId=String(data?.player_id||data?.id||currentAuctionPlayer?.Id||'');
+            const player=playersList.find(p=>String(p.Id)===playerId)||currentAuctionPlayer;
+            if(!player)return 0;
+            return typeof nominationPlayerValue==='function'?nominationPlayerValue(player):0;
+        }
+
+        function playerReadyNominatorId(){
+            const ctx=window.liveastaInlineReadyContext||{};
+            if(ctx.nominator_team_id)return String(ctx.nominator_team_id);
+            return nominationState?.enabled?String(nominationState.turn_team_id||''):'';
+        }
+
+        function renderPlayerReadyEligibleList(data={}){
+            const ctx=window.liveastaInlineReadyContext||{};
+            const required=Array.isArray(data?.required_ids)
+                ?data.required_ids.map(String)
+                :(Array.isArray(data?.ready_required_ids)
+                    ?data.ready_required_ids.map(String)
+                    :(ctx.required_ids||[]).map(String));
+            const readyIds=Array.isArray(data?.ready_ids)
+                ?data.ready_ids.map(String)
+                :(ctx.ready_ids||[]).map(String);
+
+            ctx.required_ids=required;
+            ctx.ready_ids=readyIds;
+            window.liveastaInlineReadyContext=ctx;
+
+            const box=document.getElementById('player-ready-eligible-list');
+            if(!box)return;
+
+            const nominatorId=playerReadyNominatorId();
+            const readySet=new Set(readyIds);
+            const rows=required.map(id=>{
+                const team=teamsCache.find(t=>String(t.id)===String(id));
+                return {
+                    id:String(id),
+                    name:String(team?.name||readyTeamName(id)||'Squadra'),
+                    nominator:!!nominatorId && String(id)===String(nominatorId),
+                    mine:String(id)===String(myTeamId),
+                    ready:readySet.has(String(id))
+                };
+            }).sort((a,b)=>{
+                if(a.nominator!==b.nominator)return a.nominator?-1:1;
+                return a.name.localeCompare(b.name,'it',{sensitivity:'base'});
+            });
+
+            if(!rows.length){
+                box.innerHTML='<div class="player-ready-eligible-empty">Nessuna squadra abilitata</div>';
+                return;
+            }
+
+            box.innerHTML=rows.map(row=>`
+                <div class="player-ready-eligible-row${row.nominator?' nominator':''}${row.mine?' mine':''}">
+                    <span class="player-ready-eligible-main">
+                        <b>${escapeHtml(row.name)}</b>
+                        <small>${row.nominator?'HA BANDITO':(row.mine?'LA TUA SQUADRA':'PUÒ OFFRIRE')}</small>
+                    </span>
+                    <span class="player-ready-status-dot ${row.ready?'ready':'waiting'}" title="${row.ready?'Ready':'In attesa'}"></span>
+                </div>
+            `).join('');
+        }
+
+        function setPlayerReadyInlineMode(active,data={}){
+            const grid=document.getElementById('normal-bid-controls');
+            const liveSide=document.querySelector('#screen-player-buzzer .player-live-side');
+            const panel=document.getElementById('player-ready-side-panel');
+            const inline=document.getElementById('player-inline-ready-controls');
+
+            grid?.classList.toggle('ready-active',!!active);
+            liveSide?.classList.toggle('ready-active',!!active);
+            if(panel)panel.style.display=active?'flex':'none';
+            if(inline)inline.style.display=active?'flex':'none';
+
+            if(!active)return;
+
+            const value=playerReadyFvmValue(data);
+            const fvm=document.getElementById('player-ready-fvm-value');
+            if(fvm)fvm.textContent=Number.isFinite(value)?String(value):'--';
+            renderPlayerReadyEligibleList(data);
+        }
+
         function syncPlayerReadyReopenButton(){
+            // V75: READY vive nella zona dei tasti offerta, quindi non serve più
+            // né l'overlay né il pulsante per riaprirlo.
             const reopen=document.getElementById('player-ready-reopen-btn');
-            if(!reopen)return;
-
-            const overlayOpen=!!document.getElementById('player-ready-overlay')?.classList.contains('open');
-            const hasReady=!!playerReadyToken;
-
-            // Il pulsante serve solo quando l'utente ha chiuso volontariamente
-            // la schermata READY mentre quel READY è ancora valido.
-            const dismissed=hasReady && String(playerReadyDismissedToken||'')===String(playerReadyToken);
-
-            reopen.style.display=(dismissed && !overlayOpen)?'block':'none';
-            reopen.classList.toggle('done',!!playerReadySent);
-
-            const title=reopen.querySelector('span');
-            const strong=reopen.querySelector('strong');
-            if(title)title.textContent=playerReadySent?'READY GIÀ INVIATO':'READY IN ATTESA';
-            if(strong)strong.textContent=playerReadySent?'VEDI ATTESA READY':'RIAPRI READY';
+            if(reopen)reopen.style.display='none';
+            document.getElementById('player-ready-overlay')?.classList.remove('open');
         }
 
         function showPlayerReadyBanner(data,forceOpen=false){
@@ -13021,93 +13372,106 @@ html.audio-modal-open{
             playerSealedRevealLocalEndAt=0;
 
             const required=Array.isArray(data?.ready_required_ids)
-                ? data.ready_required_ids.map(String)
-                : [];
+                ?data.ready_required_ids.map(String)
+                :(Array.isArray(data?.required_ids)?data.required_ids.map(String):[]);
+            const incomingToken=String(data?.ready_token||data?.token||'');
+            const readyIds=Array.isArray(data?.ready_ids)?data.ready_ids.map(String):[];
+            const eligible=required.includes(String(myTeamId));
 
-            if(!required.includes(String(myTeamId))){
-                closePlayerReadyBanner();
-                return;
+            window.liveastaInlineReadyContext={
+                token:incomingToken,
+                required_ids:required,
+                ready_ids:readyIds,
+                fvm:playerReadyFvmValue(data),
+                nome:data?.nome||currentAuctionPlayer?.Nome||'',
+                role:data?.role||currentAuctionPlayer?.R||'',
+                club:data?.club||currentAuctionPlayer?.Squadra||'',
+                nominator_team_id:String(data?.nominator_team_id||currentAuctionPlayer?.nominator_team_id||nominationState?.turn_team_id||''),
+                nominator_team_name:String(data?.nominator_team_name||currentAuctionPlayer?.nominator_team_name||currentNominationTeam()?.name||'')
+            };
+
+            playerReadyToken=eligible?incomingToken:null;
+            playerReadyDismissedToken=null;
+            playerReadySent=eligible && readyIds.includes(String(myTeamId));
+
+            const hiddenBtn=document.getElementById('ready-confirm-btn');
+            if(hiddenBtn){
+                hiddenBtn.disabled=!eligible||playerReadySent;
+                hiddenBtn.textContent=playerReadySent?'PRONTO ✓':'READY';
+                hiddenBtn.classList.toggle('done',playerReadySent);
             }
 
-            const incomingToken=String(data?.ready_token||'');
-
-            // Un READY nuovo deve sempre aprirsi anche se il READY precedente
-            // era stato chiuso manualmente.
-            if(
-                playerReadyDismissedToken &&
-                String(playerReadyDismissedToken)!==incomingToken
-            ){
-                playerReadyDismissedToken=null;
+            const btn=document.getElementById('player-inline-ready-btn');
+            if(btn){
+                btn.disabled=!eligible||playerReadySent;
+                btn.textContent=eligible?(playerReadySent?'PRONTO ✓':'READY'):'NON ABILITATO';
+                btn.classList.toggle('done',playerReadySent);
             }
 
-            playerReadyToken=incomingToken;
-
-            const alreadyReady=
-                Array.isArray(data?.ready_ids) &&
-                data.ready_ids.map(String).includes(String(myTeamId));
-
-            playerReadySent=alreadyReady;
-
-            document.getElementById('ready-player-name').textContent=data?.nome||'--';
-            document.getElementById('ready-player-meta').textContent=`${data?.role||'-'} · ${data?.club||'-'}`;
-
-            const btn=document.getElementById('ready-confirm-btn');
-            btn.disabled=alreadyReady;
-            btn.textContent=alreadyReady?'PRONTO ✓':'READY';
-            btn.classList.toggle('done',alreadyReady);
-
-            document.getElementById('ready-progress').textContent=
-                alreadyReady
-                    ?'READY già registrato · in attesa degli altri.'
-                    :'Conferma quando sei pronto.';
-
-            const dismissed=
-                String(playerReadyDismissedToken||'')===String(playerReadyToken);
-
-            if(forceOpen || !dismissed){
-                playerReadyDismissedToken=null;
-                document.getElementById('player-ready-overlay')?.classList.add('open');
-            }else{
-                document.getElementById('player-ready-overlay')?.classList.remove('open');
+            const progress=document.getElementById('player-inline-ready-progress');
+            if(progress){
+                if(!eligible)progress.textContent='La tua rosa non può partecipare a questa asta.';
+                else if(playerReadySent)progress.textContent='READY registrato · in attesa degli altri.';
+                else progress.textContent='Premi READY quando sei pronto.';
             }
 
+            const oldProgress=document.getElementById('ready-progress');
+            if(oldProgress)oldProgress.textContent=progress?.textContent||'';
+
+            setPlayerReadyInlineMode(true,{
+                ...data,
+                required_ids:required,
+                ready_ids:readyIds
+            });
             syncPlayerReadyReopenButton();
         }
 
-        // Chiude SOLO la finestra, senza annullare il READY né perdere il token.
-        // Serve per consultare Listone/Rosa/Stanza durante l'attesa.
+        // Compatibilità con il vecchio overlay: in V75 non viene più aperto.
         function hidePlayerReadyBanner(){
-            if(!playerReadyToken)return;
-
-            playerReadyDismissedToken=String(playerReadyToken);
             document.getElementById('player-ready-overlay')?.classList.remove('open');
             syncPlayerReadyReopenButton();
         }
 
         function reopenPlayerReadyBanner(){
-            if(!playerReadyToken)return;
-
-            playerReadyDismissedToken=null;
-            document.getElementById('player-ready-overlay')?.classList.add('open');
+            document.getElementById('player-ready-overlay')?.classList.remove('open');
             syncPlayerReadyReopenButton();
         }
 
-        // Chiusura completa: usata quando il READY è davvero terminato/cambiato.
         function closePlayerReadyBanner(){
             document.getElementById('player-ready-overlay')?.classList.remove('open');
             playerReadyToken=null;
             playerReadySent=false;
             playerReadyDismissedToken=null;
+            window.liveastaInlineReadyContext=null;
+            setPlayerReadyInlineMode(false);
             syncPlayerReadyReopenButton();
         }
 
         function confirmPlayerReady(){
             if(!playerReadyToken||playerReadySent||!channel||!myTeamId)return;
             playerReadySent=true;
-            syncPlayerReadyReopenButton();
-            const btn=document.getElementById('ready-confirm-btn');
-            btn.disabled=true;btn.textContent='PRONTO ✓';btn.classList.add('done');
-            document.getElementById('ready-progress').textContent='In attesa degli altri giocatori…';
+
+            const ctx=window.liveastaInlineReadyContext||{};
+            const readyIds=new Set((ctx.ready_ids||[]).map(String));
+            readyIds.add(String(myTeamId));
+            ctx.ready_ids=[...readyIds];
+            window.liveastaInlineReadyContext=ctx;
+
+            const buttons=[
+                document.getElementById('ready-confirm-btn'),
+                document.getElementById('player-inline-ready-btn')
+            ].filter(Boolean);
+            buttons.forEach(btn=>{
+                btn.disabled=true;
+                btn.textContent='PRONTO ✓';
+                btn.classList.add('done');
+            });
+
+            const progress=document.getElementById('player-inline-ready-progress');
+            if(progress)progress.textContent='READY inviato · in attesa degli altri giocatori…';
+            const oldProgress=document.getElementById('ready-progress');
+            if(oldProgress)oldProgress.textContent='In attesa degli altri giocatori…';
+            renderPlayerReadyEligibleList({required_ids:ctx.required_ids||[],ready_ids:ctx.ready_ids||[]});
 
             if(isAuctioneerPlayerIdentity()){
                 if(readyGateWaiting && String(playerReadyToken)===String(readyGateToken)){
@@ -13124,16 +13488,42 @@ html.audio-modal-open{
         }
 
         function updatePlayerReadyProgress(data){
-            if(!playerReadyToken||String(data?.token)!==String(playerReadyToken))return;
+            const ctx=window.liveastaInlineReadyContext;
+            if(!ctx||String(data?.token||'')!==String(ctx.token||''))return;
 
             if(data?.waiting===false){
                 closePlayerReadyBanner();
                 return;
             }
 
-            document.getElementById('ready-progress').textContent=
-                `${parseInt(data?.ready_count)||0} / ${parseInt(data?.total)||0} pronti`;
+            if(Array.isArray(data?.required_ids))ctx.required_ids=data.required_ids.map(String);
+            if(Array.isArray(data?.ready_ids))ctx.ready_ids=data.ready_ids.map(String);
+            window.liveastaInlineReadyContext=ctx;
 
+            const eligible=(ctx.required_ids||[]).map(String).includes(String(myTeamId));
+            const mineReady=(ctx.ready_ids||[]).map(String).includes(String(myTeamId));
+            if(eligible && mineReady)playerReadySent=true;
+
+            const progress=document.getElementById('player-inline-ready-progress');
+            if(progress){
+                progress.textContent=eligible
+                    ?`${parseInt(data?.ready_count)||0} / ${parseInt(data?.total)||0} pronti`
+                    :'Puoi seguire l’attesa, ma non partecipi a questa asta.';
+            }
+            const oldProgress=document.getElementById('ready-progress');
+            if(oldProgress)oldProgress.textContent=progress?.textContent||'';
+
+            const btn=document.getElementById('player-inline-ready-btn');
+            if(btn && eligible && mineReady){
+                btn.disabled=true;
+                btn.textContent='PRONTO ✓';
+                btn.classList.add('done');
+            }
+
+            renderPlayerReadyEligibleList({
+                required_ids:ctx.required_ids||[],
+                ready_ids:ctx.ready_ids||[]
+            });
             syncPlayerReadyReopenButton();
         }
 
@@ -13149,6 +13539,9 @@ html.audio-modal-open{
                 nome:String(currentAuctionPlayer.Nome||''),
                 role:String(currentAuctionPlayer.R||''),
                 club:String(currentAuctionPlayer.Squadra||''),
+                fvm:typeof nominationPlayerValue==='function'?nominationPlayerValue(currentAuctionPlayer):0,
+                nominator_team_id:nominationState?.enabled?String(nominationState.turn_team_id||''):'',
+                nominator_team_name:nominationState?.enabled?String(currentNominationTeam()?.name||''):'',
                 url:playerImageUrl(currentAuctionPlayer.Id,currentAuctionPlayer.R)
             };
         }
@@ -13294,18 +13687,15 @@ html.audio-modal-open{
                     ready_ids:Array.isArray(state.ready_ids)?state.ready_ids:[],
                     nome:state.player?.nome,
                     role:state.player?.role,
-                    club:state.player?.club
+                    club:state.player?.club,
+                    fvm:state.player?.fvm,
+                    nominator_team_id:state.player?.nominator_team_id,
+                    nominator_team_name:state.player?.nominator_team_name
                 };
-                const required=payload.ready_required_ids.map(String);
 
-                // Lo stato live READY è autoritativo:
-                // anche se il telefono era chiuso e ha perso i broadcast,
-                // al rientro deve mostrare nuovamente la richiesta.
-                if(required.includes(String(myTeamId))){
-                    showPlayerReadyBanner(payload);
-                }else{
-                    closePlayerReadyBanner();
-                }
+                // V75: tutti vedono il giocatore scelto, FVM e squadre abilitate.
+                // Solo le squadre eleggibili possono premere READY.
+                showPlayerReadyBanner(payload);
                 return;
             }
 
@@ -15228,7 +15618,12 @@ html.audio-modal-open{
             const clubEl=document.getElementById('room-roster-player-preview-club');
 
             if(nameEl)nameEl.textContent=name;
-            if(roleEl)roleEl.textContent=role;
+            if(roleEl){
+                roleEl.textContent=role;
+                roleEl.classList.remove('role-P','role-D','role-C','role-A');
+                const classicRole=String(role||'').trim().toUpperCase();
+                if(['P','D','C','A'].includes(classicRole))roleEl.classList.add(`role-${classicRole}`);
+            }
             if(clubEl)clubEl.textContent=club;
             if(image)setPlayerImage(image,playerId,role);
 
@@ -17450,7 +17845,7 @@ html.audio-modal-open{
                         channel.send({
                             type: 'broadcast',
                             event: 'new_player',
-                            payload: { url: imgUrl, nome: player.Nome, player_id: player.Id, role: activeRole, club: player.Squadra, prep_seconds: auctionPrepSeconds, ready_required: readyModeEnabled, ready_token: readyGateToken, ready_required_ids: readyModeEnabled ? readyRequiredIds() : [] }
+                            payload: { url: imgUrl, nome: player.Nome, player_id: player.Id, role: activeRole, club: player.Squadra, fvm: nominationPlayerValue(player), nominator_team_id: nominationState.enabled ? nominationState.turn_team_id : null, nominator_team_name: nominationState.enabled ? (currentNominationTeam()?.name||'') : '', prep_seconds: auctionPrepSeconds, ready_required: readyModeEnabled, ready_token: readyGateToken, ready_required_ids: readyModeEnabled ? readyRequiredIds() : [], ready_ids: readyModeEnabled ? [...readyPlayers] : [] }
                         }).catch(e => console.log("Canale broadcast non pronto"));
                     }
 
@@ -19174,10 +19569,14 @@ html.audio-modal-open{
                             player_id:currentAuctionPlayer.Id,
                             role:currentAuctionPlayer.R,
                             club:currentAuctionPlayer.Squadra,
+                            fvm:nominationPlayerValue(currentAuctionPlayer),
+                            nominator_team_id:nominationState.enabled?nominationState.turn_team_id:null,
+                            nominator_team_name:nominationState.enabled?(currentNominationTeam()?.name||''):'',
                             prep_seconds:0,
                             ready_required:true,
                             ready_token:readyGateToken,
                             ready_required_ids:required,
+                            ready_ids:[...readyPlayers],
                             mode:'sealed',
                             sealed_token:sealedAuctionToken,
                             sealed_round:sealedRound,
@@ -20171,10 +20570,14 @@ html.audio-modal-open{
                     payload:{
                         url:playerImageUrl(player.Id,player.R),
                         nome:player.Nome,player_id:player.Id,role:player.R,club:player.Squadra,
+                        fvm:nominationPlayerValue(player),
+                        nominator_team_id:nominationState.enabled?nominationState.turn_team_id:null,
+                        nominator_team_name:nominationState.enabled?(currentNominationTeam()?.name||''):'',
                         prep_seconds:0,
                         ready_required:readyModeEnabled,
                         ready_token:readyGateToken,
                         ready_required_ids:readyModeEnabled?readyRequiredIds():[],
+                        ready_ids:readyModeEnabled?[...readyPlayers]:[],
                         mode:'sealed',
                         sealed_token:sealedAuctionToken,
                         sealed_round:sealedRound,
@@ -21795,9 +22198,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyBrand(){
-    document.title='LIVEASTA V74';
+    document.title='LIVEASTA V75';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V74';
+      el.textContent='LIVEASTA · VERSIONE V75';
     });
     document.querySelectorAll('.logo-text').forEach(el=>{
       const a=el.querySelector('.rosa');
