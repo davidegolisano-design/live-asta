@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>LIVEASTA V79</title>
+    <title>LIVEASTA V74</title>
     <meta name="theme-color" content="#0D1117">
     <meta name="color-scheme" content="dark">
     <meta name="mobile-web-app-capable" content="yes">
@@ -10413,720 +10413,6 @@ html.audio-modal-open{
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="msapplication-navbutton-color" content="#0D1117">
 
-
-<style id="liveasta-v75-ready-inline-style">
-/* ==========================================================
-   LIVEASTA V77 — READY INLINE + PLANCIA BANDITORE READY A 3 COLONNE
-   ========================================================== */
-
-/* Preview rosa: ruolo nello stesso pallino colorato della banditura. */
-#room-roster-player-preview-role{
-  display:inline-flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-  min-width:30px!important;
-  width:30px!important;
-  height:30px!important;
-  padding:0!important;
-  border-radius:50%!important;
-  font-size:.78rem!important;
-  line-height:1!important;
-  font-weight:950!important;
-  flex:0 0 30px!important;
-  background:#5D6672;
-  color:#fff;
-}
-#room-roster-player-preview-role.role-P{background:#FF405E!important;color:#fff!important}
-#room-roster-player-preview-role.role-D{background:#22C55E!important;color:#07140C!important}
-#room-roster-player-preview-role.role-C{background:#4DB7FF!important;color:#06101A!important}
-#room-roster-player-preview-role.role-A{background:#F5B942!important;color:#160F04!important}
-
-/* Durante READY i 4 rilanci restano nel layout ma diventano invisibili.
-   Sono quindi gli stessi 4 tasti a mantenere l'altezza originale delle due righe:
-   READY occupa esattamente la loro area, anche sui telefoni bassi. */
-#screen-player-buzzer #normal-bid-controls.ready-active > .buzzer-btn{
-  visibility:hidden!important;
-  pointer-events:none!important;
-}
-#screen-player-buzzer #normal-bid-controls.ready-active > #sealed-bid-controls{
-  display:none!important;
-}
-#screen-player-buzzer #normal-bid-controls.ready-active{
-  display:grid!important;
-  position:relative!important;
-  width:100%!important;
-  height:auto!important;
-  min-height:0!important;
-  margin:0!important;
-  grid-template-columns:1fr 1fr!important;
-  grid-template-rows:auto auto!important;
-}
-#screen-player-buzzer .player-inline-ready-controls{
-  position:relative!important;
-  width:100%!important;
-  height:auto!important;
-  min-height:0!important;
-  margin:0!important;
-  display:none;
-}
-#screen-player-buzzer #normal-bid-controls.ready-active .player-inline-ready-controls{
-  display:block!important;
-  grid-column:1 / -1!important;
-  grid-row:1 / 3!important;
-  align-self:stretch!important;
-  justify-self:stretch!important;
-  z-index:3!important;
-}
-#screen-player-buzzer .player-inline-ready-btn{
-  position:absolute!important;
-  inset:0!important;
-  width:100%!important;
-  min-height:100%!important;
-  height:100%!important;
-  max-height:none!important;
-  margin:0!important;
-  box-sizing:border-box!important;
-  border:2px solid #78F2BE!important;
-  border-radius:19px!important;
-  background:linear-gradient(180deg,#4BE2A3,#2FCB83)!important;
-  color:#07150F!important;
-  box-shadow:0 10px 24px rgba(47,203,131,.25)!important;
-  font-family:inherit!important;
-  font-size:clamp(1.9rem,8.4vw,2.65rem)!important;
-  line-height:1!important;
-  font-weight:1000!important;
-  letter-spacing:.025em!important;
-  cursor:pointer!important;
-  touch-action:manipulation!important;
-}
-#screen-player-buzzer .player-inline-ready-btn.done{
-  background:linear-gradient(180deg,#2F9C79,#25745F)!important;
-  border-color:#54B995!important;
-  color:#fff!important;
-}
-#screen-player-buzzer .player-inline-ready-btn:disabled:not(.done){
-  background:linear-gradient(180deg,#59616C,#414852)!important;
-  border-color:#69727E!important;
-  color:#C1C7CF!important;
-  box-shadow:none!important;
-  cursor:not-allowed!important;
-}
-#screen-player-buzzer .player-inline-ready-progress{
-  position:absolute!important;
-  left:14px!important;
-  right:14px!important;
-  bottom:10px!important;
-  z-index:2!important;
-  min-height:15px;
-  padding:0 4px;
-  color:rgba(255,255,255,.94)!important;
-  text-shadow:0 1px 3px rgba(0,0,0,.55)!important;
-  font-size:.57rem;
-  line-height:1.2;
-  font-weight:900;
-  text-align:center;
-  white-space:normal;
-  pointer-events:none!important;
-}
-
-/* In READY la colonna destra non mostra timer/offerta: mostra FVM + squadre abilitate. */
-#screen-player-buzzer .player-live-side.ready-active{
-  grid-template-rows:minmax(0,1fr)!important;
-}
-#screen-player-buzzer .player-live-side.ready-active > .player-timer-box,
-#screen-player-buzzer .player-live-side.ready-active > .player-auction-info{
-  display:none!important;
-}
-#screen-player-buzzer .player-ready-side-panel{
-  min-width:0!important;
-  min-height:0!important;
-  width:100%!important;
-  height:100%!important;
-  padding:4px 3px 3px 7px!important;
-  box-sizing:border-box!important;
-  flex-direction:column!important;
-  gap:7px!important;
-  overflow:hidden!important;
-}
-#screen-player-buzzer .player-live-side.ready-active .player-ready-side-panel{
-  display:flex!important;
-}
-#screen-player-buzzer .player-ready-fvm-card{
-  flex:0 0 auto;
-  min-height:74px;
-  padding:7px 4px 8px;
-  box-sizing:border-box;
-  border-bottom:1px solid rgba(255,255,255,.12);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden;
-}
-#screen-player-buzzer .player-ready-fvm-card span,
-#screen-player-buzzer .player-ready-eligible-title{
-  color:#B8C2CF;
-  font-size:clamp(.52rem,2.35vw,.68rem);
-  line-height:1;
-  letter-spacing:.10em;
-  font-weight:900;
-  text-transform:uppercase;
-  white-space:nowrap;
-}
-#screen-player-buzzer #player-ready-fvm-value{
-  margin:3px 0 2px;
-  color:#fff;
-  font-size:clamp(2.6rem,12vw,4.2rem);
-  line-height:.88;
-  font-weight:1000;
-  font-variant-numeric:tabular-nums;
-}
-#screen-player-buzzer .player-ready-fvm-card small{
-  color:#8F9BA8;
-  font-size:.43rem;
-  line-height:1;
-  letter-spacing:.09em;
-  font-weight:850;
-}
-#screen-player-buzzer .player-ready-eligible-card{
-  min-height:0;
-  flex:1 1 auto;
-  display:flex;
-  flex-direction:column;
-  gap:5px;
-  overflow:hidden;
-}
-#screen-player-buzzer .player-ready-eligible-title{
-  flex:0 0 auto;
-  padding:0 2px;
-  text-align:center;
-}
-#screen-player-buzzer .player-ready-eligible-list{
-  min-height:0;
-  flex:1 1 auto;
-  display:flex;
-  flex-direction:column;
-  gap:4px;
-  overflow-y:auto;
-  overscroll-behavior:contain;
-  scrollbar-width:thin;
-  padding:1px 1px 2px;
-}
-#screen-player-buzzer .player-ready-eligible-row{
-  min-width:0;
-  flex:0 0 auto;
-  min-height:30px;
-  padding:5px 6px;
-  box-sizing:border-box;
-  display:grid;
-  grid-template-columns:minmax(0,1fr) 9px;
-  gap:5px;
-  align-items:center;
-  border:1px solid rgba(255,255,255,.09);
-  border-radius:8px;
-  background:rgba(255,255,255,.035);
-}
-#screen-player-buzzer .player-ready-eligible-row.nominator{
-  border-color:rgba(245,185,66,.88)!important;
-  background:rgba(245,185,66,.13)!important;
-  box-shadow:inset 3px 0 0 #F5B942;
-  order:-1;
-}
-#screen-player-buzzer .player-ready-eligible-row.mine:not(.nominator){
-  border-color:rgba(77,183,255,.50);
-  background:rgba(77,183,255,.08);
-}
-#screen-player-buzzer .player-ready-eligible-main{
-  min-width:0;
-  display:flex;
-  flex-direction:column;
-  gap:1px;
-  text-align:left;
-}
-#screen-player-buzzer .player-ready-eligible-main b{
-  min-width:0;
-  color:#fff;
-  font-size:clamp(.61rem,2.7vw,.80rem);
-  line-height:1.03;
-  font-weight:950;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-#screen-player-buzzer .player-ready-eligible-main small{
-  color:#8996A4;
-  font-size:.39rem;
-  line-height:1;
-  font-weight:900;
-  letter-spacing:.07em;
-  white-space:nowrap;
-}
-#screen-player-buzzer .player-ready-eligible-row.nominator .player-ready-eligible-main small{
-  color:#F5B942;
-}
-#screen-player-buzzer .player-ready-status-dot{
-  width:8px;
-  height:8px;
-  border-radius:50%;
-  justify-self:end;
-  background:#7D8792;
-  box-shadow:0 0 0 2px rgba(125,135,146,.12);
-}
-#screen-player-buzzer .player-ready-status-dot.ready{
-  background:#3DDC97;
-  box-shadow:0 0 0 2px rgba(61,220,151,.16),0 0 8px rgba(61,220,151,.36);
-}
-#screen-player-buzzer .player-ready-eligible-empty{
-  padding:8px 4px;
-  color:#8F9BA8;
-  font-size:.58rem;
-  text-align:center;
-}
-
-/* V77/V78 — plancia banditore durante READY.
-   La vista a 3 colonne è SOLO per la modalità COMPUTER.
-   In modalità SMARTPHONE viene mantenuta la presentazione semplice della V76. */
-#screen-auctioneer-board .auctioneer-ready-mobile-simple{display:none;}
-#screen-auctioneer-board .nomination-stage.ready-layout{
-  padding:clamp(14px,2.2vw,30px)!important;
-}
-#screen-auctioneer-board .nomination-stage.ready-layout .nomination-stage-inner{
-  width:min(1500px,98%)!important;
-  max-width:none!important;
-  min-height:0!important;
-  height:100%!important;
-  justify-content:center!important;
-  gap:0!important;
-  padding:4px 0!important;
-}
-#screen-auctioneer-board .nomination-stage.ready-layout .nomination-stage-kicker,
-#screen-auctioneer-board .nomination-stage.ready-layout .nomination-stage-title,
-#screen-auctioneer-board .nomination-stage.ready-layout .nomination-stage-team,
-#screen-auctioneer-board .nomination-stage.ready-layout .nomination-stage-role,
-#screen-auctioneer-board .nomination-stage.ready-layout .nomination-stage-player{
-  display:none!important;
-}
-#screen-auctioneer-board .nomination-stage-ready.auctioneer-ready-layout{
-  display:block;
-  width:100%!important;
-  max-width:none!important;
-  height:min(78dvh,760px)!important;
-  min-height:480px!important;
-  margin:0!important;
-  padding:0!important;
-  border:none!important;
-  background:transparent!important;
-}
-#screen-auctioneer-board .auctioneer-ready-grid{
-  width:100%;
-  height:100%;
-  display:grid;
-  grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr) minmax(0,.92fr);
-  gap:14px;
-}
-#screen-auctioneer-board .auctioneer-ready-col{
-  min-width:0;
-  min-height:0;
-  height:100%;
-  padding:16px;
-  box-sizing:border-box;
-  border:1px solid #334155;
-  border-radius:20px;
-  background:#151D27;
-  box-shadow:0 14px 34px rgba(0,0,0,.22);
-  overflow:hidden;
-}
-#screen-auctioneer-board .auctioneer-ready-col-title,
-#screen-auctioneer-board .auctioneer-ready-list-title{
-  color:#B8C2CF;
-  font-size:clamp(.66rem,1.1vw,.9rem);
-  line-height:1;
-  letter-spacing:.12em;
-  font-weight:950;
-  text-transform:uppercase;
-  text-align:center;
-}
-#screen-auctioneer-board .auctioneer-ready-player-col{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-  background:#111821;
-}
-#screen-auctioneer-board .auctioneer-ready-player-card{
-  min-height:0;
-  flex:1 1 auto;
-  display:grid;
-  grid-template-rows:minmax(0,1fr) auto auto;
-  gap:8px;
-  align-items:center;
-  justify-items:center;
-}
-#screen-auctioneer-board #auctioneer-ready-player-img{
-  width:100%;
-  height:100%;
-  min-height:0;
-  object-fit:contain;
-  filter:drop-shadow(0 14px 20px rgba(0,0,0,.35));
-}
-#screen-auctioneer-board .auctioneer-ready-player-name{
-  width:100%;
-  color:#fff;
-  font-size:clamp(1.25rem,2.5vw,2.4rem);
-  line-height:1;
-  font-weight:1000;
-  text-align:center;
-  text-transform:uppercase;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-#screen-auctioneer-board .auctioneer-ready-player-meta{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:8px;
-  color:#D5DCE5;
-  font-size:clamp(.78rem,1.35vw,1.08rem);
-  font-weight:900;
-  white-space:nowrap;
-}
-#screen-auctioneer-board .auctioneer-ready-role-dot{
-  width:30px;
-  height:30px;
-  flex:0 0 30px;
-  border-radius:50%;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  background:#5D6672;
-  color:#fff;
-  font-size:.78rem;
-  font-weight:1000;
-}
-#screen-auctioneer-board .auctioneer-ready-role-dot.role-P{background:#FF405E;color:#fff}
-#screen-auctioneer-board .auctioneer-ready-role-dot.role-D{background:#22C55E;color:#07140C}
-#screen-auctioneer-board .auctioneer-ready-role-dot.role-C{background:#4DB7FF;color:#06101A}
-#screen-auctioneer-board .auctioneer-ready-role-dot.role-A{background:#F5B942;color:#160F04}
-#screen-auctioneer-board .auctioneer-ready-wait-col,
-#screen-auctioneer-board .auctioneer-ready-offer-col{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-#screen-auctioneer-board .auctioneer-ready-wait-col .nomination-stage-ready-label{
-  margin-top:2px;
-  color:#fff;
-  font-size:clamp(.75rem,1.35vw,1.05rem);
-  letter-spacing:.1em;
-}
-#screen-auctioneer-board .auctioneer-ready-wait-col .nomination-stage-ready-count{
-  margin:0;
-  color:#3DDC97;
-  font-size:clamp(3.6rem,7vw,6.8rem);
-  line-height:.9;
-  font-weight:1000;
-  text-align:center;
-  font-variant-numeric:tabular-nums;
-}
-#screen-auctioneer-board .auctioneer-ready-team-list{
-  min-height:0;
-  flex:1 1 auto;
-  display:flex;
-  flex-direction:column;
-  gap:7px;
-  overflow-y:auto;
-  padding:2px;
-  overscroll-behavior:contain;
-}
-#screen-auctioneer-board .auctioneer-ready-team-row{
-  min-width:0;
-  min-height:46px;
-  padding:8px 10px;
-  box-sizing:border-box;
-  display:grid;
-  grid-template-columns:minmax(0,1fr) auto;
-  align-items:center;
-  gap:8px;
-  border:1px solid rgba(255,255,255,.10);
-  border-radius:11px;
-  background:rgba(255,255,255,.035);
-}
-#screen-auctioneer-board .auctioneer-ready-team-row.nominator{
-  order:-1;
-  border-color:rgba(245,185,66,.90);
-  background:rgba(245,185,66,.13);
-  box-shadow:inset 4px 0 0 #F5B942;
-}
-#screen-auctioneer-board .auctioneer-ready-team-main{
-  min-width:0;
-  display:flex;
-  flex-direction:column;
-  gap:3px;
-  text-align:left;
-}
-#screen-auctioneer-board .auctioneer-ready-team-main b{
-  color:#fff;
-  font-size:clamp(.78rem,1.25vw,1rem);
-  line-height:1;
-  font-weight:950;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-#screen-auctioneer-board .auctioneer-ready-team-main small{
-  color:#8F9BA8;
-  font-size:clamp(.5rem,.8vw,.66rem);
-  line-height:1;
-  letter-spacing:.06em;
-  font-weight:900;
-  text-transform:uppercase;
-}
-#screen-auctioneer-board .auctioneer-ready-team-row.nominator .auctioneer-ready-team-main small{color:#F5B942}
-#screen-auctioneer-board .auctioneer-ready-team-status{
-  min-width:60px;
-  padding:5px 7px;
-  border-radius:999px;
-  background:#27313D;
-  color:#AAB4C0;
-  font-size:clamp(.48rem,.75vw,.62rem);
-  line-height:1;
-  font-weight:950;
-  text-align:center;
-  white-space:nowrap;
-}
-#screen-auctioneer-board .auctioneer-ready-team-status.ready{
-  background:rgba(61,220,151,.15);
-  color:#69E8AA;
-  border:1px solid rgba(61,220,151,.34);
-}
-#screen-auctioneer-board .auctioneer-ready-fvm{
-  flex:0 0 auto;
-  min-height:138px;
-  padding:8px 6px 12px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  border-bottom:1px solid rgba(255,255,255,.12);
-}
-#screen-auctioneer-board .auctioneer-ready-fvm span,
-#screen-auctioneer-board .auctioneer-ready-fvm small{
-  color:#B8C2CF;
-  font-size:clamp(.6rem,1vw,.78rem);
-  line-height:1;
-  letter-spacing:.11em;
-  font-weight:950;
-}
-#screen-auctioneer-board .auctioneer-ready-fvm strong{
-  margin:4px 0 5px;
-  color:#fff;
-  font-size:clamp(4rem,7.5vw,7rem);
-  line-height:.82;
-  font-weight:1000;
-  font-variant-numeric:tabular-nums;
-}
-#screen-auctioneer-board .nomination-stage-ready-missing{
-  flex:0 0 auto;
-  margin:0;
-  min-height:16px;
-  color:#8F9BA8;
-  font-size:clamp(.58rem,.9vw,.72rem);
-  line-height:1.2;
-  font-weight:800;
-  text-align:center;
-}
-#screen-auctioneer-board .auctioneer-ready-empty{
-  padding:16px 8px;
-  color:#8F9BA8;
-  font-size:.8rem;
-  text-align:center;
-}
-@media(max-width:900px){
-  #screen-auctioneer-board .auctioneer-ready-grid{gap:8px;grid-template-columns:minmax(0,1fr) minmax(0,.9fr) minmax(0,.9fr)}
-  #screen-auctioneer-board .auctioneer-ready-col{padding:10px;border-radius:15px}
-  #screen-auctioneer-board .auctioneer-ready-team-row{min-height:39px;padding:6px 7px}
-  #screen-auctioneer-board .auctioneer-ready-team-status{min-width:48px;padding:4px 5px}
-  #screen-auctioneer-board .auctioneer-ready-fvm{min-height:108px}
-}
-@media(max-width:560px){
-  #screen-auctioneer-board .nomination-stage.ready-layout{overflow:auto!important;align-items:flex-start!important}
-  #screen-auctioneer-board .nomination-stage-ready.auctioneer-ready-layout{height:auto!important;min-height:0!important}
-  #screen-auctioneer-board .auctioneer-ready-grid{grid-template-columns:1fr;height:auto}
-  #screen-auctioneer-board .auctioneer-ready-col{min-height:300px;height:auto}
-  #screen-auctioneer-board .auctioneer-ready-player-col{min-height:390px}
-}
-
-/* Modalità SMARTPHONE banditore: READY semplice come prima della V77. */
-#screen-auctioneer-board #auction-dashboard.mode-mobile .nomination-stage.ready-layout{
-  padding:16px 12px!important;
-  overflow:auto!important;
-  align-items:center!important;
-  justify-content:center!important;
-}
-#screen-auctioneer-board #auction-dashboard.mode-mobile .nomination-stage.ready-layout .nomination-stage-inner{
-  width:min(1100px,96%)!important;
-  max-width:96%!important;
-  min-height:100%!important;
-  height:auto!important;
-  justify-content:center!important;
-  gap:clamp(12px,2vh,24px)!important;
-  padding:10px 0!important;
-}
-#screen-auctioneer-board #auction-dashboard.mode-mobile .nomination-stage.ready-layout .nomination-stage-kicker,
-#screen-auctioneer-board #auction-dashboard.mode-mobile .nomination-stage.ready-layout .nomination-stage-title,
-#screen-auctioneer-board #auction-dashboard.mode-mobile .nomination-stage.ready-layout .nomination-stage-team,
-#screen-auctioneer-board #auction-dashboard.mode-mobile .nomination-stage.ready-layout .nomination-stage-role{
-  display:block!important;
-}
-#screen-auctioneer-board #auction-dashboard.mode-mobile .nomination-stage.ready-layout .nomination-stage-player{
-  display:none!important;
-}
-#screen-auctioneer-board #auction-dashboard.mode-mobile .nomination-stage-ready.auctioneer-ready-layout{
-  display:block!important;
-  width:min(700px,100%)!important;
-  max-width:700px!important;
-  height:auto!important;
-  min-height:0!important;
-  margin-top:8px!important;
-  padding:14px 10px!important;
-  border:1px solid rgba(61,220,151,.32)!important;
-  border-radius:18px!important;
-  background:rgba(61,220,151,.07)!important;
-  box-sizing:border-box!important;
-}
-#screen-auctioneer-board #auction-dashboard.mode-mobile .auctioneer-ready-grid{display:none!important;}
-#screen-auctioneer-board #auction-dashboard.mode-mobile .auctioneer-ready-mobile-simple{display:block!important;}
-#screen-auctioneer-board #auction-dashboard.mode-pc .auctioneer-ready-grid{display:grid!important;}
-#screen-auctioneer-board #auction-dashboard.mode-pc .auctioneer-ready-mobile-simple{display:none!important;}
-
-/* Vecchio overlay READY e relativo pulsante riapri dismessi in V75. */
-#player-ready-overlay,
-#player-ready-reopen-btn{
-  display:none!important;
-}
-
-@media(max-height:760px){
-  #screen-player-buzzer .player-inline-ready-btn{
-    min-height:0!important;
-    height:100%!important;
-    font-size:2rem!important;
-  }
-  #screen-player-buzzer .player-ready-fvm-card{
-    min-height:62px;
-    padding:5px 3px 6px;
-  }
-  #screen-player-buzzer #player-ready-fvm-value{
-    font-size:clamp(2.25rem,10vw,3.25rem);
-  }
-  #screen-player-buzzer .player-ready-eligible-row{
-    min-height:27px;
-    padding:4px 5px;
-  }
-}
-</style>
-
-
-<style id="liveasta-v78-board-actions-style">
-/* ==========================================================
-   LIVEASTA V79 — READY TRANSIZIONE ATOMICA + RESET IN GESTIONE
-   ========================================================== */
-
-/* Messaggi di accesso bloccato: countdown su righe separate e leggibili. */
-#auction-room-error{white-space:pre-line;line-height:1.35;}
-
-/* ROSE e RESET vivono nella barra fissa della plancia banditore. */
-#screen-auctioneer-board .auction-nav-action{
-  flex:0 0 auto!important;
-  min-height:34px!important;
-  height:34px!important;
-  margin:0!important;
-  padding:0 11px!important;
-  border-radius:10px!important;
-  font-size:.66rem!important;
-  line-height:1!important;
-  font-weight:950!important;
-  letter-spacing:.045em!important;
-  white-space:nowrap!important;
-  touch-action:manipulation!important;
-}
-#screen-auctioneer-board .auction-nav-rosters{
-  color:var(--lime)!important;
-}
-#screen-auctioneer-board .auction-nav-reset{
-  min-width:68px!important;
-}
-
-/* Tolto ROSE dal listone: ricerca + dado + modalità busta. */
-#screen-auctioneer-board .auction-list-toolbar{
-  grid-template-columns:minmax(0,1fr) 58px minmax(170px,220px)!important;
-  grid-template-areas:"search random sealed"!important;
-}
-#screen-auctioneer-board .auction-list-toolbar #player-search{grid-area:search!important}
-#screen-auctioneer-board .auction-list-toolbar .toolbar-icon-btn{grid-area:random!important}
-#screen-auctioneer-board .auction-list-toolbar .toolbar-sealed-mode-btn{grid-area:sealed!important}
-
-@media(max-width:760px){
-  /* Prima riga: ESCI | PLANCIA | GESTIONE
-     Seconda riga: ROSE | STANZA | RESET */
-  #screen-auctioneer-board > .session-nav{
-    grid-template-columns:72px minmax(0,1fr) 86px!important;
-    grid-template-rows:38px 28px!important;
-    grid-template-areas:
-      "back center manage"
-      "rosters room reset"!important;
-  }
-  #screen-auctioneer-board .auction-nav-manage{grid-area:manage!important}
-  #screen-auctioneer-board .auction-nav-rosters{
-    grid-area:rosters!important;
-    width:72px!important;
-    min-width:72px!important;
-    height:26px!important;
-    min-height:26px!important;
-    padding:0 5px!important;
-    border-radius:9px!important;
-    font-size:.58rem!important;
-  }
-  #screen-auctioneer-board .auction-nav-reset{
-    grid-area:reset!important;
-    width:86px!important;
-    min-width:86px!important;
-    height:26px!important;
-    min-height:26px!important;
-    padding:0 5px!important;
-    border-radius:9px!important;
-    font-size:.56rem!important;
-  }
-  #screen-auctioneer-board .auction-nav-room-pill{
-    grid-area:room!important;
-    justify-self:stretch!important;
-    width:100%!important;
-    max-width:100%!important;
-    min-width:0!important;
-    padding:2px 7px!important;
-    font-size:.56rem!important;
-  }
-
-  /* Listone mobile: ROSE non occupa più spazio. */
-  #screen-auctioneer-board .auction-list-toolbar{
-    grid-template-columns:minmax(0,1fr) 44px!important;
-    grid-template-areas:
-      "search random"
-      "sealed sealed"!important;
-  }
-}
-
-@media(max-width:370px){
-  #screen-auctioneer-board > .session-nav{
-    grid-template-columns:66px minmax(0,1fr) 80px!important;
-    gap:4px 5px!important;
-  }
-  #screen-auctioneer-board > .session-nav > .session-back:first-child,
-  #screen-auctioneer-board .auction-nav-rosters{width:66px!important;min-width:66px!important}
-  #screen-auctioneer-board > .session-nav > .session-back:last-child,
-  #screen-auctioneer-board .auction-nav-reset{width:80px!important;min-width:80px!important}
-}
-</style>
-
 </head>
 <body>
 
@@ -11137,7 +10423,7 @@ html.audio-modal-open{
              aria-label="Apri Impostazioni LIVEASTA"
              onclick="openAdminLogin()"
              onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openAdminLogin();}">
-            LIVEASTA V79
+            LIVEASTA V74
         </div>
         <div class="setup-card">
             <h1 class="logo-text"><span class="rosa">LIVE</span><span class="rush">ASTA</span></h1>
@@ -11307,17 +10593,6 @@ html.audio-modal-open{
                     <div id="player-current-winner">Nessuno</div>
                     <div id="player-current-value">0</div>
                 </div>
-                <div id="player-ready-side-panel" class="player-ready-side-panel" style="display:none;">
-                    <div class="player-ready-fvm-card">
-                        <span>FVM</span>
-                        <strong id="player-ready-fvm-value">--</strong>
-                        <small>VALORE LISTONE</small>
-                    </div>
-                    <div class="player-ready-eligible-card">
-                        <div class="player-ready-eligible-title">POSSONO OFFRIRE</div>
-                        <div id="player-ready-eligible-list" class="player-ready-eligible-list"></div>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -11327,10 +10602,6 @@ html.audio-modal-open{
                 <button class="buzzer-btn btn-plus-2" onpointerdown="buzz(2)" disabled>+2</button>
                 <button class="buzzer-btn btn-plus-5" onpointerdown="buzz(5)" disabled>+5</button>
                 <button class="buzzer-btn btn-plus-10" onpointerdown="buzz(10)" disabled>+10</button>
-                <div id="player-inline-ready-controls" class="player-inline-ready-controls" style="display:none;">
-                    <button id="player-inline-ready-btn" class="player-inline-ready-btn" type="button" onclick="confirmPlayerReady()">READY</button>
-                    <div id="player-inline-ready-progress" class="player-inline-ready-progress">Premi READY quando sei pronto.</div>
-                </div>
                 <div id="sealed-bid-controls" class="sealed-bid-controls" style="display:none;">
                     <div class="sealed-bid-label">OFFERTA IN BUSTA CHIUSA</div>
                     <div class="sealed-bid-entry">
@@ -11561,9 +10832,7 @@ html.audio-modal-open{
                     ONLINE <b id="auction-online-count">0 / 0</b>
                 </div>
             </div>
-            <button class="btn btn-secondary auction-nav-action auction-nav-rosters" type="button" onclick="openAllRosters()" title="Visualizza rose">ROSE</button>
-            <button class="btn btn-danger auction-nav-action auction-nav-reset" type="button" onclick="resetRoomRuntimeState()" title="Reset stato asta">RESET</button>
-            <button class="btn btn-secondary session-back auction-nav-manage" onclick="openRoomControl(true)">Gestione</button>
+            <button class="btn btn-secondary session-back" onclick="openRoomControl(true)">Gestione</button>
         </div>
         <div class="dashboard" id="auction-dashboard" style="padding-top:52px;box-sizing:border-box;">
             <div class="dashboard-layout">
@@ -11581,49 +10850,10 @@ html.audio-modal-open{
                                 <div id="nomination-stage-player-meta" class="nomination-stage-player-meta">--</div>
                             </div>
                         </div>
-                        <div id="nomination-stage-ready" class="nomination-stage-ready auctioneer-ready-layout" style="display:none;">
-                            <div id="auctioneer-ready-mobile-simple" class="auctioneer-ready-mobile-simple">
-                                <div class="nomination-stage-ready-label">IN ATTESA DEI PLAYER READY</div>
-                                <div id="auctioneer-ready-mobile-count" class="nomination-stage-ready-count">0 / 0</div>
-                                <div id="auctioneer-ready-mobile-missing" class="nomination-stage-ready-missing"></div>
-                            </div>
-                            <div class="auctioneer-ready-grid">
-                                <section class="auctioneer-ready-col auctioneer-ready-player-col">
-                                    <div class="auctioneer-ready-col-title">GIOCATORE</div>
-                                    <div class="auctioneer-ready-player-card">
-                                        <img id="auctioneer-ready-player-img" src="" alt="Giocatore" onerror="playerImageFallback(this)">
-                                        <div id="auctioneer-ready-player-name" class="auctioneer-ready-player-name">--</div>
-                                        <div class="auctioneer-ready-player-meta">
-                                            <span id="auctioneer-ready-player-role" class="auctioneer-ready-role-dot">-</span>
-                                            <span class="auctioneer-ready-meta-sep">•</span>
-                                            <span id="auctioneer-ready-player-club">--</span>
-                                        </div>
-                                    </div>
-                                </section>
-
-                                <section class="auctioneer-ready-col auctioneer-ready-wait-col">
-                                    <div class="nomination-stage-ready-label">IN ATTESA DEL READY</div>
-                                    <div id="nomination-stage-ready-count" class="nomination-stage-ready-count">0 / 0</div>
-                                    <div class="auctioneer-ready-list-title">DEVONO DARE READY</div>
-                                    <div id="auctioneer-ready-required-list" class="auctioneer-ready-team-list"></div>
-                                    <div id="nomination-stage-ready-missing" class="nomination-stage-ready-missing"></div>
-                                </section>
-
-                                <section class="auctioneer-ready-col auctioneer-ready-offer-col">
-                                    <div class="auctioneer-ready-fvm">
-                                        <span>FVM</span>
-                                        <strong id="auctioneer-ready-fvm-value">--</strong>
-                                        <small>VALORE LISTONE</small>
-                                    </div>
-                                    <div class="auctioneer-ready-list-title">POSSONO OFFRIRE</div>
-                                    <div id="auctioneer-ready-eligible-list" class="auctioneer-ready-team-list"></div>
-                                </section>
-                            </div>
-                        </div>
-                        <div id="nomination-stage-sealed" class="nomination-stage-ready" style="display:none;">
-                            <div class="nomination-stage-ready-label">OFFERTE RICEVUTE</div>
-                            <div id="nomination-stage-sealed-count" class="nomination-stage-ready-count">0 / 0</div>
-                            <div id="nomination-stage-sealed-missing" class="nomination-stage-ready-missing"></div>
+                        <div id="nomination-stage-ready" class="nomination-stage-ready" style="display:none;">
+                            <div class="nomination-stage-ready-label">IN ATTESA DEI PLAYER READY</div>
+                            <div id="nomination-stage-ready-count" class="nomination-stage-ready-count">0 / 0</div>
+                            <div id="nomination-stage-ready-missing" class="nomination-stage-ready-missing"></div>
                         </div>
                     </div>
                 </div>
@@ -11641,6 +10871,7 @@ html.audio-modal-open{
                                     title="Attiva o disattiva la modalità busta chiusa">
                                 ATTIVA MODALITÀ BUSTA
                             </button>
+                            <button class="btn btn-secondary toolbar-roster-btn" onclick="openAllRosters()" title="Visualizza rose">ROSE</button>
                         </div>
 
                         <div class="list-section-title"><span>Disponibili</span><span id="available-count">0</span></div>
@@ -11987,9 +11218,9 @@ html.audio-modal-open{
                 <div class="toolbar-row" style="margin:0;">
                     <button class="btn btn-secondary btn-compact control-action-refresh" onclick="refreshRoomControl()">↻ Aggiorna</button>
                     <button class="btn btn-secondary btn-compact audio-toolbar-btn control-action-audio" onclick="openAudioMixer()">🔊 Audio</button>
+                    <button class="btn btn-danger btn-compact control-action-reset" onclick="resetRoomRuntimeState()">⟳ Reset</button>
                     <button class="btn btn-green btn-compact control-action-csv" onclick="exportRoseCSV()">CSV</button>
                     <button class="btn btn-secondary btn-compact control-action-import-csv" onclick="openCsvRosterImport()">↑ Importa CSV</button>
-                    <button class="btn btn-danger btn-compact control-action-reset" type="button" onclick="resetRoomRuntimeState()" title="Reset stato asta">RESET ASTA</button>
                     <button class="btn btn-secondary btn-compact control-action-back" onclick="closeRoomControl()">← Torna all'asta</button>
                 </div>
             </div>
@@ -12456,12 +11687,6 @@ html.audio-modal-open{
         let auctioneerLockToken = null;
         let auctioneerLockHeartbeatTimer = null;
         let auctioneerLockLostHandled = false;
-        let auctioneerBlockedStatusTimer = null;
-        let auctioneerBlockedStatusRoomId = '';
-        let auctioneerBlockedStatusState = null;
-        let auctioneerBlockedStatusLock = null;
-        let auctioneerBlockedStatusLastFetch = 0;
-        let auctioneerBlockedStatusFetching = false;
         const AUCTIONEER_LOCK_HEARTBEAT_MS = 5000;
         const AUCTIONEER_LOCK_STALE_MS = 45000;
 
@@ -12697,15 +11922,8 @@ html.audio-modal-open{
         let readyPlayers=new Set();
         let readyOfflineExcludedIds=new Set();
         let readyPresenceReconcileTimer=null;
-        let readyAckPollTimer=null;
-        let readyAckPollBusy=false;
-        // V79: serializza i salvataggi READY per evitare che uno stato READY
-        // "vecchio" finisca nel DB dopo l'avvio del countdown.
-        let readyGatePersistQueue=Promise.resolve();
-        let readyGateCompleting=false;
         let playerReadyToken=null;
         let playerReadySent=false;
-        let playerReadySubmitting=false;
         let playerReadyDismissedToken=null;
         let liveAuctionState=null;
         let showRoomsToUsers=true;
@@ -13404,7 +12622,6 @@ html.audio-modal-open{
                 }
                 await closeReadyGateDedicated();
                 readyGateWaiting=false;
-                stopReadyAckPolling();
                 readyGateToken=null;
                 readyPlayers=new Set();
                 readyOfflineExcludedIds=new Set();
@@ -13489,6 +12706,11 @@ html.audio-modal-open{
             const required=Array.isArray(gate.required_ids)?gate.required_ids.map(String):[];
             const already=Array.isArray(gate.ready_ids)?gate.ready_ids.map(String):[];
 
+            if(!required.includes(String(myTeamId))){
+                closePlayerReadyBanner();
+                return false;
+            }
+
             const p=gate.player||{};
             playerSealedMode=gate.mode==='sealed';
             playerSealedToken=playerSealedMode?String(gate.sealed_token||''):null;
@@ -13526,10 +12748,7 @@ html.audio-modal-open{
                 ready_ids:already,
                 nome:p.nome,
                 role:p.role,
-                club:p.club,
-                fvm:p.fvm,
-                nominator_team_id:p.nominator_team_id,
-                nominator_team_name:p.nominator_team_name
+                club:p.club
             });
 
             return true;
@@ -13553,7 +12772,6 @@ html.audio-modal-open{
             readyGateToken=String(gate.token||'');
             readyPlayers=new Set((gate.ready_ids||[]).map(String));
             readyOfflineExcludedIds=new Set((gate.offline_excluded_ids||[]).map(String));
-            startReadyAckPolling();
 
             // Mostra il giocatore corretto e la fase READY.
             restoreAuctioneerVisualFromState({player:p});
@@ -13572,7 +12790,12 @@ html.audio-modal-open{
             }else{
                 const classicRole=role.toUpperCase();
                 if(!classicRole || limits[classicRole]===undefined) return [];
-                eligible=teamsCache.filter(team=>maxBidForTeam(team,classicRole)>=1);
+                eligible=teamsCache.filter(team=>{
+                    const counts=teamCounts(team.id);
+                    const totalComplete=counts.total>=totalRoomSlots();
+                    const roleComplete=(counts[classicRole]||0)>=(limits[classicRole]||0);
+                    return !totalComplete && !roleComplete;
+                });
             }
 
             // Modalità ASSENTE:
@@ -13608,6 +12831,7 @@ html.audio-modal-open{
 
             readyOfflineExcludedIds.add(id);
             evaluateReadyGate();
+            saveReadyGateDedicated(readyGateWaiting);
         }
 
         function readyMarkTeamOnline(teamId){
@@ -13616,6 +12840,7 @@ html.audio-modal-open{
 
             if(readyOfflineExcludedIds.delete(id)){
                 evaluateReadyGate();
+                saveReadyGateDedicated(readyGateWaiting);
             }
         }
 
@@ -13668,7 +12893,8 @@ html.audio-modal-open{
                     if(isMantraRoom()){
                         eligible=!!role && maxBidForTeam(team,role)>=1;
                     }else if(role && limits[role]!==undefined){
-                        eligible=maxBidForTeam(team,role)>=1;
+                        const counts=teamCounts(team.id);
+                        eligible=counts.total<totalRoomSlots() && (counts[role]||0)<(limits[role]||0);
                     }
 
                     if(eligible && !present.has(id)){
@@ -13677,6 +12903,7 @@ html.audio-modal-open{
                 });
 
                 evaluateReadyGate();
+                saveReadyGateDedicated(readyGateWaiting);
             },900);
         }
 
@@ -13694,97 +12921,23 @@ html.audio-modal-open{
             return teamsCache.find(t=>String(t.id)===String(id))?.name||'Squadra';
         }
 
-        /* V79 READY robusto: broadcast + ACK persistente + transizione serializzata.
-           Se un pacchetto Realtime si perde, il banditore recupera comunque il READY. */
-        function readyAckKey(token,teamId){
-            if(!currentRoomId||!token||!teamId)return '';
-            return `ready_ack_${currentRoomId}_${String(token)}_${String(teamId)}`;
-        }
-
-        async function savePlayerReadyAck(token,teamId,teamName=''){
-            const key=readyAckKey(token,teamId);
-            if(!key)return false;
-            const now=new Date().toISOString();
-            try{
-                const {error}=await supabaseClient.from('fanta_app_data').upsert({
-                    key,
-                    data:{room_id:String(currentRoomId),token:String(token),team_id:String(teamId),team_name:String(teamName||''),ready:true,ready_at:now},
-                    file_name:'ready-ack',
-                    updated_at:now
-                },{onConflict:'key'});
-                if(error)throw error;
-                return true;
-            }catch(e){
-                console.warn('Salvataggio ACK READY non riuscito',e);
-                return false;
-            }
-        }
-
-        async function clearReadyAckRows(token,ids=[]){
-            if(!currentRoomId||!token)return;
-            const keys=[...new Set((ids||[]).map(id=>readyAckKey(token,id)).filter(Boolean))];
-            if(!keys.length)return;
-            try{await supabaseClient.from('fanta_app_data').delete().in('key',keys);}catch(e){console.warn('Pulizia ACK READY non riuscita',e);}
-        }
-
-        function stopReadyAckPolling(){
-            if(readyAckPollTimer){clearInterval(readyAckPollTimer);readyAckPollTimer=null;}
-            readyAckPollBusy=false;
-        }
-
-        async function reconcileReadyAcks(){
-            if(!readyGateWaiting||!readyGateToken||readyAckPollBusy)return;
-            const req=readyRequiredIds();
-            if(!req.length){evaluateReadyGate();return;}
-            const token=String(readyGateToken);
-            const keys=req.map(id=>readyAckKey(token,id)).filter(Boolean);
-            if(!keys.length)return;
-            readyAckPollBusy=true;
-            try{
-                const {data,error}=await supabaseClient.from('fanta_app_data').select('key,data').in('key',keys);
-                if(error)throw error;
-                let changed=false;
-                (Array.isArray(data)?data:[]).forEach(row=>{
-                    const d=row?.data||{};
-                    const id=String(d.team_id||'');
-                    if(d.ready===true && String(d.token||'')===token && req.includes(id) && !readyPlayers.has(id)){
-                        readyPlayers.add(id);changed=true;
-                    }
-                });
-                if(changed)evaluateReadyGate();
-            }catch(e){console.warn('Riconciliazione ACK READY non riuscita',e);}
-            finally{readyAckPollBusy=false;}
-        }
-
-        function startReadyAckPolling(){
-            stopReadyAckPolling();
-            if(!readyGateWaiting||!readyGateToken)return;
-            reconcileReadyAcks();
-            readyAckPollTimer=setInterval(()=>reconcileReadyAcks(),450);
-        }
-
         function beginReadyGate(){
-            stopReadyAckPolling();
-            readyGateCompleting=false;
-            readyGatePersistQueue=Promise.resolve();
             readyGateWaiting=true;
             readyPlayers=new Set();
             readyOfflineExcludedIds=new Set();
             readyGateToken=`${currentRoomId}_${currentAuctionPlayer?.Id}_${Date.now()}_${Math.random().toString(36).slice(2,7)}`;
             persistReadyGateState();
-            startReadyAckPolling();
+            saveReadyGateDedicated(true);
         }
 
 
         function persistReadyGateState(){
-            if(!readyGateWaiting || readyGateCompleting)return readyGatePersistQueue;
-
-            const tokenAtQueue=String(readyGateToken||'');
+            if(!readyGateWaiting)return;
             const req=readyRequiredIds();
             const snapshot={
                 phase:'ready',
                 player:livePlayerSnapshot(),
-                ready_token:tokenAtQueue,
+                ready_token:readyGateToken,
                 ready_required_ids:req,
                 ready_ids:[...readyPlayers],
                 offline_excluded_ids:[...readyOfflineExcludedIds],
@@ -13798,32 +12951,9 @@ html.audio-modal-open{
                 sealed_round:sealedAuctionModeActive?sealedRound:1,
                 sealed_eligible_ids:sealedAuctionModeActive?sealedEligibleIds:[]
             };
-
-            // Tutti i salvataggi READY passano da una sola coda. Quando il READY
-            // è completato, completeReadyGate() aspetta la coda e poi scrive
-            // definitivamente gate=chiuso + fase successiva. In questo modo
-            // un upsert lento non può riaprire il READY dopo il countdown.
-            readyGatePersistQueue=readyGatePersistQueue
-                .catch(()=>{})
-                .then(async()=>{
-                    if(
-                        !readyGateWaiting ||
-                        readyGateCompleting ||
-                        String(readyGateToken||'')!==tokenAtQueue
-                    )return;
-
-                    await saveLiveAuctionState(snapshot);
-
-                    if(
-                        !readyGateWaiting ||
-                        readyGateCompleting ||
-                        String(readyGateToken||'')!==tokenAtQueue
-                    )return;
-
-                    await saveReadyGateDedicated(true);
-                });
-
-            return readyGatePersistQueue;
+            liveAuctionState={...(liveAuctionState||{}),...snapshot,updated_at:new Date().toISOString()};
+            saveLiveAuctionState(snapshot);
+            saveReadyGateDedicated(true);
         }
 
         function broadcastReadyState(){
@@ -13846,148 +12976,44 @@ html.audio-modal-open{
             showAuctioneerReadyStage();
         }
 
-        async function completeReadyGate(requiredIds=[]){
-            if(!readyGateWaiting || readyGateCompleting)return;
-
-            readyGateCompleting=true;
-            const completedToken=String(readyGateToken||'');
-            const completedIds=[...requiredIds].map(String);
-
-            // Da questo istante nessun nuovo salvataggio può essere accodato come READY attivo.
-            readyGateWaiting=false;
-            stopReadyAckPolling();
-            broadcastReadyState();
-
-            try{
-                // Aspetta ogni eventuale write READY già partita prima di chiudere il gate.
-                await readyGatePersistQueue.catch(()=>{});
-                await closeReadyGateDedicated();
-            }catch(e){
-                console.warn('Chiusura READY non riuscita completamente',e);
-            }
-
-            // Pulisci il token soltanto dopo aver notificato waiting=false.
-            readyGateToken=null;
-
-            try{
-                if(sealedAuctionModeActive)startSealedAuctionTimer();
-                else startCountdown();
-
-                // La pulizia degli ACK non deve mai ritardare l'avvio del countdown.
-                clearReadyAckRows(completedToken,completedIds).catch(()=>{});
-            }finally{
-                readyGateCompleting=false;
-            }
-        }
-
         function evaluateReadyGate(){
-            if(!readyGateWaiting || readyGateCompleting)return;
+            if(!readyGateWaiting)return;
 
             const req=readyRequiredIds();
             updateReadyGateDisplay();
             broadcastReadyState();
-
-            // Se tutti sono pronti, NON persistere di nuovo la fase READY:
-            // passa direttamente alla chiusura serializzata.
-            if(req.length===0 || req.every(id=>readyPlayers.has(String(id)))){
-                void completeReadyGate(req);
-                return;
-            }
-
             persistReadyGateState();
-        }
 
-        function playerReadyFvmValue(data={}){
-            const direct=parseFloat(String(data?.fvm??'').replace(',','.'));
-            if(Number.isFinite(direct))return direct;
-
-            const playerId=String(data?.player_id||data?.id||currentAuctionPlayer?.Id||'');
-            const player=playersList.find(p=>String(p.Id)===playerId)||currentAuctionPlayer;
-            if(!player)return 0;
-            return typeof nominationPlayerValue==='function'?nominationPlayerValue(player):0;
-        }
-
-        function playerReadyNominatorId(){
-            const ctx=window.liveastaInlineReadyContext||{};
-            if(ctx.nominator_team_id)return String(ctx.nominator_team_id);
-            return nominationState?.enabled?String(nominationState.turn_team_id||''):'';
-        }
-
-        function renderPlayerReadyEligibleList(data={}){
-            const ctx=window.liveastaInlineReadyContext||{};
-            const required=Array.isArray(data?.required_ids)
-                ?data.required_ids.map(String)
-                :(Array.isArray(data?.ready_required_ids)
-                    ?data.ready_required_ids.map(String)
-                    :(ctx.required_ids||[]).map(String));
-            const readyIds=Array.isArray(data?.ready_ids)
-                ?data.ready_ids.map(String)
-                :(ctx.ready_ids||[]).map(String);
-
-            ctx.required_ids=required;
-            ctx.ready_ids=readyIds;
-            window.liveastaInlineReadyContext=ctx;
-
-            const box=document.getElementById('player-ready-eligible-list');
-            if(!box)return;
-
-            const nominatorId=playerReadyNominatorId();
-            const readySet=new Set(readyIds);
-            const rows=required.map(id=>{
-                const team=teamsCache.find(t=>String(t.id)===String(id));
-                return {
-                    id:String(id),
-                    name:String(team?.name||readyTeamName(id)||'Squadra'),
-                    nominator:!!nominatorId && String(id)===String(nominatorId),
-                    mine:String(id)===String(myTeamId),
-                    ready:readySet.has(String(id))
-                };
-            }).sort((a,b)=>{
-                if(a.nominator!==b.nominator)return a.nominator?-1:1;
-                return a.name.localeCompare(b.name,'it',{sensitivity:'base'});
-            });
-
-            if(!rows.length){
-                box.innerHTML='<div class="player-ready-eligible-empty">Nessuna squadra abilitata</div>';
-                return;
+            // OFFLINE continua a essere obbligatorio.
+            // Solo la modalità ASSENTE esplicita toglie una squadra dal READY.
+            // La banditura a turni resta comunque obbligatoria nel suo turno.
+            if(req.length===0 || req.every(id=>readyPlayers.has(String(id)))){
+                readyGateWaiting=false;
+                broadcastReadyState();
+                closeReadyGateDedicated();
+                if(sealedAuctionModeActive)startSealedAuctionTimer();
+                else startCountdown();
             }
-
-            box.innerHTML=rows.map(row=>`
-                <div class="player-ready-eligible-row${row.nominator?' nominator':''}${row.mine?' mine':''}">
-                    <span class="player-ready-eligible-main">
-                        <b>${escapeHtml(row.name)}</b>
-                        <small>${row.nominator?'HA BANDITO':(row.mine?'LA TUA SQUADRA':'PUÒ OFFRIRE')}</small>
-                    </span>
-                    <span class="player-ready-status-dot ${row.ready?'ready':'waiting'}" title="${row.ready?'Ready':'In attesa'}"></span>
-                </div>
-            `).join('');
-        }
-
-        function setPlayerReadyInlineMode(active,data={}){
-            const grid=document.getElementById('normal-bid-controls');
-            const liveSide=document.querySelector('#screen-player-buzzer .player-live-side');
-            const panel=document.getElementById('player-ready-side-panel');
-            const inline=document.getElementById('player-inline-ready-controls');
-
-            grid?.classList.toggle('ready-active',!!active);
-            liveSide?.classList.toggle('ready-active',!!active);
-            if(panel)panel.style.display=active?'flex':'none';
-            if(inline)inline.style.display=active?'flex':'none';
-
-            if(!active)return;
-
-            const value=playerReadyFvmValue(data);
-            const fvm=document.getElementById('player-ready-fvm-value');
-            if(fvm)fvm.textContent=Number.isFinite(value)?String(value):'--';
-            renderPlayerReadyEligibleList(data);
         }
 
         function syncPlayerReadyReopenButton(){
-            // V75: READY vive nella zona dei tasti offerta, quindi non serve più
-            // né l'overlay né il pulsante per riaprirlo.
             const reopen=document.getElementById('player-ready-reopen-btn');
-            if(reopen)reopen.style.display='none';
-            document.getElementById('player-ready-overlay')?.classList.remove('open');
+            if(!reopen)return;
+
+            const overlayOpen=!!document.getElementById('player-ready-overlay')?.classList.contains('open');
+            const hasReady=!!playerReadyToken;
+
+            // Il pulsante serve solo quando l'utente ha chiuso volontariamente
+            // la schermata READY mentre quel READY è ancora valido.
+            const dismissed=hasReady && String(playerReadyDismissedToken||'')===String(playerReadyToken);
+
+            reopen.style.display=(dismissed && !overlayOpen)?'block':'none';
+            reopen.classList.toggle('done',!!playerReadySent);
+
+            const title=reopen.querySelector('span');
+            const strong=reopen.querySelector('strong');
+            if(title)title.textContent=playerReadySent?'READY GIÀ INVIATO':'READY IN ATTESA';
+            if(strong)strong.textContent=playerReadySent?'VEDI ATTESA READY':'RIAPRI READY';
         }
 
         function showPlayerReadyBanner(data,forceOpen=false){
@@ -13995,200 +13021,119 @@ html.audio-modal-open{
             playerSealedRevealLocalEndAt=0;
 
             const required=Array.isArray(data?.ready_required_ids)
-                ?data.ready_required_ids.map(String)
-                :(Array.isArray(data?.required_ids)?data.required_ids.map(String):[]);
-            const incomingToken=String(data?.ready_token||data?.token||'');
-            const readyIds=Array.isArray(data?.ready_ids)?data.ready_ids.map(String):[];
-            const eligible=required.includes(String(myTeamId));
+                ? data.ready_required_ids.map(String)
+                : [];
 
-            window.liveastaInlineReadyContext={
-                token:incomingToken,
-                required_ids:required,
-                ready_ids:readyIds,
-                fvm:playerReadyFvmValue(data),
-                nome:data?.nome||currentAuctionPlayer?.Nome||'',
-                role:data?.role||currentAuctionPlayer?.R||'',
-                club:data?.club||currentAuctionPlayer?.Squadra||'',
-                nominator_team_id:String(data?.nominator_team_id||currentAuctionPlayer?.nominator_team_id||nominationState?.turn_team_id||''),
-                nominator_team_name:String(data?.nominator_team_name||currentAuctionPlayer?.nominator_team_name||currentNominationTeam()?.name||'')
-            };
-
-            playerReadyToken=eligible?incomingToken:null;
-            playerReadyDismissedToken=null;
-            playerReadySubmitting=false;
-            playerReadySent=eligible && readyIds.includes(String(myTeamId));
-
-            const hiddenBtn=document.getElementById('ready-confirm-btn');
-            if(hiddenBtn){
-                hiddenBtn.disabled=!eligible||playerReadySent;
-                hiddenBtn.textContent=playerReadySent?'PRONTO ✓':'READY';
-                hiddenBtn.classList.toggle('done',playerReadySent);
+            if(!required.includes(String(myTeamId))){
+                closePlayerReadyBanner();
+                return;
             }
 
-            const btn=document.getElementById('player-inline-ready-btn');
-            if(btn){
-                btn.disabled=!eligible||playerReadySent;
-                btn.textContent=eligible?(playerReadySent?'PRONTO ✓':'READY'):'NON ABILITATO';
-                btn.classList.toggle('done',playerReadySent);
+            const incomingToken=String(data?.ready_token||'');
+
+            // Un READY nuovo deve sempre aprirsi anche se il READY precedente
+            // era stato chiuso manualmente.
+            if(
+                playerReadyDismissedToken &&
+                String(playerReadyDismissedToken)!==incomingToken
+            ){
+                playerReadyDismissedToken=null;
             }
 
-            const progress=document.getElementById('player-inline-ready-progress');
-            if(progress){
-                if(!eligible)progress.textContent='La tua rosa non può partecipare a questa asta.';
-                else if(playerReadySent)progress.textContent='READY registrato · in attesa degli altri.';
-                else progress.textContent='Premi READY quando sei pronto.';
+            playerReadyToken=incomingToken;
+
+            const alreadyReady=
+                Array.isArray(data?.ready_ids) &&
+                data.ready_ids.map(String).includes(String(myTeamId));
+
+            playerReadySent=alreadyReady;
+
+            document.getElementById('ready-player-name').textContent=data?.nome||'--';
+            document.getElementById('ready-player-meta').textContent=`${data?.role||'-'} · ${data?.club||'-'}`;
+
+            const btn=document.getElementById('ready-confirm-btn');
+            btn.disabled=alreadyReady;
+            btn.textContent=alreadyReady?'PRONTO ✓':'READY';
+            btn.classList.toggle('done',alreadyReady);
+
+            document.getElementById('ready-progress').textContent=
+                alreadyReady
+                    ?'READY già registrato · in attesa degli altri.'
+                    :'Conferma quando sei pronto.';
+
+            const dismissed=
+                String(playerReadyDismissedToken||'')===String(playerReadyToken);
+
+            if(forceOpen || !dismissed){
+                playerReadyDismissedToken=null;
+                document.getElementById('player-ready-overlay')?.classList.add('open');
+            }else{
+                document.getElementById('player-ready-overlay')?.classList.remove('open');
             }
 
-            const oldProgress=document.getElementById('ready-progress');
-            if(oldProgress)oldProgress.textContent=progress?.textContent||'';
-
-            setPlayerReadyInlineMode(true,{
-                ...data,
-                required_ids:required,
-                ready_ids:readyIds
-            });
             syncPlayerReadyReopenButton();
         }
 
-        // Compatibilità con il vecchio overlay: in V75 non viene più aperto.
+        // Chiude SOLO la finestra, senza annullare il READY né perdere il token.
+        // Serve per consultare Listone/Rosa/Stanza durante l'attesa.
         function hidePlayerReadyBanner(){
+            if(!playerReadyToken)return;
+
+            playerReadyDismissedToken=String(playerReadyToken);
             document.getElementById('player-ready-overlay')?.classList.remove('open');
             syncPlayerReadyReopenButton();
         }
 
         function reopenPlayerReadyBanner(){
-            document.getElementById('player-ready-overlay')?.classList.remove('open');
+            if(!playerReadyToken)return;
+
+            playerReadyDismissedToken=null;
+            document.getElementById('player-ready-overlay')?.classList.add('open');
             syncPlayerReadyReopenButton();
         }
 
+        // Chiusura completa: usata quando il READY è davvero terminato/cambiato.
         function closePlayerReadyBanner(){
             document.getElementById('player-ready-overlay')?.classList.remove('open');
             playerReadyToken=null;
             playerReadySent=false;
-            playerReadySubmitting=false;
             playerReadyDismissedToken=null;
-            window.liveastaInlineReadyContext=null;
-            setPlayerReadyInlineMode(false);
             syncPlayerReadyReopenButton();
         }
 
-        async function confirmPlayerReady(){
-            if(!playerReadyToken||playerReadySent||playerReadySubmitting||!myTeamId)return;
+        function confirmPlayerReady(){
+            if(!playerReadyToken||playerReadySent||!channel||!myTeamId)return;
+            playerReadySent=true;
+            syncPlayerReadyReopenButton();
+            const btn=document.getElementById('ready-confirm-btn');
+            btn.disabled=true;btn.textContent='PRONTO ✓';btn.classList.add('done');
+            document.getElementById('ready-progress').textContent='In attesa degli altri giocatori…';
 
-            const token=String(playerReadyToken);
-            const teamId=String(myTeamId);
-            const ctx=window.liveastaInlineReadyContext||{};
-            playerReadySubmitting=true;
-
-            const buttons=[document.getElementById('ready-confirm-btn'),document.getElementById('player-inline-ready-btn')].filter(Boolean);
-            buttons.forEach(btn=>{btn.disabled=true;btn.textContent='INVIO…';btn.classList.remove('done');});
-            const progress=document.getElementById('player-inline-ready-progress');
-            if(progress)progress.textContent='Registrazione READY…';
-
-            let delivered=false;
-            const localAuctioneerTeam=!!(
-                auctioneerLockKey &&
-                auctioneerPlayerMode &&
-                auctioneerPlayerTeamId &&
-                String(auctioneerPlayerTeamId)===teamId &&
-                readyGateWaiting &&
-                token===String(readyGateToken)
-            );
-
-            // Sul dispositivo BANDITORE + GIOCATORE il broadcast non torna al mittente.
-            // Registra quindi il READY direttamente nello stato del banditore, senza
-            // dipendere dal realtime self-delivery o dal solo polling DB.
-            if(isAuctioneerPlayerIdentity() || localAuctioneerTeam){
-                if(readyGateWaiting && token===String(readyGateToken)){
-                    readyPlayers.add(teamId);
-                    await savePlayerReadyAck(token,teamId,myTeamName);
+            if(isAuctioneerPlayerIdentity()){
+                if(readyGateWaiting && String(playerReadyToken)===String(readyGateToken)){
+                    readyPlayers.add(String(myTeamId));
+                    persistReadyGateState();
                     evaluateReadyGate();
-                    delivered=true;
                 }
-            }else{
-                const ackPromise=savePlayerReadyAck(token,teamId,myTeamName);
-                let broadcastPromise=Promise.resolve(false);
-                if(channel){
-                    broadcastPromise=channel.send({type:'broadcast',event:'player_ready',payload:{token,team_id:teamId,team_name:myTeamName}})
-                        .then(result=>result==='ok').catch(()=>false);
-                }
-                const [ackOk,broadcastOk]=await Promise.all([ackPromise,broadcastPromise]);
-                delivered=!!(ackOk||broadcastOk);
-            }
-
-            if(!delivered){
-                playerReadySubmitting=false;
-                buttons.forEach(btn=>{btn.disabled=false;btn.textContent='READY';btn.classList.remove('done');});
-                if(progress)progress.textContent='READY non inviato · premi di nuovo.';
-                const oldProgress=document.getElementById('ready-progress');
-                if(oldProgress)oldProgress.textContent='READY non inviato · riprova.';
                 return;
             }
 
-            playerReadySent=true;
-            playerReadySubmitting=false;
-            const readyIds=new Set((ctx.ready_ids||[]).map(String));
-            readyIds.add(teamId);
-            ctx.ready_ids=[...readyIds];
-            window.liveastaInlineReadyContext=ctx;
-            buttons.forEach(btn=>{btn.disabled=true;btn.textContent='PRONTO ✓';btn.classList.add('done');});
-            if(progress)progress.textContent='READY registrato · in attesa degli altri giocatori…';
-            const oldProgress=document.getElementById('ready-progress');
-            if(oldProgress)oldProgress.textContent='In attesa degli altri giocatori…';
-            renderPlayerReadyEligibleList({required_ids:ctx.required_ids||[],ready_ids:ctx.ready_ids||[]});
-
-            // V79: ritrasmissione idempotente di sicurezza. Se il primo broadcast
-            // viene perso, il banditore riceve comunque il READY; se l'asta è già
-            // partita playerReadyToken viene azzerato e questi retry non fanno nulla.
-            [700,1600,3000].forEach(delay=>{
-                setTimeout(()=>{
-                    if(!playerReadySent || String(playerReadyToken||'')!==token)return;
-                    savePlayerReadyAck(token,teamId,myTeamName).catch(()=>{});
-                    if(channel){
-                        channel.send({type:'broadcast',event:'player_ready',payload:{token,team_id:teamId,team_name:myTeamName}}).catch(()=>{});
-                        channel.send({type:'broadcast',event:'live_state_request',payload:{team_id:teamId,reason:'ready_retry'}}).catch(()=>{});
-                    }
-                },delay);
-            });
+            channel.send({type:'broadcast',event:'player_ready',payload:{
+                token:playerReadyToken,team_id:myTeamId,team_name:myTeamName
+            }}).catch(()=>{});
         }
 
         function updatePlayerReadyProgress(data){
-            const ctx=window.liveastaInlineReadyContext;
-            if(!ctx||String(data?.token||'')!==String(ctx.token||''))return;
+            if(!playerReadyToken||String(data?.token)!==String(playerReadyToken))return;
 
             if(data?.waiting===false){
                 closePlayerReadyBanner();
                 return;
             }
 
-            if(Array.isArray(data?.required_ids))ctx.required_ids=data.required_ids.map(String);
-            if(Array.isArray(data?.ready_ids))ctx.ready_ids=data.ready_ids.map(String);
-            window.liveastaInlineReadyContext=ctx;
+            document.getElementById('ready-progress').textContent=
+                `${parseInt(data?.ready_count)||0} / ${parseInt(data?.total)||0} pronti`;
 
-            const eligible=(ctx.required_ids||[]).map(String).includes(String(myTeamId));
-            const mineReady=(ctx.ready_ids||[]).map(String).includes(String(myTeamId));
-            if(eligible && mineReady)playerReadySent=true;
-
-            const progress=document.getElementById('player-inline-ready-progress');
-            if(progress){
-                progress.textContent=eligible
-                    ?`${parseInt(data?.ready_count)||0} / ${parseInt(data?.total)||0} pronti`
-                    :'Puoi seguire l’attesa, ma non partecipi a questa asta.';
-            }
-            const oldProgress=document.getElementById('ready-progress');
-            if(oldProgress)oldProgress.textContent=progress?.textContent||'';
-
-            const btn=document.getElementById('player-inline-ready-btn');
-            if(btn && eligible && mineReady){
-                btn.disabled=true;
-                btn.textContent='PRONTO ✓';
-                btn.classList.add('done');
-            }
-
-            renderPlayerReadyEligibleList({
-                required_ids:ctx.required_ids||[],
-                ready_ids:ctx.ready_ids||[]
-            });
             syncPlayerReadyReopenButton();
         }
 
@@ -14204,9 +13149,6 @@ html.audio-modal-open{
                 nome:String(currentAuctionPlayer.Nome||''),
                 role:String(currentAuctionPlayer.R||''),
                 club:String(currentAuctionPlayer.Squadra||''),
-                fvm:typeof nominationPlayerValue==='function'?nominationPlayerValue(currentAuctionPlayer):0,
-                nominator_team_id:nominationState?.enabled?String(nominationState.turn_team_id||''):'',
-                nominator_team_name:nominationState?.enabled?String(currentNominationTeam()?.name||''):'',
                 url:playerImageUrl(currentAuctionPlayer.Id,currentAuctionPlayer.R)
             };
         }
@@ -14352,15 +13294,18 @@ html.audio-modal-open{
                     ready_ids:Array.isArray(state.ready_ids)?state.ready_ids:[],
                     nome:state.player?.nome,
                     role:state.player?.role,
-                    club:state.player?.club,
-                    fvm:state.player?.fvm,
-                    nominator_team_id:state.player?.nominator_team_id,
-                    nominator_team_name:state.player?.nominator_team_name
+                    club:state.player?.club
                 };
+                const required=payload.ready_required_ids.map(String);
 
-                // V75: tutti vedono il giocatore scelto, FVM e squadre abilitate.
-                // Solo le squadre eleggibili possono premere READY.
-                showPlayerReadyBanner(payload);
+                // Lo stato live READY è autoritativo:
+                // anche se il telefono era chiuso e ha perso i broadcast,
+                // al rientro deve mostrare nuovamente la richiesta.
+                if(required.includes(String(myTeamId))){
+                    showPlayerReadyBanner(payload);
+                }else{
+                    closePlayerReadyBanner();
+                }
                 return;
             }
 
@@ -14888,12 +13833,7 @@ html.audio-modal-open{
         }
 
         function hideNominationStage(){
-            const stage=document.getElementById('nomination-stage');
-            stage?.classList.remove('open','ready-layout');
-            const readyBox=document.getElementById('nomination-stage-ready');
-            if(readyBox)readyBox.style.display='none';
-            const sealedBox=document.getElementById('nomination-stage-sealed');
-            if(sealedBox)sealedBox.style.display='none';
+            document.getElementById('nomination-stage')?.classList.remove('open');
         }
 
         function showNominationTurnStage(){
@@ -14912,53 +13852,10 @@ html.audio-modal-open{
                 role ? (isMantraRoom()?'Può bandire qualsiasi giocatore disponibile':`Sceglie un ${nominationRoleName(role)} · Ruolo ${role}`) : '';
             document.getElementById('nomination-stage-player').style.display='none';
             document.getElementById('nomination-stage-ready').style.display='none';
-            const sealedStage=document.getElementById('nomination-stage-sealed');
-            if(sealedStage)sealedStage.style.display='none';
             document.getElementById('nomination-stage-ready-count').textContent='0 / 0';
             document.getElementById('nomination-stage-ready-missing').textContent='';
-            const mobileReadyCount=document.getElementById('auctioneer-ready-mobile-count');
-            const mobileReadyMissing=document.getElementById('auctioneer-ready-mobile-missing');
-            if(mobileReadyCount)mobileReadyCount.textContent='0 / 0';
-            if(mobileReadyMissing)mobileReadyMissing.textContent='';
-            const stage=document.getElementById('nomination-stage');
-            stage?.classList.remove('ready-layout');
-            stage?.classList.add('open');
+            document.getElementById('nomination-stage')?.classList.add('open');
             fitNominationStageTeam();
-        }
-
-        function auctioneerReadyTeamRows(ids, readySet, nominatorId, mode='required'){
-            const unique=[...new Set((ids||[]).map(String))];
-            const rows=unique.map(id=>{
-                const team=teamsCache.find(t=>String(t.id)===String(id));
-                return {
-                    id,
-                    name:String(team?.name||readyTeamName(id)||'Squadra'),
-                    ready:readySet.has(String(id)),
-                    nominator:!!nominatorId && String(id)===String(nominatorId)
-                };
-            }).sort((a,b)=>{
-                if(mode==='eligible' && a.nominator!==b.nominator)return a.nominator?-1:1;
-                if(mode==='required' && a.ready!==b.ready)return a.ready?1:-1;
-                return a.name.localeCompare(b.name,'it',{sensitivity:'base'});
-            });
-
-            if(!rows.length)return '<div class="auctioneer-ready-empty">Nessuna squadra</div>';
-
-            return rows.map(row=>{
-                const sub=mode==='eligible'
-                    ?(row.nominator?'HA BANDITO':'PUÒ OFFRIRE')
-                    :(row.ready?'READY REGISTRATO':'DEVE DARE READY');
-                const status=mode==='required'
-                    ?`<span class="auctioneer-ready-team-status${row.ready?' ready':''}">${row.ready?'PRONTO ✓':'IN ATTESA'}</span>`
-                    :`<span class="auctioneer-ready-team-status${row.ready?' ready':''}">${row.ready?'READY ✓':'ABILITATO'}</span>`;
-                return `<div class="auctioneer-ready-team-row${mode==='eligible' && row.nominator?' nominator':''}">
-                    <span class="auctioneer-ready-team-main">
-                        <b>${escapeHtml(row.name)}</b>
-                        <small>${sub}</small>
-                    </span>
-                    ${status}
-                </div>`;
-            }).join('');
         }
 
         function showAuctioneerReadyStage(){
@@ -14967,81 +13864,12 @@ html.audio-modal-open{
             const req=readyRequiredIds();
             const ready=req.filter(id=>readyPlayers.has(String(id)));
             const missing=req.filter(id=>!readyPlayers.has(String(id)));
-            const readySet=new Set(ready.map(String));
             const nominatingTeam=nominationState.enabled ? currentNominationTeam() : null;
-            const nominatorId=nominationState.enabled ? String(nominationState.turn_team_id||nominatingTeam?.id||'') : '';
 
             const lv=document.getElementById('view-list');
             const av=document.getElementById('view-auction');
             if(lv)lv.style.display='none';
             if(av){av.classList.add('auction-view-hidden');av.style.display='none';}
-
-            const stage=document.getElementById('nomination-stage');
-            stage?.classList.add('ready-layout');
-
-            const playerName=String(currentAuctionPlayer.Nome||'--');
-            const playerRole=String(currentAuctionPlayer.R||'-').toUpperCase();
-            const playerClub=String(currentAuctionPlayer.Squadra||'-');
-            const playerImg=document.getElementById('auctioneer-ready-player-img');
-            if(playerImg){
-                playerImg.dataset.playerRole=playerRole;
-                playerImg.src=playerImageUrl(currentAuctionPlayer.Id,playerRole);
-            }
-            const playerNameEl=document.getElementById('auctioneer-ready-player-name');
-            if(playerNameEl){playerNameEl.textContent=playerName;fitOneLine(playerNameEl);}
-            const playerRoleEl=document.getElementById('auctioneer-ready-player-role');
-            if(playerRoleEl){
-                playerRoleEl.textContent=playerRole||'-';
-                playerRoleEl.className=`auctioneer-ready-role-dot role-${playerRole}`;
-            }
-            const playerClubEl=document.getElementById('auctioneer-ready-player-club');
-            if(playerClubEl)playerClubEl.textContent=playerClub;
-
-            const fvm=document.getElementById('auctioneer-ready-fvm-value');
-            if(fvm){
-                const value=typeof nominationPlayerValue==='function'?nominationPlayerValue(currentAuctionPlayer):0;
-                fvm.textContent=Number.isFinite(Number(value))?String(value):'--';
-            }
-
-            const sealedStage=document.getElementById('nomination-stage-sealed');
-            if(sealedStage)sealedStage.style.display='none';
-
-            const readyBox=document.getElementById('nomination-stage-ready');
-            if(readyBox)readyBox.style.display='block';
-
-            const count=document.getElementById('nomination-stage-ready-count');
-            if(count)count.textContent=`${ready.length} / ${req.length}`;
-            const mobileCount=document.getElementById('auctioneer-ready-mobile-count');
-            if(mobileCount)mobileCount.textContent=`${ready.length} / ${req.length}`;
-
-            const requiredList=document.getElementById('auctioneer-ready-required-list');
-            if(requiredList)requiredList.innerHTML=auctioneerReadyTeamRows(req,readySet,nominatorId,'required');
-
-            const eligibleList=document.getElementById('auctioneer-ready-eligible-list');
-            if(eligibleList)eligibleList.innerHTML=auctioneerReadyTeamRows(req,readySet,nominatorId,'eligible');
-
-            const missingEl=document.getElementById('nomination-stage-ready-missing');
-            if(missingEl){
-                missingEl.textContent=missing.length
-                    ? `Mancano ${missing.length}: ${missing.map(readyTeamName).join(', ')}`
-                    : 'Tutti pronti';
-            }
-            const mobileMissing=document.getElementById('auctioneer-ready-mobile-missing');
-            if(mobileMissing){
-                mobileMissing.textContent=missing.length
-                    ? `Mancano: ${missing.map(readyTeamName).join(', ')}`
-                    : 'Tutti pronti';
-            }
-
-            const mobileMode=document.getElementById('auction-dashboard')?.classList.contains('mode-mobile');
-            if(mobileMode){
-                document.getElementById('nomination-stage-title').textContent='IN ATTESA DEI PLAYER READY';
-                document.getElementById('nomination-stage-team').textContent=currentAuctionPlayer.Nome||'--';
-                document.getElementById('nomination-stage-role').textContent=`${playerRole||'-'} · ${playerClub||'-'}`;
-                const oldPlayerBox=document.getElementById('nomination-stage-player');
-                if(oldPlayerBox)oldPlayerBox.style.display='none';
-                fitNominationStageTeam();
-            }
 
             document.getElementById('nomination-stage-kicker').textContent=
                 sealedAuctionModeActive && sealedRound>1
@@ -15050,7 +13878,29 @@ html.audio-modal-open{
                         ? `BANDITO DA ${nominatingTeam.name}`
                         : 'GIOCATORE SCELTO');
 
-            stage?.classList.add('open');
+            document.getElementById('nomination-stage-title').textContent='IN ATTESA DEI PLAYER READY';
+            document.getElementById('nomination-stage-team').textContent=currentAuctionPlayer.Nome||'--';
+            document.getElementById('nomination-stage-role').textContent=
+                `${currentAuctionPlayer.R||'-'} · ${currentAuctionPlayer.Squadra||'-'}`;
+
+            const playerBox=document.getElementById('nomination-stage-player');
+            if(playerBox)playerBox.style.display='none';
+
+            const readyBox=document.getElementById('nomination-stage-ready');
+            if(readyBox)readyBox.style.display='block';
+
+            const count=document.getElementById('nomination-stage-ready-count');
+            if(count)count.textContent=`${ready.length} / ${req.length}`;
+
+            const missingEl=document.getElementById('nomination-stage-ready-missing');
+            if(missingEl){
+                missingEl.textContent=missing.length
+                    ? `Mancano: ${missing.map(readyTeamName).join(', ')}`
+                    : 'Tutti pronti';
+            }
+
+            document.getElementById('nomination-stage')?.classList.add('open');
+            fitNominationStageTeam();
         }
 
         function showAuctionPanels(){
@@ -16378,12 +15228,7 @@ html.audio-modal-open{
             const clubEl=document.getElementById('room-roster-player-preview-club');
 
             if(nameEl)nameEl.textContent=name;
-            if(roleEl){
-                roleEl.textContent=role;
-                roleEl.classList.remove('role-P','role-D','role-C','role-A');
-                const classicRole=String(role||'').trim().toUpperCase();
-                if(['P','D','C','A'].includes(classicRole))roleEl.classList.add(`role-${classicRole}`);
-            }
+            if(roleEl)roleEl.textContent=role;
             if(clubEl)clubEl.textContent=club;
             if(image)setPlayerImage(image,playerId,role);
 
@@ -17007,7 +15852,6 @@ html.audio-modal-open{
         async function setAuctioneerRoomMode(mode) {
             if(mode!=='create' && mode!=='join') return;
 
-            stopAuctioneerBlockedStatus();
             auctioneerRoomMode = mode;
 
             const choice=document.getElementById('auction-mode-choice');
@@ -17032,7 +15876,6 @@ html.audio-modal-open{
         }
 
         function resetAuctioneerRoomMode(){
-            stopAuctioneerBlockedStatus();
             auctioneerRoomMode=null;
 
             const choice=document.getElementById('auction-mode-choice');
@@ -17363,6 +16206,7 @@ html.audio-modal-open{
                 renderOnlinePlayers();
                 if(readyGateWaiting){
                     evaluateReadyGate();
+                    saveReadyGateDedicated(true);
                 }
             }
         }
@@ -18049,7 +16893,6 @@ html.audio-modal-open{
 
             setPlayerConnectionStatus('offline');
             stopFallbackOnlineHeartbeat();
-            stopReadyAckPolling();
 
             const oldChannel=channel;
 
@@ -18601,13 +17444,13 @@ html.audio-modal-open{
                     document.getElementById('auction-player-club').innerText = player.Squadra || '-';
                     setPlayerImage(document.getElementById('card-image'), player.Id, activeRole);
                     if(readyModeEnabled) beginReadyGate();
-                    else { stopReadyAckPolling(); readyGateWaiting=false; readyGateToken=null; readyPlayers=new Set(); }
+                    else { readyGateWaiting=false; readyGateToken=null; readyPlayers=new Set(); }
                     
                     if(channel) {
                         channel.send({
                             type: 'broadcast',
                             event: 'new_player',
-                            payload: { url: imgUrl, nome: player.Nome, player_id: player.Id, role: activeRole, club: player.Squadra, fvm: nominationPlayerValue(player), nominator_team_id: nominationState.enabled ? nominationState.turn_team_id : null, nominator_team_name: nominationState.enabled ? (currentNominationTeam()?.name||'') : '', prep_seconds: auctionPrepSeconds, ready_required: readyModeEnabled, ready_token: readyGateToken, ready_required_ids: readyModeEnabled ? readyRequiredIds() : [], ready_ids: readyModeEnabled ? [...readyPlayers] : [] }
+                            payload: { url: imgUrl, nome: player.Nome, player_id: player.Id, role: activeRole, club: player.Squadra, prep_seconds: auctionPrepSeconds, ready_required: readyModeEnabled, ready_token: readyGateToken, ready_required_ids: readyModeEnabled ? readyRequiredIds() : [] }
                         }).catch(e => console.log("Canale broadcast non pronto"));
                     }
 
@@ -19719,7 +18562,6 @@ html.audio-modal-open{
 
         async function forceAuctioneerExitAfterLockLoss(){
             stopAuctioneerLockHeartbeat();
-            stopReadyAckPolling();
 
             const oldChannel=channel;
             realtimeConnectionGeneration++;
@@ -19744,107 +18586,8 @@ html.audio-modal-open{
             showScreen('screen-role');
         }
 
-        // V78: quando un secondo banditore trova la stanza occupata,
-        // mostra anche l'eventuale countdown live della stanza.
-        function stopAuctioneerBlockedStatus(){
-            if(auctioneerBlockedStatusTimer){
-                clearInterval(auctioneerBlockedStatusTimer);
-                auctioneerBlockedStatusTimer=null;
-            }
-            auctioneerBlockedStatusRoomId='';
-            auctioneerBlockedStatusState=null;
-            auctioneerBlockedStatusLock=null;
-            auctioneerBlockedStatusLastFetch=0;
-            auctioneerBlockedStatusFetching=false;
-        }
-
-        function auctioneerBlockedPhaseInfo(state){
-            const phase=String(state?.phase||'');
-            if(phase==='prep')return {label:'COUNTDOWN PRE-ASTA', countdown:true};
-            if(phase==='active')return {label:'ASTA IN CORSO', countdown:true};
-            if(phase==='sealed')return {label:'BUSTA CHIUSA', countdown:true};
-            if(phase==='sealed_reveal')return {label:'APERTURA BUSTE', countdown:true};
-            return null;
-        }
-
-        function auctioneerBlockedRemainingSeconds(state){
-            const deadline=Number(state?.deadline_at)||Number(state?.sealed_deadline_at)||0;
-            if(deadline>0)return Math.max(0,Math.ceil((deadline-Date.now())/1000));
-            return Math.max(0,parseInt(state?.seconds)||0);
-        }
-
-        function auctioneerBlockedLockRemainingSeconds(){
-            const last=auctioneerLockLastSeen(auctioneerBlockedStatusLock);
-            if(!last)return null;
-            return Math.max(0,Math.ceil((AUCTIONEER_LOCK_STALE_MS-(Date.now()-last))/1000));
-        }
-
-        function renderAuctioneerBlockedStatus(){
-            const err=document.getElementById('auction-room-error');
-            if(!err || !auctioneerBlockedStatusRoomId)return;
-
-            let message='Accesso bloccato: in questa stanza c’è già un banditore attivo.';
-            const state=auctioneerBlockedStatusState;
-            const info=auctioneerBlockedPhaseInfo(state);
-
-            if(info){
-                const remaining=auctioneerBlockedRemainingSeconds(state);
-                const playerName=String(state?.player?.nome||'').trim();
-                message+=`\n${info.label}: ${remaining} s`;
-                if(playerName)message+=` · ${playerName}`;
-            }
-
-            const lockRemaining=auctioneerBlockedLockRemainingSeconds();
-            if(lockRemaining!==null){
-                message+=`\nSBLOCCO DI SICUREZZA: ${lockRemaining} s dall'ultimo segnale del banditore`;
-            }
-
-            message+='\nSe il banditore è ancora attivo il conteggio di sicurezza si rinnova; premendo ESCI lo sblocco è immediato.';
-            err.innerText=message;
-        }
-
-        async function refreshAuctioneerBlockedStatus(roomId){
-            if(!roomId || auctioneerBlockedStatusFetching)return;
-            auctioneerBlockedStatusFetching=true;
-            try{
-                const [liveResult,lockResult]=await Promise.all([
-                    supabaseClient.from('fanta_app_data').select('data').eq('key',`live_auction_${roomId}`).maybeSingle(),
-                    supabaseClient.from('fanta_app_data').select('data,updated_at').eq('key',`liveasta_auctioneer_lock_${roomId}`).maybeSingle()
-                ]);
-                if(!liveResult.error)auctioneerBlockedStatusState=liveResult.data?.data||null;
-                if(!lockResult.error)auctioneerBlockedStatusLock=lockResult.data||null;
-                auctioneerBlockedStatusLastFetch=Date.now();
-            }catch(e){
-                console.warn('Lettura stato stanza bloccata non riuscita',e);
-            }finally{
-                auctioneerBlockedStatusFetching=false;
-                renderAuctioneerBlockedStatus();
-            }
-        }
-
-        async function startAuctioneerBlockedStatus(room){
-            stopAuctioneerBlockedStatus();
-            auctioneerBlockedStatusRoomId=String(room?.id||'');
-            renderAuctioneerBlockedStatus();
-            await refreshAuctioneerBlockedStatus(auctioneerBlockedStatusRoomId);
-
-            auctioneerBlockedStatusTimer=setInterval(()=>{
-                const setup=document.getElementById('screen-auctioneer-setup');
-                if(!setup?.classList.contains('active')){
-                    stopAuctioneerBlockedStatus();
-                    return;
-                }
-
-                renderAuctioneerBlockedStatus();
-                if(Date.now()-auctioneerBlockedStatusLastFetch>=2500){
-                    refreshAuctioneerBlockedStatus(auctioneerBlockedStatusRoomId);
-                }
-            },500);
-        }
-
         // --- LOGICA BANDITORE ---
         async function joinAsAuctioneer() {
-            stopAuctioneerBlockedStatus();
             const err = document.getElementById('auction-room-error');
             err.innerText = '';
             if(auctioneerRoomMode!=='create' && auctioneerRoomMode!=='join'){
@@ -19897,10 +18640,8 @@ html.audio-modal-open{
                 }
                 const lockOk=await acquireAuctioneerRoomLock(room);
                 if(!lockOk){
-                    await startAuctioneerBlockedStatus(room);
-                    return;
+                    throw new Error("Accesso bloccato: in questa stanza c\'è già un banditore attivo. Può entrare un nuovo banditore solo dopo che quello attuale ha premuto ESCI.");
                 }
-                stopAuctioneerBlockedStatus();
                 auctioneerLockAcquired=true;
 
                 await connectToRoom(room);
@@ -20079,7 +18820,8 @@ html.audio-modal-open{
                 })
                 .on('broadcast',{event:'live_state_request'},async()=>{
                     if(readyGateWaiting){
-                        await persistReadyGateState();
+                        persistReadyGateState();
+                        await saveReadyGateDedicated(true);
                     }
                     const gate=await loadReadyGateState();
                     if(gate?.active){
@@ -20098,6 +18840,7 @@ html.audio-modal-open{
                     if(!required.includes(String(d.team_id)))return;
 
                     readyPlayers.add(String(d.team_id));
+                    persistReadyGateState();
                     evaluateReadyGate();
                 })
                 .on('broadcast',{event:'player_availability'},async(payload)=>{
@@ -20115,6 +18858,7 @@ html.audio-modal-open{
                     // anche se la banditura a turni è attiva.
                     if(readyGateWaiting){
                         evaluateReadyGate();
+                        await saveReadyGateDedicated(readyGateWaiting);
                     }
                 })
                 .on('broadcast',{event:'nominate_player'},async(payload)=>{
@@ -20144,24 +18888,19 @@ html.audio-modal-open{
             if(lv)lv.style.display='none';
             if(av){av.classList.add('auction-view-hidden');av.style.display='none';}
 
-            const stage=document.getElementById('nomination-stage');
-            stage?.classList.remove('ready-layout');
-
             document.getElementById('nomination-stage-kicker').textContent=sealedRound>1?`SPAREGGIO BUSTA · ROUND ${sealedRound}`:'OFFERTA IN BUSTA CHIUSA';
             document.getElementById('nomination-stage-title').textContent=currentAuctionPlayer.Nome||'--';
             document.getElementById('nomination-stage-team').textContent=String(remaining);
             document.getElementById('nomination-stage-role').textContent='SECONDI RIMANENTI';
             document.getElementById('nomination-stage-player').style.display='none';
 
-            const readyBox=document.getElementById('nomination-stage-ready');
-            if(readyBox)readyBox.style.display='none';
-            const sealedBox=document.getElementById('nomination-stage-sealed');
-            if(sealedBox)sealedBox.style.display='block';
-            const sealedCount=document.getElementById('nomination-stage-sealed-count');
-            if(sealedCount)sealedCount.textContent=`${offered} / ${eligible}`;
-            const sealedMissing=document.getElementById('nomination-stage-sealed-missing');
-            if(sealedMissing)sealedMissing.textContent=sealedRound>1?'Solo le squadre in parità possono fare una nuova offerta.':'Gli importi restano nascosti fino all’apertura delle buste.';
-            stage?.classList.add('open');
+            const box=document.getElementById('nomination-stage-ready');
+            if(box)box.style.display='block';
+            const label=box?.querySelector('.nomination-stage-ready-label');
+            if(label)label.textContent='OFFERTE RICEVUTE';
+            document.getElementById('nomination-stage-ready-count').textContent=`${offered} / ${eligible}`;
+            document.getElementById('nomination-stage-ready-missing').textContent=sealedRound>1?'Solo le squadre in parità possono fare una nuova offerta.':'Gli importi restano nascosti fino all’apertura delle buste.';
+            document.getElementById('nomination-stage')?.classList.add('open');
             fitNominationStageTeam();
         }
 
@@ -20413,7 +19152,7 @@ html.audio-modal-open{
             // soltanto le squadre rimaste in parità.
             if(readyModeEnabled){
                 beginReadyGate();
-                await persistReadyGateState();
+                await saveReadyGateDedicated(true);
 
                 const required=readyRequiredIds();
                 const readyPayload={
@@ -20435,14 +19174,10 @@ html.audio-modal-open{
                             player_id:currentAuctionPlayer.Id,
                             role:currentAuctionPlayer.R,
                             club:currentAuctionPlayer.Squadra,
-                            fvm:nominationPlayerValue(currentAuctionPlayer),
-                            nominator_team_id:nominationState.enabled?nominationState.turn_team_id:null,
-                            nominator_team_name:nominationState.enabled?(currentNominationTeam()?.name||''):'',
                             prep_seconds:0,
                             ready_required:true,
                             ready_token:readyGateToken,
                             ready_required_ids:required,
-                            ready_ids:[...readyPlayers],
                             mode:'sealed',
                             sealed_token:sealedAuctionToken,
                             sealed_round:sealedRound,
@@ -20663,7 +19398,6 @@ html.audio-modal-open{
         }
 
         function startCountdown() {
-            stopReadyAckPolling();
             clearSealedBidRanking();
             showAuctionPanels();
             // Se siamo arrivati qui, il READY è concluso.
@@ -21036,7 +19770,6 @@ html.audio-modal-open{
                 clearTimeout(readyPresenceReconcileTimer);
                 readyPresenceReconcileTimer=null;
             }
-            stopReadyAckPolling();
             isAuctionActive=false;
             currentWinner='';
             currentAuctionValue=0;
@@ -21429,7 +20162,7 @@ html.audio-modal-open{
             setPlayerImage(document.getElementById('card-image'), player.Id, player.R);
 
             if(readyModeEnabled)beginReadyGate();
-            else{stopReadyAckPolling();readyGateWaiting=false;readyGateToken=null;readyPlayers=new Set();}
+            else{readyGateWaiting=false;readyGateToken=null;readyPlayers=new Set();}
 
             if(channel){
                 channel.send({
@@ -21438,14 +20171,10 @@ html.audio-modal-open{
                     payload:{
                         url:playerImageUrl(player.Id,player.R),
                         nome:player.Nome,player_id:player.Id,role:player.R,club:player.Squadra,
-                        fvm:nominationPlayerValue(player),
-                        nominator_team_id:nominationState.enabled?nominationState.turn_team_id:null,
-                        nominator_team_name:nominationState.enabled?(currentNominationTeam()?.name||''):'',
                         prep_seconds:0,
                         ready_required:readyModeEnabled,
                         ready_token:readyGateToken,
                         ready_required_ids:readyModeEnabled?readyRequiredIds():[],
-                        ready_ids:readyModeEnabled?[...readyPlayers]:[],
                         mode:'sealed',
                         sealed_token:sealedAuctionToken,
                         sealed_round:sealedRound,
@@ -23066,9 +21795,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyBrand(){
-    document.title='LIVEASTA V79';
+    document.title='LIVEASTA V74';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V79';
+      el.textContent='LIVEASTA · VERSIONE V74';
     });
     document.querySelectorAll('.logo-text').forEach(el=>{
       const a=el.querySelector('.rosa');
