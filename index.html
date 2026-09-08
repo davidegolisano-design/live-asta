@@ -10904,6 +10904,90 @@ html.audio-modal-open{
   #exact-bid-value-bubble strong{font-size:1.8rem}
 }
 
+/* ==========================================================
+   LIVEASTA V80 — SPAZI PLAYER + AZIONI RAPIDE BANDITORE
+   Solo UI: nessuna modifica a READY, timer o logica offerte.
+   ========================================================== */
+
+/* PLAYER: un po' di respiro reale sopra e sotto la miniatura.
+   Se lo spazio verticale manca si riduce la foto, mai i testi. */
+#screen-player-buzzer .player-card-side{
+  gap:clamp(7px,.95vh,11px)!important;
+}
+#screen-player-buzzer .phone-card-image{
+  max-height:calc(100% - 70px)!important;
+}
+@media(max-height:760px){
+  #screen-player-buzzer .player-card-side{gap:6px!important}
+  #screen-player-buzzer .phone-card-image{max-height:calc(100% - 62px)!important}
+}
+@media(max-height:690px){
+  #screen-player-buzzer .player-card-side{gap:4px!important}
+  #screen-player-buzzer .phone-card-image{max-height:calc(100% - 58px)!important}
+}
+
+/* BANDITORE: ROSE e RESET sempre disponibili nella barra superiore. */
+#screen-auctioneer-board .auction-quick-actions{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  flex:0 0 auto;
+}
+#screen-auctioneer-board .auction-quick-btn{
+  height:34px!important;
+  min-height:34px!important;
+  margin:0!important;
+  padding:0 11px!important;
+  border-radius:11px!important;
+  font-size:.64rem!important;
+  font-weight:950!important;
+  letter-spacing:.055em!important;
+  white-space:nowrap!important;
+}
+#screen-auctioneer-board .auction-quick-rosters{
+  color:var(--lime)!important;
+}
+#screen-auctioneer-board .auction-quick-reset{
+  color:#fff!important;
+}
+
+/* Su smartphone le azioni entrano nella seconda riga dell'header:
+   ROSE | STANZA | RESET, senza rubare altezza alla plancia. */
+@media(max-width:760px){
+  #screen-auctioneer-board > .session-nav{
+    grid-template-areas:
+      "back center manage"
+      "rose room reset"!important;
+  }
+  #screen-auctioneer-board .auction-quick-actions{
+    display:contents!important;
+  }
+  #screen-auctioneer-board .auction-quick-btn{
+    height:25px!important;
+    min-height:25px!important;
+    padding:0 5px!important;
+    border-radius:9px!important;
+    font-size:.56rem!important;
+  }
+  #screen-auctioneer-board .auction-quick-rosters{
+    grid-area:rose!important;
+    width:72px!important;
+    justify-self:start!important;
+  }
+  #screen-auctioneer-board .auction-quick-reset{
+    grid-area:reset!important;
+    width:86px!important;
+    justify-self:end!important;
+  }
+  #screen-auctioneer-board .auction-nav-room-pill{
+    grid-area:room!important;
+    justify-self:stretch!important;
+    width:auto!important;
+    max-width:100%!important;
+    min-width:0!important;
+  }
+}
+
 </style>
 
 <script id="liveasta-theme-preload">
@@ -10957,7 +11041,7 @@ html.audio-modal-open{
              aria-label="Apri Impostazioni LIVEASTA"
              onclick="openAdminLogin()"
              onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openAdminLogin();}">
-            LIVEASTA V79
+            LIVEASTA V80
         </div>
         <div class="setup-card">
             <h1 class="logo-text"><span class="rosa">LIVE</span><span class="rush">ASTA</span></h1>
@@ -11375,6 +11459,10 @@ html.audio-modal-open{
                     <span class="auction-online-dot"></span>
                     ONLINE <b id="auction-online-count">0 / 0</b>
                 </div>
+            </div>
+            <div class="auction-quick-actions" aria-label="Azioni rapide banditore">
+                <button class="btn btn-secondary auction-quick-btn auction-quick-rosters" type="button" onclick="openAllRosters()" title="Apri le rose">ROSE</button>
+                <button class="btn btn-danger auction-quick-btn auction-quick-reset" type="button" onclick="resetRoomRuntimeState()" title="Reset stato asta">RESET</button>
             </div>
             <button class="btn btn-secondary session-back" onclick="openRoomControl(true)">Gestione</button>
         </div>
@@ -22665,9 +22753,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyBrand(){
-    document.title='LIVEASTA V79';
+    document.title='LIVEASTA V80';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V79';
+      el.textContent='LIVEASTA · VERSIONE V80';
     });
     document.querySelectorAll('.logo-text').forEach(el=>{
       const a=el.querySelector('.rosa');
