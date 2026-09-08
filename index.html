@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>LIVEASTA V76</title>
+    <title>LIVEASTA V77</title>
     <meta name="theme-color" content="#0D1117">
     <meta name="color-scheme" content="dark">
     <meta name="mobile-web-app-capable" content="yes">
@@ -10416,7 +10416,7 @@ html.audio-modal-open{
 
 <style id="liveasta-v75-ready-inline-style">
 /* ==========================================================
-   LIVEASTA V76 — READY INLINE + FVM + SQUADRE ABILITATE
+   LIVEASTA V77 — READY INLINE + PLANCIA BANDITORE READY A 3 COLONNE
    ========================================================== */
 
 /* Preview rosa: ruolo nello stesso pallino colorato della banditura. */
@@ -10447,30 +10447,36 @@ html.audio-modal-open{
   display:none!important;
 }
 #screen-player-buzzer #normal-bid-controls.ready-active{
-  /* V76: il READY occupa esattamente l'impronta dei 4 tasti offerta (2x2),
-     così il pannello centrale non cambia altezza passando da READY ad asta. */
-  --live-bid-row-h:clamp(88px,11.3dvh,106px);
-  grid-template-columns:1fr 1fr!important;
-  grid-template-rows:var(--live-bid-row-h) var(--live-bid-row-h)!important;
-  gap:8px!important;
-}
-#screen-player-buzzer .player-inline-ready-controls{
-  grid-column:1/-1!important;
-  grid-row:1/-1!important;
+  /* V77: stessa altezza reale delle due righe dei 4 tasti offerta.
+     Forziamo un contenitore unico, così READY si estende anche verso il basso. */
+  --live-bid-row-h:clamp(76px,10.4dvh,94px);
+  display:block!important;
   position:relative!important;
   width:100%!important;
   height:calc(var(--live-bid-row-h) + var(--live-bid-row-h) + 8px)!important;
-  min-height:0!important;
+  min-height:calc(var(--live-bid-row-h) + var(--live-bid-row-h) + 8px)!important;
+  margin:0!important;
+}
+#screen-player-buzzer .player-inline-ready-controls{
+  position:relative!important;
+  width:100%!important;
+  height:100%!important;
+  min-height:100%!important;
+  margin:0!important;
   display:block;
 }
 #screen-player-buzzer #normal-bid-controls.ready-active .player-inline-ready-controls{
   display:block!important;
 }
 #screen-player-buzzer .player-inline-ready-btn{
+  position:absolute!important;
+  inset:0!important;
   width:100%!important;
-  min-height:0!important;
+  min-height:100%!important;
   height:100%!important;
+  max-height:none!important;
   margin:0!important;
+  box-sizing:border-box!important;
   border:2px solid #78F2BE!important;
   border-radius:19px!important;
   background:linear-gradient(180deg,#4BE2A3,#2FCB83)!important;
@@ -10516,7 +10522,7 @@ html.audio-modal-open{
 
 @media(max-height:760px){
   #screen-player-buzzer #normal-bid-controls.ready-active{
-    --live-bid-row-h:78px;
+    --live-bid-row-h:70px;
   }
 }
 
@@ -10674,6 +10680,276 @@ html.audio-modal-open{
   text-align:center;
 }
 
+/* V77 — plancia banditore durante READY: giocatore | attesa READY | FVM/abilitati. */
+#screen-auctioneer-board .nomination-stage.ready-layout{
+  padding:clamp(14px,2.2vw,30px)!important;
+}
+#screen-auctioneer-board .nomination-stage.ready-layout .nomination-stage-inner{
+  width:min(1500px,98%)!important;
+  max-width:none!important;
+  min-height:0!important;
+  height:100%!important;
+  justify-content:center!important;
+  gap:0!important;
+  padding:4px 0!important;
+}
+#screen-auctioneer-board .nomination-stage.ready-layout .nomination-stage-kicker,
+#screen-auctioneer-board .nomination-stage.ready-layout .nomination-stage-title,
+#screen-auctioneer-board .nomination-stage.ready-layout .nomination-stage-team,
+#screen-auctioneer-board .nomination-stage.ready-layout .nomination-stage-role,
+#screen-auctioneer-board .nomination-stage.ready-layout .nomination-stage-player{
+  display:none!important;
+}
+#screen-auctioneer-board .nomination-stage-ready.auctioneer-ready-layout{
+  display:block;
+  width:100%!important;
+  max-width:none!important;
+  height:min(78dvh,760px)!important;
+  min-height:480px!important;
+  margin:0!important;
+  padding:0!important;
+  border:none!important;
+  background:transparent!important;
+}
+#screen-auctioneer-board .auctioneer-ready-grid{
+  width:100%;
+  height:100%;
+  display:grid;
+  grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr) minmax(0,.92fr);
+  gap:14px;
+}
+#screen-auctioneer-board .auctioneer-ready-col{
+  min-width:0;
+  min-height:0;
+  height:100%;
+  padding:16px;
+  box-sizing:border-box;
+  border:1px solid #334155;
+  border-radius:20px;
+  background:#151D27;
+  box-shadow:0 14px 34px rgba(0,0,0,.22);
+  overflow:hidden;
+}
+#screen-auctioneer-board .auctioneer-ready-col-title,
+#screen-auctioneer-board .auctioneer-ready-list-title{
+  color:#B8C2CF;
+  font-size:clamp(.66rem,1.1vw,.9rem);
+  line-height:1;
+  letter-spacing:.12em;
+  font-weight:950;
+  text-transform:uppercase;
+  text-align:center;
+}
+#screen-auctioneer-board .auctioneer-ready-player-col{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  background:#111821;
+}
+#screen-auctioneer-board .auctioneer-ready-player-card{
+  min-height:0;
+  flex:1 1 auto;
+  display:grid;
+  grid-template-rows:minmax(0,1fr) auto auto;
+  gap:8px;
+  align-items:center;
+  justify-items:center;
+}
+#screen-auctioneer-board #auctioneer-ready-player-img{
+  width:100%;
+  height:100%;
+  min-height:0;
+  object-fit:contain;
+  filter:drop-shadow(0 14px 20px rgba(0,0,0,.35));
+}
+#screen-auctioneer-board .auctioneer-ready-player-name{
+  width:100%;
+  color:#fff;
+  font-size:clamp(1.25rem,2.5vw,2.4rem);
+  line-height:1;
+  font-weight:1000;
+  text-align:center;
+  text-transform:uppercase;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+#screen-auctioneer-board .auctioneer-ready-player-meta{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  color:#D5DCE5;
+  font-size:clamp(.78rem,1.35vw,1.08rem);
+  font-weight:900;
+  white-space:nowrap;
+}
+#screen-auctioneer-board .auctioneer-ready-role-dot{
+  width:30px;
+  height:30px;
+  flex:0 0 30px;
+  border-radius:50%;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  background:#5D6672;
+  color:#fff;
+  font-size:.78rem;
+  font-weight:1000;
+}
+#screen-auctioneer-board .auctioneer-ready-role-dot.role-P{background:#FF405E;color:#fff}
+#screen-auctioneer-board .auctioneer-ready-role-dot.role-D{background:#22C55E;color:#07140C}
+#screen-auctioneer-board .auctioneer-ready-role-dot.role-C{background:#4DB7FF;color:#06101A}
+#screen-auctioneer-board .auctioneer-ready-role-dot.role-A{background:#F5B942;color:#160F04}
+#screen-auctioneer-board .auctioneer-ready-wait-col,
+#screen-auctioneer-board .auctioneer-ready-offer-col{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+#screen-auctioneer-board .auctioneer-ready-wait-col .nomination-stage-ready-label{
+  margin-top:2px;
+  color:#fff;
+  font-size:clamp(.75rem,1.35vw,1.05rem);
+  letter-spacing:.1em;
+}
+#screen-auctioneer-board .auctioneer-ready-wait-col .nomination-stage-ready-count{
+  margin:0;
+  color:#3DDC97;
+  font-size:clamp(3.6rem,7vw,6.8rem);
+  line-height:.9;
+  font-weight:1000;
+  text-align:center;
+  font-variant-numeric:tabular-nums;
+}
+#screen-auctioneer-board .auctioneer-ready-team-list{
+  min-height:0;
+  flex:1 1 auto;
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+  overflow-y:auto;
+  padding:2px;
+  overscroll-behavior:contain;
+}
+#screen-auctioneer-board .auctioneer-ready-team-row{
+  min-width:0;
+  min-height:46px;
+  padding:8px 10px;
+  box-sizing:border-box;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  align-items:center;
+  gap:8px;
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:11px;
+  background:rgba(255,255,255,.035);
+}
+#screen-auctioneer-board .auctioneer-ready-team-row.nominator{
+  order:-1;
+  border-color:rgba(245,185,66,.90);
+  background:rgba(245,185,66,.13);
+  box-shadow:inset 4px 0 0 #F5B942;
+}
+#screen-auctioneer-board .auctioneer-ready-team-main{
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+  text-align:left;
+}
+#screen-auctioneer-board .auctioneer-ready-team-main b{
+  color:#fff;
+  font-size:clamp(.78rem,1.25vw,1rem);
+  line-height:1;
+  font-weight:950;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+#screen-auctioneer-board .auctioneer-ready-team-main small{
+  color:#8F9BA8;
+  font-size:clamp(.5rem,.8vw,.66rem);
+  line-height:1;
+  letter-spacing:.06em;
+  font-weight:900;
+  text-transform:uppercase;
+}
+#screen-auctioneer-board .auctioneer-ready-team-row.nominator .auctioneer-ready-team-main small{color:#F5B942}
+#screen-auctioneer-board .auctioneer-ready-team-status{
+  min-width:60px;
+  padding:5px 7px;
+  border-radius:999px;
+  background:#27313D;
+  color:#AAB4C0;
+  font-size:clamp(.48rem,.75vw,.62rem);
+  line-height:1;
+  font-weight:950;
+  text-align:center;
+  white-space:nowrap;
+}
+#screen-auctioneer-board .auctioneer-ready-team-status.ready{
+  background:rgba(61,220,151,.15);
+  color:#69E8AA;
+  border:1px solid rgba(61,220,151,.34);
+}
+#screen-auctioneer-board .auctioneer-ready-fvm{
+  flex:0 0 auto;
+  min-height:138px;
+  padding:8px 6px 12px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  border-bottom:1px solid rgba(255,255,255,.12);
+}
+#screen-auctioneer-board .auctioneer-ready-fvm span,
+#screen-auctioneer-board .auctioneer-ready-fvm small{
+  color:#B8C2CF;
+  font-size:clamp(.6rem,1vw,.78rem);
+  line-height:1;
+  letter-spacing:.11em;
+  font-weight:950;
+}
+#screen-auctioneer-board .auctioneer-ready-fvm strong{
+  margin:4px 0 5px;
+  color:#fff;
+  font-size:clamp(4rem,7.5vw,7rem);
+  line-height:.82;
+  font-weight:1000;
+  font-variant-numeric:tabular-nums;
+}
+#screen-auctioneer-board .nomination-stage-ready-missing{
+  flex:0 0 auto;
+  margin:0;
+  min-height:16px;
+  color:#8F9BA8;
+  font-size:clamp(.58rem,.9vw,.72rem);
+  line-height:1.2;
+  font-weight:800;
+  text-align:center;
+}
+#screen-auctioneer-board .auctioneer-ready-empty{
+  padding:16px 8px;
+  color:#8F9BA8;
+  font-size:.8rem;
+  text-align:center;
+}
+@media(max-width:900px){
+  #screen-auctioneer-board .auctioneer-ready-grid{gap:8px;grid-template-columns:minmax(0,1fr) minmax(0,.9fr) minmax(0,.9fr)}
+  #screen-auctioneer-board .auctioneer-ready-col{padding:10px;border-radius:15px}
+  #screen-auctioneer-board .auctioneer-ready-team-row{min-height:39px;padding:6px 7px}
+  #screen-auctioneer-board .auctioneer-ready-team-status{min-width:48px;padding:4px 5px}
+  #screen-auctioneer-board .auctioneer-ready-fvm{min-height:108px}
+}
+@media(max-width:560px){
+  #screen-auctioneer-board .nomination-stage.ready-layout{overflow:auto!important;align-items:flex-start!important}
+  #screen-auctioneer-board .nomination-stage-ready.auctioneer-ready-layout{height:auto!important;min-height:0!important}
+  #screen-auctioneer-board .auctioneer-ready-grid{grid-template-columns:1fr;height:auto}
+  #screen-auctioneer-board .auctioneer-ready-col{min-height:300px;height:auto}
+  #screen-auctioneer-board .auctioneer-ready-player-col{min-height:390px}
+}
+
 /* Vecchio overlay READY e relativo pulsante riapri dismessi in V75. */
 #player-ready-overlay,
 #player-ready-reopen-btn{
@@ -10682,8 +10958,8 @@ html.audio-modal-open{
 
 @media(max-height:760px){
   #screen-player-buzzer .player-inline-ready-btn{
-    min-height:70px!important;
-    height:70px!important;
+    min-height:0!important;
+    height:100%!important;
     font-size:2rem!important;
   }
   #screen-player-buzzer .player-ready-fvm-card{
@@ -10710,7 +10986,7 @@ html.audio-modal-open{
              aria-label="Apri Impostazioni LIVEASTA"
              onclick="openAdminLogin()"
              onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openAdminLogin();}">
-            LIVEASTA V76
+            LIVEASTA V77
         </div>
         <div class="setup-card">
             <h1 class="logo-text"><span class="rosa">LIVE</span><span class="rush">ASTA</span></h1>
@@ -11152,10 +11428,44 @@ html.audio-modal-open{
                                 <div id="nomination-stage-player-meta" class="nomination-stage-player-meta">--</div>
                             </div>
                         </div>
-                        <div id="nomination-stage-ready" class="nomination-stage-ready" style="display:none;">
-                            <div class="nomination-stage-ready-label">IN ATTESA DEI PLAYER READY</div>
-                            <div id="nomination-stage-ready-count" class="nomination-stage-ready-count">0 / 0</div>
-                            <div id="nomination-stage-ready-missing" class="nomination-stage-ready-missing"></div>
+                        <div id="nomination-stage-ready" class="nomination-stage-ready auctioneer-ready-layout" style="display:none;">
+                            <div class="auctioneer-ready-grid">
+                                <section class="auctioneer-ready-col auctioneer-ready-player-col">
+                                    <div class="auctioneer-ready-col-title">GIOCATORE</div>
+                                    <div class="auctioneer-ready-player-card">
+                                        <img id="auctioneer-ready-player-img" src="" alt="Giocatore" onerror="playerImageFallback(this)">
+                                        <div id="auctioneer-ready-player-name" class="auctioneer-ready-player-name">--</div>
+                                        <div class="auctioneer-ready-player-meta">
+                                            <span id="auctioneer-ready-player-role" class="auctioneer-ready-role-dot">-</span>
+                                            <span class="auctioneer-ready-meta-sep">•</span>
+                                            <span id="auctioneer-ready-player-club">--</span>
+                                        </div>
+                                    </div>
+                                </section>
+
+                                <section class="auctioneer-ready-col auctioneer-ready-wait-col">
+                                    <div class="nomination-stage-ready-label">IN ATTESA DEL READY</div>
+                                    <div id="nomination-stage-ready-count" class="nomination-stage-ready-count">0 / 0</div>
+                                    <div class="auctioneer-ready-list-title">DEVONO DARE READY</div>
+                                    <div id="auctioneer-ready-required-list" class="auctioneer-ready-team-list"></div>
+                                    <div id="nomination-stage-ready-missing" class="nomination-stage-ready-missing"></div>
+                                </section>
+
+                                <section class="auctioneer-ready-col auctioneer-ready-offer-col">
+                                    <div class="auctioneer-ready-fvm">
+                                        <span>FVM</span>
+                                        <strong id="auctioneer-ready-fvm-value">--</strong>
+                                        <small>VALORE LISTONE</small>
+                                    </div>
+                                    <div class="auctioneer-ready-list-title">POSSONO OFFRIRE</div>
+                                    <div id="auctioneer-ready-eligible-list" class="auctioneer-ready-team-list"></div>
+                                </section>
+                            </div>
+                        </div>
+                        <div id="nomination-stage-sealed" class="nomination-stage-ready" style="display:none;">
+                            <div class="nomination-stage-ready-label">OFFERTE RICEVUTE</div>
+                            <div id="nomination-stage-sealed-count" class="nomination-stage-ready-count">0 / 0</div>
+                            <div id="nomination-stage-sealed-missing" class="nomination-stage-ready-missing"></div>
                         </div>
                     </div>
                 </div>
@@ -14239,7 +14549,12 @@ html.audio-modal-open{
         }
 
         function hideNominationStage(){
-            document.getElementById('nomination-stage')?.classList.remove('open');
+            const stage=document.getElementById('nomination-stage');
+            stage?.classList.remove('open','ready-layout');
+            const readyBox=document.getElementById('nomination-stage-ready');
+            if(readyBox)readyBox.style.display='none';
+            const sealedBox=document.getElementById('nomination-stage-sealed');
+            if(sealedBox)sealedBox.style.display='none';
         }
 
         function showNominationTurnStage(){
@@ -14258,10 +14573,49 @@ html.audio-modal-open{
                 role ? (isMantraRoom()?'Può bandire qualsiasi giocatore disponibile':`Sceglie un ${nominationRoleName(role)} · Ruolo ${role}`) : '';
             document.getElementById('nomination-stage-player').style.display='none';
             document.getElementById('nomination-stage-ready').style.display='none';
+            const sealedStage=document.getElementById('nomination-stage-sealed');
+            if(sealedStage)sealedStage.style.display='none';
             document.getElementById('nomination-stage-ready-count').textContent='0 / 0';
             document.getElementById('nomination-stage-ready-missing').textContent='';
-            document.getElementById('nomination-stage')?.classList.add('open');
+            const stage=document.getElementById('nomination-stage');
+            stage?.classList.remove('ready-layout');
+            stage?.classList.add('open');
             fitNominationStageTeam();
+        }
+
+        function auctioneerReadyTeamRows(ids, readySet, nominatorId, mode='required'){
+            const unique=[...new Set((ids||[]).map(String))];
+            const rows=unique.map(id=>{
+                const team=teamsCache.find(t=>String(t.id)===String(id));
+                return {
+                    id,
+                    name:String(team?.name||readyTeamName(id)||'Squadra'),
+                    ready:readySet.has(String(id)),
+                    nominator:!!nominatorId && String(id)===String(nominatorId)
+                };
+            }).sort((a,b)=>{
+                if(mode==='eligible' && a.nominator!==b.nominator)return a.nominator?-1:1;
+                if(mode==='required' && a.ready!==b.ready)return a.ready?1:-1;
+                return a.name.localeCompare(b.name,'it',{sensitivity:'base'});
+            });
+
+            if(!rows.length)return '<div class="auctioneer-ready-empty">Nessuna squadra</div>';
+
+            return rows.map(row=>{
+                const sub=mode==='eligible'
+                    ?(row.nominator?'HA BANDITO':'PUÒ OFFRIRE')
+                    :(row.ready?'READY REGISTRATO':'DEVE DARE READY');
+                const status=mode==='required'
+                    ?`<span class="auctioneer-ready-team-status${row.ready?' ready':''}">${row.ready?'PRONTO ✓':'IN ATTESA'}</span>`
+                    :`<span class="auctioneer-ready-team-status${row.ready?' ready':''}">${row.ready?'READY ✓':'ABILITATO'}</span>`;
+                return `<div class="auctioneer-ready-team-row${mode==='eligible' && row.nominator?' nominator':''}">
+                    <span class="auctioneer-ready-team-main">
+                        <b>${escapeHtml(row.name)}</b>
+                        <small>${sub}</small>
+                    </span>
+                    ${status}
+                </div>`;
+            }).join('');
         }
 
         function showAuctioneerReadyStage(){
@@ -14270,12 +14624,63 @@ html.audio-modal-open{
             const req=readyRequiredIds();
             const ready=req.filter(id=>readyPlayers.has(String(id)));
             const missing=req.filter(id=>!readyPlayers.has(String(id)));
+            const readySet=new Set(ready.map(String));
             const nominatingTeam=nominationState.enabled ? currentNominationTeam() : null;
+            const nominatorId=nominationState.enabled ? String(nominationState.turn_team_id||nominatingTeam?.id||'') : '';
 
             const lv=document.getElementById('view-list');
             const av=document.getElementById('view-auction');
             if(lv)lv.style.display='none';
             if(av){av.classList.add('auction-view-hidden');av.style.display='none';}
+
+            const stage=document.getElementById('nomination-stage');
+            stage?.classList.add('ready-layout');
+
+            const playerName=String(currentAuctionPlayer.Nome||'--');
+            const playerRole=String(currentAuctionPlayer.R||'-').toUpperCase();
+            const playerClub=String(currentAuctionPlayer.Squadra||'-');
+            const playerImg=document.getElementById('auctioneer-ready-player-img');
+            if(playerImg){
+                playerImg.dataset.playerRole=playerRole;
+                playerImg.src=playerImageUrl(currentAuctionPlayer.Id,playerRole);
+            }
+            const playerNameEl=document.getElementById('auctioneer-ready-player-name');
+            if(playerNameEl){playerNameEl.textContent=playerName;fitOneLine(playerNameEl);}
+            const playerRoleEl=document.getElementById('auctioneer-ready-player-role');
+            if(playerRoleEl){
+                playerRoleEl.textContent=playerRole||'-';
+                playerRoleEl.className=`auctioneer-ready-role-dot role-${playerRole}`;
+            }
+            const playerClubEl=document.getElementById('auctioneer-ready-player-club');
+            if(playerClubEl)playerClubEl.textContent=playerClub;
+
+            const fvm=document.getElementById('auctioneer-ready-fvm-value');
+            if(fvm){
+                const value=typeof nominationPlayerValue==='function'?nominationPlayerValue(currentAuctionPlayer):0;
+                fvm.textContent=Number.isFinite(Number(value))?String(value):'--';
+            }
+
+            const sealedStage=document.getElementById('nomination-stage-sealed');
+            if(sealedStage)sealedStage.style.display='none';
+
+            const readyBox=document.getElementById('nomination-stage-ready');
+            if(readyBox)readyBox.style.display='block';
+
+            const count=document.getElementById('nomination-stage-ready-count');
+            if(count)count.textContent=`${ready.length} / ${req.length}`;
+
+            const requiredList=document.getElementById('auctioneer-ready-required-list');
+            if(requiredList)requiredList.innerHTML=auctioneerReadyTeamRows(req,readySet,nominatorId,'required');
+
+            const eligibleList=document.getElementById('auctioneer-ready-eligible-list');
+            if(eligibleList)eligibleList.innerHTML=auctioneerReadyTeamRows(req,readySet,nominatorId,'eligible');
+
+            const missingEl=document.getElementById('nomination-stage-ready-missing');
+            if(missingEl){
+                missingEl.textContent=missing.length
+                    ? `Mancano ${missing.length}: ${missing.map(readyTeamName).join(', ')}`
+                    : 'Tutti pronti';
+            }
 
             document.getElementById('nomination-stage-kicker').textContent=
                 sealedAuctionModeActive && sealedRound>1
@@ -14284,29 +14689,7 @@ html.audio-modal-open{
                         ? `BANDITO DA ${nominatingTeam.name}`
                         : 'GIOCATORE SCELTO');
 
-            document.getElementById('nomination-stage-title').textContent='IN ATTESA DEI PLAYER READY';
-            document.getElementById('nomination-stage-team').textContent=currentAuctionPlayer.Nome||'--';
-            document.getElementById('nomination-stage-role').textContent=
-                `${currentAuctionPlayer.R||'-'} · ${currentAuctionPlayer.Squadra||'-'}`;
-
-            const playerBox=document.getElementById('nomination-stage-player');
-            if(playerBox)playerBox.style.display='none';
-
-            const readyBox=document.getElementById('nomination-stage-ready');
-            if(readyBox)readyBox.style.display='block';
-
-            const count=document.getElementById('nomination-stage-ready-count');
-            if(count)count.textContent=`${ready.length} / ${req.length}`;
-
-            const missingEl=document.getElementById('nomination-stage-ready-missing');
-            if(missingEl){
-                missingEl.textContent=missing.length
-                    ? `Mancano: ${missing.map(readyTeamName).join(', ')}`
-                    : 'Tutti pronti';
-            }
-
-            document.getElementById('nomination-stage')?.classList.add('open');
-            fitNominationStageTeam();
+            stage?.classList.add('open');
         }
 
         function showAuctionPanels(){
@@ -19299,19 +19682,24 @@ html.audio-modal-open{
             if(lv)lv.style.display='none';
             if(av){av.classList.add('auction-view-hidden');av.style.display='none';}
 
+            const stage=document.getElementById('nomination-stage');
+            stage?.classList.remove('ready-layout');
+
             document.getElementById('nomination-stage-kicker').textContent=sealedRound>1?`SPAREGGIO BUSTA · ROUND ${sealedRound}`:'OFFERTA IN BUSTA CHIUSA';
             document.getElementById('nomination-stage-title').textContent=currentAuctionPlayer.Nome||'--';
             document.getElementById('nomination-stage-team').textContent=String(remaining);
             document.getElementById('nomination-stage-role').textContent='SECONDI RIMANENTI';
             document.getElementById('nomination-stage-player').style.display='none';
 
-            const box=document.getElementById('nomination-stage-ready');
-            if(box)box.style.display='block';
-            const label=box?.querySelector('.nomination-stage-ready-label');
-            if(label)label.textContent='OFFERTE RICEVUTE';
-            document.getElementById('nomination-stage-ready-count').textContent=`${offered} / ${eligible}`;
-            document.getElementById('nomination-stage-ready-missing').textContent=sealedRound>1?'Solo le squadre in parità possono fare una nuova offerta.':'Gli importi restano nascosti fino all’apertura delle buste.';
-            document.getElementById('nomination-stage')?.classList.add('open');
+            const readyBox=document.getElementById('nomination-stage-ready');
+            if(readyBox)readyBox.style.display='none';
+            const sealedBox=document.getElementById('nomination-stage-sealed');
+            if(sealedBox)sealedBox.style.display='block';
+            const sealedCount=document.getElementById('nomination-stage-sealed-count');
+            if(sealedCount)sealedCount.textContent=`${offered} / ${eligible}`;
+            const sealedMissing=document.getElementById('nomination-stage-sealed-missing');
+            if(sealedMissing)sealedMissing.textContent=sealedRound>1?'Solo le squadre in parità possono fare una nuova offerta.':'Gli importi restano nascosti fino all’apertura delle buste.';
+            stage?.classList.add('open');
             fitNominationStageTeam();
         }
 
@@ -22214,9 +22602,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyBrand(){
-    document.title='LIVEASTA V76';
+    document.title='LIVEASTA V77';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V76';
+      el.textContent='LIVEASTA · VERSIONE V77';
     });
     document.querySelectorAll('.logo-text').forEach(el=>{
       const a=el.querySelector('.rosa');
