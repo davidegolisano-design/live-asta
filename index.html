@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>LIVEASTA MV 99</title>
+    <title>LIVEASTA MV 100</title>
     <meta name="theme-color" content="#0D1117">
     <meta name="color-scheme" content="dark">
     <meta name="mobile-web-app-capable" content="yes">
@@ -18,7 +18,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
-    <style id="liveasta-styles-mv99">
+    <style id="liveasta-styles-mv100">
 :root {
   --bg-main: #0D1117;
   --bg-hover: #334155;
@@ -14551,6 +14551,28 @@ body #screen-auctioneer-board #auction-dashboard #view-list .auction-list-toolba
 body #screen-auctioneer-board #auction-dashboard #view-list .toolbar-icon-btn {grid-area:random!important;}
 body #screen-auctioneer-board #auction-dashboard #view-list #toolbar-sealed-mode-btn {grid-area:sealed!important;font-size:10px!important;line-height:1.1!important;}
 body #screen-auctioneer-board #auction-dashboard #view-list .toolbar-roster-btn {grid-area:roses!important;font-size:10px!important;}
+
+/* MV 100: compact live budget, full-height player list, fixed presence colors. */
+body #player-budget-overlay #player-budget-rows .budget-role-card {grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important;}
+body #player-budget-overlay .budget-role-card > label {grid-column:auto!important;font-size:11px!important;}
+body #player-budget-overlay .budget-role-card output {display:flex;align-items:center;justify-content:center;height:44px;font-size:20px;font-weight:800;}
+body #player-budget-overlay .budget-role-card output.over {color:#ef4444;}
+body #player-budget-overlay .budget-unit-toggle {margin:0;display:grid;grid-template-columns:1fr 1fr;}
+body #player-budget-overlay .budget-unit-toggle .btn {height:36px;min-height:36px;font-size:13px;}
+body #player-budget-overlay .budget-rebalance-section summary {white-space:normal;letter-spacing:0;font-size:13px;min-height:44px;}
+@media(max-width:760px){
+ html body #player-listone-overlay {padding:0!important;inset:0!important;height:100dvh!important;box-sizing:border-box!important;}
+ html body #player-listone-overlay > .player-listone-card {height:100%!important;max-height:100%!important;border-radius:0!important;padding-bottom:max(8px,env(safe-area-inset-bottom))!important;box-sizing:border-box!important;}
+}
+html body #team-inline-status-dot.offline,html body #screen-player-buzzer #player-connection-pill.offline .player-connection-dot {background:#ef4444!important;box-shadow:0 0 8px #ef4444!important;}
+html body #team-inline-status-dot.connecting,html body #screen-player-buzzer #player-connection-pill.connecting .player-connection-dot {background:#f59e0b!important;box-shadow:0 0 8px #f59e0b!important;}
+html body #team-inline-status-dot.absent,html body #screen-player-buzzer #player-connection-pill.absent .player-connection-dot {background:#a874ff!important;box-shadow:0 0 8px #a874ff!important;}
+html body #team-inline-status-dot.online,html body #screen-player-buzzer #player-connection-pill.online .player-connection-dot {background:#22c55e!important;box-shadow:0 0 8px #22c55e!important;}
+html body .player-availability-choice.online-choice .availability-choice-dot {background:#22c55e!important;box-shadow:0 0 8px #22c55e!important;}
+html body .player-availability-choice.absent-choice .availability-choice-dot,
+html body .player-ready-team-row.absent .player-ready-team-dot,
+html body .ard-team-row.absent .ard-team-dot {background:#a874ff!important;box-shadow:0 0 8px #a874ff!important;}
+html body .player-ready-team-row.absent .player-ready-team-status,html body .ard-team-row.absent .ard-team-status {color:#a874ff!important;}
 </style>
 
 
@@ -14645,7 +14667,7 @@ body #screen-auctioneer-board #auction-dashboard #view-list .toolbar-roster-btn 
              aria-label="Apri Impostazioni LIVEASTA"
              onclick="openAdminLogin()"
              onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openAdminLogin();}">
-            LIVEASTA MV 99
+            LIVEASTA MV 100
         </div>
         <div class="setup-card">
             <h1 class="logo-text"><span class="rosa">LIVE</span><span class="rush">ASTA</span></h1>
@@ -15046,7 +15068,7 @@ body #screen-auctioneer-board #auction-dashboard #view-list .toolbar-roster-btn 
 
     <div id="screen-admin" class="screen">
         <div class="setup-card" style="max-width:1100px; width:96%; padding:24px;">
-            <div class="admin-version-badge">LIVEASTA · VERSIONE MV 99</div>
+            <div class="admin-version-badge">LIVEASTA · VERSIONE MV 100</div>
             <h1>Gestione stanze</h1>
             <p class="subtitle">Nome, password, modifica ed eliminazione</p>
 
@@ -15379,41 +15401,26 @@ body #screen-auctioneer-board #auction-dashboard #view-list .toolbar-roster-btn 
                 </label>
             </div>
 
-            <p id="budget-initial-note" class="budget-comparison-note"></p>
-            <div id="player-budget-rows" class="player-budget-rows">
-                <div class="player-budget-row budget-role-card" data-role="P">
-                    <div class="budget-role-heading"><b class="budget-role role-P">P</b><strong>Portieri</strong><div class="budget-unit-toggle" role="group" aria-label="Unità budget Portieri"><button id="budget-unit-credits-P" type="button" class="btn btn-secondary" onclick="setBudgetInputUnit('P','credits')">Crediti</button><button id="budget-unit-percent-P" type="button" class="btn btn-secondary" onclick="setBudgetInputUnit('P','percent')">%</button></div></div>
-                    <label class="budget-unit-field" data-budget-unit="credits"><span id="budget-credit-label-P">Budget iniziale (crediti)</span><input id="budget-credit-P" type="number" min="0" inputmode="numeric" onchange="updateBudgetFromCredits('P',this.value)"><small id="budget-equivalent-percent-P"></small></label>
-                    <label class="budget-unit-field" data-budget-unit="percent" hidden><span id="budget-percent-label-P">Budget iniziale (%)</span><input id="budget-percent-P" type="number" min="0" max="100" step="0.1" inputmode="decimal" onchange="updateBudgetFromPercent('P',this.value)"><small id="budget-equivalent-credits-P"></small></label>
-                    <label class="budget-alert-field">Allerta da (crediti)<input id="budget-alert-P" type="number" min="0" inputmode="numeric" onchange="setBudgetRoleAlert('P',this.value)"><small>Arancione dalla soglia; rosso al raggiungimento del budget. Preimpostata all’80%, modificabile.</small></label>
-                    <div class="budget-comparison"><span>Iniziale<strong id="budget-initial-P">—</strong></span><span>Spesi<strong id="budget-spent-P">0</strong></span><span>Residuo<strong id="budget-left-P">0</strong></span><span>Scostamento<strong id="budget-delta-P">—</strong></span></div>
-                </div>
-                <div class="player-budget-row budget-role-card" data-role="D">
-                    <div class="budget-role-heading"><b class="budget-role role-D">D</b><strong>Difensori</strong><div class="budget-unit-toggle" role="group" aria-label="Unità budget Difensori"><button id="budget-unit-credits-D" type="button" class="btn btn-secondary" onclick="setBudgetInputUnit('D','credits')">Crediti</button><button id="budget-unit-percent-D" type="button" class="btn btn-secondary" onclick="setBudgetInputUnit('D','percent')">%</button></div></div>
-                    <label class="budget-unit-field" data-budget-unit="credits"><span id="budget-credit-label-D">Budget iniziale (crediti)</span><input id="budget-credit-D" type="number" min="0" inputmode="numeric" onchange="updateBudgetFromCredits('D',this.value)"><small id="budget-equivalent-percent-D"></small></label>
-                    <label class="budget-unit-field" data-budget-unit="percent" hidden><span id="budget-percent-label-D">Budget iniziale (%)</span><input id="budget-percent-D" type="number" min="0" max="100" step="0.1" inputmode="decimal" onchange="updateBudgetFromPercent('D',this.value)"><small id="budget-equivalent-credits-D"></small></label>
-                    <label class="budget-alert-field">Allerta da (crediti)<input id="budget-alert-D" type="number" min="0" inputmode="numeric" onchange="setBudgetRoleAlert('D',this.value)"><small>Arancione dalla soglia; rosso al raggiungimento del budget. Preimpostata all’80%, modificabile.</small></label>
-                    <div class="budget-comparison"><span>Iniziale<strong id="budget-initial-D">—</strong></span><span>Spesi<strong id="budget-spent-D">0</strong></span><span>Residuo<strong id="budget-left-D">0</strong></span><span>Scostamento<strong id="budget-delta-D">—</strong></span></div>
-                </div>
-                <div class="player-budget-row budget-role-card" data-role="C">
-                    <div class="budget-role-heading"><b class="budget-role role-C">C</b><strong>Centrocampisti</strong><div class="budget-unit-toggle" role="group" aria-label="Unità budget Centrocampisti"><button id="budget-unit-credits-C" type="button" class="btn btn-secondary" onclick="setBudgetInputUnit('C','credits')">Crediti</button><button id="budget-unit-percent-C" type="button" class="btn btn-secondary" onclick="setBudgetInputUnit('C','percent')">%</button></div></div>
-                    <label class="budget-unit-field" data-budget-unit="credits"><span id="budget-credit-label-C">Budget iniziale (crediti)</span><input id="budget-credit-C" type="number" min="0" inputmode="numeric" onchange="updateBudgetFromCredits('C',this.value)"><small id="budget-equivalent-percent-C"></small></label>
-                    <label class="budget-unit-field" data-budget-unit="percent" hidden><span id="budget-percent-label-C">Budget iniziale (%)</span><input id="budget-percent-C" type="number" min="0" max="100" step="0.1" inputmode="decimal" onchange="updateBudgetFromPercent('C',this.value)"><small id="budget-equivalent-credits-C"></small></label>
-                    <label class="budget-alert-field">Allerta da (crediti)<input id="budget-alert-C" type="number" min="0" inputmode="numeric" onchange="setBudgetRoleAlert('C',this.value)"><small>Arancione dalla soglia; rosso al raggiungimento del budget. Preimpostata all’80%, modificabile.</small></label>
-                    <div class="budget-comparison"><span>Iniziale<strong id="budget-initial-C">—</strong></span><span>Spesi<strong id="budget-spent-C">0</strong></span><span>Residuo<strong id="budget-left-C">0</strong></span><span>Scostamento<strong id="budget-delta-C">—</strong></span></div>
-                </div>
-                <div class="player-budget-row budget-role-card" data-role="A">
-                    <div class="budget-role-heading"><b class="budget-role role-A">A</b><strong>Attaccanti</strong><div class="budget-unit-toggle" role="group" aria-label="Unità budget Attaccanti"><button id="budget-unit-credits-A" type="button" class="btn btn-secondary" onclick="setBudgetInputUnit('A','credits')">Crediti</button><button id="budget-unit-percent-A" type="button" class="btn btn-secondary" onclick="setBudgetInputUnit('A','percent')">%</button></div></div>
-                    <label class="budget-unit-field" data-budget-unit="credits"><span id="budget-credit-label-A">Budget iniziale (crediti)</span><input id="budget-credit-A" type="number" min="0" inputmode="numeric" onchange="updateBudgetFromCredits('A',this.value)"><small id="budget-equivalent-percent-A"></small></label>
-                    <label class="budget-unit-field" data-budget-unit="percent" hidden><span id="budget-percent-label-A">Budget iniziale (%)</span><input id="budget-percent-A" type="number" min="0" max="100" step="0.1" inputmode="decimal" onchange="updateBudgetFromPercent('A',this.value)"><small id="budget-equivalent-credits-A"></small></label>
-                    <label class="budget-alert-field">Allerta da (crediti)<input id="budget-alert-A" type="number" min="0" inputmode="numeric" onchange="setBudgetRoleAlert('A',this.value)"><small>Arancione dalla soglia; rosso al raggiungimento del budget. Preimpostata all’80%, modificabile.</small></label>
-                    <div class="budget-comparison"><span>Iniziale<strong id="budget-initial-A">—</strong></span><span>Spesi<strong id="budget-spent-A">0</strong></span><span>Residuo<strong id="budget-left-A">0</strong></span><span>Scostamento<strong id="budget-delta-A">—</strong></span></div>
-                </div>
-            </div>
-            <button id="budget-save-initial" type="button" class="btn" onclick="saveInitialBudget()">Salva budget iniziale</button>
-            <button id="budget-edit-initial" type="button" class="btn btn-secondary" onclick="editInitialBudget()">Modifica budget iniziale</button>
-            <button id="budget-cancel-initial" type="button" class="btn btn-secondary" hidden onclick="cancelInitialBudgetEdit()">Annulla modifica</button>
-            <section class="budget-rebalance-section"><h3>Copri gli sforamenti</h3><p>Scegli i ruoli da cui recuperare i crediti. Puoi modificare gli importi proposti prima di confermare. Il piano iniziale resta invariato.</p><div id="budget-rebalance"></div></section>
+<div class="budget-unit-toggle" role="group" aria-label="Unità budget"><button id="budget-unit-credits" type="button" class="btn btn-secondary" onclick="setBudgetInputUnit('credits')">Crediti</button><button id="budget-unit-percent" type="button" class="btn btn-secondary" onclick="setBudgetInputUnit('percent')">Percentuale</button></div>
+<p class="budget-comparison-note">Salvataggio automatico. Arancione dalla soglia, rosso al raggiungimento del budget.</p>
+<div id="player-budget-rows" class="player-budget-rows"><div class="budget-role-card player-budget-row" data-role="P"><div class="budget-role-heading"><b class="budget-role role-P">P</b><strong>Portieri</strong></div>
+ <label data-budget-unit="credits">Budget (crediti)<input id="budget-credit-P" type="number" min="0" inputmode="numeric" onchange="updateBudgetFromCredits('P',this.value)"></label>
+ <label data-budget-unit="percent" hidden>Budget (%)<input id="budget-percent-P" type="number" min="0" max="100" step="0.1" inputmode="decimal" onchange="updateBudgetFromPercent('P',this.value)"></label>
+ <label>Soglia (crediti)<input id="budget-alert-P" type="number" min="0" inputmode="numeric" onchange="setBudgetRoleAlert('P',this.value)"></label>
+ <label>Residuo<output id="budget-left-P">0</output></label></div><div class="budget-role-card player-budget-row" data-role="D"><div class="budget-role-heading"><b class="budget-role role-D">D</b><strong>Difensori</strong></div>
+ <label data-budget-unit="credits">Budget (crediti)<input id="budget-credit-D" type="number" min="0" inputmode="numeric" onchange="updateBudgetFromCredits('D',this.value)"></label>
+ <label data-budget-unit="percent" hidden>Budget (%)<input id="budget-percent-D" type="number" min="0" max="100" step="0.1" inputmode="decimal" onchange="updateBudgetFromPercent('D',this.value)"></label>
+ <label>Soglia (crediti)<input id="budget-alert-D" type="number" min="0" inputmode="numeric" onchange="setBudgetRoleAlert('D',this.value)"></label>
+ <label>Residuo<output id="budget-left-D">0</output></label></div><div class="budget-role-card player-budget-row" data-role="C"><div class="budget-role-heading"><b class="budget-role role-C">C</b><strong>Centrocampisti</strong></div>
+ <label data-budget-unit="credits">Budget (crediti)<input id="budget-credit-C" type="number" min="0" inputmode="numeric" onchange="updateBudgetFromCredits('C',this.value)"></label>
+ <label data-budget-unit="percent" hidden>Budget (%)<input id="budget-percent-C" type="number" min="0" max="100" step="0.1" inputmode="decimal" onchange="updateBudgetFromPercent('C',this.value)"></label>
+ <label>Soglia (crediti)<input id="budget-alert-C" type="number" min="0" inputmode="numeric" onchange="setBudgetRoleAlert('C',this.value)"></label>
+ <label>Residuo<output id="budget-left-C">0</output></label></div><div class="budget-role-card player-budget-row" data-role="A"><div class="budget-role-heading"><b class="budget-role role-A">A</b><strong>Attaccanti</strong></div>
+ <label data-budget-unit="credits">Budget (crediti)<input id="budget-credit-A" type="number" min="0" inputmode="numeric" onchange="updateBudgetFromCredits('A',this.value)"></label>
+ <label data-budget-unit="percent" hidden>Budget (%)<input id="budget-percent-A" type="number" min="0" max="100" step="0.1" inputmode="decimal" onchange="updateBudgetFromPercent('A',this.value)"></label>
+ <label>Soglia (crediti)<input id="budget-alert-A" type="number" min="0" inputmode="numeric" onchange="setBudgetRoleAlert('A',this.value)"></label>
+ <label>Residuo<output id="budget-left-A">0</output></label></div></div>
+<details class="budget-rebalance-section"><summary class="btn btn-secondary">Distribuisci budget per coprire gli sforamenti</summary><p>Scegli i ruoli e i crediti da prelevare, poi conferma.</p><div id="budget-rebalance"></div></details>
             <div id="budget-save-status" class="budget-comparison-note" role="status"></div>
             <div class="player-budget-footer">
                 <div>
@@ -17626,7 +17633,7 @@ body #screen-auctioneer-board #auction-dashboard #view-list .toolbar-roster-btn 
 
             if(fvm)fvm.textContent=playerReadyFvmValue();
 
-            const rows=required
+            const rows=[...new Set([...required,...absentTeamIds].map(String))]
                 .map(id=>teamsCache.find(t=>String(t.id)===String(id)))
                 .filter(Boolean)
                 .sort((a,b)=>{
@@ -17637,14 +17644,15 @@ body #screen-auctioneer-board #auction-dashboard #view-list .toolbar-roster-btn 
 
             list.innerHTML=rows.length?rows.map(team=>{
                 const id=String(team.id);
+                const absent=absentTeamIds.has(id);
                 const done=readySet.has(id);
                 const nominated=nominatorId && id===nominatorId;
-                return `<div class="player-ready-team-row${done?' ready':''}${nominated?' nominator':''}">
+                return `<div class="player-ready-team-row${absent?' absent':''}${done?' ready':''}${nominated?' nominator':''}">
                     <div class="player-ready-team-copy">
                         <strong>${escapeHtml(team.name||'Squadra')}</strong>
                         ${nominated?'<small>HA BANDITO</small>':''}
                     </div>
-                    <span class="player-ready-team-status">${done?'PRONTO':'IN ATTESA'}</span>
+                    <span class="player-ready-team-status">${absent?'ASSENTE':done?'PRONTO':'IN ATTESA'}</span>
                     <span class="player-ready-team-dot"></span>
                 </div>`;
             }).join(''):'<div class="player-ready-team-empty">Nessuna squadra abilitata</div>';
@@ -17705,7 +17713,7 @@ body #screen-auctioneer-board #auction-dashboard #view-list .toolbar-roster-btn 
             }
             playerReadyToken=incomingToken;
 
-            const eligible=required.includes(String(myTeamId));
+            const eligible=required.includes(String(myTeamId)) && playerAvailabilityMode!=='absent' && !absentTeamIds.has(String(myTeamId));
             const alreadyReady=already.includes(String(myTeamId));
             playerReadySent=alreadyReady;
 
@@ -17757,6 +17765,7 @@ body #screen-auctioneer-board #auction-dashboard #view-list .toolbar-roster-btn 
         }
 
         function confirmPlayerReady(choice='ready'){
+            if(playerAvailabilityMode==='absent'||absentTeamIds.has(String(myTeamId)))return;
             const selected=choice==='skip'?'skip':'ready';
             if(!playerReadyToken||playerReadySent||!myTeamId)return;
             if(!isAuctioneerPlayerIdentity()&&!channel)return;
@@ -18686,7 +18695,7 @@ body #screen-auctioneer-board #auction-dashboard #view-list .toolbar-roster-btn 
 
                 if(list){
                     const nominatorId=nominatingTeam?.id!=null?String(nominatingTeam.id):'';
-                    const ordered=[...req].sort((a,b)=>{
+                    const ordered=[...new Set([...req,...absentTeamIds].map(String))].sort((a,b)=>{
                         const aa=String(a)===nominatorId?0:1;
                         const bb=String(b)===nominatorId?0:1;
                         if(aa!==bb)return aa-bb;
@@ -18695,11 +18704,12 @@ body #screen-auctioneer-board #auction-dashboard #view-list .toolbar-roster-btn 
 
                     list.innerHTML=ordered.length?ordered.map(id=>{
                         const sid=String(id);
+                        const absent=absentTeamIds.has(sid);
                         const isReady=readyPlayers.has(sid);
                         const isNominator=!!nominatorId && sid===nominatorId;
-                        return `<div class="ard-team-row${isReady?' ready':''}${isNominator?' nominator':''}">
+                        return `<div class="ard-team-row${absent?' absent':''}${isReady?' ready':''}${isNominator?' nominator':''}">
                             <div class="ard-team-name">${escapeHtml(readyTeamName(sid))}${isNominator?'<small>HA BANDITO</small>':''}</div>
-                            <div class="ard-team-status">${isReady?'PRONTO':'IN ATTESA'}</div>
+                            <div class="ard-team-status">${absent?'ASSENTE':isReady?'PRONTO':'IN ATTESA'}</div>
                             <span class="ard-team-dot" aria-hidden="true"></span>
                         </div>`;
                     }).join(''):'<div class="ard-empty">Nessuna squadra deve confermare.</div>';
@@ -18745,6 +18755,7 @@ body #screen-auctioneer-board #auction-dashboard #view-list .toolbar-roster-btn 
                 missingEl.textContent=missing.length
                     ? `Mancano: ${missing.map(readyTeamName).join(', ')}`
                     : 'Tutti pronti';
+                if(absentTeamIds.size)missingEl.textContent+=` · Assenti: ${[...absentTeamIds].map(readyTeamName).join(', ')}`;
             }
 
             document.getElementById('nomination-stage')?.classList.add('open');
@@ -19537,9 +19548,7 @@ body #screen-auctioneer-board #auction-dashboard #view-list .toolbar-roster-btn 
         const BUDGET_ROLES=['P','D','C','A'];
         const budgetDonorSelections=new Map();
         const budgetDonorAmounts=new Map();
-        const budgetInputUnits={P:'credits',D:'credits',C:'credits',A:'credits'};
-        let budgetInitialDraft=null;
-        let budgetInitialDraftKey='';
+        let budgetInputUnit='credits';
         const budgetSaveTimers=new Map();
         let budgetPlanReadyFor='';
 
@@ -19563,30 +19572,9 @@ body #screen-auctioneer-board #auction-dashboard #view-list .toolbar-roster-btn 
             renderPlayerBudgetManager();updatePlayerBidBudgetVisuals();schedulePlayerBudgetSave();
         }
 
-        function saveInitialBudget(){
-            if(!playerBudgetStateKey() || budgetPlanReadyFor!==playerBudgetStateKey() || (playerBudgetPlan.initialLocked&&!budgetInitialDraft))return;
-            playerBudgetPlan.initial=Object.fromEntries(BUDGET_ROLES.map(r=>[r,budgetCreditNumber((budgetInitialDraft||playerBudgetPlan)[r])]));
-            playerBudgetPlan.initialLocked=true;
-            playerBudgetPlan.initialOrigin=BUDGET_ROLES.some(r=>playerBudgetSpentByRole()[r]>0)?'during-auction':'before-auction';
-            budgetInitialDraft=null;budgetInitialDraftKey='';
-            schedulePlayerBudgetSave();renderPlayerBudgetManager();
-        }
-
-        function editInitialBudget(){
-            if(budgetPlanReadyFor!==playerBudgetStateKey())return;
-            budgetInitialDraft={...(playerBudgetPlan.initial||playerBudgetPlan)};
-            budgetInitialDraftKey=playerBudgetStateKey();
-            renderPlayerBudgetManager();
-        }
-
-        function cancelInitialBudgetEdit(){
-            budgetInitialDraft=null;budgetInitialDraftKey='';renderPlayerBudgetManager();
-        }
-
-        function setBudgetInputUnit(role,unit){
-            if(!BUDGET_ROLES.includes(role)||!['credits','percent'].includes(unit))return;
-            budgetInputUnits[role]=unit;
-            renderPlayerBudgetManager();
+        function setBudgetInputUnit(unit){
+            if(!['credits','percent'].includes(unit))return;
+            budgetInputUnit=unit;renderPlayerBudgetManager();
         }
 
         function setBudgetDonorAmount(target,role,value){
@@ -19814,19 +19802,6 @@ body #screen-auctioneer-board #auction-dashboard #view-list .toolbar-roster-btn 
         }
 
         function redistributePlayerBudget(changedRole,newCredits){
-            if(budgetInitialDraft && budgetInitialDraftKey===playerBudgetStateKey()){
-                if(!BUDGET_ROLES.includes(changedRole))return;
-                const total=playerBudgetTotalCredits();
-                const target=Math.max(0,Math.min(total,Math.round(Number(newCredits)||0)));
-                const others=BUDGET_ROLES.filter(r=>r!==changedRole),rest=total-target;
-                const sum=others.reduce((n,r)=>n+budgetInitialDraft[r],0);
-                const values=others.map(r=>Math.floor(rest*(sum?budgetInitialDraft[r]/sum:1/3)));
-                let missing=rest-values.reduce((a,b)=>a+b,0);
-                for(let i=0;missing>0;i++,missing--)values[i%3]++;
-                budgetInitialDraft[changedRole]=target;others.forEach((r,i)=>budgetInitialDraft[r]=values[i]);
-                renderPlayerBudgetManager();return;
-            }
-
             const before={...playerBudgetPlan};
             const roles=['P','D','C','A'];
             const total=playerBudgetTotalCredits();
@@ -19926,81 +19901,26 @@ body #screen-auctioneer-board #auction-dashboard #view-list .toolbar-roster-btn 
         }
 
         function renderPlayerBudgetManager(){
-            const overlay=document.getElementById('player-budget-overlay');
-            if(!overlay)return;
-
-            const total=playerBudgetTotalCredits();
-            const spent=playerBudgetSpentByRole();
-            if(budgetInitialDraftKey!==playerBudgetStateKey()){budgetInitialDraft=null;budgetInitialDraftKey='';}
-            const editingInitial=!!budgetInitialDraft||!playerBudgetPlan.initialLocked;
-            const displayedPlan=budgetInitialDraft||playerBudgetPlan;
-            const saveInitial=document.getElementById('budget-save-initial');
-            if(saveInitial){saveInitial.hidden=!editingInitial;saveInitial.disabled=budgetPlanReadyFor!==playerBudgetStateKey();}
-            const edit=document.getElementById('budget-edit-initial');if(edit)edit.hidden=editingInitial;
-            const cancel=document.getElementById('budget-cancel-initial');if(cancel)cancel.hidden=!budgetInitialDraft;
-            BUDGET_ROLES.forEach(role=>{
-                for(const unit of ['credits','percent']){
-                    document.getElementById(`budget-unit-${unit}-${role}`)?.setAttribute('aria-pressed',String(budgetInputUnits[role]===unit));
-                    document.querySelector(`.budget-role-card[data-role="${role}"] [data-budget-unit="${unit}"]`).hidden=budgetInputUnits[role]!==unit;
-                }
-            });
-            const team=myTeamId?teamsCache.find(t=>String(t.id)===String(myTeamId)):null;
-
-            const toggle=document.getElementById('player-budget-enabled');
-            if(toggle)toggle.checked=!!playerBudgetPlan.enabled;
-
-            const totalLabel=document.getElementById('player-budget-total-label');
-            if(totalLabel)totalLabel.textContent=`Budget totale: ${total} crediti`;
-
-            ['P','D','C','A'].forEach(role=>{
-                const credits=Math.max(0,parseInt(displayedPlan[role])||0);
-                const pct=total>0?(credits/total*100):0;
-                const state=playerBudgetRoleState(role);
-
-                const ci=document.getElementById(`budget-credit-${role}`);
-                const pi=document.getElementById(`budget-percent-${role}`);
-                const sp=document.getElementById(`budget-spent-${role}`);
-                const left=document.getElementById(`budget-left-${role}`);
-                const row=document.querySelector(`.player-budget-row[data-role="${role}"]`);
-
-                const creditLabel=document.getElementById(`budget-credit-label-${role}`);
-                const percentLabel=document.getElementById(`budget-percent-label-${role}`);
-                if(creditLabel)creditLabel.textContent=editingInitial?'Budget iniziale (crediti)':'Budget attuale (crediti)';
-                if(percentLabel)percentLabel.textContent=editingInitial?'Budget iniziale (%)':'Budget attuale (%)';
-                if(ci)ci.value=String(credits);
-                if(pi)pi.value=pct.toFixed(1);
-                const ep=document.getElementById(`budget-equivalent-percent-${role}`);
-                const ec=document.getElementById(`budget-equivalent-credits-${role}`);
-                if(ep)ep.textContent=`= ${pct.toFixed(1)}%`;
-                if(ec)ec.textContent=`= ${credits} crediti`;
-                if(sp)sp.textContent=String(spent[role]||0);
-                if(left)left.textContent=String(credits-(spent[role]||0));
-                const alertInput=document.getElementById(`budget-alert-${role}`);
-                if(alertInput){alertInput.disabled=!!budgetInitialDraft;alertInput.value=String(budgetAlertCredits(role));alertInput.max=String(credits);}
-                const initial=document.getElementById(`budget-initial-${role}`);
-                const delta=document.getElementById(`budget-delta-${role}`);
-                const baseline=playerBudgetPlan.initial?.[role];
-                if(initial)initial.textContent=baseline===undefined?'—':String(baseline);
-                if(delta){const d=baseline===undefined?null:(spent[role]||0)-baseline;delta.textContent=d===null?'—':(d>0?'+':'')+d;delta.classList.toggle('over',d>0);}
-
-
-                if(row){
-                    row.classList.toggle('budget-ok',!!playerBudgetPlan.enabled && state.ok);
-                    row.classList.toggle('budget-over',!!playerBudgetPlan.enabled && !state.ok);
-                    row.classList.toggle('budget-disabled',!playerBudgetPlan.enabled);
-                }
-            });
-
-            const current=document.getElementById('budget-current-credits');
-            if(current)current.textContent=String(parseInt(team?.credits_remaining)||0);
-            const note=document.getElementById('budget-initial-note');
-            if(note){
-                const allocation=` Il totale resta ${total} crediti: modificando un ruolo, gli altri si riequilibrano.`;
-                note.textContent=budgetInitialDraft?'Modifica il piano iniziale e premi “Salva budget iniziale”. Sostituirai il riferimento del confronto; il budget attuale e gli acquisti restano invariati.':(editingInitial
-                    ? 'Imposta i ruoli e premi “Salva budget iniziale” per fissare il riferimento del confronto.'
-                    : 'Piano iniziale salvato. Le modifiche riguardano solo il budget attuale. Differenza = spesa effettiva − budget iniziale.')+allocation;
-                if(playerBudgetPlan.initialOrigin==='during-auction')note.textContent+=' Piano iniziale salvato ad asta già iniziata.';
+            if(!document.getElementById('player-budget-overlay'))return;
+            const total=playerBudgetTotalCredits(),spent=playerBudgetSpentByRole();
+            const toggle=document.getElementById('player-budget-enabled');if(toggle)toggle.checked=!!playerBudgetPlan.enabled;
+            const title=document.getElementById('player-budget-total-label');if(title)title.textContent=`Budget totale: ${total} crediti`;
+            for(const unit of ['credits','percent']){
+                document.getElementById(`budget-unit-${unit}`)?.setAttribute('aria-pressed',String(unit===budgetInputUnit));
+                document.querySelectorAll(`[data-budget-unit="${unit}"]`).forEach(el=>el.hidden=unit!==budgetInputUnit);
             }
+            for(const role of BUDGET_ROLES){
+                const amount=budgetCreditNumber(playerBudgetPlan[role]);
+                const ci=document.getElementById(`budget-credit-${role}`),pi=document.getElementById(`budget-percent-${role}`);
+                const alert=document.getElementById(`budget-alert-${role}`),left=document.getElementById(`budget-left-${role}`);
+                if(ci){ci.value=amount;ci.max=total;}
+                if(pi)pi.value=(100*amount/total).toFixed(1);
+                if(alert){alert.value=budgetAlertCredits(role);alert.max=amount;}
+                if(left){left.textContent=String(amount-(spent[role]||0));left.classList.toggle('over',amount<(spent[role]||0));}
+            }
+            const current=document.getElementById('budget-current-credits');
+            const team=teamsCache.find(t=>String(t.id)===String(myTeamId));
+            if(current)current.textContent=String(team?.credits_remaining||0);
             renderBudgetRebalance();
         }
 
@@ -23245,7 +23165,7 @@ body #screen-auctioneer-board #auction-dashboard #view-list .toolbar-roster-btn 
             knob.classList.toggle('available',available);
             knob.setAttribute('aria-disabled',available?'false':'true');
             knob.title=available
-                ? `Tieni premuto 1 secondo · 0 in basso annulla · offerta ${range.min}-${range.max}`
+                ? `Tieni premuto 0,3 secondi · 0 in basso annulla · offerta ${range.min}-${range.max}`
                 : 'Offerta esatta non disponibile';
         }
 
@@ -23376,7 +23296,7 @@ body #screen-auctioneer-board #auction-dashboard #view-list .toolbar-roster-btn 
             knob.classList.add('holding');
             exactBidHoldTimer=setTimeout(()=>{
                 if(exactBidPointerId===event.pointerId)exactBidActivate(knob);
-            },1000);
+            },300);
         }
 
         function exactBidPointerMove(event){
@@ -27065,9 +26985,10 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
     }
 
     const sync=()=>{
-      dot.classList.remove('online','connecting');
-      if(oldPill.classList.contains('online')) dot.classList.add('online');
-      else if(oldPill.classList.contains('connecting')) dot.classList.add('connecting');
+      dot.classList.remove('online','connecting','offline','absent');
+      const status=['offline','connecting','absent','online'].find(s=>oldPill.classList.contains(s))||'offline';
+      dot.classList.add(status);
+      dot.title={offline:'Offline',connecting:'Connessione',absent:'Assente',online:'Online'}[status];
     };
     sync();
     new MutationObserver(sync).observe(
@@ -27158,9 +27079,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyBrand(){
-    document.title='LIVEASTA MV 99';
+    document.title='LIVEASTA MV 100';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE MV 99';
+      el.textContent='LIVEASTA · VERSIONE MV 100';
     });
     document.querySelectorAll('.logo-text').forEach(el=>{
       const a=el.querySelector('.rosa');
