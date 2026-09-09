@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>LIVEASTA MV 101</title>
+    <title>LIVEASTA MV 102</title>
     <meta name="theme-color" content="#0D1117">
     <meta name="color-scheme" content="dark">
     <meta name="mobile-web-app-capable" content="yes">
@@ -18,7 +18,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
-    <style id="liveasta-styles-mv101">
+    <style id="liveasta-styles-mv102">
 :root {
   --bg-main: #0D1117;
   --bg-hover: #334155;
@@ -14552,7 +14552,7 @@ body #screen-auctioneer-board #auction-dashboard #view-list .toolbar-icon-btn {g
 body #screen-auctioneer-board #auction-dashboard #view-list #toolbar-sealed-mode-btn {grid-area:sealed!important;font-size:10px!important;line-height:1.1!important;}
 body #screen-auctioneer-board #auction-dashboard #view-list .toolbar-roster-btn {grid-area:roses!important;font-size:10px!important;}
 
-/* MV 101: compact live budget, full-height player list, fixed presence colors. */
+/* MV 102: compact live budget, full-height player list, fixed presence colors. */
 body #player-budget-overlay #player-budget-rows .budget-role-card {grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important;}
 body #player-budget-overlay .budget-role-card > label {grid-column:auto!important;font-size:11px!important;}
 body #player-budget-overlay .budget-role-card output {display:flex;align-items:center;justify-content:center;height:44px;font-size:20px;font-weight:800;}
@@ -14574,7 +14574,7 @@ html body .player-ready-team-row.absent .player-ready-team-dot,
 html body .ard-team-row.absent .ard-team-dot {background:#a874ff!important;box-shadow:0 0 8px #a874ff!important;}
 html body .player-ready-team-row.absent .player-ready-team-status,html body .ard-team-row.absent .ard-team-status {color:#a874ff!important;}
 
-/* MV 101: Ready occupies the standard bid area, never the hidden sealed form. */
+/* MV 102: Ready occupies the standard bid area, never the hidden sealed form. */
 body #screen-player-buzzer #normal-bid-controls.ready-choice-active {
  height:var(--regular-bid-area-height,calc(clamp(66px,9.2dvh,82px) * 2 + 7px))!important;
  min-height:var(--regular-bid-area-height,calc(clamp(66px,9.2dvh,82px) * 2 + 7px))!important;
@@ -14596,6 +14596,15 @@ body #sealed-delivery-names p,body #sealed-delivery-panel small {font-size:12px;
 body .sealed-delivery-row {display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--theme-border);font-size:clamp(14px,1.4vw,22px);}
 body .sealed-delivery-row strong {flex:1;min-width:0;overflow-wrap:anywhere;}
 body .sealed-delivery-dot {width:8px;height:8px;border-radius:50%;background:#22c55e;flex:0 0 8px;}
+
+/* MV 102: private delivery/reveal phases must never show a previous winner. */
+html body #screen-auctioneer-board #auction-dashboard #view-auction.sealed-collecting .col-info #winner-display,
+html body #screen-auctioneer-board #auction-dashboard #view-auction.sealed-collecting .col-info #auction-title-display,
+html body #screen-auctioneer-board #auction-dashboard #view-auction.sealed-collecting .col-info .bid-box,
+html body #screen-auctioneer-board #auction-dashboard #view-auction.sealed-collecting .col-info #sealed-ranking-auctioneer,
+html body #screen-auctioneer-board #auction-dashboard #view-auction.sealed-collecting .col-info #auctioneer-turn-ranking-empty {
+ display:none!important;visibility:hidden!important;
+}
 </style>
 
 
@@ -14690,7 +14699,7 @@ body .sealed-delivery-dot {width:8px;height:8px;border-radius:50%;background:#22
              aria-label="Apri Impostazioni LIVEASTA"
              onclick="openAdminLogin()"
              onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openAdminLogin();}">
-            LIVEASTA MV 101
+            LIVEASTA MV 102
         </div>
         <div class="setup-card">
             <h1 class="logo-text"><span class="rosa">LIVE</span><span class="rush">ASTA</span></h1>
@@ -15091,7 +15100,7 @@ body .sealed-delivery-dot {width:8px;height:8px;border-radius:50%;background:#22
 
     <div id="screen-admin" class="screen">
         <div class="setup-card" style="max-width:1100px; width:96%; padding:24px;">
-            <div class="admin-version-badge">LIVEASTA · VERSIONE MV 101</div>
+            <div class="admin-version-badge">LIVEASTA · VERSIONE MV 102</div>
             <h1>Gestione stanze</h1>
             <p class="subtitle">Nome, password, modifica ed eliminazione</p>
 
@@ -17435,7 +17444,7 @@ body .sealed-delivery-dot {width:8px;height:8px;border-radius:50%;background:#22
             return true;
         }
 
-        function readyRequiredTeams(){
+        function readyRequiredTeams(includeAbsent=false){
             const role=String(currentAuctionPlayer?.R||'');
             const limits=roomLimits();
 
@@ -17459,7 +17468,7 @@ body .sealed-delivery-dot {width:8px;height:8px;border-radius:50%;background:#22
             // Questo vale anche con banditura a turni attiva.
             // L'assenza NON modifica però l'ordine dei turni di banditura:
             // quando arriva il suo turno, quella squadra deve comunque bandire.
-            if(absentTeamIds.size){
+            if(!includeAbsent && absentTeamIds.size){
                 eligible=eligible.filter(team=>!absentTeamIds.has(String(team.id)));
             }
 
@@ -17503,6 +17512,12 @@ body .sealed-delivery-dot {width:8px;height:8px;border-radius:50%;background:#22
         function handleReadyPresenceJoin(payload){
             // Il giocatore era già presente nel gate anche mentre offline.
             return;
+        }
+
+        function readyVisibleTeamIds(required){
+            const named=new Set(teamsCache.filter(t=>t.id!=null&&String(t.name||'').trim()).map(t=>String(t.id)));
+            const absent=readyRequiredTeams(true).map(t=>String(t.id)).filter(id=>absentTeamIds.has(id));
+            return [...new Set([...required,...absent].map(String))].filter(id=>named.has(id));
         }
 
         function readyRequiredIds(){
@@ -17667,7 +17682,7 @@ body .sealed-delivery-dot {width:8px;height:8px;border-radius:50%;background:#22
 
             if(fvm)fvm.textContent=playerReadyFvmValue();
 
-            const rows=[...new Set([...required,...absentTeamIds].map(String))]
+            const rows=readyVisibleTeamIds(required)
                 .map(id=>teamsCache.find(t=>String(t.id)===String(id)))
                 .filter(Boolean)
                 .sort((a,b)=>{
@@ -18286,6 +18301,7 @@ body .sealed-delivery-dot {width:8px;height:8px;border-radius:50%;background:#22
                 document.getElementById('current-value-display').textContent='?';
                 const deadline=Number(state.deadline_at)||0;
                 sealedRevealDeadlineAt=deadline;
+                showSealedAuctionStage('opening');
                 const nextButton=document.getElementById('btn-next');
                 if(nextButton)nextButton.style.display='none';
                 let lastRestoreRevealSoundSecond=null;
@@ -18730,7 +18746,7 @@ body .sealed-delivery-dot {width:8px;height:8px;border-radius:50%;background:#22
 
                 if(list){
                     const nominatorId=nominatingTeam?.id!=null?String(nominatingTeam.id):'';
-                    const ordered=[...new Set([...req,...absentTeamIds].map(String))].sort((a,b)=>{
+                    const ordered=readyVisibleTeamIds(req).sort((a,b)=>{
                         const aa=String(a)===nominatorId?0:1;
                         const bb=String(b)===nominatorId?0:1;
                         if(aa!==bb)return aa-bb;
@@ -18790,7 +18806,8 @@ body .sealed-delivery-dot {width:8px;height:8px;border-radius:50%;background:#22
                 missingEl.textContent=missing.length
                     ? `Mancano: ${missing.map(readyTeamName).join(', ')}`
                     : 'Tutti pronti';
-                if(absentTeamIds.size)missingEl.textContent+=` · Assenti: ${[...absentTeamIds].map(readyTeamName).join(', ')}`;
+                const visibleAbsent=readyVisibleTeamIds([]);
+                if(visibleAbsent.length)missingEl.textContent+=` · Assenti: ${visibleAbsent.map(readyTeamName).join(', ')}`;
             }
 
             document.getElementById('nomination-stage')?.classList.add('open');
@@ -18799,11 +18816,12 @@ body .sealed-delivery-dot {width:8px;height:8px;border-radius:50%;background:#22
 
         function showAuctionPanels(){
             hideNominationStage();
+            const caption=document.querySelector('#view-auction .timer-caption');if(caption)caption.textContent='TEMPO RESIDUO';
             const lv=document.getElementById('view-list');
             const av=document.getElementById('view-auction');
             if(lv)lv.style.display='none';
             if(av){
-                av.classList.remove('auction-view-hidden','nomination-turn-desktop','sealed-collecting');
+                av.classList.remove('auction-view-hidden','nomination-turn-desktop','sealed-collecting','sealed-opening');
                 av.style.display='flex';
             }
             document.getElementById('auctioneer-turn-center')?.setAttribute('aria-hidden','true');
@@ -24001,15 +24019,19 @@ body .sealed-delivery-dot {width:8px;height:8px;border-radius:50%;background:#22
                 });
         }
 
-        function showSealedAuctionStage(){
-            if(!sealedAuctionModeActive || !currentAuctionPlayer || sealedEnding)return;
-            const remaining=Math.max(0,Math.ceil((sealedDeadlineAt-Date.now())/1000));
+        function showSealedAuctionStage(phase='offers'){
+            const opening=phase==='opening';
+            if(!sealedAuctionModeActive || !currentAuctionPlayer || (sealedEnding&&!opening))return;
+            const remaining=Math.max(0,Math.ceil(((opening?sealedRevealDeadlineAt:sealedDeadlineAt)-Date.now())/1000));
             const eligible=[...new Set(sealedEligibleIds.map(String))];
             const submitted=new Set([...sealedBids.keys()].map(String));
             const delivered=eligible.filter(id=>submitted.has(id));
             showAuctionPanels();
             const av=document.getElementById('view-auction');
             av?.classList.add('sealed-collecting');
+            av?.classList.toggle('sealed-opening',opening);
+            const caption=av?.querySelector('.timer-caption');if(caption)caption.textContent=opening?'APERTURA BUSTA TRA':'TEMPO RESIDUO';
+            document.getElementById('winner-display').textContent='';
             document.getElementById('auction-player-name-top').textContent=currentAuctionPlayer.Nome||'--';
             document.getElementById('auction-player-role').textContent=currentAuctionPlayer.R||'-';
             document.getElementById('auction-player-club').textContent=currentAuctionPlayer.Squadra||'-';
@@ -24349,6 +24371,7 @@ body .sealed-delivery-dot {width:8px;height:8px;border-radius:50%;background:#22
                 return;
             }
 
+            showAuctionPanels();
             const token=sealedAuctionToken;
             const bids=normalizeSealedRanking(
                 [...sealedBids.values()]
@@ -24480,6 +24503,7 @@ body .sealed-delivery-dot {width:8px;height:8px;border-radius:50%;background:#22
             let reveal=Math.max(1,parseInt(sealedRevealSeconds)||5);
             const revealDeadline=Date.now()+reveal*1000;
             sealedRevealDeadlineAt=revealDeadline;
+            showSealedAuctionStage('opening');
             const timerEl=document.getElementById('countdown-display');
             timerEl.textContent=String(reveal);
             timerEl.style.color='var(--accent-blue)';
@@ -27110,9 +27134,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyBrand(){
-    document.title='LIVEASTA MV 101';
+    document.title='LIVEASTA MV 102';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE MV 101';
+      el.textContent='LIVEASTA · VERSIONE MV 102';
     });
     document.querySelectorAll('.logo-text').forEach(el=>{
       const a=el.querySelector('.rosa');
