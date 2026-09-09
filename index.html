@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>LIVEASTA V98</title>
+    <title>LIVEASTA MV 99</title>
     <meta name="theme-color" content="#0D1117">
     <meta name="color-scheme" content="dark">
     <meta name="mobile-web-app-capable" content="yes">
@@ -18,7 +18,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
-    <style id="liveasta-styles-v98">
+    <style id="liveasta-styles-mv99">
 :root {
   --bg-main: #0D1117;
   --bg-hover: #334155;
@@ -14645,7 +14645,7 @@ body #screen-auctioneer-board #auction-dashboard #view-list .toolbar-roster-btn 
              aria-label="Apri Impostazioni LIVEASTA"
              onclick="openAdminLogin()"
              onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openAdminLogin();}">
-            LIVEASTA V98
+            LIVEASTA MV 99
         </div>
         <div class="setup-card">
             <h1 class="logo-text"><span class="rosa">LIVE</span><span class="rush">ASTA</span></h1>
@@ -15046,7 +15046,7 @@ body #screen-auctioneer-board #auction-dashboard #view-list .toolbar-roster-btn 
 
     <div id="screen-admin" class="screen">
         <div class="setup-card" style="max-width:1100px; width:96%; padding:24px;">
-            <div class="admin-version-badge">LIVEASTA · VERSIONE V98</div>
+            <div class="admin-version-badge">LIVEASTA · VERSIONE MV 99</div>
             <h1>Gestione stanze</h1>
             <p class="subtitle">Nome, password, modifica ed eliminazione</p>
 
@@ -15385,28 +15385,28 @@ body #screen-auctioneer-board #auction-dashboard #view-list .toolbar-roster-btn 
                     <div class="budget-role-heading"><b class="budget-role role-P">P</b><strong>Portieri</strong><div class="budget-unit-toggle" role="group" aria-label="Unità budget Portieri"><button id="budget-unit-credits-P" type="button" class="btn btn-secondary" onclick="setBudgetInputUnit('P','credits')">Crediti</button><button id="budget-unit-percent-P" type="button" class="btn btn-secondary" onclick="setBudgetInputUnit('P','percent')">%</button></div></div>
                     <label class="budget-unit-field" data-budget-unit="credits"><span id="budget-credit-label-P">Budget iniziale (crediti)</span><input id="budget-credit-P" type="number" min="0" inputmode="numeric" onchange="updateBudgetFromCredits('P',this.value)"><small id="budget-equivalent-percent-P"></small></label>
                     <label class="budget-unit-field" data-budget-unit="percent" hidden><span id="budget-percent-label-P">Budget iniziale (%)</span><input id="budget-percent-P" type="number" min="0" max="100" step="0.1" inputmode="decimal" onchange="updateBudgetFromPercent('P',this.value)"><small id="budget-equivalent-credits-P"></small></label>
-                    <label class="budget-alert-field">Allerta da (crediti)<input id="budget-alert-P" type="number" min="0" inputmode="numeric" onchange="setBudgetRoleAlert('P',this.value)"><small>Arancione dalla soglia; rosso oltre il budget. Preimpostata all’80%, modificabile.</small></label>
+                    <label class="budget-alert-field">Allerta da (crediti)<input id="budget-alert-P" type="number" min="0" inputmode="numeric" onchange="setBudgetRoleAlert('P',this.value)"><small>Arancione dalla soglia; rosso al raggiungimento del budget. Preimpostata all’80%, modificabile.</small></label>
                     <div class="budget-comparison"><span>Iniziale<strong id="budget-initial-P">—</strong></span><span>Spesi<strong id="budget-spent-P">0</strong></span><span>Residuo<strong id="budget-left-P">0</strong></span><span>Scostamento<strong id="budget-delta-P">—</strong></span></div>
                 </div>
                 <div class="player-budget-row budget-role-card" data-role="D">
                     <div class="budget-role-heading"><b class="budget-role role-D">D</b><strong>Difensori</strong><div class="budget-unit-toggle" role="group" aria-label="Unità budget Difensori"><button id="budget-unit-credits-D" type="button" class="btn btn-secondary" onclick="setBudgetInputUnit('D','credits')">Crediti</button><button id="budget-unit-percent-D" type="button" class="btn btn-secondary" onclick="setBudgetInputUnit('D','percent')">%</button></div></div>
                     <label class="budget-unit-field" data-budget-unit="credits"><span id="budget-credit-label-D">Budget iniziale (crediti)</span><input id="budget-credit-D" type="number" min="0" inputmode="numeric" onchange="updateBudgetFromCredits('D',this.value)"><small id="budget-equivalent-percent-D"></small></label>
                     <label class="budget-unit-field" data-budget-unit="percent" hidden><span id="budget-percent-label-D">Budget iniziale (%)</span><input id="budget-percent-D" type="number" min="0" max="100" step="0.1" inputmode="decimal" onchange="updateBudgetFromPercent('D',this.value)"><small id="budget-equivalent-credits-D"></small></label>
-                    <label class="budget-alert-field">Allerta da (crediti)<input id="budget-alert-D" type="number" min="0" inputmode="numeric" onchange="setBudgetRoleAlert('D',this.value)"><small>Arancione dalla soglia; rosso oltre il budget. Preimpostata all’80%, modificabile.</small></label>
+                    <label class="budget-alert-field">Allerta da (crediti)<input id="budget-alert-D" type="number" min="0" inputmode="numeric" onchange="setBudgetRoleAlert('D',this.value)"><small>Arancione dalla soglia; rosso al raggiungimento del budget. Preimpostata all’80%, modificabile.</small></label>
                     <div class="budget-comparison"><span>Iniziale<strong id="budget-initial-D">—</strong></span><span>Spesi<strong id="budget-spent-D">0</strong></span><span>Residuo<strong id="budget-left-D">0</strong></span><span>Scostamento<strong id="budget-delta-D">—</strong></span></div>
                 </div>
                 <div class="player-budget-row budget-role-card" data-role="C">
                     <div class="budget-role-heading"><b class="budget-role role-C">C</b><strong>Centrocampisti</strong><div class="budget-unit-toggle" role="group" aria-label="Unità budget Centrocampisti"><button id="budget-unit-credits-C" type="button" class="btn btn-secondary" onclick="setBudgetInputUnit('C','credits')">Crediti</button><button id="budget-unit-percent-C" type="button" class="btn btn-secondary" onclick="setBudgetInputUnit('C','percent')">%</button></div></div>
                     <label class="budget-unit-field" data-budget-unit="credits"><span id="budget-credit-label-C">Budget iniziale (crediti)</span><input id="budget-credit-C" type="number" min="0" inputmode="numeric" onchange="updateBudgetFromCredits('C',this.value)"><small id="budget-equivalent-percent-C"></small></label>
                     <label class="budget-unit-field" data-budget-unit="percent" hidden><span id="budget-percent-label-C">Budget iniziale (%)</span><input id="budget-percent-C" type="number" min="0" max="100" step="0.1" inputmode="decimal" onchange="updateBudgetFromPercent('C',this.value)"><small id="budget-equivalent-credits-C"></small></label>
-                    <label class="budget-alert-field">Allerta da (crediti)<input id="budget-alert-C" type="number" min="0" inputmode="numeric" onchange="setBudgetRoleAlert('C',this.value)"><small>Arancione dalla soglia; rosso oltre il budget. Preimpostata all’80%, modificabile.</small></label>
+                    <label class="budget-alert-field">Allerta da (crediti)<input id="budget-alert-C" type="number" min="0" inputmode="numeric" onchange="setBudgetRoleAlert('C',this.value)"><small>Arancione dalla soglia; rosso al raggiungimento del budget. Preimpostata all’80%, modificabile.</small></label>
                     <div class="budget-comparison"><span>Iniziale<strong id="budget-initial-C">—</strong></span><span>Spesi<strong id="budget-spent-C">0</strong></span><span>Residuo<strong id="budget-left-C">0</strong></span><span>Scostamento<strong id="budget-delta-C">—</strong></span></div>
                 </div>
                 <div class="player-budget-row budget-role-card" data-role="A">
                     <div class="budget-role-heading"><b class="budget-role role-A">A</b><strong>Attaccanti</strong><div class="budget-unit-toggle" role="group" aria-label="Unità budget Attaccanti"><button id="budget-unit-credits-A" type="button" class="btn btn-secondary" onclick="setBudgetInputUnit('A','credits')">Crediti</button><button id="budget-unit-percent-A" type="button" class="btn btn-secondary" onclick="setBudgetInputUnit('A','percent')">%</button></div></div>
                     <label class="budget-unit-field" data-budget-unit="credits"><span id="budget-credit-label-A">Budget iniziale (crediti)</span><input id="budget-credit-A" type="number" min="0" inputmode="numeric" onchange="updateBudgetFromCredits('A',this.value)"><small id="budget-equivalent-percent-A"></small></label>
                     <label class="budget-unit-field" data-budget-unit="percent" hidden><span id="budget-percent-label-A">Budget iniziale (%)</span><input id="budget-percent-A" type="number" min="0" max="100" step="0.1" inputmode="decimal" onchange="updateBudgetFromPercent('A',this.value)"><small id="budget-equivalent-credits-A"></small></label>
-                    <label class="budget-alert-field">Allerta da (crediti)<input id="budget-alert-A" type="number" min="0" inputmode="numeric" onchange="setBudgetRoleAlert('A',this.value)"><small>Arancione dalla soglia; rosso oltre il budget. Preimpostata all’80%, modificabile.</small></label>
+                    <label class="budget-alert-field">Allerta da (crediti)<input id="budget-alert-A" type="number" min="0" inputmode="numeric" onchange="setBudgetRoleAlert('A',this.value)"><small>Arancione dalla soglia; rosso al raggiungimento del budget. Preimpostata all’80%, modificabile.</small></label>
                     <div class="budget-comparison"><span>Iniziale<strong id="budget-initial-A">—</strong></span><span>Spesi<strong id="budget-spent-A">0</strong></span><span>Residuo<strong id="budget-left-A">0</strong></span><span>Scostamento<strong id="budget-delta-A">—</strong></span></div>
                 </div>
             </div>
@@ -19668,7 +19668,7 @@ body #screen-auctioneer-board #auction-dashboard #view-list .toolbar-roster-btn 
             const state=playerBudgetRoleState(role);
             const projected=state.spent+Math.max(0,Number(amount)||0);
             const limit=state.allocated;
-            const tone=projected>limit?'red':projected>=budgetAlertCredits(role)?'orange':'normal';
+            const tone=projected>=limit?'red':projected>=budgetAlertCredits(role)?'orange':'normal';
             return {tone,role,remaining:limit-projected};
         }
 
@@ -27158,9 +27158,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyBrand(){
-    document.title='LIVEASTA V98';
+    document.title='LIVEASTA MV 99';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V98';
+      el.textContent='LIVEASTA · VERSIONE MV 99';
     });
     document.querySelectorAll('.logo-text').forEach(el=>{
       const a=el.querySelector('.rosa');
