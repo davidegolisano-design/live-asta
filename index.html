@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>LIVEASTA MV 102</title>
+    <title>LIVEASTA v0.15</title>
     <meta name="theme-color" content="#0D1117">
     <meta name="color-scheme" content="dark">
     <meta name="mobile-web-app-capable" content="yes">
@@ -14606,7 +14606,7 @@ html body #screen-auctioneer-board #auction-dashboard #view-auction.sealed-colle
  display:none!important;visibility:hidden!important;
 }
 
-/* LIVEASTA MV103 · Gestione autorilancio */
+/* LIVEASTA MV105 · Gestione autorilancio */
 .self-raise-control-card{border-color:color-mix(in srgb,var(--theme-primary,#3DDC97) 22%,var(--border-color))!important;}
 .self-raise-control-note{font-size:.72rem;color:var(--text-muted);margin-top:4px;line-height:1.45;max-width:760px;}
 .self-raise-control-row{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-top:14px;padding:12px 14px;border:1px solid var(--border-color);border-radius:12px;background:var(--bg-input,#111821);}
@@ -23157,6 +23157,13 @@ html body #screen-auctioneer-board #auction-dashboard #view-auction.sealed-colle
             return maxBid>0 && (currentAuctionValue+inc)<=maxBid;
         }
 
+        function isSelfRaiseTemporarilyLocked(){
+            const team = myTeamId
+                ? teamsCache.find(x => String(x.id) === String(myTeamId))
+                : findTeamByName(myTeamName);
+            return !!(team && isSelfRaiseBlockedForTeam(team));
+        }
+
         function refreshPlayerBidButtons() {
             updatePlayerBidBudgetVisuals();
             const team = myTeamId ? teamsCache.find(x => String(x.id) === String(myTeamId)) : findTeamByName(myTeamName);
@@ -23179,9 +23186,21 @@ html body #screen-auctioneer-board #auction-dashboard #view-auction.sealed-colle
 
             document.querySelectorAll('#screen-player-buzzer .buzzer-btn').forEach(btn => {
                 const inc = parseInt(btn.textContent.replace('+','')) || 1;
-                const allowed = baseAllowed && isNormalBidAmountAllowed(inc);
-                btn.disabled = !allowed;
-                btn.setAttribute('aria-disabled', allowed ? 'false' : 'true');
+                const selfRaiseLocked = isSelfRaiseTemporarilyLocked();
+                // MV105: l'autorilancio disattivato blocca il tap ma NON rende grigi i tasti.
+                // Restano grigi solo per i veri vincoli (crediti, slot, asta non attiva, ecc.).
+                const allowedByRealConstraints = baseAllowed && (
+                    selfRaiseLocked
+                        ? (() => {
+                            const roleNow=String(currentAuctionPlayer?.R||'');
+                            const maxBidNow=maxBidForTeam(team,roleNow);
+                            return maxBidNow>0 && (currentAuctionValue+inc)<=maxBidNow;
+                        })()
+                        : isNormalBidAmountAllowed(inc)
+                );
+                btn.disabled = !allowedByRealConstraints;
+                btn.setAttribute('aria-disabled', allowedByRealConstraints ? 'false' : 'true');
+                btn.classList.toggle('self-raise-locked', selfRaiseLocked && allowedByRealConstraints);
             });
             refreshExactBidControl();
         }
@@ -23330,12 +23349,21 @@ html body #screen-auctioneer-board #auction-dashboard #view-auction.sealed-colle
             const knob=document.getElementById('exact-bid-knob');
             if(!knob)return;
             const range=exactBidRange();
-            const available=!!range.valid;
+            const selfRaiseLocked=isSelfRaiseTemporarilyLocked();
+            let available=!!range.valid;
+            if(selfRaiseLocked){
+                const team=exactBidTeam();
+                const role=String(currentAuctionPlayer?.R||'');
+                const max=Math.max(0,parseInt(team?maxBidForTeam(team,role):0)||0);
+                const min=Math.max(1,(parseInt(currentAuctionValue)||0)+1);
+                available=max>=min;
+            }
             knob.disabled=!available;
             knob.classList.toggle('available',available);
+            knob.classList.toggle('self-raise-locked',selfRaiseLocked && available);
             knob.setAttribute('aria-disabled',available?'false':'true');
             knob.title=available
-                ? `Tieni premuto 0,3 secondi · 0 in basso annulla · offerta ${range.min}-${range.max}`
+                ? (selfRaiseLocked ? 'Attendi il rilancio di un’altra squadra' : `Tieni premuto 0,3 secondi · 0 in basso annulla · offerta ${range.min}-${range.max}`)
                 : 'Offerta esatta non disponibile';
         }
 
