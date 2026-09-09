@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>LIVEASTA MV 100</title>
+    <title>LIVEASTA MV 101</title>
     <meta name="theme-color" content="#0D1117">
     <meta name="color-scheme" content="dark">
     <meta name="mobile-web-app-capable" content="yes">
@@ -18,7 +18,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
-    <style id="liveasta-styles-mv100">
+    <style id="liveasta-styles-mv101">
 :root {
   --bg-main: #0D1117;
   --bg-hover: #334155;
@@ -14552,7 +14552,7 @@ body #screen-auctioneer-board #auction-dashboard #view-list .toolbar-icon-btn {g
 body #screen-auctioneer-board #auction-dashboard #view-list #toolbar-sealed-mode-btn {grid-area:sealed!important;font-size:10px!important;line-height:1.1!important;}
 body #screen-auctioneer-board #auction-dashboard #view-list .toolbar-roster-btn {grid-area:roses!important;font-size:10px!important;}
 
-/* MV 100: compact live budget, full-height player list, fixed presence colors. */
+/* MV 101: compact live budget, full-height player list, fixed presence colors. */
 body #player-budget-overlay #player-budget-rows .budget-role-card {grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important;}
 body #player-budget-overlay .budget-role-card > label {grid-column:auto!important;font-size:11px!important;}
 body #player-budget-overlay .budget-role-card output {display:flex;align-items:center;justify-content:center;height:44px;font-size:20px;font-weight:800;}
@@ -14573,6 +14573,29 @@ html body .player-availability-choice.absent-choice .availability-choice-dot,
 html body .player-ready-team-row.absent .player-ready-team-dot,
 html body .ard-team-row.absent .ard-team-dot {background:#a874ff!important;box-shadow:0 0 8px #a874ff!important;}
 html body .player-ready-team-row.absent .player-ready-team-status,html body .ard-team-row.absent .ard-team-status {color:#a874ff!important;}
+
+/* MV 101: Ready occupies the standard bid area, never the hidden sealed form. */
+body #screen-player-buzzer #normal-bid-controls.ready-choice-active {
+ height:var(--regular-bid-area-height,calc(clamp(66px,9.2dvh,82px) * 2 + 7px))!important;
+ min-height:var(--regular-bid-area-height,calc(clamp(66px,9.2dvh,82px) * 2 + 7px))!important;
+ max-height:var(--regular-bid-area-height,calc(clamp(66px,9.2dvh,82px) * 2 + 7px))!important;
+ overflow:hidden!important;box-sizing:border-box!important;
+}
+body #screen-player-buzzer #normal-bid-controls.ready-choice-active #sealed-bid-controls {display:none!important;}
+body #screen-player-buzzer #normal-bid-controls.ready-choice-active #player-ready-choice-controls {height:100%!important;min-height:0!important;max-height:100%!important;box-sizing:border-box!important;}
+body #sealed-delivery-panel {display:none;}
+body #screen-auctioneer-board #view-auction.sealed-collecting .col-info > :not(#sealed-delivery-panel) {display:none!important;}
+body #screen-auctioneer-board #view-auction.sealed-collecting #btn-next {display:none!important;}
+body #screen-auctioneer-board #view-auction.sealed-collecting #sealed-delivery-panel {
+ display:flex!important;flex-direction:column;gap:12px;width:100%;height:100%;min-height:0;min-width:0;overflow:hidden;box-sizing:border-box;padding:16px;
+}
+body #sealed-delivery-panel h3 {margin:0;font-size:clamp(14px,1.5vw,24px);text-align:center;color:var(--theme-text);}
+body #sealed-delivery-count {font-size:clamp(32px,5vw,80px);line-height:1.1;text-align:center;color:var(--lime);}
+body #sealed-delivery-names {flex:1;min-height:0;overflow-y:auto;}
+body #sealed-delivery-names p,body #sealed-delivery-panel small {font-size:12px;color:var(--theme-muted);text-align:center;}
+body .sealed-delivery-row {display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--theme-border);font-size:clamp(14px,1.4vw,22px);}
+body .sealed-delivery-row strong {flex:1;min-width:0;overflow-wrap:anywhere;}
+body .sealed-delivery-dot {width:8px;height:8px;border-radius:50%;background:#22c55e;flex:0 0 8px;}
 </style>
 
 
@@ -14667,7 +14690,7 @@ html body .player-ready-team-row.absent .player-ready-team-status,html body .ard
              aria-label="Apri Impostazioni LIVEASTA"
              onclick="openAdminLogin()"
              onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openAdminLogin();}">
-            LIVEASTA MV 100
+            LIVEASTA MV 101
         </div>
         <div class="setup-card">
             <h1 class="logo-text"><span class="rosa">LIVE</span><span class="rush">ASTA</span></h1>
@@ -15068,7 +15091,7 @@ html body .player-ready-team-row.absent .player-ready-team-status,html body .ard
 
     <div id="screen-admin" class="screen">
         <div class="setup-card" style="max-width:1100px; width:96%; padding:24px;">
-            <div class="admin-version-badge">LIVEASTA · VERSIONE MV 100</div>
+            <div class="admin-version-badge">LIVEASTA · VERSIONE MV 101</div>
             <h1>Gestione stanze</h1>
             <p class="subtitle">Nome, password, modifica ed eliminazione</p>
 
@@ -15267,6 +15290,11 @@ html body .player-ready-team-row.absent .player-ready-team-status,html body .ard
                     </div>
 
                     <div class="auction-col col-info">
+                        <section id="sealed-delivery-panel" aria-label="Consegna buste">
+                            <h3>BUSTE CONSEGNATE</h3><strong id="sealed-delivery-count">0 / 0</strong>
+                            <div id="sealed-delivery-names"></div>
+                            <small>Gli importi restano nascosti fino all’apertura.</small>
+                        </section>
                         <div class="auction-title" id="auction-title-display">MIGLIOR OFFERENTE</div>
                         <div id="winner-display">--</div>
                         <div class="bid-box">
@@ -16495,7 +16523,11 @@ html body .player-ready-team-row.absent .player-ready-team-status,html body .ard
 
         function syncSealedBidAreaHeight(){
             const grid=document.getElementById('normal-bid-controls');
-            if(!grid||grid.classList.contains('ready-choice-active'))return;
+            if(!grid)return;
+            const ready=grid.classList.contains('ready-choice-active');
+            if(ready)grid.classList.remove('ready-choice-active');
+            const temporary=[...grid.querySelectorAll('#sealed-bid-controls,#player-ready-choice-controls')].map(el=>({el,style:el.getAttribute('style')}));
+            temporary.forEach(({el})=>el.style.setProperty('display','none','important'));
             const sealed=grid.classList.contains('sealed-active');
             // Measure the normal four-button layout synchronously, without rendering an intermediate frame.
             if(sealed)grid.classList.remove('sealed-active');
@@ -16509,6 +16541,8 @@ html body .player-ready-team-row.absent .player-ready-team-status,html body .ard
                 if(height>0)grid.style.setProperty('--regular-bid-area-height',`${Math.ceil(height)}px`);
             }finally{
                 if(sealed)grid.classList.add('sealed-active');
+                if(ready)grid.classList.add('ready-choice-active');
+                temporary.forEach(({el,style})=>{if(style===null)el.removeAttribute('style');else el.setAttribute('style',style);});
             }
         }
         window.addEventListener('resize',()=>requestAnimationFrame(syncSealedBidAreaHeight),{passive:true});
@@ -17668,6 +17702,7 @@ html body .player-ready-team-row.absent .player-ready-team-status,html body .ard
             const skipBtn=document.getElementById('player-ready-choice-skip');
             if(!normal||!box)return;
 
+            if(show)syncSealedBidAreaHeight();
             normal.classList.toggle('ready-choice-active',!!show);
             box.classList.toggle('visible',!!show);
             box.setAttribute('aria-hidden',show?'false':'true');
@@ -18768,7 +18803,7 @@ html body .player-ready-team-row.absent .player-ready-team-status,html body .ard
             const av=document.getElementById('view-auction');
             if(lv)lv.style.display='none';
             if(av){
-                av.classList.remove('auction-view-hidden','nomination-turn-desktop');
+                av.classList.remove('auction-view-hidden','nomination-turn-desktop','sealed-collecting');
                 av.style.display='flex';
             }
             document.getElementById('auctioneer-turn-center')?.setAttribute('aria-hidden','true');
@@ -23967,30 +24002,26 @@ html body .player-ready-team-row.absent .player-ready-team-status,html body .ard
         }
 
         function showSealedAuctionStage(){
-            if(!sealedAuctionModeActive || !currentAuctionPlayer)return;
+            if(!sealedAuctionModeActive || !currentAuctionPlayer || sealedEnding)return;
             const remaining=Math.max(0,Math.ceil((sealedDeadlineAt-Date.now())/1000));
-            const eligible=sealedEligibleIds.length;
-            const offered=[...sealedBids.keys()].filter(id=>sealedEligibleIds.includes(String(id))).length;
-
-            const lv=document.getElementById('view-list');
+            const eligible=[...new Set(sealedEligibleIds.map(String))];
+            const submitted=new Set([...sealedBids.keys()].map(String));
+            const delivered=eligible.filter(id=>submitted.has(id));
+            showAuctionPanels();
             const av=document.getElementById('view-auction');
-            if(lv)lv.style.display='none';
-            if(av){av.classList.add('auction-view-hidden');av.style.display='none';}
-
-            document.getElementById('nomination-stage-kicker').textContent=sealedRound>1?`SPAREGGIO BUSTA · ROUND ${sealedRound}`:'OFFERTA IN BUSTA CHIUSA';
-            document.getElementById('nomination-stage-title').textContent=currentAuctionPlayer.Nome||'--';
-            document.getElementById('nomination-stage-team').textContent=String(remaining);
-            document.getElementById('nomination-stage-role').textContent='SECONDI RIMANENTI';
-            document.getElementById('nomination-stage-player').style.display='none';
-
-            const box=document.getElementById('nomination-stage-ready');
-            if(box)box.style.display='block';
-            const label=box?.querySelector('.nomination-stage-ready-label');
-            if(label)label.textContent='OFFERTE RICEVUTE';
-            document.getElementById('nomination-stage-ready-count').textContent=`${offered} / ${eligible}`;
-            document.getElementById('nomination-stage-ready-missing').textContent=sealedRound>1?'Solo le squadre in parità possono fare una nuova offerta.':'Gli importi restano nascosti fino all’apertura delle buste.';
-            document.getElementById('nomination-stage')?.classList.add('open');
-            fitNominationStageTeam();
+            av?.classList.add('sealed-collecting');
+            document.getElementById('auction-player-name-top').textContent=currentAuctionPlayer.Nome||'--';
+            document.getElementById('auction-player-role').textContent=currentAuctionPlayer.R||'-';
+            document.getElementById('auction-player-club').textContent=currentAuctionPlayer.Squadra||'-';
+            const img=document.getElementById('card-image');
+            const imageKey=String(currentAuctionPlayer.Id)+':'+sealedAuctionToken;
+            if(img && img.dataset.sealedPlayer!==imageKey){
+                img.dataset.sealedPlayer=imageKey;setPlayerImage(img,currentAuctionPlayer.Id,currentAuctionPlayer.R);
+            }
+            document.getElementById('countdown-display').textContent=String(remaining);
+            document.getElementById('sealed-delivery-count').textContent=`${delivered.length} / ${eligible.length}`;
+            const list=document.getElementById('sealed-delivery-names');
+            list.innerHTML=delivered.length?delivered.map(id=>`<div class="sealed-delivery-row"><span class="sealed-delivery-dot"></span><strong>${escapeHtml(teamsCache.find(t=>String(t.id)===id)?.name||'Squadra')}</strong><span>✓</span></div>`).join(''):'<p>In attesa delle buste…</p>';
         }
 
         async function startSealedAuctionTimer(){
@@ -27079,9 +27110,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyBrand(){
-    document.title='LIVEASTA MV 100';
+    document.title='LIVEASTA MV 101';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE MV 100';
+      el.textContent='LIVEASTA · VERSIONE MV 101';
     });
     document.querySelectorAll('.logo-text').forEach(el=>{
       const a=el.querySelector('.rosa');
