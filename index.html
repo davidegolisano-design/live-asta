@@ -14611,14 +14611,14 @@ html body #screen-auctioneer-board #auction-dashboard #view-auction.sealed-colle
 .self-raise-control-note{font-size:.72rem;color:var(--text-muted);margin-top:4px;line-height:1.45;max-width:760px;}
 .self-raise-control-row{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-top:14px;padding:12px 14px;border:1px solid var(--border-color);border-radius:12px;background:var(--bg-input,#111821);}
 .self-raise-control-status{min-width:0;font-size:.8rem;color:var(--text-muted);line-height:1.4;text-align:left;}
-.self-raise-switch{display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none;flex:0 0 auto;}
-.self-raise-switch input{position:absolute;opacity:0;pointer-events:none;width:1px!important;height:1px!important;}
-.self-raise-switch-track{width:48px;height:27px;border-radius:999px;background:#3A4655;border:1px solid #526174;position:relative;transition:.2s;box-sizing:border-box;}
+.self-raise-switch{display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none;flex:0 0 auto;background:transparent;border:0;padding:0;margin:0;color:inherit;font:inherit;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
+.self-raise-switch-track{width:48px;height:27px;border-radius:999px;background:#3A4655;border:1px solid #526174;position:relative;transition:.2s;box-sizing:border-box;flex:0 0 auto;}
 .self-raise-switch-thumb{position:absolute;top:3px;left:3px;width:19px;height:19px;border-radius:50%;background:#F8FAFC;box-shadow:0 2px 6px rgba(0,0,0,.35);transition:.2s;}
-.self-raise-switch input:checked + .self-raise-switch-track{background:var(--theme-primary,#3DDC97);border-color:var(--theme-primary,#3DDC97);}
-.self-raise-switch input:checked + .self-raise-switch-track .self-raise-switch-thumb{transform:translateX(21px);background:var(--theme-bg-deep,#07110C);}
-.self-raise-switch input:focus-visible + .self-raise-switch-track{outline:3px solid color-mix(in srgb,var(--theme-primary,#3DDC97) 25%,transparent);outline-offset:2px;}
+.self-raise-switch[aria-checked="true"] .self-raise-switch-track{background:var(--theme-primary,#3DDC97);border-color:var(--theme-primary,#3DDC97);}
+.self-raise-switch[aria-checked="true"] .self-raise-switch-thumb{transform:translateX(21px);background:var(--theme-bg-deep,#07110C);}
+.self-raise-switch:focus-visible .self-raise-switch-track{outline:3px solid color-mix(in srgb,var(--theme-primary,#3DDC97) 25%,transparent);outline-offset:2px;}
 .self-raise-switch-label{font-size:.76rem;font-weight:900;color:var(--text-main);white-space:nowrap;}
+#self-raise-enabled{display:none!important;}
 @media(max-width:700px){
   #screen-room-control .self-raise-control-card .control-title{flex-direction:row!important;align-items:flex-start!important;}
   #screen-room-control .self-raise-control-card .control-title > div{min-width:0!important;}
@@ -15614,11 +15614,11 @@ html body #screen-auctioneer-board #auction-dashboard #view-auction.sealed-colle
                 </div>
                 <div class="self-raise-control-row">
                     <div id="self-raise-control-status" class="self-raise-control-status">Autorilancio consentito.</div>
-                    <label class="self-raise-switch" for="self-raise-enabled">
-                        <input id="self-raise-enabled" type="checkbox" onchange="setSelfRaiseEnabled(this.checked)">
+                    <input id="self-raise-enabled" type="checkbox" tabindex="-1" aria-hidden="true">
+                    <button id="self-raise-toggle" class="self-raise-switch" type="button" role="switch" aria-checked="true" onclick="toggleSelfRaiseFromUI(event)">
                         <span class="self-raise-switch-track" aria-hidden="true"><span class="self-raise-switch-thumb"></span></span>
                         <span class="self-raise-switch-label">Consenti autorilancio</span>
-                    </label>
+                    </button>
                 </div>
             </div>
 
@@ -17085,6 +17085,8 @@ html body #screen-auctioneer-board #auction-dashboard #view-auction.sealed-colle
             const badge=document.getElementById('self-raise-control-badge');
             const status=document.getElementById('self-raise-control-status');
             if(input)input.checked=!!selfRaiseEnabled;
+            const toggle=document.getElementById('self-raise-toggle');
+            if(toggle)toggle.setAttribute('aria-checked',selfRaiseEnabled?'true':'false');
             if(badge){
                 badge.textContent=selfRaiseEnabled?'ATTIVO':'DISATTIVO';
                 badge.classList.toggle('badge-warn',!selfRaiseEnabled);
@@ -17093,6 +17095,20 @@ html body #screen-auctioneer-board #auction-dashboard #view-auction.sealed-colle
             if(status)status.textContent=selfRaiseEnabled
                 ?'Autorilancio consentito: il miglior offerente può rilanciare ancora su se stesso.'
                 :'Autorilancio bloccato: il miglior offerente deve attendere il rilancio di un’altra squadra.';
+        }
+
+        function toggleSelfRaiseFromUI(event){
+            if(event){
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            const y=window.scrollY;
+            setSelfRaiseEnabled(!selfRaiseEnabled);
+            // Su alcuni browser Android il focus di controlli custom può provare a ricentrare la viewport.
+            // Manteniamo esplicitamente la posizione corrente della pagina.
+            requestAnimationFrame(()=>{
+                if(Math.abs(window.scrollY-y)>1)window.scrollTo(0,y);
+            });
         }
 
         async function setSelfRaiseEnabled(enabled){
