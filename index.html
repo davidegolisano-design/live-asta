@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>LIVEASTA V106</title>
+    <title>LIVEASTA V98</title>
     <meta name="theme-color" content="#0D1117">
     <meta name="color-scheme" content="dark">
     <meta name="mobile-web-app-capable" content="yes">
@@ -12247,7 +12247,9 @@ html.audio-modal-open{
   min-height:64px;
   box-sizing:border-box;
   padding:8px 9px;
-  transform:translate(-100%,-50%);
+  left:50%;
+  top:clamp(72px,calc(50dvh - 48px),calc(100dvh - 72px));
+  transform:translate(-50%,-50%);
   border-radius:14px;
   border:1px solid rgba(255,255,255,.42);
   background:rgba(13,20,29,.96);
@@ -12263,16 +12265,6 @@ html.audio-modal-open{
   font-weight:950;
   font-variant-numeric:tabular-nums;
   letter-spacing:-.04em;
-}
-#exact-bid-value-bubble small{
-  display:block;
-  margin-top:5px;
-  color:#B8C2CF;
-  font-size:.52rem;
-  font-weight:900;
-  line-height:1.15;
-  letter-spacing:.04em;
-  white-space:nowrap;
 }
 #exact-bid-value-bubble.invalid strong{
   font-size:.9rem;
@@ -14370,32 +14362,165 @@ body #screen-room-control #control-purchases-content > .control-table-wrap {
   overscroll-behavior-y:contain; scrollbar-gutter:stable;
 }
 
-/* LIVEASTA V106 patch: busta mobile, budget warning, assegnazione manuale mobile */
-.player-budget-warning-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 12px;padding:10px 12px;border:1px solid var(--theme-border,#334155);border-radius:12px;background:var(--theme-input,#111821);text-align:left}
-.player-budget-warning-row b{display:block;font-size:.76rem}.player-budget-warning-row small{display:block;margin-top:3px;color:var(--theme-muted,#B8C2CF);font-size:.58rem;line-height:1.3}.player-budget-warning-input{position:relative;flex:0 0 86px}.player-budget-warning-input input{width:100%!important;height:40px!important;margin:0!important;padding:0 25px 0 8px!important;text-align:center!important;font-size:16px!important;font-weight:900!important}.player-budget-warning-input span{position:absolute;right:9px;top:50%;transform:translateY(-50%);color:var(--theme-muted,#B8C2CF);font-size:.7rem;pointer-events:none}
-#screen-player-buzzer .buzzer-btn.budget-warning:not(:disabled){background:linear-gradient(180deg,#FFAA55,#F07A18)!important;color:#1A0B00!important;border-color:#FFC17F!important;box-shadow:0 8px 22px rgba(240,122,24,.28)!important}
-#screen-player-buzzer .buzzer-btn.budget-over:not(:disabled){background:linear-gradient(180deg,#FF667A,#E62F49)!important;color:#fff!important;border-color:#FF8A99!important;box-shadow:0 8px 22px rgba(230,47,73,.30)!important}
-#exact-bid-slider-layer.active.budget-warning{background:rgba(240,122,24,.14)}#exact-bid-slider-layer.active.budget-over{background:rgba(230,47,73,.17)}
-#exact-bid-slider-layer.budget-warning #exact-bid-track-fill{background:linear-gradient(180deg,#FFC46B,#F07A18)!important;box-shadow:0 0 18px rgba(240,122,24,.62)!important}#exact-bid-slider-layer.budget-over #exact-bid-track-fill{background:linear-gradient(180deg,#FF7A8C,#E62F49)!important;box-shadow:0 0 18px rgba(230,47,73,.66)!important}
-#exact-bid-value-bubble.budget-warning{background:rgba(80,40,8,.97)!important;border-color:#FFAA55!important}#exact-bid-value-bubble.budget-over{background:rgba(72,12,24,.97)!important;border-color:#FF667A!important}
-@media(max-width:700px){
- .player-budget-warning-row{padding:9px 10px}.player-budget-warning-input{flex-basis:78px}
- #screen-player-buzzer #normal-bid-controls.sealed-active{display:block!important;width:100%!important}
- #screen-player-buzzer #normal-bid-controls.sealed-active #sealed-bid-controls.sealed-visible{display:block!important;width:100%!important;max-width:none!important;padding:12px!important;border-radius:15px!important}
- #screen-player-buzzer #normal-bid-controls.sealed-active .sealed-bid-entry{display:grid!important;grid-template-columns:minmax(0,1fr) 112px!important;gap:8px!important}
- #screen-player-buzzer #normal-bid-controls.sealed-active .sealed-bid-entry input{min-height:58px!important;height:58px!important;margin:0!important;font-size:1.25rem!important}
- #screen-player-buzzer #normal-bid-controls.sealed-active .sealed-bid-entry .btn{min-height:58px!important;height:58px!important;margin:0!important;padding:0 10px!important;font-size:.88rem!important}
- #screen-player-buzzer #normal-bid-controls.sealed-active .sealed-bid-label{margin-bottom:8px!important;font-size:.72rem!important}
- #screen-player-buzzer #normal-bid-controls.sealed-active .sealed-bid-status{margin-top:8px!important;font-size:.68rem!important}
- .manual-assign-overlay{padding:0!important;align-items:stretch!important}
- .manual-assign-card{width:100vw!important;max-width:none!important;height:100dvh!important;max-height:100dvh!important;border-radius:0!important;border:0!important;padding:calc(10px + env(safe-area-inset-top)) 10px calc(10px + env(safe-area-inset-bottom))!important;display:flex!important;flex-direction:column!important;overflow:hidden!important}
- .manual-assign-card .control-title,.manual-assign-team,#manual-player-search,#list-filters-manual,.manual-player-preview,.manual-price-row,#manual-assign-error{flex:0 0 auto!important}
- #manual-player-select{flex:1 1 auto!important;width:100%!important;height:auto!important;min-height:260px!important;max-height:none!important;margin:6px 0 8px!important;font-size:16px!important;line-height:1.25!important;overflow-y:auto!important}
- #manual-player-select option{padding:13px 9px!important;min-height:44px!important}
- .manual-player-preview{margin:4px 0 8px!important;padding:9px!important;font-size:.72rem!important}
- .manual-price-row{grid-template-columns:105px minmax(0,1fr)!important;gap:8px!important}.manual-price-row .btn{height:48px!important;min-height:48px!important;padding:0 8px!important;font-size:.72rem!important}
+/* Sealed bids replace the two-row bid grid with one compact, readable form. */
+body #screen-player-buzzer #normal-bid-controls.sealed-active:not(.ready-choice-active) {
+  grid-template-columns:minmax(0,1fr)!important;
+  grid-template-rows:auto!important;
+  height:auto!important; min-height:0!important; gap:0!important;
 }
-@media(max-width:380px){#screen-player-buzzer #normal-bid-controls.sealed-active .sealed-bid-entry{grid-template-columns:1fr 100px!important}.manual-price-row{grid-template-columns:92px minmax(0,1fr)!important}}
+body #screen-player-buzzer #normal-bid-controls.sealed-active #sealed-bid-controls {
+  grid-row:1!important; grid-column:1!important;
+  padding:12px!important; min-height:0!important; height:auto!important; max-width:none!important;
+}
+body #screen-player-buzzer #sealed-bid-controls .sealed-bid-label {
+  margin:0 0 8px!important; font-size:12px!important; line-height:1.25!important;
+}
+body #screen-player-buzzer #sealed-bid-controls .sealed-bid-entry {
+  display:grid!important; grid-template-columns:minmax(0,1fr) minmax(88px,30%)!important;
+  gap:8px!important; align-items:stretch!important;
+}
+body #screen-player-buzzer #sealed-bid-input,
+body #screen-player-buzzer #sealed-bid-submit {
+  width:100%!important; min-width:0!important; height:52px!important; min-height:52px!important;
+  padding:0 10px!important; margin:0!important; box-sizing:border-box!important;
+  border-radius:10px!important; line-height:1.15!important;
+}
+body #screen-player-buzzer #sealed-bid-input {font-size:20px!important;}
+body #screen-player-buzzer #sealed-bid-submit {font-size:12px!important;white-space:normal!important;}
+body #screen-player-buzzer #sealed-bid-status {
+  margin:8px 0 0!important; font-size:12px!important; line-height:1.3!important; white-space:normal!important;
+}
+/* Advisory colors never change availability, disabled attributes or bid limits. */
+body #screen-player-buzzer #normal-bid-controls[data-budget-tone="orange"] {--bid-budget-color:#f59e0b;--bid-budget-text:#000;}
+body #screen-player-buzzer #normal-bid-controls[data-budget-tone="red"] {--bid-budget-color:#dc3545;--bid-budget-text:#000;}
+body #screen-player-buzzer #normal-bid-controls:is([data-budget-tone="orange"],[data-budget-tone="red"]) :is(.buzzer-btn,#sealed-bid-submit):not(:disabled),
+body #screen-player-buzzer #normal-bid-controls:is([data-budget-tone="orange"],[data-budget-tone="red"]) :is(.buzzer-btn,#sealed-bid-submit):not(:disabled):active {
+  background:var(--bid-budget-color)!important; background-image:none!important;
+  color:var(--bid-budget-text)!important; border-color:var(--bid-budget-color)!important;
+  box-shadow:0 0 12px color-mix(in srgb,var(--bid-budget-color) 35%,transparent)!important;
+}
+body #screen-player-buzzer #normal-bid-controls:is([data-budget-tone="orange"],[data-budget-tone="red"]) #sealed-bid-input {
+  border:2px solid var(--bid-budget-color)!important;
+}
+body #exact-bid-slider-layer[data-budget-tone="normal"] {--slider-budget-color:#22c55e;}
+body #exact-bid-slider-layer[data-budget-tone="orange"] {--slider-budget-color:#f59e0b;}
+body #exact-bid-slider-layer[data-budget-tone="red"] {--slider-budget-color:#ef4444;}
+body #exact-bid-slider-layer:is([data-budget-tone="normal"],[data-budget-tone="orange"],[data-budget-tone="red"]) #exact-bid-value-bubble {
+  background:color-mix(in srgb,var(--slider-budget-color) 35%,#101820)!important;
+  border-color:var(--slider-budget-color)!important;
+}
+
+/* Role plans stay readable on a phone: labeled inputs and a separate comparison. */
+body #player-budget-overlay #player-budget-rows {display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:12px!important;}
+body #player-budget-overlay #player-budget-rows .budget-role-card {
+  display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:10px!important;padding:12px!important;min-width:0!important;box-sizing:border-box!important;
+}
+body #player-budget-overlay .budget-role-heading {grid-column:1 / -1;display:flex;align-items:center;gap:10px;min-width:0;}
+body #player-budget-overlay .budget-role-card > label {display:flex;flex-direction:column;gap:6px;min-width:0;font-size:12px;line-height:1.3;color:var(--theme-text);}
+body #player-budget-overlay #player-budget-rows .budget-role-card input {
+  width:100%!important;min-width:0!important;height:44px!important;min-height:44px!important;margin:0!important;
+  padding:8px!important;box-sizing:border-box!important;font-size:16px!important;
+}
+body #player-budget-overlay .budget-alert-field {grid-column:1 / -1;}
+body #player-budget-overlay .budget-alert-field small {font-size:11px;line-height:1.35;color:var(--theme-muted);}
+body #player-budget-overlay .budget-comparison {grid-column:1 / -1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;}
+body #player-budget-overlay .budget-comparison span {display:flex;flex-direction:column;gap:3px;font-size:12px;line-height:1.3;min-width:0;color:var(--theme-muted);}
+body #player-budget-overlay .budget-comparison strong {font-size:18px;color:var(--theme-text);}
+body #player-budget-overlay .budget-comparison strong.over {color:#ef4444;}
+body #player-budget-overlay .budget-comparison-note {font-size:12px;line-height:1.4;color:var(--theme-muted);margin:10px 0;}
+body #player-budget-overlay .budget-rebalance-section {margin-top:16px;}
+body #player-budget-overlay .budget-rebalance-section h3 {margin:0 0 6px;font-size:16px;}
+body #player-budget-overlay .budget-rebalance-section p,body #player-budget-overlay .budget-balanced-note {font-size:12px;line-height:1.4;color:var(--theme-muted);}
+body #player-budget-overlay .budget-rebalance-card {display:flex;flex-direction:column;gap:10px;padding:12px;margin:10px 0;border:1px solid #ef4444;border-radius:12px;min-width:0;}
+body #player-budget-overlay .budget-rebalance-card > strong {font-size:14px;}
+body #player-budget-overlay .budget-rebalance-card > span,body #player-budget-overlay .budget-transfer-preview {font-size:12px;line-height:1.4;}
+body #player-budget-overlay .budget-donor-buttons {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;}
+body #player-budget-overlay .budget-donor {display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-width:0;min-height:52px;padding:6px 2px;border:2px solid transparent;border-radius:10px;opacity:.45;color:#000;cursor:pointer;}
+body #player-budget-overlay .budget-donor b {font-size:16px;}
+body #player-budget-overlay .budget-donor small {font-size:10px;white-space:normal;}
+body #player-budget-overlay .budget-donor.selected {opacity:1;border-color:var(--theme-text);}
+body #player-budget-overlay .budget-donor:disabled {opacity:.2;cursor:default;}
+body #player-budget-overlay .budget-donor.role-P {background:#ffda32;}
+body #player-budget-overlay .budget-donor.role-D {background:#24c968;}
+body #player-budget-overlay .budget-donor.role-C {background:#387ef5;}
+body #player-budget-overlay .budget-donor.role-A {background:#ed3e46;}
+body #player-budget-overlay .budget-rebalance-card > .btn {width:100%;min-height:44px;margin:0;padding:8px;white-space:normal;}
+/* Budget affects the value bubble only; the central knob and the track retain their normal style. */
+body #exact-bid-slider-layer {background:transparent!important;}
+body #exact-bid-slider-layer #exact-bid-value-bubble {
+  width:min(220px,calc(100vw - 16px))!important;min-height:112px!important;padding:12px!important;
+  box-sizing:border-box!important;border-radius:16px!important;
+  display:grid!important;place-items:center!important;pointer-events:none!important;
+}
+body #exact-bid-slider-layer #exact-bid-value-bubble strong {font-size:48px!important;line-height:1.05!important;}
+body #screen-player-buzzer #normal-bid-controls :is(.buzzer-btn,#sealed-bid-submit),
+body #screen-player-buzzer #normal-bid-controls :is(.buzzer-btn,#sealed-bid-submit):active {color:#000!important;text-shadow:none!important;}
+
+/* Keep the upper player layout in the same position for normal bids and sealed bids. */
+body #screen-player-buzzer #normal-bid-controls.sealed-active:not(.ready-choice-active) {
+  height:var(--regular-bid-area-height,calc(clamp(66px,9.2dvh,82px) * 2 + 7px))!important;
+  min-height:var(--regular-bid-area-height,calc(clamp(66px,9.2dvh,82px) * 2 + 7px))!important;
+  grid-template-rows:minmax(0,1fr)!important;
+}
+body #screen-player-buzzer #normal-bid-controls.sealed-active:not(.ready-choice-active) #sealed-bid-controls.sealed-visible {
+  display:grid!important;grid-template-rows:auto minmax(0,1fr) auto!important;
+  height:100%!important;min-height:0!important;box-sizing:border-box!important;padding:8px 12px!important;
+}
+body #screen-player-buzzer #normal-bid-controls.sealed-active #sealed-bid-controls .sealed-bid-entry {
+  min-height:0!important;height:100%!important;align-items:stretch!important;
+}
+body #screen-player-buzzer #normal-bid-controls.sealed-active :is(#sealed-bid-input,#sealed-bid-submit) {
+  height:100%!important;min-height:44px!important;
+}
+body #screen-player-buzzer #normal-bid-controls.sealed-active #sealed-bid-label,
+body #screen-player-buzzer #normal-bid-controls.sealed-active .sealed-bid-label {margin:0 0 6px!important;}
+body #screen-player-buzzer #normal-bid-controls.sealed-active #sealed-bid-status {margin:6px 0 0!important;font-size:11px!important;line-height:1.25!important;}
+body #screen-player-buzzer #normal-bid-controls[data-budget-tone="normal"] #sealed-bid-submit:not(:disabled) {
+  background:#3ddc97!important;background-image:none!important;color:#000!important;
+}
+/* Switches use the existing navigation positions, only for the host's assigned team. */
+body :is(#hybrid-view-to-board,#hybrid-view-to-player,#auctioneer-session-title)[hidden] {display:none!important;}
+body #screen-player-buzzer #hybrid-view-to-board:not([hidden]) {
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  width:100%!important;min-width:0!important;height:40px!important;min-height:40px!important;
+  padding:0 4px!important;font-size:11px!important;white-space:nowrap!important;line-height:1!important;
+}
+body #screen-auctioneer-board #hybrid-view-to-player:not([hidden]) {
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  width:100%!important;max-width:220px!important;min-width:0!important;
+  min-height:30px!important;height:30px!important;margin:0 auto!important;padding:0 8px!important;
+  border-radius:9px!important;font-size:12px!important;line-height:1!important;white-space:nowrap!important;
+}
+
+/* Mobile navigation needs room for both the switch and the connection status. */
+@media(max-width:760px){
+  body #screen-auctioneer-board > .session-nav {
+    grid-template-rows:56px 28px!important;
+    row-gap:6px!important;height:90px!important;min-height:90px!important;
+  }
+  body #screen-auctioneer-board .auction-session-center {
+    height:56px!important;gap:5px!important;min-width:0!important;
+  }
+  body #screen-auctioneer-board #hybrid-view-to-player:not([hidden]) {
+    flex:0 0 30px!important;box-sizing:border-box!important;letter-spacing:0!important;
+    font-size:11px!important;padding:0 4px!important;
+  }
+  body #screen-auctioneer-board .auction-online-pill {
+    flex:0 0 18px!important;box-sizing:border-box!important;line-height:16px!important;
+  }
+  body #auction-dashboard.mode-mobile {padding-top:106px!important;}
+  body #screen-player-buzzer.hybrid-auctioneer-player .player-session-nav {
+    grid-template-columns:100px minmax(0,1fr) 66px 84px!important;gap:4px!important;
+  }
+  body #screen-player-buzzer #hybrid-view-to-board:not([hidden]) {
+    letter-spacing:0!important;box-sizing:border-box!important;overflow:visible!important;
+  }
+  body #screen-player-buzzer.hybrid-auctioneer-player #player-session-title {
+    min-width:0!important;font-size:10px!important;letter-spacing:0!important;
+    white-space:normal!important;line-height:1.15!important;text-align:center!important;
+  }
+}
 </style>
 
 
@@ -14480,294 +14605,6 @@ body #screen-room-control #control-purchases-content > .control-table-wrap {
 
 
 
-
-<style id="liveasta-v101-budget-polish">
-/* V101: budget manager integration */
-.player-budget-table-head,.player-budget-row{grid-template-columns:48px minmax(86px,1.1fr) minmax(76px,.9fr) 66px 62px 68px!important}
-.budget-initial-input{width:100%!important;height:38px!important;min-height:38px!important;margin:0!important;padding:0 8px!important;box-sizing:border-box!important;border:1px solid var(--theme-border)!important;border-radius:8px!important;background:var(--theme-card)!important;color:var(--theme-text)!important;font-family:inherit!important;font-size:16px!important;font-weight:850!important;text-align:center!important}
-.budget-managed-value{display:flex!important;align-items:center!important;justify-content:center!important;min-height:38px!important;border:1px solid var(--theme-border)!important;border-radius:8px!important;background:rgba(255,255,255,.045)!important;color:var(--theme-text)!important}
-.player-budget-reset-row{display:flex!important;justify-content:flex-end!important;margin-top:10px!important}.player-budget-reset-row .btn{min-height:42px!important}
-.budget-redistribution-panels{display:flex;flex-direction:column;gap:10px;margin-top:10px}
-.budget-reassign-card{padding:11px;border:1px solid rgba(255,91,104,.5);border-radius:12px;background:color-mix(in srgb,#d54150 8%,var(--theme-input));text-align:left}
-.budget-reassign-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px}.budget-reassign-head b{font-size:.76rem}.budget-reassign-head small{display:block;margin-top:2px;color:var(--theme-muted);font-size:.58rem}.budget-reassign-deficit{font-weight:950;color:#ff667a}
-.budget-reassign-actions{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-bottom:9px}
-.budget-reassign-role{min-height:48px;border:1px solid var(--theme-border);border-radius:10px;font:950 .82rem inherit;cursor:pointer;opacity:.23;filter:saturate(.18) brightness(.72);transition:.15s ease}
-.budget-reassign-role small{display:block;margin-top:2px;font-size:.5rem;font-weight:800;opacity:.9}
-.budget-reassign-role.role-P{background:#ffcc00;color:#171E28}.budget-reassign-role.role-D{background:#19df77;color:#171E28}.budget-reassign-role.role-C{background:#4388ff;color:#fff}.budget-reassign-role.role-A{background:#ff405e;color:#fff}
-.budget-reassign-role.selected{opacity:1;filter:saturate(1) brightness(1);box-shadow:0 0 0 1px rgba(255,255,255,.16),0 0 14px rgba(255,255,255,.08)}
-.budget-reassign-role:disabled{opacity:.1!important;filter:grayscale(1) brightness(.55)!important;cursor:not-allowed!important}
-.budget-reassign-submit{width:100%!important;min-height:44px!important}
-/* Il layer fullscreen dello slider resta sempre trasparente: cambia colore solo la casella valore. */
-#exact-bid-slider-layer,#exact-bid-slider-layer.active,#exact-bid-slider-layer.active.budget-warning,#exact-bid-slider-layer.active.budget-over{background:transparent!important}
-#exact-bid-slider-layer.budget-warning #exact-bid-track-fill,#exact-bid-slider-layer.budget-over #exact-bid-track-fill{background:linear-gradient(180deg,#67E8F9,#0EA5E9)!important;box-shadow:0 0 18px rgba(56,189,248,.58)!important}
-/* Il +2 rosso deve avere testo bianco anche contro le vecchie regole successive. */
-#screen-player-buzzer .buzzer-btn.btn-plus-2.budget-over:not(:disabled),#screen-player-buzzer .buzzer-btn.btn-plus-2.budget-over:not(:disabled):active{color:#fff!important;-webkit-text-fill-color:#fff!important}
-@media(max-width:700px){
-  .player-budget-table-head{display:none!important}
-  .player-budget-row{grid-template-columns:42px minmax(0,1fr) minmax(0,1fr)!important;grid-template-areas:'role set managed' 'role pct spent' 'role pct left'!important;gap:6px!important;padding:8px!important}
-  .player-budget-row .budget-role{grid-area:role;align-self:stretch!important;height:auto!important;min-height:100%!important}
-  .player-budget-row .budget-initial-input{grid-area:set}.player-budget-row .budget-managed-value{grid-area:managed}.player-budget-row .budget-percent-input{grid-area:pct}
-  .player-budget-row > strong[id^='budget-spent-']{grid-area:spent}.player-budget-row > strong[id^='budget-left-']{grid-area:left}
-  .player-budget-row .budget-initial-input::before{content:'Budget impostato'}
-  .budget-reassign-role{min-height:46px!important}
-  .player-budget-reset-row .btn{width:100%!important}
-}
-</style>
-
-
-<style id="liveasta-v102-budget-polish">
-/* V102: labels chiari, soglia per ruolo in crediti, slider senza overlay */
-.player-budget-guide{margin:0 0 12px;padding:10px 12px;border:1px solid var(--theme-border,#334155);border-radius:12px;background:var(--theme-input,#111821);text-align:left}
-.player-budget-guide b{display:block;font-size:.78rem}.player-budget-guide small{display:block;margin-top:4px;color:var(--theme-muted,#B8C2CF);font-size:.61rem;line-height:1.45}
-.player-budget-table-head,.player-budget-row{grid-template-columns:48px minmax(92px,1fr) minmax(86px,.95fr) minmax(92px,.95fr) 66px 72px!important}
-.player-budget-row .budget-cell{min-width:0;display:flex;flex-direction:column;gap:4px;margin:0!important}
-.player-budget-row .budget-cell>small{display:none;color:var(--theme-muted,#B8C2CF);font-size:.53rem;font-weight:800;line-height:1.1}
-.budget-warning-credit-input{width:100%!important;height:38px!important;min-height:38px!important;margin:0!important;padding:0 8px!important;box-sizing:border-box!important;border:1px solid var(--theme-border)!important;border-radius:8px!important;background:var(--theme-card)!important;color:var(--theme-text)!important;font-family:inherit!important;font-size:16px!important;font-weight:850!important;text-align:center!important}
-/* Regola finale: qualsiasi pulsante rosso usa testo bianco, incluso +2. */
-#screen-player-buzzer .buzzer-btn.budget-over:not(:disabled),#screen-player-buzzer .buzzer-btn.budget-over:not(:disabled):active{color:#fff!important;-webkit-text-fill-color:#fff!important;text-shadow:none!important}
-/* Nessuna colorazione fullscreen durante l'offerta mirata. */
-#exact-bid-slider-layer,#exact-bid-slider-layer.active,#exact-bid-slider-layer[class*="budget-"]{background:transparent!important;background-color:transparent!important;background-image:none!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
-#exact-bid-slider-layer::before,#exact-bid-slider-layer::after{content:none!important;display:none!important}
-@media(max-width:700px){
-  .player-budget-table-head{display:none!important}
-  .player-budget-row{grid-template-columns:42px minmax(0,1fr) minmax(0,1fr)!important;grid-template-areas:'role set managed' 'role warning spent' 'role warning left'!important;gap:7px!important;padding:9px!important}
-  .player-budget-row .budget-role{grid-area:role;align-self:stretch!important;height:auto!important;min-height:100%!important}
-  .player-budget-row .budget-cell>small{display:block!important}
-  .player-budget-row .budget-cell:nth-of-type(1){grid-area:set}
-  .player-budget-row .budget-cell:nth-of-type(2){grid-area:managed}
-  .player-budget-row .budget-cell:nth-of-type(3){grid-area:warning}
-  .player-budget-row .budget-cell:nth-of-type(4){grid-area:spent}
-  .player-budget-row .budget-cell:nth-of-type(5){grid-area:left}
-  .player-budget-row .budget-cell>strong[id^='budget-spent-'],.player-budget-row .budget-cell>strong[id^='budget-left-']{display:flex;align-items:center;justify-content:center;min-height:38px;border:1px solid var(--theme-border);border-radius:8px;background:rgba(255,255,255,.035)}
-  .player-budget-guide small{font-size:.59rem}
-}
-</style>
-
-
-<style id="liveasta-v103-budget-mobile-fix">
-/* V103 - Slot/Budget mobile: labels leggibili, nessuna sovrapposizione */
-@media(max-width:700px){
-  #player-budget-overlay .player-budget-row{
-    display:grid!important;
-    grid-template-columns:52px minmax(0,1fr) minmax(0,1fr)!important;
-    grid-template-areas:
-      "role set managed"
-      "role warning spent"
-      "role left left"!important;
-    column-gap:10px!important;row-gap:10px!important;
-    align-items:stretch!important;padding:12px!important;
-  }
-  #player-budget-overlay .player-budget-row .budget-role{grid-area:role!important;min-width:52px!important;height:auto!important;min-height:100%!important;display:flex!important;align-items:center!important;justify-content:center!important;font-size:1.15rem!important;border-radius:12px!important}
-  #player-budget-overlay .budget-set{grid-area:set!important}
-  #player-budget-overlay .budget-managed{grid-area:managed!important}
-  #player-budget-overlay .budget-warning{grid-area:warning!important}
-  #player-budget-overlay .budget-spent{grid-area:spent!important}
-  #player-budget-overlay .budget-left{grid-area:left!important}
-  #player-budget-overlay .player-budget-row .budget-cell{display:flex!important;flex-direction:column!important;gap:6px!important;min-width:0!important}
-  #player-budget-overlay .player-budget-row .budget-cell>small{display:block!important;position:static!important;transform:none!important;margin:0!important;padding:0!important;white-space:normal!important;overflow:visible!important;text-overflow:clip!important;text-align:center!important;font-size:.68rem!important;line-height:1.15!important;font-weight:850!important;color:var(--theme-muted,#B8C2CF)!important;min-height:1.5em!important}
-  #player-budget-overlay .budget-initial-input,#player-budget-overlay .budget-warning-credit-input,#player-budget-overlay .budget-managed-value,#player-budget-overlay .budget-spent>strong,#player-budget-overlay .budget-left>strong{width:100%!important;min-height:48px!important;height:48px!important;box-sizing:border-box!important;display:flex!important;align-items:center!important;justify-content:center!important;font-size:1.2rem!important;font-weight:900!important;border:1px solid var(--theme-border,#334155)!important;border-radius:10px!important;background:var(--theme-card,#18212d)!important;color:var(--theme-text,#fff)!important;text-align:center!important}
-  #player-budget-overlay .budget-initial-input,#player-budget-overlay .budget-warning-credit-input{padding:0 8px!important}
-  #player-budget-overlay .budget-left>strong{background:rgba(255,255,255,.035)!important}
-}
-</style>
-
-<style id="liveasta-v104-budget-dual-input-fix">
-/* V104 - Budget impostabile sia in crediti sia in percentuale. */
-#player-budget-overlay .budget-set-dual{display:grid;grid-template-columns:minmax(0,1fr) 72px;gap:7px;width:100%;min-width:0}
-#player-budget-overlay .budget-set-dual>label{display:flex;flex-direction:column;gap:4px;min-width:0;margin:0}
-#player-budget-overlay .budget-set-dual>label>span{font-size:.53rem;font-weight:850;line-height:1;color:var(--theme-muted,#B8C2CF);text-align:center}
-#player-budget-overlay .budget-percent-input{width:100%!important;height:38px!important;min-height:38px!important;margin:0!important;padding:0 6px!important;box-sizing:border-box!important;border:1px solid var(--theme-border,#334155)!important;border-radius:8px!important;background:var(--theme-card,#18212d)!important;color:var(--theme-text,#fff)!important;font-family:inherit!important;font-size:16px!important;font-weight:850!important;text-align:center!important}
-/* Gli stati budget mantengono il proprio colore anche durante la pressione: nessun colore originale visibile sotto. */
-#screen-player-buzzer .buzzer-btn.budget-warning:not(:disabled),
-#screen-player-buzzer .buzzer-btn.budget-warning:not(:disabled):hover,
-#screen-player-buzzer .buzzer-btn.budget-warning:not(:disabled):focus,
-#screen-player-buzzer .buzzer-btn.budget-warning:not(:disabled):active{
-  background:linear-gradient(180deg,#FFAA55,#F07A18)!important;
-  background-color:#F07A18!important;
-  color:#1A0B00!important;
-  -webkit-text-fill-color:#1A0B00!important;
-  border-color:#FFC17F!important;
-  box-shadow:0 8px 22px rgba(240,122,24,.28)!important;
-}
-#screen-player-buzzer .buzzer-btn.budget-over:not(:disabled),
-#screen-player-buzzer .buzzer-btn.budget-over:not(:disabled):hover,
-#screen-player-buzzer .buzzer-btn.budget-over:not(:disabled):focus,
-#screen-player-buzzer .buzzer-btn.budget-over:not(:disabled):active{
-  background:linear-gradient(180deg,#FF667A,#E62F49)!important;
-  background-color:#E62F49!important;
-  color:#fff!important;
-  -webkit-text-fill-color:#fff!important;
-  border-color:#FF8A99!important;
-  box-shadow:0 8px 22px rgba(230,47,73,.30)!important;
-}
-#screen-player-buzzer .buzzer-btn.budget-warning:not(:disabled)::before,
-#screen-player-buzzer .buzzer-btn.budget-warning:not(:disabled)::after,
-#screen-player-buzzer .buzzer-btn.budget-over:not(:disabled)::before,
-#screen-player-buzzer .buzzer-btn.budget-over:not(:disabled)::after{background:transparent!important;opacity:0!important}
-@media(max-width:700px){
-  #player-budget-overlay .budget-set-dual{grid-template-columns:minmax(0,1fr) 68px;gap:6px}
-  #player-budget-overlay .budget-set-dual>label>span{font-size:.6rem}
-  #player-budget-overlay .budget-initial-input,#player-budget-overlay .budget-percent-input{height:48px!important;min-height:48px!important;font-size:1.08rem!important}
-}
-
-/* V105 · Hybrid manual switch + cleaner player role badge */
-#screen-player-buzzer #phone-player-role{
-  text-shadow:none!important;
-  filter:none!important;
-  box-shadow:none!important;
-}
-#screen-player-buzzer .hybrid-management-btn,#hybrid-management-btn{display:none!important;}
-.hybrid-view-switch{
-  align-items:center!important;
-  justify-content:center!important;
-  min-height:38px!important;
-  padding:0 13px!important;
-  border-radius:12px!important;
-  font-size:.72rem!important;
-  font-weight:950!important;
-  letter-spacing:.045em!important;
-  white-space:nowrap!important;
-  border:1px solid color-mix(in srgb,var(--theme-accent,#3ddc97) 55%,#334155)!important;
-  background:color-mix(in srgb,var(--theme-accent,#3ddc97) 12%,#17202b)!important;
-  color:#fff!important;
-}
-#screen-player-buzzer.hybrid-auctioneer-player .player-session-nav{
-  grid-template-columns:minmax(0,1fr) 92px!important;
-}
-#screen-player-buzzer.hybrid-auctioneer-player #hybrid-player-switch-btn{
-  display:flex!important;
-  grid-column:1!important;
-  justify-self:start!important;
-}
-#screen-player-buzzer.hybrid-auctioneer-player #player-session-title{display:none!important;}
-#screen-auctioneer-board #hybrid-auctioneer-switch-btn{margin:0 auto!important;}
-@media(max-width:700px){
-  #screen-player-buzzer.hybrid-auctioneer-player .player-session-nav{
-    grid-template-columns:minmax(0,1fr) 72px!important;
-    gap:6px!important;
-  }
-  #screen-player-buzzer.hybrid-auctioneer-player #hybrid-player-switch-btn{
-    min-width:122px!important;
-    width:auto!important;
-    height:40px!important;
-    min-height:40px!important;
-    padding:0 9px!important;
-    font-size:.64rem!important;
-  }
-  #screen-auctioneer-board #hybrid-auctioneer-switch-btn{
-    height:36px!important;
-    min-height:36px!important;
-    padding:0 9px!important;
-    font-size:.62rem!important;
-  }
-}
-
-/* V106 · Mobile header alignment */
-@media(max-width:700px){
-  /* Giocatore ibrido: ROSA | BANDITORE | LISTONE */
-  #screen-player-buzzer.hybrid-auctioneer-player .player-session-nav{
-    display:grid!important;
-    grid-template-columns:minmax(0,1fr) minmax(0,1.18fr) minmax(0,1fr)!important;
-    gap:8px!important;
-    align-items:stretch!important;
-    padding:0 18px!important;
-  }
-  #screen-player-buzzer.hybrid-auctioneer-player #player-roster-btn{
-    display:flex!important;
-    grid-column:1!important;
-    grid-row:1!important;
-    width:100%!important;
-    min-width:0!important;
-    height:48px!important;
-    min-height:48px!important;
-    margin:0!important;
-    align-items:center!important;
-    justify-content:center!important;
-    white-space:nowrap!important;
-    font-size:.72rem!important;
-  }
-  #screen-player-buzzer.hybrid-auctioneer-player #hybrid-player-switch-btn{
-    grid-column:2!important;
-    grid-row:1!important;
-    width:100%!important;
-    min-width:0!important;
-    height:48px!important;
-    min-height:48px!important;
-    margin:0!important;
-    padding:0 8px!important;
-    font-size:.69rem!important;
-  }
-  #screen-player-buzzer.hybrid-auctioneer-player #player-listone-btn{
-    display:flex!important;
-    grid-column:3!important;
-    grid-row:1!important;
-    width:100%!important;
-    min-width:0!important;
-    height:48px!important;
-    min-height:48px!important;
-    margin:0!important;
-    align-items:center!important;
-    justify-content:center!important;
-    white-space:nowrap!important;
-    font-size:.72rem!important;
-  }
-  #screen-player-buzzer.hybrid-auctioneer-player #player-exit-btn,
-  #screen-player-buzzer.hybrid-auctioneer-player #player-session-title{display:none!important;}
-
-  /* Banditore ibrido: prima riga ESCI | GIOCATORE | GESTIONE, seconda ROSE | STANZA + ● x/x | RESET */
-  #screen-auctioneer-board.hybrid-auctioneer-player > .session-nav{
-    display:grid!important;
-    grid-template-columns:118px minmax(0,1fr) 118px!important;
-    grid-template-rows:48px 48px!important;
-    gap:8px!important;
-    width:calc(100% - 28px)!important;
-    max-width:none!important;
-    padding:0!important;
-    top:8px!important;
-    align-items:stretch!important;
-  }
-  #screen-auctioneer-board.hybrid-auctioneer-player > .session-nav > .session-back:first-child{
-    grid-column:1!important;grid-row:1!important;width:100%!important;height:48px!important;margin:0!important;
-  }
-  #screen-auctioneer-board.hybrid-auctioneer-player .auction-session-center{
-    grid-column:2!important;grid-row:1!important;display:flex!important;width:100%!important;min-width:0!important;margin:0!important;
-  }
-  #screen-auctioneer-board.hybrid-auctioneer-player #hybrid-auctioneer-switch-btn{
-    width:100%!important;height:48px!important;min-height:48px!important;margin:0!important;font-size:.69rem!important;
-  }
-  #screen-auctioneer-board.hybrid-auctioneer-player > .session-nav > .session-back:last-child{
-    grid-column:3!important;grid-row:1!important;width:100%!important;height:48px!important;margin:0!important;
-  }
-  #screen-auctioneer-board.hybrid-auctioneer-player .auction-quick-actions{
-    display:contents!important;
-  }
-  #screen-auctioneer-board.hybrid-auctioneer-player .auction-quick-rosters{
-    grid-column:1!important;grid-row:2!important;width:100%!important;height:48px!important;margin:0!important;
-  }
-  #screen-auctioneer-board.hybrid-auctioneer-player .auction-quick-reset{
-    grid-column:3!important;grid-row:2!important;width:100%!important;min-width:0!important;height:48px!important;margin:0!important;
-  }
-  #screen-auctioneer-board.hybrid-auctioneer-player .auction-nav-room-pill{
-    grid-column:2!important;grid-row:2!important;width:100%!important;min-width:0!important;height:48px!important;margin:0!important;
-    display:flex!important;align-items:center!important;justify-content:center!important;gap:7px!important;padding:0 9px!important;
-    white-space:nowrap!important;overflow:hidden!important;
-  }
-  #screen-auctioneer-board.hybrid-auctioneer-player .auction-nav-room-pill .auction-room-label{
-    font-size:.64rem!important;letter-spacing:.08em!important;opacity:.8!important;
-  }
-  #screen-auctioneer-board.hybrid-auctioneer-player .auction-nav-room-pill > b{
-    min-width:0!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important;
-  }
-  #screen-auctioneer-board.hybrid-auctioneer-player .auction-online-pill{
-    position:static!important;transform:none!important;margin-left:auto!important;display:inline-flex!important;align-items:center!important;gap:5px!important;
-    padding:0!important;background:transparent!important;border:0!important;box-shadow:none!important;white-space:nowrap!important;font-size:.68rem!important;
-  }
-  #screen-auctioneer-board.hybrid-auctioneer-player .auction-online-dot{width:10px!important;height:10px!important;min-width:10px!important;}
-  #screen-auctioneer-board.hybrid-auctioneer-player #auctioneer-session-title{display:none!important;}
-  #screen-auctioneer-board.hybrid-auctioneer-player #auction-dashboard{padding-top:116px!important;}
-}
-</style>
-
 </head>
 <body>
 
@@ -14778,7 +14615,7 @@ body #screen-room-control #control-purchases-content > .control-table-wrap {
              aria-label="Apri Impostazioni LIVEASTA"
              onclick="openAdminLogin()"
              onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openAdminLogin();}">
-            LIVEASTA V106
+            LIVEASTA V98
         </div>
         <div class="setup-card">
             <h1 class="logo-text"><span class="rosa">LIVE</span><span class="rush">ASTA</span></h1>
@@ -14893,8 +14730,8 @@ body #screen-room-control #control-purchases-content > .control-table-wrap {
     <div id="screen-player-buzzer" class="screen">
         <div class="session-nav player-session-nav">
             <button id="player-exit-btn" class="btn btn-secondary session-back" onclick="leaveCurrentSession()">← Esci</button>
+            <button id="hybrid-view-to-board" class="btn btn-secondary session-back hybrid-view-switch" type="button" hidden onclick="switchHybridView('board')" aria-label="Passa alla plancia banditore">Banditore ⇄</button>
             <div id="player-session-title" class="session-title">Asta Live</div>
-            <button id="hybrid-player-switch-btn" class="btn btn-secondary hybrid-view-switch" type="button" onclick="switchHybridView('banditore')" style="display:none;">⇄ BANDITORE</button>
             <button class="btn btn-secondary session-back player-listone-nav-btn" id="player-listone-btn" onclick="openPlayerListone()">Listone</button>
             <button class="btn btn-secondary session-back" id="player-roster-btn" onclick="togglePlayerRoster(true)">Rosa · 0</button>
         </div>
@@ -15001,7 +14838,7 @@ body #screen-room-control #control-purchases-content > .control-table-wrap {
                 <div id="sealed-bid-controls" class="sealed-bid-controls" style="display:none;">
                     <div class="sealed-bid-label">OFFERTA IN BUSTA CHIUSA</div>
                     <div class="sealed-bid-entry">
-                        <input id="sealed-bid-input" type="text" inputmode="numeric" pattern="[0-9]*" placeholder="Inserisci crediti" autocomplete="off" autocapitalize="off" spellcheck="false" name="liveasta-sealed-offer" data-lpignore="true" data-1p-ignore="true" data-bwignore="true" data-form-type="other">
+                        <input id="sealed-bid-input" type="text" inputmode="numeric" pattern="[0-9]*" placeholder="Inserisci crediti" autocomplete="off" autocapitalize="off" spellcheck="false" name="liveasta-sealed-offer" data-lpignore="true" data-1p-ignore="true" data-bwignore="true" data-form-type="other" oninput="updatePlayerBidBudgetVisuals()">
                         <button id="sealed-bid-submit" class="btn btn-green" type="button" onclick="submitSealedBid()">OFFRI</button>
                     </div>
                     <div id="sealed-bid-status" class="sealed-bid-status">L'offerta sarà visibile solo alla fine del timer.</div>
@@ -15014,7 +14851,7 @@ body #screen-room-control #control-purchases-content > .control-table-wrap {
     <div id="exact-bid-slider-layer" aria-hidden="true">
         <div id="exact-bid-track"><div id="exact-bid-track-fill"></div></div>
         <div id="exact-bid-thumb"></div>
-        <div id="exact-bid-value-bubble"><strong id="exact-bid-value">0</strong><small id="exact-bid-range">MIN 0 · MAX 0</small></div>
+        <div id="exact-bid-value-bubble"><strong id="exact-bid-value">0</strong></div>
     </div>
 
     <div id="screen-auctioneer-setup" class="screen">
@@ -15179,7 +15016,7 @@ body #screen-room-control #control-purchases-content > .control-table-wrap {
 
     <div id="screen-admin" class="screen">
         <div class="setup-card" style="max-width:1100px; width:96%; padding:24px;">
-            <div class="admin-version-badge">LIVEASTA · VERSIONE V106</div>
+            <div class="admin-version-badge">LIVEASTA · VERSIONE V98</div>
             <h1>Gestione stanze</h1>
             <p class="subtitle">Nome, password, modifica ed eliminazione</p>
 
@@ -15238,16 +15075,14 @@ body #screen-room-control #control-purchases-content > .control-table-wrap {
     <div id="screen-auctioneer-board" class="screen">
         <div class="session-nav" style="position:absolute;top:10px;left:50%;transform:translateX(-50%);z-index:20;padding:0 10px;box-sizing:border-box;">
             <button class="btn btn-secondary session-back" onclick="leaveCurrentSession()">← Esci</button>
-            <div class="room-pill auction-nav-room-pill" id="auction-room-pill">
-                <span class="auction-room-label">STANZA</span> <b>--</b>
-                <span class="auction-online-pill" id="auction-online-pill">
-                    <span class="auction-online-dot"></span>
-                    <b id="auction-online-count">0 / 0</b>
-                </span>
-            </div>
+            <div class="room-pill auction-nav-room-pill" id="auction-room-pill">STANZA <b>--</b></div>
             <div class="auction-session-center">
                 <div id="auctioneer-session-title" class="session-title">Plancia Banditore</div>
-                <button id="hybrid-auctioneer-switch-btn" class="btn btn-secondary hybrid-view-switch" type="button" onclick="switchHybridView('giocatore')" style="display:none;">⇄ GIOCATORE</button>
+                <button id="hybrid-view-to-player" class="btn btn-secondary hybrid-view-switch" type="button" hidden onclick="switchHybridView('player')" aria-label="Passa alla plancia giocatore">Giocatore ⇄</button>
+                <div class="auction-online-pill" id="auction-online-pill">
+                    <span class="auction-online-dot"></span>
+                    ONLINE <b id="auction-online-count">0 / 0</b>
+                </div>
             </div>
             <div class="auction-quick-actions" aria-label="Azioni rapide banditore">
                 <button class="btn btn-secondary auction-quick-btn auction-quick-rosters" type="button" onclick="openAllRosters()" title="Apri le rose">ROSE</button>
@@ -15514,61 +15349,39 @@ body #screen-room-control #control-purchases-content > .control-table-wrap {
                 </label>
             </div>
 
-            <div class="player-budget-guide">
-                <b>Come leggere i valori</b>
-                <small><strong>Impostato</strong> = piano che puoi modificare in crediti oppure in percentuale del budget totale. <strong>Gestito</strong> = budget operativo dopo le riassegnazioni. <strong>Avviso</strong> = crediti residui del ruolo sotto i quali i tasti diventano arancioni. <strong>Spesi</strong> = crediti già usati. <strong>Residuo</strong> = gestito meno spesi.</small>
-            </div>
-
-            <div class="player-budget-table-head">
-                <span>Ruolo</span>
-                <span>Budget impostato</span>
-                <span>Budget gestito</span>
-                <span>Avviso crediti</span>
-                <span>Spesi</span>
-                <span>Residuo</span>
-            </div>
-
+            <p id="budget-initial-note" class="budget-comparison-note"></p>
             <div id="player-budget-rows" class="player-budget-rows">
-                <div class="player-budget-row" data-role="P">
-                    <b class="budget-role role-P">P</b>
-                    <div class="budget-cell budget-set"><small>Budget impostato</small><div class="budget-set-dual"><label><span>Crediti</span><input id="budget-initial-P" class="budget-initial-input" type="number" min="0" inputmode="numeric" onchange="updateBudgetFromCredits('P',this.value)"></label><label><span>%</span><input id="budget-percent-P" class="budget-percent-input" type="number" min="0" max="100" step="0.1" inputmode="decimal" onchange="updateBudgetFromPercent('P',this.value)"></label></div></div>
-                    <div class="budget-cell budget-managed"><small>Budget gestito</small><strong id="budget-credit-P" class="budget-managed-value">0</strong></div>
-                    <label class="budget-cell budget-warning"><small>Avviso crediti</small><input id="budget-warning-P" class="budget-warning-credit-input" type="number" min="0" inputmode="numeric" onchange="setPlayerBudgetWarningCredits('P',this.value)"></label>
-                    <div class="budget-cell budget-spent"><small>Spesi</small><strong id="budget-spent-P">0</strong></div>
-                    <div class="budget-cell budget-left"><small>Residuo</small><strong id="budget-left-P">0</strong></div>
+                <div class="player-budget-row budget-role-card" data-role="P">
+                    <div class="budget-role-heading"><b class="budget-role role-P">P</b><strong>Portieri</strong></div>
+                    <label>Budget attuale (crediti)<input id="budget-credit-P" type="number" min="0" inputmode="numeric" onchange="updateBudgetFromCredits('P',this.value)"></label>
+                    <label>Budget attuale (%)<input id="budget-percent-P" type="number" min="0" max="100" step="0.1" inputmode="decimal" onchange="updateBudgetFromPercent('P',this.value)"></label>
+                    <label class="budget-alert-field">Allerta arancione (crediti)<input id="budget-alert-P" type="number" min="0" inputmode="numeric" onchange="setBudgetRoleAlert('P',this.value)"><small>Automaticamente all’80% quando modifichi il budget.</small></label>
+                    <div class="budget-comparison"><span>Iniziale<strong id="budget-initial-P">—</strong></span><span>Spesi<strong id="budget-spent-P">0</strong></span><span>Residuo<strong id="budget-left-P">0</strong></span><span>Scostamento<strong id="budget-delta-P">—</strong></span></div>
                 </div>
-                <div class="player-budget-row" data-role="D">
-                    <b class="budget-role role-D">D</b>
-                    <div class="budget-cell budget-set"><small>Budget impostato</small><div class="budget-set-dual"><label><span>Crediti</span><input id="budget-initial-D" class="budget-initial-input" type="number" min="0" inputmode="numeric" onchange="updateBudgetFromCredits('D',this.value)"></label><label><span>%</span><input id="budget-percent-D" class="budget-percent-input" type="number" min="0" max="100" step="0.1" inputmode="decimal" onchange="updateBudgetFromPercent('D',this.value)"></label></div></div>
-                    <div class="budget-cell budget-managed"><small>Budget gestito</small><strong id="budget-credit-D" class="budget-managed-value">0</strong></div>
-                    <label class="budget-cell budget-warning"><small>Avviso crediti</small><input id="budget-warning-D" class="budget-warning-credit-input" type="number" min="0" inputmode="numeric" onchange="setPlayerBudgetWarningCredits('D',this.value)"></label>
-                    <div class="budget-cell budget-spent"><small>Spesi</small><strong id="budget-spent-D">0</strong></div>
-                    <div class="budget-cell budget-left"><small>Residuo</small><strong id="budget-left-D">0</strong></div>
+                <div class="player-budget-row budget-role-card" data-role="D">
+                    <div class="budget-role-heading"><b class="budget-role role-D">D</b><strong>Difensori</strong></div>
+                    <label>Budget attuale (crediti)<input id="budget-credit-D" type="number" min="0" inputmode="numeric" onchange="updateBudgetFromCredits('D',this.value)"></label>
+                    <label>Budget attuale (%)<input id="budget-percent-D" type="number" min="0" max="100" step="0.1" inputmode="decimal" onchange="updateBudgetFromPercent('D',this.value)"></label>
+                    <label class="budget-alert-field">Allerta arancione (crediti)<input id="budget-alert-D" type="number" min="0" inputmode="numeric" onchange="setBudgetRoleAlert('D',this.value)"><small>Automaticamente all’80% quando modifichi il budget.</small></label>
+                    <div class="budget-comparison"><span>Iniziale<strong id="budget-initial-D">—</strong></span><span>Spesi<strong id="budget-spent-D">0</strong></span><span>Residuo<strong id="budget-left-D">0</strong></span><span>Scostamento<strong id="budget-delta-D">—</strong></span></div>
                 </div>
-                <div class="player-budget-row" data-role="C">
-                    <b class="budget-role role-C">C</b>
-                    <div class="budget-cell budget-set"><small>Budget impostato</small><div class="budget-set-dual"><label><span>Crediti</span><input id="budget-initial-C" class="budget-initial-input" type="number" min="0" inputmode="numeric" onchange="updateBudgetFromCredits('C',this.value)"></label><label><span>%</span><input id="budget-percent-C" class="budget-percent-input" type="number" min="0" max="100" step="0.1" inputmode="decimal" onchange="updateBudgetFromPercent('C',this.value)"></label></div></div>
-                    <div class="budget-cell budget-managed"><small>Budget gestito</small><strong id="budget-credit-C" class="budget-managed-value">0</strong></div>
-                    <label class="budget-cell budget-warning"><small>Avviso crediti</small><input id="budget-warning-C" class="budget-warning-credit-input" type="number" min="0" inputmode="numeric" onchange="setPlayerBudgetWarningCredits('C',this.value)"></label>
-                    <div class="budget-cell budget-spent"><small>Spesi</small><strong id="budget-spent-C">0</strong></div>
-                    <div class="budget-cell budget-left"><small>Residuo</small><strong id="budget-left-C">0</strong></div>
+                <div class="player-budget-row budget-role-card" data-role="C">
+                    <div class="budget-role-heading"><b class="budget-role role-C">C</b><strong>Centrocampisti</strong></div>
+                    <label>Budget attuale (crediti)<input id="budget-credit-C" type="number" min="0" inputmode="numeric" onchange="updateBudgetFromCredits('C',this.value)"></label>
+                    <label>Budget attuale (%)<input id="budget-percent-C" type="number" min="0" max="100" step="0.1" inputmode="decimal" onchange="updateBudgetFromPercent('C',this.value)"></label>
+                    <label class="budget-alert-field">Allerta arancione (crediti)<input id="budget-alert-C" type="number" min="0" inputmode="numeric" onchange="setBudgetRoleAlert('C',this.value)"><small>Automaticamente all’80% quando modifichi il budget.</small></label>
+                    <div class="budget-comparison"><span>Iniziale<strong id="budget-initial-C">—</strong></span><span>Spesi<strong id="budget-spent-C">0</strong></span><span>Residuo<strong id="budget-left-C">0</strong></span><span>Scostamento<strong id="budget-delta-C">—</strong></span></div>
                 </div>
-                <div class="player-budget-row" data-role="A">
-                    <b class="budget-role role-A">A</b>
-                    <div class="budget-cell budget-set"><small>Budget impostato</small><div class="budget-set-dual"><label><span>Crediti</span><input id="budget-initial-A" class="budget-initial-input" type="number" min="0" inputmode="numeric" onchange="updateBudgetFromCredits('A',this.value)"></label><label><span>%</span><input id="budget-percent-A" class="budget-percent-input" type="number" min="0" max="100" step="0.1" inputmode="decimal" onchange="updateBudgetFromPercent('A',this.value)"></label></div></div>
-                    <div class="budget-cell budget-managed"><small>Budget gestito</small><strong id="budget-credit-A" class="budget-managed-value">0</strong></div>
-                    <label class="budget-cell budget-warning"><small>Avviso crediti</small><input id="budget-warning-A" class="budget-warning-credit-input" type="number" min="0" inputmode="numeric" onchange="setPlayerBudgetWarningCredits('A',this.value)"></label>
-                    <div class="budget-cell budget-spent"><small>Spesi</small><strong id="budget-spent-A">0</strong></div>
-                    <div class="budget-cell budget-left"><small>Residuo</small><strong id="budget-left-A">0</strong></div>
+                <div class="player-budget-row budget-role-card" data-role="A">
+                    <div class="budget-role-heading"><b class="budget-role role-A">A</b><strong>Attaccanti</strong></div>
+                    <label>Budget attuale (crediti)<input id="budget-credit-A" type="number" min="0" inputmode="numeric" onchange="updateBudgetFromCredits('A',this.value)"></label>
+                    <label>Budget attuale (%)<input id="budget-percent-A" type="number" min="0" max="100" step="0.1" inputmode="decimal" onchange="updateBudgetFromPercent('A',this.value)"></label>
+                    <label class="budget-alert-field">Allerta arancione (crediti)<input id="budget-alert-A" type="number" min="0" inputmode="numeric" onchange="setBudgetRoleAlert('A',this.value)"><small>Automaticamente all’80% quando modifichi il budget.</small></label>
+                    <div class="budget-comparison"><span>Iniziale<strong id="budget-initial-A">—</strong></span><span>Spesi<strong id="budget-spent-A">0</strong></span><span>Residuo<strong id="budget-left-A">0</strong></span><span>Scostamento<strong id="budget-delta-A">—</strong></span></div>
                 </div>
             </div>
-
-            <div id="budget-redistribution-panels" class="budget-redistribution-panels"></div>
-
-            <div class="player-budget-reset-row">
-                <button type="button" class="btn btn-secondary" onclick="resetPlayerBudgetManaged()">Reset budget gestito</button>
-            </div>
-
+            <section class="budget-rebalance-section"><h3>Gestisci gli sforamenti</h3><p>Il credito recuperato viene ripartito tra i ruoli selezionati in proporzione al loro residuo. I budget totali restano invariati.</p><div id="budget-rebalance"></div></section>
+            <div id="budget-save-status" class="budget-comparison-note" role="status"></div>
             <div class="player-budget-footer">
                 <div>
                     <small>Totale assegnato</small>
@@ -15581,7 +15394,7 @@ body #screen-room-control #control-purchases-content > .control-table-wrap {
             </div>
 
             <div class="player-budget-note">
-                Il budget impostato resta sempre modificabile. Il budget gestito è il valore operativo. La soglia di avviso è personale per ogni ruolo ed è espressa in crediti: quando il residuo previsto scende sotto quella cifra i tasti diventano arancioni; diventano rossi solo oltre il budget. Se un reparto va in negativo, Riassegna trasferisce solo i crediti necessari per riportare il suo residuo esattamente a 0.
+                Quando il budget è attivo, un reparto è verde se il budget residuo può ancora coprire gli slot mancanti (almeno 1 credito per slot); altrimenti diventa rosso.
             </div>
         </div>
     </div>
@@ -16291,8 +16104,7 @@ body #screen-room-control #control-purchases-content > .control-table-wrap {
         let playerShortlistLoadedFor = '';
         let playerShortlistSaveTimer = null;
 
-        let playerBudgetPlan = {enabled:false,P:0,D:0,C:0,A:0,initial:{P:0,D:0,C:0,A:0},warningCredits:{P:0,D:0,C:0,A:0}};
-        let playerBudgetRedistributionSelections={P:new Set(),D:new Set(),C:new Set(),A:new Set()};
+        let playerBudgetPlan = {enabled:false,P:0,D:0,C:0,A:0};
         let playerBudgetLoadedFor = '';
         let playerBudgetSaveTimer = null;
 
@@ -16512,6 +16324,7 @@ body #screen-room-control #control-purchases-content > .control-table-wrap {
         }
 
         function renderAuctioneerPlayerControl(){
+            syncHybridViewButtons();
             const select=document.getElementById('auctioneer-player-team-select');
             const badge=document.getElementById('auctioneer-player-badge');
             const btn=document.getElementById('auctioneer-player-toggle-btn');
@@ -16606,6 +16419,63 @@ body #screen-room-control #control-purchases-content > .control-table-wrap {
             renderOnlinePlayers();
         }
 
+        let hybridPreferredView=null;
+        let hybridPreferredViewKey='';
+        function syncHybridViewButtons(){
+            const active=isAuctioneerPlayerIdentity();
+            const key=active?`${currentRoomId}:${myTeamId}`:'';
+            if(key!==hybridPreferredViewKey){hybridPreferredViewKey=key;hybridPreferredView=null;}
+            for(const id of ['hybrid-view-to-board','hybrid-view-to-player']){
+                const btn=document.getElementById(id);
+                if(btn){btn.hidden=!active;btn.style.display=active?'':'none';}
+            }
+            const title=document.getElementById('auctioneer-session-title');if(title)title.hidden=active;
+        }
+
+        function switchHybridView(view){
+            if(!['player','board'].includes(view)||!isAuctioneerPlayerIdentity())return;
+            syncHybridViewButtons();
+            hybridPreferredView=view;
+            exactBidSliderCancel(false);
+            if(view==='player'){
+                if(!configureHybridPlayerIdentity())return;
+                if(currentAuctionPlayer){
+                    setPlayerImage(document.getElementById('phone-card-image'),currentAuctionPlayer.Id,currentAuctionPlayer.R);
+                    setPhonePlayerDisplayName(currentAuctionPlayer.Nome||'--',currentAuctionPlayer.Id);
+                    const role=document.getElementById('phone-player-role');if(role)role.textContent=currentAuctionPlayer.R||'-';
+                    const club=document.getElementById('phone-player-club');if(club)club.textContent=currentAuctionPlayer.Squadra||'-';
+                }
+                // Existing hybrid callbacks keep this screen up to date even while hidden.
+                // Do not reinitialize the auction, timers, ready state or sealed offer here.
+                showScreen('screen-player-buzzer');
+                if(readyGateWaiting)showHybridReadyIfNeeded();
+                updatePlayerBudgetVisuals();
+            }else{
+                showScreen('screen-auctioneer-board');
+            }
+            syncHybridViewButtons();
+        }
+
+        function syncSealedBidAreaHeight(){
+            const grid=document.getElementById('normal-bid-controls');
+            if(!grid||grid.classList.contains('ready-choice-active'))return;
+            const sealed=grid.classList.contains('sealed-active');
+            // Measure the normal four-button layout synchronously, without rendering an intermediate frame.
+            if(sealed)grid.classList.remove('sealed-active');
+            try{
+                const rect=grid.getBoundingClientRect();
+                const style=getComputedStyle(grid);
+                const button=grid.querySelector('.buzzer-btn');
+                const buttonHeight=button?parseFloat(getComputedStyle(button).height)||0:0;
+                const extra=['paddingTop','paddingBottom','borderTopWidth','borderBottomWidth'].reduce((n,k)=>n+(parseFloat(style[k])||0),0);
+                const height=rect.height||buttonHeight*2+(parseFloat(style.rowGap)||0)+extra;
+                if(height>0)grid.style.setProperty('--regular-bid-area-height',`${Math.ceil(height)}px`);
+            }finally{
+                if(sealed)grid.classList.add('sealed-active');
+            }
+        }
+        window.addEventListener('resize',()=>requestAnimationFrame(syncSealedBidAreaHeight),{passive:true});
+
         function configureHybridPlayerIdentity(){
             if(!auctioneerPlayerMode)return false;
             const team=currentAuctioneerPlayerTeam();
@@ -16618,14 +16488,13 @@ body #screen-room-control #control-purchases-content > .control-table-wrap {
             const teamName=document.getElementById('display-team-name');
             const title=document.getElementById('player-session-title');
             const exitBtn=document.getElementById('player-exit-btn');
-            const switchBtn=document.getElementById('hybrid-player-switch-btn');
+            const manageBtn=document.getElementById('hybrid-view-to-board');
 
             if(room)room.textContent=currentRoomCode||currentRoom?.name||'--';
             if(teamName)teamName.textContent=team.name;
-            if(title)title.style.display='none';
+            if(title)title.textContent='Asta Live';
             if(exitBtn)exitBtn.style.display='none';
-            if(switchBtn)switchBtn.style.display='flex';
-            updateHybridSwitchUI();
+            if(manageBtn)manageBtn.style.display='';
 
             document.getElementById('screen-player-buzzer')?.classList.add('hybrid-auctioneer-player');
             setPlayerConnectionStatus('online');
@@ -16636,53 +16505,11 @@ body #screen-room-control #control-purchases-content > .control-table-wrap {
         function restoreHybridPlayerNav(){
             const title=document.getElementById('player-session-title');
             const exitBtn=document.getElementById('player-exit-btn');
-            const switchBtn=document.getElementById('hybrid-player-switch-btn');
-            if(title){title.textContent='Asta Live';title.style.display='';}
+            const manageBtn=document.getElementById('hybrid-view-to-board');
+            if(title)title.textContent='Asta Live';
             if(exitBtn)exitBtn.style.display='';
-            if(switchBtn)switchBtn.style.display='none';
-            updateHybridSwitchUI();
+            if(manageBtn)manageBtn.style.display='none';
             document.getElementById('screen-player-buzzer')?.classList.remove('hybrid-auctioneer-player');
-        }
-
-        function updateHybridSwitchUI(){
-            const active=!!auctioneerPlayerMode;
-            const playerBtn=document.getElementById('hybrid-player-switch-btn');
-            const auctionBtn=document.getElementById('hybrid-auctioneer-switch-btn');
-            const auctionTitle=document.getElementById('auctioneer-session-title');
-            const playerTitle=document.getElementById('player-session-title');
-            if(playerBtn)playerBtn.style.display=active?'flex':'none';
-            if(auctionBtn)auctionBtn.style.display=active?'flex':'none';
-            if(auctionTitle)auctionTitle.style.display=active?'none':'';
-            document.getElementById('screen-auctioneer-board')?.classList.toggle('hybrid-auctioneer-player',active);
-            if(playerTitle){
-                if(active)playerTitle.style.display='none';
-                else playerTitle.style.display='';
-            }
-        }
-
-        function switchHybridView(target){
-            if(!auctioneerPlayerMode)return;
-            if(hybridReturnTimer){
-                clearTimeout(hybridReturnTimer);
-                hybridReturnTimer=null;
-            }
-            updateHybridSwitchUI();
-
-            if(target==='banditore'){
-                closePlayerReadyBanner();
-                showScreen('screen-auctioneer-board');
-                try{renderAuctioneerBoard?.()}catch(e){}
-                try{updateAuctionDisplay?.()}catch(e){}
-                return;
-            }
-
-            configureHybridPlayerIdentity();
-            showScreen('screen-player-buzzer');
-            if(readyGateWaiting)showHybridReadyIfNeeded();
-            try{updatePlayerTeamStatus();}catch(e){}
-            try{refreshPlayerBidButtons();}catch(e){}
-            try{updateNominationUI();}catch(e){}
-            try{window.updateLiveAstaTeamCards?.();}catch(e){}
         }
 
         function showHybridPlayerForCurrentAuction(){
@@ -19677,176 +19504,202 @@ body #screen-room-control #control-purchases-content > .control-table-wrap {
             return Math.max(1,parseInt(currentRoom?.initial_credits??500)||500);
         }
 
+        const BUDGET_ROLES=['P','D','C','A'];
+        const budgetDonorSelections=new Map();
+        const budgetSaveTimers=new Map();
+        let budgetPlanReadyFor='';
+
+        function budgetCreditNumber(value,fallback=0){
+            if(value===null||value===undefined||String(value).trim()==='')return fallback;
+            const n=Number(String(value).replace(',','.'));
+            return Number.isFinite(n)?Math.max(0,Math.round(n)):fallback;
+        }
+
+        function budgetDefaultAlert(credits){return Math.floor(Math.max(0,credits)*.8);}
+
+        function budgetAlertCredits(role){
+            const limit=budgetCreditNumber(playerBudgetPlan[role]);
+            return Math.min(limit,budgetCreditNumber(playerBudgetPlan.alerts?.[role],budgetDefaultAlert(limit)));
+        }
+
+        function setBudgetRoleAlert(role,value){
+            if(!BUDGET_ROLES.includes(role))return;
+            playerBudgetPlan.alerts=playerBudgetPlan.alerts||{};
+            playerBudgetPlan.alerts[role]=Math.min(budgetCreditNumber(playerBudgetPlan[role]),budgetCreditNumber(value,budgetDefaultAlert(playerBudgetPlan[role])));
+            renderPlayerBudgetManager();updatePlayerBidBudgetVisuals();schedulePlayerBudgetSave();
+        }
+
+        function captureInitialBudget(){
+            if(!playerBudgetStateKey() || budgetPlanReadyFor!==playerBudgetStateKey())return false;
+            const spent=playerBudgetSpentByRole();
+            const started=BUDGET_ROLES.some(r=>spent[r]>0);
+            const previous=JSON.stringify([playerBudgetPlan.initial,playerBudgetPlan.initialLocked,playerBudgetPlan.initialOrigin]);
+            if(!playerBudgetPlan.initial){
+                playerBudgetPlan.initial=Object.fromEntries(BUDGET_ROLES.map(r=>[r,budgetCreditNumber(playerBudgetPlan[r])]));
+                playerBudgetPlan.initialOrigin=started?'during-auction':'before-auction';
+            }else if(!playerBudgetPlan.initialLocked && !started){
+                playerBudgetPlan.initial=Object.fromEntries(BUDGET_ROLES.map(r=>[r,budgetCreditNumber(playerBudgetPlan[r])]));
+            }
+            if(started)playerBudgetPlan.initialLocked=true;
+            return previous!==JSON.stringify([playerBudgetPlan.initial,playerBudgetPlan.initialLocked,playerBudgetPlan.initialOrigin]);
+        }
+
+        function budgetDonorKey(target){return playerBudgetStateKey()+':'+target;}
+        function toggleBudgetDonor(target,donor){
+            if(!BUDGET_ROLES.includes(target)||!BUDGET_ROLES.includes(donor)||target===donor)return;
+            const key=budgetDonorKey(target),set=budgetDonorSelections.get(key)||new Set();
+            set.has(donor)?set.delete(donor):set.add(donor);budgetDonorSelections.set(key,set);
+            renderBudgetRebalance();
+        }
+
+        function budgetRebalancePlan(target){
+            const spent=playerBudgetSpentByRole();
+            const deficit=Math.max(0,(spent[target]||0)-budgetCreditNumber(playerBudgetPlan[target]));
+            const selected=budgetDonorSelections.get(budgetDonorKey(target))||new Set();
+            const donors=BUDGET_ROLES.filter(r=>r!==target).map(role=>({role,available:Math.max(0,budgetCreditNumber(playerBudgetPlan[role])-(spent[role]||0))}));
+            const chosen=donors.filter(d=>selected.has(d.role)&&d.available>0);
+            const available=chosen.reduce((sum,d)=>sum+d.available,0);
+            const valid=deficit>0&&available>=deficit;
+            const transfers={};
+            if(valid){
+                chosen.forEach(d=>transfers[d.role]=Math.floor(deficit*d.available/available));
+                let remaining=deficit-Object.values(transfers).reduce((a,b)=>a+b,0);
+                const ordered=[...chosen].sort((a,b)=>(deficit*b.available/available-Math.floor(deficit*b.available/available))-(deficit*a.available/available-Math.floor(deficit*a.available/available)));
+                for(const donor of ordered){if(remaining>0 && transfers[donor.role]<donor.available){transfers[donor.role]++;remaining--;}}
+            }
+            return {target,deficit,donors,selected,available,valid,transfers};
+        }
+
+        function applyBudgetRebalance(target){
+            if(!BUDGET_ROLES.includes(target))return;
+            const plan=budgetRebalancePlan(target); // Recompute against current purchases before applying.
+            if(!plan.valid){renderBudgetRebalance();return;}
+            captureInitialBudget();
+            for(const [role,amount] of Object.entries(plan.transfers))playerBudgetPlan[role]-=amount;
+            playerBudgetPlan[target]+=plan.deficit;
+            playerBudgetPlan.alerts=playerBudgetPlan.alerts||{};
+            [target,...Object.keys(plan.transfers)].forEach(r=>playerBudgetPlan.alerts[r]=budgetDefaultAlert(playerBudgetPlan[r]));
+            budgetDonorSelections.delete(budgetDonorKey(target));
+            renderPlayerBudgetManager();updatePlayerBudgetVisuals();schedulePlayerBudgetSave();
+        }
+
+        function renderBudgetRebalance(){
+            const box=document.getElementById('budget-rebalance');if(!box)return;
+            const plans=BUDGET_ROLES.map(budgetRebalancePlan).filter(p=>p.deficit>0);
+            box.innerHTML=plans.length?plans.map(p=>`<section class="budget-rebalance-card">
+                <strong>Ruolo ${p.target}: mancano ${p.deficit} crediti</strong>
+                <span>Scegli da quali ruoli recuperarli:</span>
+                <div class="budget-donor-buttons">${BUDGET_ROLES.map(role=>{
+                    const donor=p.donors.find(d=>d.role===role),available=donor?.available||0;
+                    return `<button type="button" class="budget-donor role-${role}${p.selected.has(role)?' selected':''}" aria-pressed="${p.selected.has(role)}" ${available<=0?'disabled':''} onclick="toggleBudgetDonor('${p.target}','${role}')"><b>${role}</b><small>${available} liberi</small></button>`;
+                }).join('')}</div>
+                <div class="budget-transfer-preview" aria-live="polite">${p.valid?Object.entries(p.transfers).map(([r,v])=>`${r}: −${v}`).join(' · ')+` → ${p.target}: +${p.deficit}`:`Selezionati ${p.available} crediti su ${p.deficit} necessari.`}</div>
+                <button type="button" class="btn btn-secondary" ${p.valid?'':'disabled'} onclick="applyBudgetRebalance('${p.target}')">Riporta il residuo ${p.target} a 0</button>
+            </section>`).join(''):'<div class="budget-balanced-note">Nessun reparto con residuo negativo.</div>';
+        }
+
+
+
+        function playerBudgetOfferState(amount){
+            const role=String(currentAuctionPlayer?.R||'').toUpperCase();
+            if(!playerBudgetPlan.enabled || isMantraRoom() || !['P','D','C','A'].includes(role))return {tone:'off'};
+            const state=playerBudgetRoleState(role);
+            const projected=state.spent+Math.max(0,Number(amount)||0);
+            const limit=state.allocated;
+            const tone=projected>limit?'red':projected>budgetAlertCredits(role)?'orange':'normal';
+            return {tone,role,remaining:limit-projected};
+        }
+
+        function updatePlayerBidBudgetVisuals(){
+            const controls=document.getElementById('normal-bid-controls');
+            const input=document.getElementById('sealed-bid-input');
+            const amount=playerSealedMode?(Number(input?.value)||0):(Number(currentAuctionValue)||0);
+            const state=isAuctionActive||playerSealedMode?playerBudgetOfferState(amount):{tone:'off'};
+            if(controls)controls.dataset.budgetTone=state.tone;
+            const layer=document.getElementById('exact-bid-slider-layer');
+            if(layer)layer.dataset.budgetTone=exactBidActive&&exactBidSelected>0?playerBudgetOfferState(exactBidSelected).tone:'off';
+        }
+
         function defaultPlayerBudgetPlan(){
             const total=playerBudgetTotalCredits();
             const base=Math.floor(total/4);
             const remainder=total-(base*4);
-            const values={
+            return {
+                enabled:false,
+                alerts:{}, initial:null, initialLocked:false, initialOrigin:null,
                 P:base+(remainder>0?1:0),
                 D:base+(remainder>1?1:0),
                 C:base+(remainder>2?1:0),
                 A:base
             };
-            return {
-                enabled:false,
-                ...values,
-                initial:{...values},
-                warningCredits:{
-                    P:Math.round(values.P*0.20),
-                    D:Math.round(values.D*0.20),
-                    C:Math.round(values.C*0.20),
-                    A:Math.round(values.A*0.20)
-                }
-            };
         }
 
         function normalizePlayerBudgetPlan(plan){
-            const total=playerBudgetTotalCredits();
-            const roles=['P','D','C','A'];
-            const values=roles.map(r=>Math.max(0,parseInt(plan?.[r])||0));
+            const total=playerBudgetTotalCredits(),roles=BUDGET_ROLES;
+            const values=roles.map(r=>budgetCreditNumber(plan?.[r]));
             const sum=values.reduce((a,b)=>a+b,0);
-
-            if(sum<=0){
-                const d=defaultPlayerBudgetPlan();
-                d.enabled=!!plan?.enabled;
-                return d;
+            let scaled;
+            if(sum<=0){const d=defaultPlayerBudgetPlan();scaled=roles.map(r=>d[r]);}
+            else{
+                scaled=values.map(v=>Math.floor(v*total/sum));
+                let missing=total-scaled.reduce((a,b)=>a+b,0);
+                const fractions=values.map((v,i)=>({i,f:v*total/sum-Math.floor(v*total/sum)})).sort((a,b)=>b.f-a.f);
+                for(let i=0;missing>0;i++,missing--)scaled[fractions[i%roles.length].i]++;
             }
-
-            // Riscala eventuali vecchi piani se il banditore ha cambiato i crediti iniziali.
-            const scaled=values.map(v=>Math.floor(v*total/sum));
-            let missing=total-scaled.reduce((a,b)=>a+b,0);
-
-            const fractions=values
-                .map((v,i)=>({i,f:(v*total/sum)-Math.floor(v*total/sum)}))
-                .sort((a,b)=>b.f-a.f);
-
-            let k=0;
-            while(missing>0){
-                scaled[fractions[k%fractions.length].i]++;
-                missing--;
-                k++;
-            }
-
-            const managed={P:scaled[0],D:scaled[1],C:scaled[2],A:scaled[3]};
-
-            // Mantiene una fotografia separata del piano iniziale. Per i vecchi
-            // salvataggi senza questa proprietà usa come riferimento il piano
-            // gestito presente al momento della migrazione.
-            const initialSource=plan?.initial && typeof plan.initial==='object' ? plan.initial : managed;
-            const initialValues=roles.map(r=>Math.max(0,parseInt(initialSource?.[r])||0));
-            const initialSum=initialValues.reduce((a,b)=>a+b,0);
-            let initialScaled;
-            if(initialSum>0){
-                initialScaled=initialValues.map(v=>Math.floor(v*total/initialSum));
-                let initialMissing=total-initialScaled.reduce((a,b)=>a+b,0);
-                const initialFractions=initialValues
-                    .map((v,i)=>({i,f:(v*total/initialSum)-Math.floor(v*total/initialSum)}))
-                    .sort((a,b)=>b.f-a.f);
-                let ik=0;
-                while(initialMissing>0){
-                    initialScaled[initialFractions[ik%initialFractions.length].i]++;
-                    initialMissing--;
-                    ik++;
-                }
-            }else{
-                initialScaled=[managed.P,managed.D,managed.C,managed.A];
-            }
-
-            const normalizedInitial={P:initialScaled[0],D:initialScaled[1],C:initialScaled[2],A:initialScaled[3]};
-            const legacyWarningPct=Math.max(0,Math.min(100,Number(plan?.warningPercent ?? 20)||20));
-            const warningSource=plan?.warningCredits && typeof plan.warningCredits==='object' ? plan.warningCredits : null;
-            const warningCredits={};
-            roles.forEach(r=>{
-                const fallback=Math.round((normalizedInitial[r]||0)*(legacyWarningPct/100));
-                const rawWarning=warningSource?.[r];
-                const parsedWarning=rawWarning===0 || rawWarning==='0' ? 0 : parseInt(rawWarning);
-                warningCredits[r]=Math.max(0,Number.isFinite(parsedWarning)?parsedWarning:fallback);
-            });
-
+            const hasInitial=plan?.initial&&roles.every(r=>Number.isFinite(plan.initial[r])&&plan.initial[r]>=0);
             return {
-                enabled:!!plan?.enabled,
-                ...managed,
-                initial:normalizedInitial,
-                warningCredits
+                schemaVersion:2,enabled:!!plan?.enabled,
+                ...Object.fromEntries(roles.map((r,i)=>[r,scaled[i]])),
+                alerts:Object.fromEntries(roles.map((r,i)=>[r,Math.min(scaled[i],values[i]===scaled[i]?budgetCreditNumber(plan?.alerts?.[r],budgetDefaultAlert(scaled[i])):budgetDefaultAlert(scaled[i]))])),
+                initial:hasInitial?Object.fromEntries(roles.map(r=>[r,budgetCreditNumber(plan.initial[r])])):null,
+                initialLocked:hasInitial&&!!plan.initialLocked,
+                initialOrigin:hasInitial?(plan.initialOrigin==='during-auction'?'during-auction':'before-auction'):null
             };
         }
 
         async function loadPlayerBudgetPlan(force=false){
             const key=playerBudgetStateKey();
-            if(!key){
-                playerBudgetPlan=defaultPlayerBudgetPlan();
-                playerBudgetLoadedFor='';
-                return;
-            }
-
-            if(!force && playerBudgetLoadedFor===key)return;
-
-            playerBudgetLoadedFor=key;
-            playerBudgetPlan=defaultPlayerBudgetPlan();
-
+            if(!key){playerBudgetPlan=defaultPlayerBudgetPlan();playerBudgetLoadedFor='';budgetPlanReadyFor='';return;}
+            if(!force && budgetPlanReadyFor===key)return;
+            budgetPlanReadyFor='';
+            const local=safeReadLocalJson('liveasta_budget_cache_'+key);
+            let remote=null;
             try{
-                const {data,error}=await supabaseClient
-                    .from('fanta_app_data')
-                    .select('data')
-                    .eq('key',key)
-                    .maybeSingle();
-
+                const {data,error}=await supabaseClient.from('fanta_app_data').select('data').eq('key',key).maybeSingle();
                 if(error)throw error;
-                if(data?.data)playerBudgetPlan=normalizePlayerBudgetPlan(data.data);
-            }catch(e){
-                console.warn('Caricamento gestione budget non riuscito',e);
-            }
-
-            renderPlayerBudgetManager();
-            updatePlayerBudgetVisuals();
+                remote=data?.data||null;
+            }catch(e){console.warn('Caricamento budget: uso la copia locale se disponibile',e);}
+            if(playerBudgetStateKey()!==key)return;
+            const chosen=local&&(!remote||String(local.updated_at||'')>String(remote.updated_at||''))?local:remote;
+            playerBudgetPlan=normalizePlayerBudgetPlan(chosen||defaultPlayerBudgetPlan());
+            playerBudgetLoadedFor=key;budgetPlanReadyFor=key;
+            if(captureInitialBudget())schedulePlayerBudgetSave();
+            renderPlayerBudgetManager();updatePlayerBudgetVisuals();
         }
 
-        async function persistPlayerBudgetPlan(){
-            const key=playerBudgetStateKey();
-            if(!key)return;
-
-            playerBudgetPlan=normalizePlayerBudgetPlan(playerBudgetPlan);
-            const now=new Date().toISOString();
-
+        async function persistPlayerBudgetPlan(snapshot=null,savedKey=null){
+            const key=savedKey||playerBudgetStateKey();if(!key)return;
+            const data=snapshot||{...normalizePlayerBudgetPlan(playerBudgetPlan),total:playerBudgetTotalCredits(),updated_at:new Date().toISOString()};
+            safeWriteLocalJson('liveasta_budget_cache_'+key,data);
+            const status=document.getElementById('budget-save-status');
             try{
-                const {error}=await supabaseClient
-                    .from('fanta_app_data')
-                    .upsert({
-                        key,
-                        data:{
-                            enabled:!!playerBudgetPlan.enabled,
-                            P:playerBudgetPlan.P,
-                            D:playerBudgetPlan.D,
-                            C:playerBudgetPlan.C,
-                            A:playerBudgetPlan.A,
-                            initial:{
-                                P:Math.max(0,parseInt(playerBudgetPlan.initial?.P)||0),
-                                D:Math.max(0,parseInt(playerBudgetPlan.initial?.D)||0),
-                                C:Math.max(0,parseInt(playerBudgetPlan.initial?.C)||0),
-                                A:Math.max(0,parseInt(playerBudgetPlan.initial?.A)||0)
-                            },
-                            warningCredits:{
-                                P:Math.max(0,parseInt(playerBudgetPlan.warningCredits?.P)||0),
-                                D:Math.max(0,parseInt(playerBudgetPlan.warningCredits?.D)||0),
-                                C:Math.max(0,parseInt(playerBudgetPlan.warningCredits?.C)||0),
-                                A:Math.max(0,parseInt(playerBudgetPlan.warningCredits?.A)||0)
-                            },
-                            total:playerBudgetTotalCredits(),
-                            updated_at:now
-                        },
-                        file_name:'player-budget-plan',
-                        updated_at:now
-                    },{onConflict:'key'});
-
+                const {error}=await supabaseClient.from('fanta_app_data').upsert({key,data,file_name:'player-budget-plan',updated_at:data.updated_at},{onConflict:'key'});
                 if(error)throw error;
+                if(status&&playerBudgetStateKey()===key)status.textContent='Budget salvato';
             }catch(e){
-                console.warn('Salvataggio gestione budget non riuscito',e);
+                if(status&&playerBudgetStateKey()===key)status.textContent='Salvato su questo dispositivo; sincronizzazione non riuscita.';
+                console.warn('Salvataggio remoto budget non riuscito',e);
             }
         }
 
         function schedulePlayerBudgetSave(){
-            clearTimeout(playerBudgetSaveTimer);
-            playerBudgetSaveTimer=setTimeout(()=>persistPlayerBudgetPlan(),180);
+            const key=playerBudgetStateKey();if(!key||budgetPlanReadyFor!==key)return;
+            captureInitialBudget();
+            const data={...normalizePlayerBudgetPlan(playerBudgetPlan),total:playerBudgetTotalCredits(),updated_at:new Date().toISOString()};
+            safeWriteLocalJson('liveasta_budget_cache_'+key,data);
+            const status=document.getElementById('budget-save-status');if(status)status.textContent='Salvataggio…';
+            clearTimeout(budgetSaveTimers.get(key));
+            budgetSaveTimers.set(key,setTimeout(()=>{budgetSaveTimers.delete(key);persistPlayerBudgetPlan(data,key);},180));
         }
 
         function playerBudgetSpentByRole(){
@@ -19876,10 +19729,9 @@ body #screen-room-control #control-purchases-content > .control-table-wrap {
             const remainingBudget=allocated-spentRole;
             const missingSlots=Math.max(0,(limits[r]||0)-(counts[r]||0));
 
-            // Il reparto diventa rosso solo quando il budget gestito è stato superato.
-            // Gli slot mancanti restano disponibili come informazione, ma non aggiungono
-            // crediti alla riassegnazione: un riequilibrio deve tornare esattamente a 0.
-            const ok=remainingBudget>=0;
+            // Un piano è ancora rispettabile se nel reparto sono rimasti
+            // almeno 1 credito per ogni slot ancora da completare.
+            const ok=remainingBudget>=missingSlots;
 
             return {
                 ok,
@@ -19902,36 +19754,50 @@ body #screen-room-control #control-purchases-content > .control-table-wrap {
         }
 
         function redistributePlayerBudget(changedRole,newCredits){
+            captureInitialBudget();
+            const before={...playerBudgetPlan};
             const roles=['P','D','C','A'];
             const total=playerBudgetTotalCredits();
             const role=String(changedRole||'').toUpperCase();
             if(!roles.includes(role))return;
 
-            const currentInitial={...playerBudgetPlan.initial};
             const target=Math.max(0,Math.min(total,Math.round(Number(newCredits)||0)));
             const others=roles.filter(r=>r!==role);
             const remainder=total-target;
-            const current=others.map(r=>Math.max(0,parseInt(currentInitial?.[r])||0));
+
+            const current=others.map(r=>Math.max(0,parseInt(playerBudgetPlan[r])||0));
             const currentSum=current.reduce((a,b)=>a+b,0);
+
             let nextOthers=[0,0,0];
+
             if(currentSum>0){
                 nextOthers=current.map(v=>Math.floor(v*remainder/currentSum));
                 let missing=remainder-nextOthers.reduce((a,b)=>a+b,0);
-                const fractions=current.map((v,i)=>({i,f:(v*remainder/currentSum)-Math.floor(v*remainder/currentSum)})).sort((a,b)=>b.f-a.f);
-                let k=0; while(missing>0){nextOthers[fractions[k%fractions.length].i]++;missing--;k++;}
+
+                const fractions=current
+                    .map((v,i)=>({i,f:(v*remainder/currentSum)-Math.floor(v*remainder/currentSum)}))
+                    .sort((a,b)=>b.f-a.f);
+
+                let k=0;
+                while(missing>0){
+                    nextOthers[fractions[k%fractions.length].i]++;
+                    missing--;
+                    k++;
+                }
             }else{
-                const base=Math.floor(remainder/3); nextOthers=[base,base,base];
-                let missing=remainder-base*3; for(let i=0;i<3&&missing>0;i++,missing--)nextOthers[i]++;
+                const base=Math.floor(remainder/3);
+                nextOthers=[base,base,base];
+                let missing=remainder-base*3;
+                for(let i=0;i<3 && missing>0;i++,missing--)nextOthers[i]++;
             }
-            const nextInitial={...currentInitial,[role]:target};
-            others.forEach((r,i)=>nextInitial[r]=nextOthers[i]);
-            playerBudgetPlan.initial=nextInitial;
-            // Una modifica manuale del budget impostato diventa il nuovo piano gestito.
-            roles.forEach(r=>playerBudgetPlan[r]=nextInitial[r]);
-            roles.forEach(r=>playerBudgetRedistributionSelections[r]?.clear?.());
+
+            playerBudgetPlan[role]=target;
+            others.forEach((r,i)=>playerBudgetPlan[r]=nextOthers[i]);
+            playerBudgetPlan.alerts=playerBudgetPlan.alerts||{};
+            roles.forEach(r=>{if(before[r]!==playerBudgetPlan[r])playerBudgetPlan.alerts[r]=budgetDefaultAlert(playerBudgetPlan[r]);});
+
             renderPlayerBudgetManager();
             updatePlayerBudgetVisuals();
-            refreshPlayerBidButtons();
             schedulePlayerBudgetSave();
         }
 
@@ -19943,155 +19809,6 @@ body #screen-room-control #control-purchases-content > .control-table-wrap {
             const total=playerBudgetTotalCredits();
             const pct=Math.max(0,Math.min(100,Number(String(value).replace(',','.'))||0));
             redistributePlayerBudget(role,Math.round(total*pct/100));
-        }
-
-        function playerBudgetMinimumViable(role){
-            const state=playerBudgetRoleState(role);
-            return Math.max(0,state.spent||0);
-        }
-
-        function playerBudgetDonorCapacity(role){
-            const r=String(role||'').toUpperCase();
-            const state=playerBudgetRoleState(r);
-            if(!state.ok)return 0;
-            return Math.max(0,(parseInt(playerBudgetPlan[r])||0)-playerBudgetMinimumViable(r));
-        }
-
-        function toggleBudgetRedistributionTarget(deficitRole,donorRole){
-            const d=String(deficitRole||'').toUpperCase();
-            const r=String(donorRole||'').toUpperCase();
-            if(!playerBudgetRedistributionSelections[d])return;
-            if(d===r || !playerBudgetRoleState(r).ok || playerBudgetDonorCapacity(r)<=0)return;
-            const set=playerBudgetRedistributionSelections[d];
-            if(set.has(r))set.delete(r); else set.add(r);
-            renderBudgetRedistributionPanels();
-        }
-
-        function reassignPlayerBudget(deficitRole){
-            const d=String(deficitRole||'').toUpperCase();
-            const state=playerBudgetRoleState(d);
-            if(state.ok)return;
-
-            const required=Math.max(0,(playerBudgetSpentByRole()[d]||0)-(parseInt(playerBudgetPlan[d])||0));
-            if(required<=0)return;
-
-            const selected=[...(playerBudgetRedistributionSelections[d]||new Set())]
-                .filter(r=>r!==d && playerBudgetRoleState(r).ok && playerBudgetDonorCapacity(r)>0);
-            if(!selected.length){
-                alert('Seleziona almeno un ruolo non rosso da cui recuperare il budget.');
-                return;
-            }
-
-            const totalCapacity=selected.reduce((sum,r)=>sum+playerBudgetDonorCapacity(r),0);
-            if(totalCapacity<required){
-                alert(`I ruoli selezionati possono cedere al massimo ${totalCapacity} crediti, ma ne servono ${required}. Seleziona altri ruoli.`);
-                return;
-            }
-
-            let remaining=required;
-            // Prelievo proporzionale alla capacità disponibile, poi rifinitura
-            // credito per credito per garantire che nessun donatore diventi rosso.
-            const capacities=selected.map(r=>({r,cap:playerBudgetDonorCapacity(r)}));
-            capacities.forEach((item,index)=>{
-                if(remaining<=0)return;
-                const futureCaps=capacities.slice(index).reduce((s,x)=>s+x.cap,0);
-                const share=index===capacities.length-1
-                    ? remaining
-                    : Math.min(item.cap,Math.floor(required*(item.cap/totalCapacity)));
-                const minimumNeeded=Math.max(0,remaining-(futureCaps-item.cap));
-                const take=Math.min(item.cap,Math.max(share,minimumNeeded));
-                playerBudgetPlan[item.r]=Math.max(0,(parseInt(playerBudgetPlan[item.r])||0)-take);
-                remaining-=take;
-            });
-            if(remaining>0){
-                for(const item of capacities){
-                    if(remaining<=0)break;
-                    const extra=Math.min(remaining,playerBudgetDonorCapacity(item.r));
-                    playerBudgetPlan[item.r]-=extra;
-                    remaining-=extra;
-                }
-            }
-
-            const moved=required-remaining;
-            playerBudgetPlan[d]=(parseInt(playerBudgetPlan[d])||0)+moved;
-            playerBudgetRedistributionSelections[d].clear();
-            renderPlayerBudgetManager();
-            updatePlayerBudgetVisuals();
-            refreshPlayerBidButtons();
-            schedulePlayerBudgetSave();
-        }
-
-        function renderBudgetRedistributionPanels(){
-            const host=document.getElementById('budget-redistribution-panels');
-            if(!host)return;
-            if(!playerBudgetPlan.enabled){host.innerHTML='';return;}
-
-            const redRoles=['P','D','C','A'].filter(r=>!playerBudgetRoleState(r).ok);
-            if(!redRoles.length){
-                host.innerHTML='';
-                return;
-            }
-
-            host.innerHTML=redRoles.map(deficitRole=>{
-                const required=Math.max(0,(playerBudgetSpentByRole()[deficitRole]||0)-(parseInt(playerBudgetPlan[deficitRole])||0));
-                const selected=playerBudgetRedistributionSelections[deficitRole]||new Set();
-                const buttons=['P','D','C','A'].map(r=>{
-                    const state=playerBudgetRoleState(r);
-                    const cap=playerBudgetDonorCapacity(r);
-                    const disabled=r===deficitRole || !state.ok || cap<=0;
-                    const active=selected.has(r) && !disabled;
-                    return `<button type="button" class="budget-reassign-role role-${r}${active?' selected':''}" ${disabled?'disabled':''} onclick="toggleBudgetRedistributionTarget('${deficitRole}','${r}')">${r}<small>${disabled?'—':`max ${cap}`}</small></button>`;
-                }).join('');
-                return `<div class="budget-reassign-card" data-deficit-role="${deficitRole}">
-                    <div class="budget-reassign-head"><div><b>Riequilibra ${deficitRole}</b><small>Crediti necessari per riportare il residuo a 0: <strong>${required}</strong></small></div><span class="budget-reassign-deficit">-${required}</span></div>
-                    <div class="budget-reassign-actions">${buttons}</div>
-                    <button type="button" class="btn budget-reassign-submit" onclick="reassignPlayerBudget('${deficitRole}')">Riassegna e porta a 0</button>
-                </div>`;
-            }).join('');
-        }
-
-        function resetPlayerBudgetManaged(){
-            const roles=['P','D','C','A'];
-            roles.forEach(r=>{
-                playerBudgetPlan[r]=Math.max(0,parseInt(playerBudgetPlan.initial?.[r])||0);
-                playerBudgetRedistributionSelections[r]?.clear?.();
-            });
-            renderPlayerBudgetManager();
-            updatePlayerBudgetVisuals();
-            refreshPlayerBidButtons();
-            if(exactBidActive)exactBidRefreshActive();
-            schedulePlayerBudgetSave();
-        }
-
-        function setPlayerBudgetWarningCredits(role,value){
-            const r=String(role||'').toUpperCase();
-            if(!['P','D','C','A'].includes(r))return;
-            if(!playerBudgetPlan.warningCredits || typeof playerBudgetPlan.warningCredits!=='object')playerBudgetPlan.warningCredits={P:0,D:0,C:0,A:0};
-            playerBudgetPlan.warningCredits[r]=Math.max(0,Math.round(Number(String(value).replace(',','.'))||0));
-            renderPlayerBudgetManager();
-            refreshPlayerBidButtons();
-            if(exactBidActive)exactBidRefreshActive();
-            schedulePlayerBudgetSave();
-        }
-
-        function playerBudgetOfferState(role,offerValue){
-            if(!playerBudgetPlan.enabled || isMantraRoom())return 'normal';
-            const r=String(role||'').toUpperCase();
-            if(!['P','D','C','A'].includes(r))return 'normal';
-            const allocated=Math.max(0,parseInt(playerBudgetPlan[r])||0);
-            const spent=playerBudgetSpentByRole()[r]||0;
-            const projected=spent+Math.max(0,parseInt(offerValue)||0);
-            const projectedRemaining=allocated-projected;
-            const warning=Math.max(0,parseInt(playerBudgetPlan.warningCredits?.[r])||0);
-            if(projectedRemaining<0)return 'red';
-            if(projectedRemaining<=warning)return 'orange';
-            return 'normal';
-        }
-
-        function currentPlayerBudgetBidState(){
-            if(!currentAuctionPlayer)return 'normal';
-            const next=Math.max(1,(parseInt(currentAuctionValue)||0)+1);
-            return playerBudgetOfferState(currentAuctionPlayer.R,next);
         }
 
         function setPlayerBudgetEnabled(enabled){
@@ -20152,23 +19869,27 @@ body #screen-room-control #control-purchases-content > .control-table-wrap {
 
             ['P','D','C','A'].forEach(role=>{
                 const credits=Math.max(0,parseInt(playerBudgetPlan[role])||0);
+                const pct=total>0?(credits/total*100):0;
                 const state=playerBudgetRoleState(role);
 
-                const initial=document.getElementById(`budget-initial-${role}`);
-                const percent=document.getElementById(`budget-percent-${role}`);
                 const ci=document.getElementById(`budget-credit-${role}`);
-                const wi=document.getElementById(`budget-warning-${role}`);
+                const pi=document.getElementById(`budget-percent-${role}`);
                 const sp=document.getElementById(`budget-spent-${role}`);
                 const left=document.getElementById(`budget-left-${role}`);
                 const row=document.querySelector(`.player-budget-row[data-role="${role}"]`);
 
-                const initialCredits=Math.max(0,parseInt(playerBudgetPlan.initial?.[role])||credits);
-                if(initial)initial.value=String(initialCredits);
-                if(percent)percent.value=(total>0?(initialCredits*100/total):0).toFixed(1).replace(/\.0$/,'');
-                if(ci)ci.textContent=String(credits);
-                if(wi)wi.value=String(Math.max(0,parseInt(playerBudgetPlan.warningCredits?.[role])||0));
+                if(ci)ci.value=String(credits);
+                if(pi)pi.value=pct.toFixed(1);
                 if(sp)sp.textContent=String(spent[role]||0);
                 if(left)left.textContent=String(credits-(spent[role]||0));
+                const alertInput=document.getElementById(`budget-alert-${role}`);
+                if(alertInput){alertInput.value=String(budgetAlertCredits(role));alertInput.max=String(credits);}
+                const initial=document.getElementById(`budget-initial-${role}`);
+                const delta=document.getElementById(`budget-delta-${role}`);
+                const baseline=playerBudgetPlan.initial?.[role];
+                if(initial)initial.textContent=baseline===undefined?'—':String(baseline);
+                if(delta){const d=baseline===undefined?null:(spent[role]||0)-baseline;delta.textContent=d===null?'—':(d>0?'+':'')+d;delta.classList.toggle('over',d>0);}
+
 
                 if(row){
                     row.classList.toggle('budget-ok',!!playerBudgetPlan.enabled && state.ok);
@@ -20176,8 +19897,6 @@ body #screen-room-control #control-purchases-content > .control-table-wrap {
                     row.classList.toggle('budget-disabled',!playerBudgetPlan.enabled);
                 }
             });
-
-            renderBudgetRedistributionPanels();
 
             const assigned=document.getElementById('budget-assigned-total');
             if(assigned){
@@ -20187,9 +19906,16 @@ body #screen-room-control #control-purchases-content > .control-table-wrap {
 
             const current=document.getElementById('budget-current-credits');
             if(current)current.textContent=String(parseInt(team?.credits_remaining)||0);
+            const note=document.getElementById('budget-initial-note');
+            if(note)note.textContent=playerBudgetPlan.initialOrigin==='during-auction'
+                ? 'Confronto dal piano registrato durante questa asta: i valori precedenti non erano stati salvati.'
+                : playerBudgetPlan.initialLocked?'Piano iniziale conservato. Scostamento = spesa effettiva − piano iniziale.':'Il piano iniziale si aggiorna durante la preparazione e viene conservato dal primo acquisto.';
+            renderBudgetRebalance();
         }
 
         function updatePlayerBudgetVisuals(){
+            if(captureInitialBudget())schedulePlayerBudgetSave();
+            updatePlayerBidBudgetVisuals();
             const credits=document.getElementById('player-credits');
             const slots=document.getElementById('player-slots');
 
@@ -21971,8 +21697,15 @@ body #screen-room-control #control-purchases-content > .control-table-wrap {
         }
 
         function showScreen(screenId) {
+            syncHybridViewButtons();
+            if(isAuctioneerPlayerIdentity() && hybridPreferredView && ['screen-player-buzzer','screen-auctioneer-board'].includes(screenId)){
+                screenId=hybridPreferredView==='player'?'screen-player-buzzer':'screen-auctioneer-board';
+            }
+            if(screenId==='screen-player-buzzer' && isAuctioneerPlayerIdentity())configureHybridPlayerIdentity();
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById(screenId).classList.add('active');
+            syncHybridViewButtons();
+            if(screenId==='screen-player-buzzer')requestAnimationFrame(syncSealedBidAreaHeight);
         }
 
         async function leaveCurrentSession() {
@@ -23248,6 +22981,7 @@ body #screen-room-control #control-purchases-content > .control-table-wrap {
         }
 
         function refreshPlayerBidButtons() {
+            updatePlayerBidBudgetVisuals();
             const team = myTeamId ? teamsCache.find(x => String(x.id) === String(myTeamId)) : findTeamByName(myTeamName);
             const role = String(currentAuctionPlayer?.R || '');
             const limits = roomLimits();
@@ -23266,14 +23000,11 @@ body #screen-room-control #control-purchases-content > .control-table-wrap {
                 maxBid>0
             );
 
-            const budgetState=currentPlayerBudgetBidState();
             document.querySelectorAll('#screen-player-buzzer .buzzer-btn').forEach(btn => {
                 const inc = parseInt(btn.textContent.replace('+','')) || 1;
                 const allowed = baseAllowed && isNormalBidAmountAllowed(inc);
                 btn.disabled = !allowed;
                 btn.setAttribute('aria-disabled', allowed ? 'false' : 'true');
-                btn.classList.toggle('budget-warning',allowed && budgetState==='orange');
-                btn.classList.toggle('budget-over',allowed && budgetState==='red');
             });
             refreshExactBidControl();
         }
@@ -23331,6 +23062,8 @@ body #screen-room-control #control-purchases-content > .control-table-wrap {
                         ? 'Inserisci l’importo e conferma. L’offerta è definitiva.'
                         : (playerSealedMode?'Buste in attesa di apertura.':'In attesa della busta chiusa.');
             }
+            updatePlayerBidBudgetVisuals();
+            syncSealedBidAreaHeight();
         }
 
         async function submitSealedBid(){
@@ -23431,9 +23164,6 @@ body #screen-room-control #control-purchases-content > .control-table-wrap {
             if(!layer)return;
             layer.classList.toggle('active',!!show);
             layer.setAttribute('aria-hidden',show?'false':'true');
-            if(!show){
-                document.getElementById('exact-bid-value-bubble')?.classList.remove('budget-warning','budget-over');
-            }
         }
 
         function exactBidRefreshActive(){
@@ -23443,8 +23173,14 @@ body #screen-room-control #control-purchases-content > .control-table-wrap {
             const thumb=document.getElementById('exact-bid-thumb');
             const bubble=document.getElementById('exact-bid-value-bubble');
             const valueEl=document.getElementById('exact-bid-value');
-            const rangeEl=document.getElementById('exact-bid-range');
-            if(!track||!fill||!thumb||!bubble||!valueEl||!rangeEl)return;
+            if(!track||!fill||!thumb||!bubble||!valueEl)return;
+
+            // Keep the amount above the finger, centered for either hand.
+            const halfHeight=(bubble.offsetHeight||112)/2;
+            const fingerY=Number.isFinite(exactBidPointerY)?exactBidPointerY:exactBidOriginY;
+            const viewportHeight=window.innerHeight;
+            const bubbleY=Math.max(halfHeight+8,Math.min(viewportHeight-halfHeight-8,fingerY-halfHeight-40));
+            bubble.style.top=`${Math.round(bubbleY)}px`;
 
             const range=exactBidRange();
             track.style.left=`${Math.round(exactBidOriginX-5)}px`;
@@ -23459,11 +23195,11 @@ body #screen-room-control #control-purchases-content > .control-table-wrap {
                 thumb.style.left=`${Math.round(exactBidOriginX)}px`;
                 thumb.style.top=`${Math.round(y)}px`;
                 fill.style.height='0px';
-                bubble.style.left=`${Math.max(122,Math.round(exactBidOriginX-22))}px`;
-                bubble.style.top=`${Math.max(42,Math.min(window.innerHeight-42,Math.round(y)))}px`;
+
+
                 bubble.classList.remove('invalid');
                 valueEl.textContent='0';
-                rangeEl.textContent='NESSUNA OFFERTA';
+                updatePlayerBidBudgetVisuals();
                 return;
             }
 
@@ -23494,19 +23230,10 @@ body #screen-room-control #control-purchases-content > .control-table-wrap {
             thumb.style.left=`${Math.round(exactBidOriginX)}px`;
             thumb.style.top=`${Math.round(thumbY)}px`;
             fill.style.height=`${Math.round(fillHeight)}px`;
-            bubble.style.left=`${Math.max(122,Math.round(exactBidOriginX-22))}px`;
-            bubble.style.top=`${Math.max(42,Math.min(window.innerHeight-42,Math.round(thumbY)))}px`;
-            valueEl.textContent=String(exactBidSelected);
-            rangeEl.textContent=exactBidSelected===0
-                ? `0 = ANNULLA · MIN ${range.min} · MAX ${range.max}`
-                : `MIN ${range.min} · MAX ${range.max}`;
 
-            const layer=document.getElementById('exact-bid-slider-layer');
-            const budgetState=exactBidSelected>0
-                ? playerBudgetOfferState(currentAuctionPlayer?.R,exactBidSelected)
-                : 'normal';
-            bubble?.classList.toggle('budget-warning',budgetState==='orange');
-            bubble?.classList.toggle('budget-over',budgetState==='red');
+
+            valueEl.textContent=String(exactBidSelected);
+            updatePlayerBidBudgetVisuals();
         }
 
         function exactBidActivate(knob){
@@ -23596,6 +23323,7 @@ body #screen-room-control #control-purchases-content > .control-table-wrap {
             exactBidPointerId=null;
             exactBidActive=false;
             exactBidSelected=0;
+            updatePlayerBidBudgetVisuals();
             if(refresh)refreshExactBidControl();
         }
 
@@ -27340,9 +27068,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyBrand(){
-    document.title='LIVEASTA V106';
+    document.title='LIVEASTA V98';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V106';
+      el.textContent='LIVEASTA · VERSIONE V98';
     });
     document.querySelectorAll('.logo-text').forEach(el=>{
       const a=el.querySelector('.rosa');
