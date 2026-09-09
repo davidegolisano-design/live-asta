@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>LIVEASTA V104</title>
+    <title>LIVEASTA V105</title>
     <meta name="theme-color" content="#0D1117">
     <meta name="color-scheme" content="dark">
     <meta name="mobile-web-app-capable" content="yes">
@@ -14370,7 +14370,7 @@ body #screen-room-control #control-purchases-content > .control-table-wrap {
   overscroll-behavior-y:contain; scrollbar-gutter:stable;
 }
 
-/* LIVEASTA V104 patch: busta mobile, budget warning, assegnazione manuale mobile */
+/* LIVEASTA V105 patch: busta mobile, budget warning, assegnazione manuale mobile */
 .player-budget-warning-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 12px;padding:10px 12px;border:1px solid var(--theme-border,#334155);border-radius:12px;background:var(--theme-input,#111821);text-align:left}
 .player-budget-warning-row b{display:block;font-size:.76rem}.player-budget-warning-row small{display:block;margin-top:3px;color:var(--theme-muted,#B8C2CF);font-size:.58rem;line-height:1.3}.player-budget-warning-input{position:relative;flex:0 0 86px}.player-budget-warning-input input{width:100%!important;height:40px!important;margin:0!important;padding:0 25px 0 8px!important;text-align:center!important;font-size:16px!important;font-weight:900!important}.player-budget-warning-input span{position:absolute;right:9px;top:50%;transform:translateY(-50%);color:var(--theme-muted,#B8C2CF);font-size:.7rem;pointer-events:none}
 #screen-player-buzzer .buzzer-btn.budget-warning:not(:disabled){background:linear-gradient(180deg,#FFAA55,#F07A18)!important;color:#1A0B00!important;border-color:#FFC17F!important;box-shadow:0 8px 22px rgba(240,122,24,.28)!important}
@@ -14609,6 +14609,58 @@ body #screen-room-control #control-purchases-content > .control-table-wrap {
   #player-budget-overlay .budget-set-dual>label>span{font-size:.6rem}
   #player-budget-overlay .budget-initial-input,#player-budget-overlay .budget-percent-input{height:48px!important;min-height:48px!important;font-size:1.08rem!important}
 }
+
+/* V105 · Hybrid manual switch + cleaner player role badge */
+#screen-player-buzzer #phone-player-role{
+  text-shadow:none!important;
+  filter:none!important;
+  box-shadow:none!important;
+}
+#screen-player-buzzer .hybrid-management-btn,#hybrid-management-btn{display:none!important;}
+.hybrid-view-switch{
+  align-items:center!important;
+  justify-content:center!important;
+  min-height:38px!important;
+  padding:0 13px!important;
+  border-radius:12px!important;
+  font-size:.72rem!important;
+  font-weight:950!important;
+  letter-spacing:.045em!important;
+  white-space:nowrap!important;
+  border:1px solid color-mix(in srgb,var(--theme-accent,#3ddc97) 55%,#334155)!important;
+  background:color-mix(in srgb,var(--theme-accent,#3ddc97) 12%,#17202b)!important;
+  color:#fff!important;
+}
+#screen-player-buzzer.hybrid-auctioneer-player .player-session-nav{
+  grid-template-columns:minmax(0,1fr) 92px!important;
+}
+#screen-player-buzzer.hybrid-auctioneer-player #hybrid-player-switch-btn{
+  display:flex!important;
+  grid-column:1!important;
+  justify-self:start!important;
+}
+#screen-player-buzzer.hybrid-auctioneer-player #player-session-title{display:none!important;}
+#screen-auctioneer-board #hybrid-auctioneer-switch-btn{margin:0 auto!important;}
+@media(max-width:700px){
+  #screen-player-buzzer.hybrid-auctioneer-player .player-session-nav{
+    grid-template-columns:minmax(0,1fr) 72px!important;
+    gap:6px!important;
+  }
+  #screen-player-buzzer.hybrid-auctioneer-player #hybrid-player-switch-btn{
+    min-width:122px!important;
+    width:auto!important;
+    height:40px!important;
+    min-height:40px!important;
+    padding:0 9px!important;
+    font-size:.64rem!important;
+  }
+  #screen-auctioneer-board #hybrid-auctioneer-switch-btn{
+    height:36px!important;
+    min-height:36px!important;
+    padding:0 9px!important;
+    font-size:.62rem!important;
+  }
+}
 </style>
 
 </head>
@@ -14621,7 +14673,7 @@ body #screen-room-control #control-purchases-content > .control-table-wrap {
              aria-label="Apri Impostazioni LIVEASTA"
              onclick="openAdminLogin()"
              onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openAdminLogin();}">
-            LIVEASTA V104
+            LIVEASTA V105
         </div>
         <div class="setup-card">
             <h1 class="logo-text"><span class="rosa">LIVE</span><span class="rush">ASTA</span></h1>
@@ -14736,8 +14788,8 @@ body #screen-room-control #control-purchases-content > .control-table-wrap {
     <div id="screen-player-buzzer" class="screen">
         <div class="session-nav player-session-nav">
             <button id="player-exit-btn" class="btn btn-secondary session-back" onclick="leaveCurrentSession()">← Esci</button>
-            <button id="hybrid-management-btn" class="btn btn-secondary session-back hybrid-management-btn" onclick="openHybridRoomControl()">Gestione</button>
             <div id="player-session-title" class="session-title">Asta Live</div>
+            <button id="hybrid-player-switch-btn" class="btn btn-secondary hybrid-view-switch" type="button" onclick="switchHybridView('banditore')" style="display:none;">⇄ BANDITORE</button>
             <button class="btn btn-secondary session-back player-listone-nav-btn" id="player-listone-btn" onclick="openPlayerListone()">Listone</button>
             <button class="btn btn-secondary session-back" id="player-roster-btn" onclick="togglePlayerRoster(true)">Rosa · 0</button>
         </div>
@@ -15022,7 +15074,7 @@ body #screen-room-control #control-purchases-content > .control-table-wrap {
 
     <div id="screen-admin" class="screen">
         <div class="setup-card" style="max-width:1100px; width:96%; padding:24px;">
-            <div class="admin-version-badge">LIVEASTA · VERSIONE V104</div>
+            <div class="admin-version-badge">LIVEASTA · VERSIONE V105</div>
             <h1>Gestione stanze</h1>
             <p class="subtitle">Nome, password, modifica ed eliminazione</p>
 
@@ -15083,7 +15135,8 @@ body #screen-room-control #control-purchases-content > .control-table-wrap {
             <button class="btn btn-secondary session-back" onclick="leaveCurrentSession()">← Esci</button>
             <div class="room-pill auction-nav-room-pill" id="auction-room-pill">STANZA <b>--</b></div>
             <div class="auction-session-center">
-                <div class="session-title">Plancia Banditore</div>
+                <div id="auctioneer-session-title" class="session-title">Plancia Banditore</div>
+                <button id="hybrid-auctioneer-switch-btn" class="btn btn-secondary hybrid-view-switch" type="button" onclick="switchHybridView('giocatore')" style="display:none;">⇄ GIOCATORE</button>
                 <div class="auction-online-pill" id="auction-online-pill">
                     <span class="auction-online-dot"></span>
                     ONLINE <b id="auction-online-count">0 / 0</b>
@@ -16458,13 +16511,14 @@ body #screen-room-control #control-purchases-content > .control-table-wrap {
             const teamName=document.getElementById('display-team-name');
             const title=document.getElementById('player-session-title');
             const exitBtn=document.getElementById('player-exit-btn');
-            const manageBtn=document.getElementById('hybrid-management-btn');
+            const switchBtn=document.getElementById('hybrid-player-switch-btn');
 
             if(room)room.textContent=currentRoomCode||currentRoom?.name||'--';
             if(teamName)teamName.textContent=team.name;
-            if(title)title.textContent='Banditore + giocatore';
+            if(title)title.style.display='none';
             if(exitBtn)exitBtn.style.display='none';
-            if(manageBtn)manageBtn.style.display='';
+            if(switchBtn)switchBtn.style.display='flex';
+            updateHybridSwitchUI();
 
             document.getElementById('screen-player-buzzer')?.classList.add('hybrid-auctioneer-player');
             setPlayerConnectionStatus('online');
@@ -16475,11 +16529,52 @@ body #screen-room-control #control-purchases-content > .control-table-wrap {
         function restoreHybridPlayerNav(){
             const title=document.getElementById('player-session-title');
             const exitBtn=document.getElementById('player-exit-btn');
-            const manageBtn=document.getElementById('hybrid-management-btn');
-            if(title)title.textContent='Asta Live';
+            const switchBtn=document.getElementById('hybrid-player-switch-btn');
+            if(title){title.textContent='Asta Live';title.style.display='';}
             if(exitBtn)exitBtn.style.display='';
-            if(manageBtn)manageBtn.style.display='none';
+            if(switchBtn)switchBtn.style.display='none';
+            updateHybridSwitchUI();
             document.getElementById('screen-player-buzzer')?.classList.remove('hybrid-auctioneer-player');
+        }
+
+        function updateHybridSwitchUI(){
+            const active=!!auctioneerPlayerMode;
+            const playerBtn=document.getElementById('hybrid-player-switch-btn');
+            const auctionBtn=document.getElementById('hybrid-auctioneer-switch-btn');
+            const auctionTitle=document.getElementById('auctioneer-session-title');
+            const playerTitle=document.getElementById('player-session-title');
+            if(playerBtn)playerBtn.style.display=active?'flex':'none';
+            if(auctionBtn)auctionBtn.style.display=active?'flex':'none';
+            if(auctionTitle)auctionTitle.style.display=active?'none':'';
+            if(playerTitle){
+                if(active)playerTitle.style.display='none';
+                else playerTitle.style.display='';
+            }
+        }
+
+        function switchHybridView(target){
+            if(!auctioneerPlayerMode)return;
+            if(hybridReturnTimer){
+                clearTimeout(hybridReturnTimer);
+                hybridReturnTimer=null;
+            }
+            updateHybridSwitchUI();
+
+            if(target==='banditore'){
+                closePlayerReadyBanner();
+                showScreen('screen-auctioneer-board');
+                try{renderAuctioneerBoard?.()}catch(e){}
+                try{updateAuctionDisplay?.()}catch(e){}
+                return;
+            }
+
+            configureHybridPlayerIdentity();
+            showScreen('screen-player-buzzer');
+            if(readyGateWaiting)showHybridReadyIfNeeded();
+            try{updatePlayerTeamStatus();}catch(e){}
+            try{refreshPlayerBidButtons();}catch(e){}
+            try{updateNominationUI();}catch(e){}
+            try{window.updateLiveAstaTeamCards?.();}catch(e){}
         }
 
         function showHybridPlayerForCurrentAuction(){
@@ -27137,9 +27232,9 @@ Tutti i suoi acquisti verranno annullati e i giocatori torneranno disponibili ne
   }
 
   function applyBrand(){
-    document.title='LIVEASTA V104';
+    document.title='LIVEASTA V105';
     document.querySelectorAll('.admin-version-badge').forEach(el=>{
-      el.textContent='LIVEASTA · VERSIONE V104';
+      el.textContent='LIVEASTA · VERSIONE V105';
     });
     document.querySelectorAll('.logo-text').forEach(el=>{
       const a=el.querySelector('.rosa');
